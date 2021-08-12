@@ -96,7 +96,7 @@ Use ggplot to recreate the plot below, which shows data for all 18 subjects.
 It looks like RT is increasing with each additional day of sleep deprivation, starting from day 2 and increasing until day 10.
 
 
-<div class='solution'><button>Hint, please</button>
+<div class='webex-solution'><button>Hint, please</button>
 
 
 Just above, you were given the code to make a plot for a single participant. Adapt this code to show all of the participants by getting rid of the `filter()` statement and adding a *`ggplot2`* function that starts with `facet_`.
@@ -106,7 +106,7 @@ Just above, you were given the code to make a plot for a single participant. Ada
 
 
 
-<div class='solution'><button>Show me</button>
+<div class='webex-solution'><button>Show me</button>
 
 
 Same as above, except you just add one line: `facet_wrap(~Subject)`
@@ -140,7 +140,7 @@ There were seven nights of sleep restriction, with the first night of restrictio
 Remove from the dataset observations where `Days` is coded `0` or `1`, and then make a new variable `days_deprived` from the `Days` variable so that the sequence starts at day 2, with day 2 being re-coded as day 0, day 3 as day 1, day 4 as day 2, etc. This new variable now tracks the number of days of sleep deprivation. Store the new table as `sleep2`.
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -416,13 +416,13 @@ What this model has done is take one subject to be the baseline (specifically, s
 
 Answer these questions (to three decimal places):
 
-* What is the intercept for subject 308? <input name='q_1'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["288.217466666666"]'/>
-* What is the slope for subject 308? <input name='q_2'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["21.6904952380953"]'/>
-* What is the intercept for subject 335? <input name='q_3'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["262.874583333333"]'/>
-* What is the slope for subject 335? <input name='q_4'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["-4.20899166666667"]'/>
+* What is the intercept for subject 308? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["288.217466666666"]'/>
+* What is the slope for subject 308? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["21.6904952380953"]'/>
+* What is the intercept for subject 335? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["262.874583333333"]'/>
+* What is the slope for subject 335? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["-4.20899166666667"]'/>
 
 
-<div class='solution'><button>Answers and Explanation</button>
+<div class='webex-solution'><button>Answers and Explanation</button>
 
 
 The baseline subject is 308; the default in R is to sort the levels of the factor alphabetically and chooses the first one as the baseline. This means that the intercept and slope for 308 are given by `(Intercept)` and `days_deprived` respectively, because all of the other 17 dummy variables will be zero for subject 308.

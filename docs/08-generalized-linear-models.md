@@ -71,8 +71,8 @@ rainy_days %>%
 ## # A tibble: 2 x 2
 ##   city         sd
 ##   <chr>     <dbl>
-## 1 Barcelona  6.99
-## 2 Glasgow    9.56
+## 1 Barcelona  6.61
+## 2 Glasgow    9.74
 ```
 
 

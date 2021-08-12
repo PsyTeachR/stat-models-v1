@@ -1310,7 +1310,7 @@ Let's assume that your data is contained in a table `dat` like the one below.
 ```
 
 
-<div class='solution'><button>Click to view example data</button>
+<div class='webex-solution'><button>Click to view example data</button>
 
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1390,7 +1390,7 @@ Let's assume that your data is contained in a table `dat` like the one below.
 ```
 
 
-<div class='solution'><button>Click to view resulting table</button>
+<div class='webex-solution'><button>Click to view resulting table</button>
 
 
 
@@ -1431,7 +1431,7 @@ dat_sum <- dat %>%
 ```
 
 
-<div class='solution'><button>Click to view resulting table</button>
+<div class='webex-solution'><button>Click to view resulting table</button>
 
 
 
@@ -1469,7 +1469,7 @@ dat_dev <- dat %>%
 ```
 
 
-<div class='solution'><button>Click to view resulting table</button>
+<div class='webex-solution'><button>Click to view resulting table</button>
 
 
 

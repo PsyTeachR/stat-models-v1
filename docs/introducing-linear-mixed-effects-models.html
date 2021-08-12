@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R</title>
   <meta name="description" content="Textbook on statistical models for social scientists." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dale J. Barr" />
 
 
-<meta name="date" content="2021-05-17" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -117,7 +119,9 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/webex.css" type="text/css" />
 <link rel="stylesheet" href="include/style.css" type="text/css" />
 </head>
 
@@ -150,9 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html"><i class="fa fa-check"></i><b>2</b> Understanding correlation and regression through bivariate simulation</a><ul>
 <li class="chapter" data-level="2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> Correlation matrices</a></li>
-<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#bivariate-app"><i class="fa fa-check"></i><b>2.2.1</b> Bivariate app</a></li>
-</ul></li>
+<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a></li>
 <li class="chapter" data-level="2.3" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#relationship-between-correlation-and-regression"><i class="fa fa-check"></i><b>2.3</b> Relationship between correlation and regression</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>3</b> Multiple regression</a><ul>
@@ -195,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
 <li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
@@ -211,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
-<li class="chapter" data-level="6.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#learning-objectives-2"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
@@ -222,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
-<li class="chapter" data-level="7.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#learning-objectives-3"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
 <li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
 <li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
@@ -240,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
-<li class="chapter" data-level="8.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#learning-objectives-4"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
 </ul></li>
@@ -285,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="introducing-linear-mixed-effects-models" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Introducing Linear Mixed-Effects Models</h1>
-<div id="learning-objectives" class="section level2">
+<div id="learning-objectives-1" class="section level2">
 <h2><span class="header-section-number">5.1</span> Learning objectives</h2>
 <ul>
 <li>express multi-level designs in mathematical format (DGP)</li>
@@ -364,13 +366,13 @@ Figure 5.2: <em>Data from Belenky et al. (2003)</em>
 </p>
 </div>
 <p>It looks like RT is increasing with each additional day of sleep deprivation, starting from day 2 and increasing until day 10.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint, please
 </button>
 <p>Just above, you were given the code to make a plot for a single participant. Adapt this code to show all of the participants by getting rid of the <code>filter()</code> statement and adding a <em><code>ggplot2</code></em> function that starts with <code>facet_</code>.</p>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Show me
 </button>
@@ -392,7 +394,7 @@ Show me
 <div class="try">
 <h3 id="exercise-1" class="unnumbered">Exercise</h3>
 <p>Remove from the dataset observations where <code>Days</code> is coded <code>0</code> or <code>1</code>, and then make a new variable <code>days_deprived</code> from the <code>Days</code> variable so that the sequence starts at day 2, with day 2 being re-coded as day 0, day 3 as day 1, day 4 as day 2, etc. This new variable now tracks the number of days of sleep deprivation. Store the new table as <code>sleep2</code>.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -468,7 +470,7 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at basel
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 50.85 on 142 degrees of freedom
-## Multiple R-squared:  0.2121,	Adjusted R-squared:  0.2066 
+## Multiple R-squared:  0.2121, Adjusted R-squared:  0.2066 
 ## F-statistic: 38.23 on 1 and 142 DF,  p-value: 6.316e-09</code></pre>
 <p>According to this model, the predicted mean response time on Day 0 is about 268 milliseconds, with an increase of about 11 milliseconds per day of deprivation, on average. We can’t trust the standard errors for our regression coefficients, however, because we are assuming that all of the observations are independent (technically, that the residuals are). However, we can be pretty sure this is a bad assumption.</p>
 <p>Let’s add the model predictions to the graph that we created above. We can use <code>geom_abline()</code> to do so, specifying the intercept and slope for the line using the regression coefficients from the model fit, <code>coef(cp_model)</code>, which returns a two-element vector with intercept and slope, respectively.</p>
@@ -568,18 +570,18 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 25.53 on 108 degrees of freedom
-## Multiple R-squared:  0.849,	Adjusted R-squared:  0.8001 
+## Multiple R-squared:  0.849,  Adjusted R-squared:  0.8001 
 ## F-statistic: 17.35 on 35 and 108 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>What this model has done is take one subject to be the baseline (specifically, subject 308), and represent each subject in terms of offsets from that baseline. You saw this already when we talked about <a href="05-interactions-course-notes.html#cont-by-cat">continuous-by-categorical interactions</a>.</p>
 <div class="try">
 <p>Answer these questions (to three decimal places):</p>
 <ul>
-<li>What is the intercept for subject 308? <input name='q_1'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["288.217466666666"]'/></li>
-<li>What is the slope for subject 308? <input name='q_2'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["21.6904952380953"]'/></li>
-<li>What is the intercept for subject 335? <input name='q_3'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["262.874583333333"]'/></li>
-<li>What is the slope for subject 335? <input name='q_4'class='solveme nospaces' data-tol='0.001' size='8' data-answer='["-4.20899166666667"]'/></li>
+<li>What is the intercept for subject 308? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["288.217466666666"]'/></li>
+<li>What is the slope for subject 308? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["21.6904952380953"]'/></li>
+<li>What is the intercept for subject 335? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["262.874583333333"]'/></li>
+<li>What is the slope for subject 335? <input class='webex-solveme nospaces' data-tol='0.001' size='8' data-answer='["-4.20899166666667"]'/></li>
 </ul>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Answers and Explanation
 </button>
@@ -648,7 +650,7 @@ Figure 5.5: Data plotted against fits from the no-pooling approach.
 <p>This is much better than the complete pooling model. If we want to test the null hypothesis that the fixed slope is zero, we could do using a one-sample test.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" title="1">np_coef <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(slope) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t.test</span>()</a></code></pre></div>
 <pre><code>## 
-## 	One Sample t-test
+##  One Sample t-test
 ## 
 ## data:  .
 ## t = 6.1971, df = 17, p-value = 9.749e-06
@@ -1283,6 +1285,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
 "google": false
 },

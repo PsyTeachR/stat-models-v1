@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Understanding correlation and regression through bivariate simulation | Learning Statistical Models Through Simulation in R</title>
   <meta name="description" content="Textbook on statistical models for social scientists." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Understanding correlation and regression through bivariate simulation | Learning Statistical Models Through Simulation in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dale J. Barr" />
 
 
-<meta name="date" content="2021-05-17" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -117,7 +119,9 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/webex.css" type="text/css" />
 <link rel="stylesheet" href="include/style.css" type="text/css" />
 </head>
 
@@ -193,12 +197,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a><ul>
-<li class="chapter" data-level="" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
 <li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
-<li class="chapter" data-level="" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#exercise-1"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
 <li class="chapter" data-level="5.3.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#no-pooling"><i class="fa fa-check"></i><b>5.3.2</b> No pooling</a></li>
 <li class="chapter" data-level="5.3.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#partial-pooling-using-mixed-effects-models"><i class="fa fa-check"></i><b>5.3.3</b> Partial pooling using mixed-effects models</a></li>
@@ -212,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
-<li class="chapter" data-level="6.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#learning-objectives-2"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
@@ -223,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
-<li class="chapter" data-level="7.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#learning-objectives-3"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
 <li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
 <li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
@@ -241,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
-<li class="chapter" data-level="8.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#learning-objectives-4"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
 </ul></li>
@@ -259,6 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="A.1" data-path="symbols.html"><a href="symbols.html#general-notes"><i class="fa fa-check"></i><b>A.1</b> General notes</a></li>
 <li class="chapter" data-level="A.2" data-path="symbols.html"><a href="symbols.html#table-of-symbols"><i class="fa fa-check"></i><b>A.2</b> Table of symbols</a></li>
 </ul></li>
+<li class="chapter" data-level="B" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>B</b> Bibliography</a></li>
 <li class="divider"></li>
 <li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
     target="blank"><img alt="Creative Commons License" 
@@ -329,50 +331,50 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 </div>
 <p>You can create a correlation matrix in R using <code>base::cor()</code> or <code>corrr::correlate()</code>. We prefer the latter function because <code>cor()</code> requires that your data is stored in a matrix, whereas most of the data we will be working with is tabular data stored in a data frame. The <code>corrr::correlate()</code> function takes a data frame as the first argument, and provides “tidy” output, so it integrates better with tidyverse functions and pipes (<code>%&gt;%</code>).</p>
 <p>Let’s create a correlation matrix to see how it works. Start by loading in the packages we will need.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(<span class="st">&quot;corrr&quot;</span>)  <span class="co"># install.packages(&quot;corrr&quot;) in console if missing</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">library</span>(<span class="st">&quot;corrr&quot;</span>)  <span class="co"># install.packages(&quot;corrr&quot;) in console if missing</span></a></code></pre></div>
 <p>We will use the <code>starwars</code> dataset, which is a built-in dataset that becomes available after you load the tidyverse package. This dataset has information about various characters that have appeared in the Star Wars film series. Let’s look at the correlation between</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">correlate</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">correlate</span>()</a></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
 <pre><code>## # A tibble: 3 x 4
-##   rowname    height   mass birth_year
+##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 height     NA      0.134     -0.400
 ## 2 mass        0.134 NA          0.478
 ## 3 birth_year -0.400  0.478     NA</code></pre>
 <p>You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between <code>height</code> and <code>mass</code> is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only <code>choose(3, 2)</code> = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending <code>corrr::shave()</code> to our pipeline.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">shave</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">shave</span>()</a></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
 <pre><code>## # A tibble: 3 x 4
-##   rowname    height   mass birth_year
+##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 height     NA     NA             NA
 ## 2 mass        0.134 NA             NA
 ## 3 birth_year -0.400  0.478         NA</code></pre>
 <p>Now we’ve only got the lower triangle of the correlation matrix, but the <code>NA</code> values are ugly and so are the leading zeroes. The <strong><code>corrr</code></strong> package also provides the <code>fashion()</code> function that cleans things up (see <code>?corrr::fashion</code> for more options).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
-<pre><code>##      rowname height mass birth_year
+<pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .13                
 ## 3 birth_year   -.40  .48</code></pre>
 <p>Correlations only provide a good description of the relationship if the relationship is (roughly) linear and there aren’t severe outliers that are wielding too strong of an influence on the results. So it is always a good idea to visualize the correlations as well as to quantify them. The <code>base::pairs()</code> function does this. The first argument to <code>pairs()</code> is simply of the form <code>~ v1 + v2 + v3 + ... + vn</code> where <code>v1</code>, <code>v2</code>, etc. are the names of the variables you want to correlate.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">pairs</span>(<span class="op">~</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">pairs</span>(<span class="op">~</span><span class="st"> </span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pairs"></span>
 <img src="02-bivariate-simulation_files/figure-html/pairs-1.png" alt="Pairwise correlations for the starwars dataset" width="100%" />
 <p class="caption">
@@ -380,18 +382,18 @@ Figure 2.2: Pairwise correlations for the starwars dataset
 </p>
 </div>
 <p>We can see that there is a big outlier influencing our data; in particular, there is a creature with a mass greater than 1200kg! Let’s find out who this is and eliminate them from the dataset.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span><span class="kw">filter</span>(mass <span class="op">&gt;</span><span class="st"> </span><span class="dv">1200</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, mass, height, birth_year)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="kw">filter</span>(mass <span class="op">&gt;</span><span class="st"> </span><span class="dv">1200</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, mass, height, birth_year)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   name                   mass height birth_year
 ##   &lt;chr&gt;                 &lt;dbl&gt;  &lt;int&gt;      &lt;dbl&gt;
 ## 1 Jabba Desilijic Tiure  1358    175        600</code></pre>
 <p>OK, let’s see how the data look without this massive creature.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">starwars2 &lt;-<span class="st"> </span>starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;Jabba Desilijic Tiure&quot;</span>)</a>
-<a class="sourceLine" id="cb14-3" title="3"></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="kw">pairs</span>(<span class="op">~</span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars2)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">starwars2 &lt;-<span class="st"> </span>starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;Jabba Desilijic Tiure&quot;</span>)</a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="kw">pairs</span>(<span class="op">~</span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars2)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:massive-creature"></span>
 <img src="02-bivariate-simulation_files/figure-html/massive-creature-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass value." width="100%" />
 <p class="caption">
@@ -399,18 +401,18 @@ Figure 2.3: Pairwise correlations for the starwars dataset after removing outlyi
 </p>
 </div>
 <p>Better, but there’s a creature with an outlying birth year that we might want to get rid of.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">starwars2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">filter</span>(birth_year <span class="op">&gt;</span><span class="st"> </span><span class="dv">800</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, height, mass, birth_year)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">starwars2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">filter</span>(birth_year <span class="op">&gt;</span><span class="st"> </span><span class="dv">800</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, height, mass, birth_year)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   name  height  mass birth_year
 ##   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 Yoda      66    17        896</code></pre>
 <p>It’s Yoda. He’s as old as the universe. Let’s drop him and see how the plots look.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">starwars3 &lt;-<span class="st"> </span>starwars2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;Yoda&quot;</span>)</a>
-<a class="sourceLine" id="cb17-3" title="3"></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="kw">pairs</span>(<span class="op">~</span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars3)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">starwars3 &lt;-<span class="st"> </span>starwars2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;Yoda&quot;</span>)</a>
+<a class="sourceLine" id="cb23-3" title="3"></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="kw">pairs</span>(<span class="op">~</span>height <span class="op">+</span><span class="st"> </span>mass <span class="op">+</span><span class="st"> </span>birth_year, starwars3)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bye-yoda"></span>
 <img src="02-bivariate-simulation_files/figure-html/bye-yoda-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values." width="100%" />
 <p class="caption">
@@ -418,43 +420,43 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 </p>
 </div>
 <p>That looks much better. Let’s see how that changes our correlation matrix.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">starwars3 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">starwars3 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
-<pre><code>##      rowname height mass birth_year
+<pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .74                
 ## 3 birth_year    .45  .24</code></pre>
 <p>Note that these values are quite different from the ones we started with.</p>
 <p>Sometimes it’s not a great idea to remove outliers. Another approach to dealing with outliers is to use a robust method. The default correlation coefficient that is computed by <code>corrr::correlate()</code> is the Pearson product-moment correlation coefficient. You can also compute the Spearman correlation coefficient by changing the <code>method()</code> argument to <code>correlate()</code>. This replaces the values with ranks before computing the correlation, so that outliers will still be included, but will have dramatically less influence.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">correlate</span>(<span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="st">  </span><span class="kw">correlate</span>(<span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span><span class="kw">fashion</span>()</a></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;spearman&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
-<pre><code>##      rowname height mass birth_year
+<pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .75                
 ## 3 birth_year    .16  .15</code></pre>
 <p>Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use <code>knitr::kable()</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">correlate</span>(<span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw">fashion</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass, birth_year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="st">  </span><span class="kw">correlate</span>(<span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">fashion</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th align="left">rowname</th>
+<th align="left">term</th>
 <th align="left">height</th>
 <th align="left">mass</th>
 <th align="left">birth_year</th>
@@ -557,11 +559,11 @@ c &amp; f \\
 </iframe>
 <p>Let’s start by simulating data representing hypothetical humans and their heights and weights. We know these things are correlated. What we need to be able to simulate data are means and standard deviations for these two variables and their correlation.</p>
 <p>I found some data <a href="https://www.geogebra.org/m/RRprACv4">here</a> which I converted into a CSV file. If you want to follow along, download the file <a href="data/heights_and_weights.csv" download="heights_and_weights.csv">heights_and_weights.csv</a>. Here’s how the scatterplot looks:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">handw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/heights_and_weights.csv&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;dd&quot;</span>)</a>
-<a class="sourceLine" id="cb25-2" title="2"></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="kw">ggplot</span>(handw, <span class="kw">aes</span>(height_in, weight_lbs)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;height (inches)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;weight (pounds)&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">handw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/heights_and_weights.csv&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;dd&quot;</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2"></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="kw">ggplot</span>(handw, <span class="kw">aes</span>(height_in, weight_lbs)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;height (inches)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;weight (pounds)&quot;</span>) </a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:heights-and-weights"></span>
 <img src="02-bivariate-simulation_files/figure-html/heights-and-weights-1.png" alt="Heights and weights of 475 humans (including infants)" width="100%" />
 <p class="caption">
@@ -569,9 +571,9 @@ Figure 2.5: Heights and weights of 475 humans (including infants)
 </p>
 </div>
 <p>Now, that’s not quite a linear relationship. We can make it into one by log transforming each of the variables first.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">handw_log &lt;-<span class="st"> </span>handw <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hlog =</span> <span class="kw">log</span>(height_in),</a>
-<a class="sourceLine" id="cb26-3" title="3">         <span class="dt">wlog =</span> <span class="kw">log</span>(weight_lbs))</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">handw_log &lt;-<span class="st"> </span>handw <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hlog =</span> <span class="kw">log</span>(height_in),</a>
+<a class="sourceLine" id="cb32-3" title="3">         <span class="dt">wlog =</span> <span class="kw">log</span>(weight_lbs))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:handw-log"></span>
 <img src="02-bivariate-simulation_files/figure-html/handw-log-1.png" alt="Log transformed heights and weights." width="100%" />
 <p class="caption">
@@ -603,10 +605,10 @@ Figure 2.6: Log transformed heights and weights.
 \]</span></p>
 <p>OK, how do we form <code>Sigma</code> in R so that we can pass it to the <code>mvrnorm()</code> function? We will use the <code>matrix()</code> function, as shown below.</p>
 <p>First let’s define our covariance and store it in the variable <code>my_cov</code>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">my_cov &lt;-<span class="st"> </span><span class="fl">.96</span> <span class="op">*</span><span class="st"> </span><span class="fl">.26</span> <span class="op">*</span><span class="st"> </span><span class="fl">.65</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">my_cov &lt;-<span class="st"> </span><span class="fl">.96</span> <span class="op">*</span><span class="st"> </span><span class="fl">.26</span> <span class="op">*</span><span class="st"> </span><span class="fl">.65</span></a></code></pre></div>
 <p>Now we’ll use <code>matrix()</code> to define our <code>Sigma</code>, <code>my_Sigma</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">my_Sigma &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(.<span class="dv">26</span><span class="op">^</span><span class="dv">2</span>, my_cov, my_cov, <span class="fl">.65</span><span class="op">^</span><span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb28-2" title="2">my_Sigma</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">my_Sigma &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(.<span class="dv">26</span><span class="op">^</span><span class="dv">2</span>, my_cov, my_cov, <span class="fl">.65</span><span class="op">^</span><span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb34-2" title="2">my_Sigma</a></code></pre></div>
 <pre><code>##         [,1]    [,2]
 ## [1,] 0.06760 0.16224
 ## [2,] 0.16224 0.42250</code></pre>
@@ -631,15 +633,15 @@ If you want to change this behavior, set the <code>byrow</code> argument to <cod
 </p>
 </div>
 <p>Great. Now that we’ve got <code>my_Sigma</code>, we’re ready to use <code>MASS::mvrnorm()</code>. Let’s test it out by creating 6 synthetic humans.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">set.seed</span>(<span class="dv">62</span>) <span class="co"># for reproducibility</span></a>
-<a class="sourceLine" id="cb30-2" title="2"></a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="co"># passing the *named* vector c(height = 4.11, weight = 4.74)</span></a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="co"># for mu gives us column names in the output</span></a>
-<a class="sourceLine" id="cb30-5" title="5">log_ht_wt &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(<span class="dv">6</span>, </a>
-<a class="sourceLine" id="cb30-6" title="6">                           <span class="kw">c</span>(<span class="dt">height =</span> <span class="fl">4.11</span>, <span class="dt">weight =</span> <span class="fl">4.74</span>), </a>
-<a class="sourceLine" id="cb30-7" title="7">                           my_Sigma)</a>
-<a class="sourceLine" id="cb30-8" title="8"></a>
-<a class="sourceLine" id="cb30-9" title="9">log_ht_wt</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">set.seed</span>(<span class="dv">62</span>) <span class="co"># for reproducibility</span></a>
+<a class="sourceLine" id="cb36-2" title="2"></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="co"># passing the *named* vector c(height = 4.11, weight = 4.74)</span></a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="co"># for mu gives us column names in the output</span></a>
+<a class="sourceLine" id="cb36-5" title="5">log_ht_wt &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(<span class="dv">6</span>, </a>
+<a class="sourceLine" id="cb36-6" title="6">                           <span class="kw">c</span>(<span class="dt">height =</span> <span class="fl">4.11</span>, <span class="dt">weight =</span> <span class="fl">4.74</span>), </a>
+<a class="sourceLine" id="cb36-7" title="7">                           my_Sigma)</a>
+<a class="sourceLine" id="cb36-8" title="8"></a>
+<a class="sourceLine" id="cb36-9" title="9">log_ht_wt</a></code></pre></div>
 <pre><code>##        height   weight
 ## [1,] 4.254209 5.282913
 ## [2,] 4.257828 4.895222
@@ -648,7 +650,7 @@ If you want to change this behavior, set the <code>byrow</code> argument to <cod
 ## [5,] 4.739967 6.185191
 ## [6,] 4.058105 4.806485</code></pre>
 <p>So <code>MASS::mvrnorm()</code> returns a matrix with a row for each simulated human, with the first column representing the log height and the second column representing the log weight. But log heights and log weights are not very useful to us, so let’s transform them back by using <code>exp()</code>, which is the inverse of the <code>log()</code> transform.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">exp</span>(log_ht_wt)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">exp</span>(log_ht_wt)</a></code></pre></div>
 <pre><code>##         height    weight
 ## [1,]  70.40108 196.94276
 ## [2,]  70.65632 133.64963
@@ -658,21 +660,21 @@ If you want to change this behavior, set the <code>byrow</code> argument to <cod
 ## [6,]  57.86453 122.30092</code></pre>
 <p>So our first simulated human is 70.4 inches tall (about 5’5" or X) and weighs 196.94 pounds (89.32 kg). Sounds about right! (Note also that it will generate observations outside of our original data; we’ll get super tall humans, like observation 5, but at least the weight/height relationship will be preserved.)</p>
 <p>OK, let’s randomly generate a bunch of humans, transform them from log to inches and pounds, and plot them against our original data to see how we’re doing.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co">## simulate new humans</span></a>
-<a class="sourceLine" id="cb34-2" title="2">new_humans &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(<span class="dv">500</span>, </a>
-<a class="sourceLine" id="cb34-3" title="3">                            <span class="kw">c</span>(<span class="dt">height_in =</span> <span class="fl">4.11</span>, <span class="dt">weight_lbs =</span> <span class="fl">4.74</span>),</a>
-<a class="sourceLine" id="cb34-4" title="4">                            my_Sigma) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-5" title="5"><span class="st">  </span><span class="kw">exp</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># back-transform from log to inches and pounds</span></a>
-<a class="sourceLine" id="cb34-6" title="6"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># make tibble for plotting</span></a>
-<a class="sourceLine" id="cb34-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;simulated&quot;</span>) <span class="co"># tag them as simulated</span></a>
-<a class="sourceLine" id="cb34-8" title="8"></a>
-<a class="sourceLine" id="cb34-9" title="9"><span class="co">## combine real and simulated datasets</span></a>
-<a class="sourceLine" id="cb34-10" title="10"><span class="co">## handw is variable containing data from heights_and_weights.csv</span></a>
-<a class="sourceLine" id="cb34-11" title="11">alldata &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(handw <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;real&quot;</span>), </a>
-<a class="sourceLine" id="cb34-12" title="12">                     new_humans)</a>
-<a class="sourceLine" id="cb34-13" title="13"></a>
-<a class="sourceLine" id="cb34-14" title="14"><span class="kw">ggplot</span>(alldata, <span class="kw">aes</span>(height_in, weight_lbs)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb34-15" title="15"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> type), <span class="dt">alpha =</span> <span class="fl">.1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co">## simulate new humans</span></a>
+<a class="sourceLine" id="cb40-2" title="2">new_humans &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(<span class="dv">500</span>, </a>
+<a class="sourceLine" id="cb40-3" title="3">                            <span class="kw">c</span>(<span class="dt">height_in =</span> <span class="fl">4.11</span>, <span class="dt">weight_lbs =</span> <span class="fl">4.74</span>),</a>
+<a class="sourceLine" id="cb40-4" title="4">                            my_Sigma) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-5" title="5"><span class="st">  </span><span class="kw">exp</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># back-transform from log to inches and pounds</span></a>
+<a class="sourceLine" id="cb40-6" title="6"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># make tibble for plotting</span></a>
+<a class="sourceLine" id="cb40-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;simulated&quot;</span>) <span class="co"># tag them as simulated</span></a>
+<a class="sourceLine" id="cb40-8" title="8"></a>
+<a class="sourceLine" id="cb40-9" title="9"><span class="co">## combine real and simulated datasets</span></a>
+<a class="sourceLine" id="cb40-10" title="10"><span class="co">## handw is variable containing data from heights_and_weights.csv</span></a>
+<a class="sourceLine" id="cb40-11" title="11">alldata &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(handw <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;real&quot;</span>), </a>
+<a class="sourceLine" id="cb40-12" title="12">                     new_humans)</a>
+<a class="sourceLine" id="cb40-13" title="13"></a>
+<a class="sourceLine" id="cb40-14" title="14"><span class="kw">ggplot</span>(alldata, <span class="kw">aes</span>(height_in, weight_lbs)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb40-15" title="15"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> type), <span class="dt">alpha =</span> <span class="fl">.1</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:plot-together"></span>
 <img src="02-bivariate-simulation_files/figure-html/plot-together-1.png" alt="Real and simulated humans." width="100%" />
 <p class="caption">
@@ -692,8 +694,8 @@ Figure 2.7: Real and simulated humans.
 <p><span class="math display">\[\beta_1 = \rho \frac{\sigma_Y}{\sigma_X}\]</span></p>
 <p>Given the estimates above for log height and weight, can you solve for <span class="math inline">\(\beta_1\)</span>?</p>
 <!-- TODO make this use webex -->
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">b1 &lt;-<span class="st"> </span><span class="fl">.96</span> <span class="op">*</span><span class="st"> </span>(.<span class="dv">65</span> <span class="op">/</span><span class="st"> </span><span class="fl">.26</span>)</a>
-<a class="sourceLine" id="cb35-2" title="2">b1</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">b1 &lt;-<span class="st"> </span><span class="fl">.96</span> <span class="op">*</span><span class="st"> </span>(.<span class="dv">65</span> <span class="op">/</span><span class="st"> </span><span class="fl">.26</span>)</a>
+<a class="sourceLine" id="cb41-2" title="2">b1</a></code></pre></div>
 <pre><code>## [1] 2.4</code></pre>
 <p>The next thing to note is that for mathematical reasons, the regression line is guaranteed to go through the point corresponding to the mean of <span class="math inline">\(X\)</span> and the mean of <span class="math inline">\(Y\)</span>, i.e., the point <span class="math inline">\((\mu_x, \mu_y)\)</span>. (You can think of the regression line “pivoting” around that point depending on the slope). You also know that <span class="math inline">\(\beta_0\)</span> is the y-intercept, the point where the line crosses the vertical axis at <span class="math inline">\(X = 0\)</span>. From this information, and the estimates above, can you figure out the value of <span class="math inline">\(\beta_0\)</span>?</p>
 <!-- TODO: use webex -->
@@ -705,7 +707,7 @@ At <span class="math inline">\(X = \mu_x\)</span>, <span class="math inline">\(Y
 <p>Since <span class="math inline">\(\beta_1 = 2.4\)</span>, <span class="math inline">\(\mu_x = 4.11\)</span>, and <span class="math inline">\(\mu_y = 4.74\)</span>, <span class="math inline">\(\beta_0 = -5.124\)</span>. Thus, our regression equation is:</p>
 <p><span class="math display">\[Y_i =  -5.124 + 2.4X_i + e_i.\]</span></p>
 <p>To check our results, let’s first run a regression on the log-transformed data using <code>lm()</code>, which estimates parameters using ordinary least squares regression.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">summary</span>(<span class="kw">lm</span>(wlog <span class="op">~</span><span class="st"> </span>hlog, handw_log))</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">summary</span>(<span class="kw">lm</span>(wlog <span class="op">~</span><span class="st"> </span>hlog, handw_log))</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = wlog ~ hlog, data = handw_log)
@@ -722,14 +724,14 @@ At <span class="math inline">\(X = \mu_x\)</span>, <span class="math inline">\(Y
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.1774 on 473 degrees of freedom
-## Multiple R-squared:  0.9246,	Adjusted R-squared:  0.9245 
+## Multiple R-squared:  0.9246, Adjusted R-squared:  0.9245 
 ## F-statistic:  5802 on 1 and 473 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Looks pretty close. The reason that it doesn’t match exactly is only because we’ve rounded off our estimates to two decimal places for convenience.</p>
 <p>As another check, let’s superimpose the regression line we computed by hand on the scatterplot of the log-transformed data.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">ggplot</span>(handw_log, <span class="kw">aes</span>(hlog, wlog)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;log(height)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;log(weight)&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-4" title="4"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">-5.124</span>, <span class="dt">slope =</span> <span class="fl">2.4</span>, <span class="dt">colour =</span> <span class="st">&#39;blue&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">ggplot</span>(handw_log, <span class="kw">aes</span>(hlog, wlog)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;log(height)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;log(weight)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-4" title="4"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">-5.124</span>, <span class="dt">slope =</span> <span class="fl">2.4</span>, <span class="dt">colour =</span> <span class="st">&#39;blue&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatter-with-line"></span>
 <img src="02-bivariate-simulation_files/figure-html/scatter-with-line-1.png" alt="Log transformed values with superimposed regression line." width="100%" />
 <p class="caption">
@@ -881,6 +883,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
 "google": false
 },

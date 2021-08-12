@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R</title>
   <meta name="description" content="Textbook on statistical models for social scientists." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dale J. Barr" />
 
 
-<meta name="date" content="2021-05-17" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -117,7 +119,9 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/webex.css" type="text/css" />
 <link rel="stylesheet" href="include/style.css" type="text/css" />
 </head>
 
@@ -150,9 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html"><i class="fa fa-check"></i><b>2</b> Understanding correlation and regression through bivariate simulation</a><ul>
 <li class="chapter" data-level="2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> Correlation matrices</a></li>
-<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#bivariate-app"><i class="fa fa-check"></i><b>2.2.1</b> Bivariate app</a></li>
-</ul></li>
+<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a></li>
 <li class="chapter" data-level="2.3" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#relationship-between-correlation-and-regression"><i class="fa fa-check"></i><b>2.3</b> Relationship between correlation and regression</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>3</b> Multiple regression</a><ul>
@@ -195,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
 <li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
@@ -211,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
-<li class="chapter" data-level="6.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#learning-objectives-2"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
@@ -222,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
-<li class="chapter" data-level="7.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#learning-objectives-3"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
 <li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
 <li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
@@ -240,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
-<li class="chapter" data-level="8.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#learning-objectives-4"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
 </ul></li>
@@ -326,7 +328,7 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
-<pre><code>##   rowname grade  GPA lecture nclicks
+<pre><code>##      term grade  GPA lecture nclicks
 ## 1   grade                           
 ## 2     GPA   .25                     
 ## 3 lecture   .24  .44                
@@ -369,7 +371,7 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.8692 on 97 degrees of freedom
-## Multiple R-squared:  0.06543,	Adjusted R-squared:  0.04616 
+## Multiple R-squared:  0.06543,    Adjusted R-squared:  0.04616 
 ## F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756</code></pre>
 <p>We’ll often write the parameter symbol with a little hat on top to make clear that we are dealing with estimates from the sample rather than the (unknown) true population values. From above:</p>
 <ul>
@@ -523,7 +525,7 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.8692 on 97 degrees of freedom
-## Multiple R-squared:  0.06543,	Adjusted R-squared:  0.04616 
+## Multiple R-squared:  0.06543,    Adjusted R-squared:  0.04616 
 ## F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756</code></pre>
 <p>This tells us that lecture_c has a relatively larger influence; for each standard deviation increase in this variable, <code>grade</code> increases by about 0.19.</p>
 </div>
@@ -577,16 +579,16 @@ z = \frac{X - \mu_x}{\sigma_x}
 <pre><code>## # A tibble: 10 x 2
 ##          Y group
 ##      &lt;dbl&gt; &lt;chr&gt;
-##  1 -1.62   A    
-##  2  0.418  A    
-##  3  0.401  A    
-##  4 -0.744  A    
-##  5 -0.723  A    
-##  6 -0.284  B    
-##  7  0.751  B    
-##  8 -0.0766 B    
-##  9  0.380  B    
-## 10  0.792  B</code></pre>
+##  1  0.621  A    
+##  2  1.07   A    
+##  3 -0.0333 A    
+##  4 -0.138  A    
+##  5 -0.845  A    
+##  6  1.33   B    
+##  7  0.514  B    
+##  8  0.309  B    
+##  9 -0.342  B    
+## 10 -1.69   B</code></pre>
 <p>Now let’s add a new variable, <code>group_d</code>, which is the dummy coded group variable. We will use the <code>dplyr::if_else()</code> function to define the new column.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">fake_data2 &lt;-<span class="st"> </span>fake_data <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb71-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group_d =</span> <span class="kw">if_else</span>(group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a>
@@ -595,16 +597,16 @@ z = \frac{X - \mu_x}{\sigma_x}
 <pre><code>## # A tibble: 10 x 3
 ##          Y group group_d
 ##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-##  1 -1.62   A           0
-##  2  0.418  A           0
-##  3  0.401  A           0
-##  4 -0.744  A           0
-##  5 -0.723  A           0
-##  6 -0.284  B           1
-##  7  0.751  B           1
-##  8 -0.0766 B           1
-##  9  0.380  B           1
-## 10  0.792  B           1</code></pre>
+##  1  0.621  A           0
+##  2  1.07   A           0
+##  3 -0.0333 A           0
+##  4 -0.138  A           0
+##  5 -0.845  A           0
+##  6  1.33   B           1
+##  7  0.514  B           1
+##  8  0.309  B           1
+##  9 -0.342  B           1
+## 10 -1.69   B           1</code></pre>
 <p>Now we just run it as a regular regression model.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">summary</span>(<span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>group_d, fake_data2))</a></code></pre></div>
 <pre><code>## 
@@ -613,16 +615,16 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.1631 -0.3646 -0.1016  0.4692  0.8710 
+## -1.7136 -0.3419  0.0588  0.4899  1.3018 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  -0.4526     0.3135  -1.444    0.187
-## group_d       0.7650     0.4434   1.726    0.123
+## (Intercept)   0.1346     0.4260   0.316    0.760
+## group_d      -0.1112     0.6024  -0.185    0.858
 ## 
-## Residual standard error: 0.701 on 8 degrees of freedom
-## Multiple R-squared:  0.2712,	Adjusted R-squared:  0.1801 
-## F-statistic: 2.978 on 1 and 8 DF,  p-value: 0.1227</code></pre>
+## Residual standard error: 0.9525 on 8 degrees of freedom
+## Multiple R-squared:  0.004243,   Adjusted R-squared:  -0.1202 
+## F-statistic: 0.03409 on 1 and 8 DF,  p-value: 0.8581</code></pre>
 <p>Note that if we reverse the coding we get the same result, just the sign is different.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">fake_data3 &lt;-<span class="st"> </span>fake_data <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb75-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group_d =</span> <span class="kw">if_else</span>(group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a>
@@ -634,16 +636,16 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.1631 -0.3646 -0.1016  0.4692  0.8710 
+## -1.7136 -0.3419  0.0588  0.4899  1.3018 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.3125     0.3135   0.997    0.348
-## group_d      -0.7650     0.4434  -1.726    0.123
+## (Intercept)  0.02338    0.42599   0.055    0.958
+## group_d      0.11123    0.60244   0.185    0.858
 ## 
-## Residual standard error: 0.701 on 8 degrees of freedom
-## Multiple R-squared:  0.2712,	Adjusted R-squared:  0.1801 
-## F-statistic: 2.978 on 1 and 8 DF,  p-value: 0.1227</code></pre>
+## Residual standard error: 0.9525 on 8 degrees of freedom
+## Multiple R-squared:  0.004243,   Adjusted R-squared:  -0.1202 
+## F-statistic: 0.03409 on 1 and 8 DF,  p-value: 0.8581</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
 <!--
@@ -667,26 +669,26 @@ Why not just use **factors** as your predictors?
 <pre><code>## # A tibble: 20 x 2
 ##    season bodyweight_kg
 ##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 winter         112. 
-##  2 winter         108. 
-##  3 winter         101. 
-##  4 winter         111. 
-##  5 winter         107. 
-##  6 spring          99.9
-##  7 spring         102. 
-##  8 spring         105. 
-##  9 spring         102. 
-## 10 spring         100. 
-## 11 summer         105. 
-## 12 summer         103. 
+##  1 winter         106. 
+##  2 winter         104. 
+##  3 winter         110. 
+##  4 winter         100. 
+##  5 winter         109. 
+##  6 spring         103. 
+##  7 spring         105. 
+##  8 spring          99.6
+##  9 spring         106. 
+## 10 spring         104. 
+## 11 summer         102. 
+## 12 summer         105. 
 ## 13 summer         101. 
-## 14 summer         105. 
-## 15 summer          98.7
-## 16 fall           105. 
-## 17 fall           103. 
-## 18 fall           107. 
-## 19 fall           101. 
-## 20 fall           104.</code></pre>
+## 14 summer         104. 
+## 15 summer         100. 
+## 16 fall            99.6
+## 17 fall           108. 
+## 18 fall           101. 
+## 19 fall           107. 
+## 20 fall           100.</code></pre>
 <p>Now let’s add three predictors to code the variable <code>season</code>.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="co">## baseline value is &#39;winter&#39;</span></a>
 <a class="sourceLine" id="cb79-2" title="2">mydata2 &lt;-<span class="st"> </span>mydata <span class="op">%&gt;%</span></a>
@@ -698,26 +700,26 @@ Why not just use **factors** as your predictors?
 <pre><code>## # A tibble: 20 x 5
 ##    season bodyweight_kg    V1    V2    V3
 ##    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 winter         112.      0     0     0
-##  2 winter         108.      0     0     0
-##  3 winter         101.      0     0     0
-##  4 winter         111.      0     0     0
-##  5 winter         107.      0     0     0
-##  6 spring          99.9     1     0     0
-##  7 spring         102.      1     0     0
-##  8 spring         105.      1     0     0
-##  9 spring         102.      1     0     0
-## 10 spring         100.      1     0     0
-## 11 summer         105.      0     1     0
-## 12 summer         103.      0     1     0
+##  1 winter         106.      0     0     0
+##  2 winter         104.      0     0     0
+##  3 winter         110.      0     0     0
+##  4 winter         100.      0     0     0
+##  5 winter         109.      0     0     0
+##  6 spring         103.      1     0     0
+##  7 spring         105.      1     0     0
+##  8 spring          99.6     1     0     0
+##  9 spring         106.      1     0     0
+## 10 spring         104.      1     0     0
+## 11 summer         102.      0     1     0
+## 12 summer         105.      0     1     0
 ## 13 summer         101.      0     1     0
-## 14 summer         105.      0     1     0
-## 15 summer          98.7     0     1     0
-## 16 fall           105.      0     0     1
-## 17 fall           103.      0     0     1
-## 18 fall           107.      0     0     1
-## 19 fall           101.      0     0     1
-## 20 fall           104.      0     0     1</code></pre>
+## 14 summer         104.      0     1     0
+## 15 summer         100.      0     1     0
+## 16 fall            99.6     0     0     1
+## 17 fall           108.      0     0     1
+## 18 fall           101.      0     0     1
+## 19 fall           107.      0     0     1
+## 20 fall           100.      0     0     1</code></pre>
 </div>
 </div>
 <div id="equivalence-between-multiple-regression-and-one-way-anova" class="section level2">
@@ -729,11 +731,9 @@ Why not just use **factors** as your predictors?
 <a class="sourceLine" id="cb81-4" title="4"></a>
 <a class="sourceLine" id="cb81-5" title="5">my_anova &lt;-<span class="st"> </span><span class="kw">aov</span>(bodyweight_kg <span class="op">~</span><span class="st"> </span>season, mydata3)</a>
 <a class="sourceLine" id="cb81-6" title="6"><span class="kw">summary</span>(my_anova)</a></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## season       3  109.7   36.55   4.051 0.0255 *
-## Residuals   16  144.3    9.02                 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
+## season       3  31.68   10.56   1.036  0.403
+## Residuals   16 163.10   10.19</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw">summary</span>(<span class="kw">lm</span>(bodyweight_kg <span class="op">~</span><span class="st"> </span>V1 <span class="op">+</span><span class="st"> </span>V2 <span class="op">+</span><span class="st"> </span>V3, mydata3))</a></code></pre></div>
@@ -743,20 +743,20 @@ Why not just use **factors** as your predictors?
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.9786 -1.5333  0.0761  2.4149  4.5209 
+## -5.6982 -2.0631  0.0232  2.3905  4.5665 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  107.756      1.343  80.218  &lt; 2e-16 ***
-## V1            -6.078      1.900  -3.199  0.00559 ** 
-## V2            -5.314      1.900  -2.797  0.01291 *  
-## V3            -3.917      1.900  -2.062  0.05585 .  
+## (Intercept)  105.818      1.428  74.111   &lt;2e-16 ***
+## V1            -2.352      2.019  -1.165    0.261    
+## V2            -3.360      2.019  -1.664    0.116    
+## V3            -2.626      2.019  -1.300    0.212    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 3.004 on 16 degrees of freedom
-## Multiple R-squared:  0.4317,	Adjusted R-squared:  0.3251 
-## F-statistic: 4.051 on 3 and 16 DF,  p-value: 0.02551</code></pre>
+## Residual standard error: 3.193 on 16 degrees of freedom
+## Multiple R-squared:  0.1627, Adjusted R-squared:  0.005665 
+## F-statistic: 1.036 on 3 and 16 DF,  p-value: 0.4032</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solution-to-partial-effect-plot" class="section level2">
@@ -936,6 +936,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
 "google": false
 },

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
   <meta name="description" content="Textbook on statistical models for social scientists." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dale J. Barr" />
 
 
-<meta name="date" content="2021-05-17" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -117,7 +119,9 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/webex.css" type="text/css" />
 <link rel="stylesheet" href="include/style.css" type="text/css" />
 </head>
 
@@ -150,9 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html"><i class="fa fa-check"></i><b>2</b> Understanding correlation and regression through bivariate simulation</a><ul>
 <li class="chapter" data-level="2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> Correlation matrices</a></li>
-<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#bivariate-app"><i class="fa fa-check"></i><b>2.2.1</b> Bivariate app</a></li>
-</ul></li>
+<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a></li>
 <li class="chapter" data-level="2.3" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#relationship-between-correlation-and-regression"><i class="fa fa-check"></i><b>2.3</b> Relationship between correlation and regression</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>3</b> Multiple regression</a><ul>
@@ -195,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
 <li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
@@ -211,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
-<li class="chapter" data-level="6.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#learning-objectives-2"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
@@ -222,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
-<li class="chapter" data-level="7.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#learning-objectives-3"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
 <li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
 <li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
@@ -240,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
-<li class="chapter" data-level="8.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#learning-objectives-4"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
 </ul></li>
@@ -285,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="linear-mixed-effects-models-with-crossed-random-factors" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Linear mixed-effects models with crossed random factors</h1>
-<div id="learning-objectives" class="section level2">
+<div id="learning-objectives-3" class="section level2">
 <h2><span class="header-section-number">7.1</span> Learning objectives</h2>
 <ul>
 <li>analyze data from a design with crossed random factors of subjects and stimuli</li>
@@ -393,23 +395,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">45</td>
-<td align="left">2020-05-05</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">42</td>
-<td align="left">2020-05-06</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">42</td>
+<td align="right">60</td>
 <td align="left">2020-05-12</td>
 </tr>
 <tr class="even">
+<td align="right">2</td>
+<td align="right">35</td>
+<td align="left">2020-05-18</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">57</td>
+<td align="left">2020-05-19</td>
+</tr>
+<tr class="even">
 <td align="right">4</td>
-<td align="right">54</td>
-<td align="left">2020-05-22</td>
+<td align="right">51</td>
+<td align="left">2020-05-21</td>
 </tr>
 </tbody>
 </table>
@@ -759,9 +761,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Exercise</em></p>
 <p>Answer these question about <code>abc_data</code>.</p>
 <ul>
-<li>Are the levels of factor <span class="math inline">\(A\)</span> administered between or within stimuli? <select class='solveme' name='q_1' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
+<li>Are the levels of factor <span class="math inline">\(A\)</span> administered between or within stimuli? <select class='webex-solveme' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
 </ul>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -776,9 +778,9 @@ Solution
 ## 4           4 A2        4</code></pre>
 </div>
 <ul>
-<li>Are the levels of factor <span class="math inline">\(B\)</span> administered between or within stimuli? <select class='solveme' name='q_2' data-answer='["within"]'> <option></option> <option>between</option> <option>within</option></select></li>
+<li>Are the levels of factor <span class="math inline">\(B\)</span> administered between or within stimuli? <select class='webex-solveme' data-answer='["within"]'> <option></option> <option>between</option> <option>within</option></select></li>
 </ul>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -797,9 +799,9 @@ Solution
 ## 8           4 B2        2</code></pre>
 </div>
 <ul>
-<li>Are the levels of factor <span class="math inline">\(C\)</span> administered between or within stimuli? <select class='solveme' name='q_3' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
+<li>Are the levels of factor <span class="math inline">\(C\)</span> administered between or within stimuli? <select class='webex-solveme' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
 </ul>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -842,7 +844,7 @@ Solution
 <p>This shows us that we have <em>one</em> observation per combination of <span class="math inline">\(AC\)</span>, so we do not need random slopes for <span class="math inline">\(AC\)</span>, nor for <span class="math inline">\(A\)</span> or <span class="math inline">\(C\)</span>. The random effects part of the formula for subjects would just be <code>(1 | subject_id)</code>.</p>
 <div class="try">
 <p>What random slopes do you need for the random factor of stimulus?</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1032,7 +1034,7 @@ e_{si} \sim N\left(0, \sigma^2\right)
 <div id="generate-a-sample-of-stimuli" class="section level3">
 <h3><span class="header-section-number">7.6.2</span> Generate a sample of stimuli</h3>
 <p>Let’s randomly generate our 50 items. Create a tibble called <code>item</code> like the one below, where <code>iri</code> are the by-item random intercepts (drawn from a normal distribution with variance <span class="math inline">\(\omega_{00}^2\)</span> = 6400). Half of the words are of type NOUN (<code>cond = -.5</code>) and half of type VERB (<code>cond = .5</code>).</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Click to reveal full table
 </button>
@@ -1090,19 +1092,19 @@ Click to reveal full table
 ## 49      49  -0.5  -23.9 
 ## 50      50   0.5   97.3</code></pre>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint for making cond
 </button>
 <p><code>rep()</code></p>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint for making item random effects
 </button>
 <p><code>rnorm()</code></p>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1118,7 +1120,7 @@ Solution
 <p>REMEMBER: do not run <code>library("MASS")</code> just to get this one function, because <code>MASS</code> has a function <code>select()</code> that will overwrite the tidyverse version. Since all we want from MASS is the <code>mvrnorm()</code> function, we can just access it directly by the <code>pkgname::function</code> syntax, i.e., <code>MASS::mvrnorm()</code>.</p>
 </div>
 <p>Your subjects table should look like this:</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Click to reveal full table
 </button>
@@ -1226,7 +1228,7 @@ Click to reveal full table
 ##  99      99   68.8      30.6  
 ## 100     100  136.       44.2</code></pre>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint 1
 </button>
@@ -1237,27 +1239,27 @@ Hint 1
 <li><em><code>rho</code></em> : correlation between intercept and slope</li>
 </ul>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint 2
 </button>
 <p><code>covariance = rho * tau_00 * tau_11</code></p>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint 3
 </button>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">matrix</span>(    tau_<span class="dv">00</span><span class="op">^</span><span class="dv">2</span>,            rho <span class="op">*</span><span class="st"> </span>tau_<span class="dv">00</span> <span class="op">*</span><span class="st"> </span>tau_<span class="dv">11</span>,</a>
 <a class="sourceLine" id="cb221-2" title="2">        rho <span class="op">*</span><span class="st"> </span>tau_<span class="dv">00</span> <span class="op">*</span><span class="st"> </span>tau_<span class="dv">11</span>,      tau_<span class="dv">11</span><span class="op">^</span><span class="dv">2</span>, ...)</a></code></pre></div>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint 4
 </button>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">as_tibble</span>(mx) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb222-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subj_id =</span> ...)</a></code></pre></div>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1292,7 +1294,7 @@ Solution
 ##  9       1       9 -410. 
 ## 10       1      10  102. 
 ## # … with 4,990 more rows</code></pre>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1318,13 +1320,13 @@ Solution
 ##  9       1       9 -80.0 -97.4 -0.763  -0.5 -410. 
 ## 10       1      10 -80.0 -85.2 -0.763   0.5  102. 
 ## # … with 4,990 more rows</code></pre>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint
 </button>
 <p><code>inner_join()</code></p>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1355,7 +1357,7 @@ Solution
 ## 10       1      10  776. -80.0 -85.2 -0.763   0.5  102. 
 ## # … with 4,990 more rows</code></pre>
 <p>Note: this is the full <strong>decomposition table</strong> for this model.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Hint
 </button>
@@ -1363,7 +1365,7 @@ Hint
   mutate(Y = ...) %&gt;%
   select(...)</code></pre>
 </div>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1375,7 +1377,7 @@ Solution
 <div id="fitting-the-model" class="section level3">
 <h3><span class="header-section-number">7.6.7</span> Fitting the model</h3>
 <p>Now that you have created simulated data, estimate the model using <code>lme4::lmer()</code>, and run <code>summary()</code>.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution
 </button>
@@ -1409,7 +1411,7 @@ Solution
 </div>
 <p>Now see if you can identify the data generating parameters in the output of <code>summary()</code>.</p>
 <p>First, try to find <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution: Fixed effects
 </button>
@@ -1439,7 +1441,7 @@ Solution: Fixed effects
 </table>
 </div>
 <p>Now try to find estimates of random effects parameters <span class="math inline">\(\tau_{00}\)</span>, <span class="math inline">\(\tau_{11}\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\omega_{00}\)</span>, and <span class="math inline">\(\sigma\)</span>.</p>
-<div class="solution">
+<div class="webex-solution">
 <button>
 Solution: Random effects parameters
 </button>
@@ -1657,6 +1659,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
 "google": false
 },

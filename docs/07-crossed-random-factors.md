@@ -44,10 +44,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  45|2020-05-05 |
-|          2|  42|2020-05-06 |
-|          3|  42|2020-05-12 |
-|          4|  54|2020-05-22 |
+|          1|  60|2020-05-12 |
+|          2|  35|2020-05-18 |
+|          3|  57|2020-05-19 |
+|          4|  51|2020-05-21 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
@@ -244,10 +244,10 @@ OK $B$ is between subjects (each subject gets only one level), and $C$ is within
 
 Answer these question about `abc_data`.
 
-* Are the levels of factor $A$ administered between or within stimuli? <select class='solveme' name='q_1' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select>
+* Are the levels of factor $A$ administered between or within stimuli? <select class='webex-solveme' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select>
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -270,10 +270,10 @@ abc_data %>%
 </div>
 
 
-* Are the levels of factor $B$ administered between or within stimuli? <select class='solveme' name='q_2' data-answer='["within"]'> <option></option> <option>between</option> <option>within</option></select>
+* Are the levels of factor $B$ administered between or within stimuli? <select class='webex-solveme' data-answer='["within"]'> <option></option> <option>between</option> <option>within</option></select>
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -300,10 +300,10 @@ abc_data %>%
 </div>
 
 
-* Are the levels of factor $C$ administered between or within stimuli? <select class='solveme' name='q_3' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select>
+* Are the levels of factor $C$ administered between or within stimuli? <select class='webex-solveme' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select>
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -371,7 +371,7 @@ This shows us that we have *one* observation per combination of $AC$, so we do n
 What random slopes do you need for the random factor of stimulus?
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 You have one within-stimulus factor, $B$, which has pseudoreplications.
@@ -525,7 +525,7 @@ Let's randomly generate our 50 items. Create a tibble called `item` like the one
 
 
 
-<div class='solution'><button>Click to reveal full table</button>
+<div class='webex-solution'><button>Click to reveal full table</button>
 
 
 
@@ -590,7 +590,7 @@ Let's randomly generate our 50 items. Create a tibble called `item` like the one
 
 
 
-<div class='solution'><button>Hint for making cond</button>
+<div class='webex-solution'><button>Hint for making cond</button>
 
 
 `rep()`
@@ -600,7 +600,7 @@ Let's randomly generate our 50 items. Create a tibble called `item` like the one
 
 
 
-<div class='solution'><button>Hint for making item random effects</button>
+<div class='webex-solution'><button>Hint for making item random effects</button>
 
 
 `rnorm()`
@@ -610,7 +610,7 @@ Let's randomly generate our 50 items. Create a tibble called `item` like the one
 
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -637,7 +637,7 @@ REMEMBER: do not run `library("MASS")` just to get this one function, because `M
 Your subjects table should look like this:
 
 
-<div class='solution'><button>Click to reveal full table</button>
+<div class='webex-solution'><button>Click to reveal full table</button>
 
 
 
@@ -754,7 +754,7 @@ Your subjects table should look like this:
 
 
 
-<div class='solution'><button>Hint 1</button>
+<div class='webex-solution'><button>Hint 1</button>
 
 
 recall that:
@@ -768,7 +768,7 @@ recall that:
 
 
 
-<div class='solution'><button>Hint 2</button>
+<div class='webex-solution'><button>Hint 2</button>
 
 
 `covariance = rho * tau_00 * tau_11`
@@ -778,7 +778,7 @@ recall that:
 
 
 
-<div class='solution'><button>Hint 3</button>
+<div class='webex-solution'><button>Hint 3</button>
 
 
 
@@ -792,7 +792,7 @@ matrix(    tau_00^2,            rho * tau_00 * tau_11,
 
 
 
-<div class='solution'><button>Hint 4</button>
+<div class='webex-solution'><button>Hint 4</button>
 
 
 
@@ -806,7 +806,7 @@ as_tibble(mx) %>%
 
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -855,7 +855,7 @@ Now apply this example to generate the table below, where `err` is the residual 
 ```
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -894,7 +894,7 @@ Merge the information in `subjects`, `items`, and `trials` to create the full da
 ```
 
 
-<div class='solution'><button>Hint</button>
+<div class='webex-solution'><button>Hint</button>
 
 
 `inner_join()`
@@ -904,7 +904,7 @@ Merge the information in `subjects`, `items`, and `trials` to create the full da
 
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -951,7 +951,7 @@ so that the resulting table (`dat_sim2`) looks like this:
 Note: this is the full **decomposition table** for this model.
 
 
-<div class='solution'><button>Hint</button>
+<div class='webex-solution'><button>Hint</button>
 
 
 ```
@@ -965,7 +965,7 @@ Note: this is the full **decomposition table** for this model.
 
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -984,7 +984,7 @@ dat_sim2 <- dat_sim %>%
 Now that you have created simulated data, estimate the model using `lme4::lmer()`, and run `summary()`.
 
 
-<div class='solution'><button>Solution</button>
+<div class='webex-solution'><button>Solution</button>
 
 
 
@@ -1032,7 +1032,7 @@ Now see if you can identify the data generating parameters in the output of `sum
 First, try to find \(\beta_0\) and \(\beta_1\).
 
 
-<div class='solution'><button>Solution: Fixed effects</button>
+<div class='webex-solution'><button>Solution: Fixed effects</button>
 
 
 
@@ -1048,7 +1048,7 @@ First, try to find \(\beta_0\) and \(\beta_1\).
 Now try to find estimates of random effects parameters \(\tau_{00}\), \(\tau_{11}\), \(\rho\), \(\omega_{00}\), and \(\sigma\).
 
 
-<div class='solution'><button>Solution: Random effects parameters</button>
+<div class='webex-solution'><button>Solution: Random effects parameters</button>
 
 
 

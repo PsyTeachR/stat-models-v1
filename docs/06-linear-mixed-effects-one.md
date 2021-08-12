@@ -113,7 +113,7 @@ t.test(mean_rt ~ cond, subj_means)
 ## 
 ## data:  mean_rt by cond
 ## t = -3.7985, df = 11.32, p-value = 0.002807
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group P and group T is not equal to 0
 ## 95 percent confidence interval:
 ##  -76.32580 -20.44563
 ## sample estimates:
@@ -449,7 +449,7 @@ anova(mod, mod_tow)
 Try to figure out how to test the interaction on your own.
 
 
-<div class='solution'><button>Click to see solution</button>
+<div class='webex-solution'><button>Click to see solution</button>
 
 
 
