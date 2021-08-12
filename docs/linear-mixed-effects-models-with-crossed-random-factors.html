@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
+  <meta name="description" content="Textbook on statistical models for social scientists." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Textbook on statistical models for social scientists." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R" />
+  
+  <meta name="twitter:description" content="Textbook on statistical models for social scientists." />
+  
+
+<meta name="author" content="Dale J. Barr" />
+
+
+<meta name="date" content="2021-05-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="linear-mixed-effects-models-with-one-random-factor.html"/>
+<link rel="next" href="generalized-linear-mixed-effects-models.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-cite-this-book"><i class="fa fa-check"></i>How to cite this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#found-an-issue"><i class="fa fa-check"></i>Found an issue?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#information-for-educators"><i class="fa fa-check"></i>Information for educators</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#goal-of-this-course"><i class="fa fa-check"></i><b>1.1</b> Goal of this course</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#flexibility"><i class="fa fa-check"></i><b>1.1.1</b> Flexibility</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#generalizability"><i class="fa fa-check"></i><b>1.2</b> Generalizability</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#reproduciblity-and-transparency"><i class="fa fa-check"></i><b>1.3</b> Reproduciblity and Transparency</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#a-simulation-based-approach"><i class="fa fa-check"></i><b>1.4</b> A simulation-based approach</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#what-you-will-learn"><i class="fa fa-check"></i><b>1.5</b> What you will learn</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html"><i class="fa fa-check"></i><b>2</b> Understanding correlation and regression through bivariate simulation</a><ul>
+<li class="chapter" data-level="2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> Correlation matrices</a></li>
+<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#bivariate-app"><i class="fa fa-check"></i><b>2.2.1</b> Bivariate app</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#relationship-between-correlation-and-regression"><i class="fa fa-check"></i><b>2.3</b> Relationship between correlation and regression</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>3</b> Multiple regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="multiple-regression.html"><a href="multiple-regression.html#an-example-how-to-get-a-good-grade-in-statistics"><i class="fa fa-check"></i><b>3.1</b> An example: How to get a good grade in statistics</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-regression.html"><a href="multiple-regression.html#data-import-and-visualization"><i class="fa fa-check"></i><b>3.1.1</b> Data import and visualization</a></li>
+<li class="chapter" data-level="3.1.2" data-path="multiple-regression.html"><a href="multiple-regression.html#estimation-and-interpretation"><i class="fa fa-check"></i><b>3.1.2</b> Estimation and interpretation</a></li>
+<li class="chapter" data-level="3.1.3" data-path="multiple-regression.html"><a href="multiple-regression.html#predictions-from-the-linear-model-using-predict"><i class="fa fa-check"></i><b>3.1.3</b> Predictions from the linear model using <code>predict()</code></a></li>
+<li class="chapter" data-level="3.1.4" data-path="multiple-regression.html"><a href="multiple-regression.html#visualizing-partial-effects"><i class="fa fa-check"></i><b>3.1.4</b> Visualizing partial effects</a></li>
+<li class="chapter" data-level="3.1.5" data-path="multiple-regression.html"><a href="multiple-regression.html#standardizing-coefficients"><i class="fa fa-check"></i><b>3.1.5</b> Standardizing coefficients</a></li>
+<li class="chapter" data-level="3.1.6" data-path="multiple-regression.html"><a href="multiple-regression.html#model-comparison"><i class="fa fa-check"></i><b>3.1.6</b> Model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dealing-with-categorical-predictors"><i class="fa fa-check"></i><b>3.2</b> Dealing with categorical predictors</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-regression.html"><a href="multiple-regression.html#dummy-coding"><i class="fa fa-check"></i><b>3.2.1</b> Dummy coding</a></li>
+<li class="chapter" data-level="3.2.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dummy-coding-when-k-2"><i class="fa fa-check"></i><b>3.2.2</b> Dummy coding when <span class="math inline">\(k &gt; 2\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="multiple-regression.html"><a href="multiple-regression.html#equivalence-between-multiple-regression-and-one-way-anova"><i class="fa fa-check"></i><b>3.3</b> Equivalence between multiple regression and one-way ANOVA</a></li>
+<li class="chapter" data-level="3.4" data-path="multiple-regression.html"><a href="multiple-regression.html#solution-to-partial-effect-plot"><i class="fa fa-check"></i><b>3.4</b> Solution to partial effect plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interactions.html"><a href="interactions.html"><i class="fa fa-check"></i><b>4</b> Interactions</a><ul>
+<li class="chapter" data-level="4.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="interactions.html"><a href="interactions.html#interactions-1"><i class="fa fa-check"></i><b>4.2</b> Interactions</a></li>
+<li class="chapter" data-level="4.3" data-path="interactions.html"><a href="interactions.html#cont-by-cat"><i class="fa fa-check"></i><b>4.3</b> Continuous-by-Categorical Interactions</a></li>
+<li class="chapter" data-level="4.4" data-path="interactions.html"><a href="interactions.html#categorical-by-categorical-interactions"><i class="fa fa-check"></i><b>4.4</b> Categorical-by-Categorical Interactions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="interactions.html"><a href="interactions.html#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><i class="fa fa-check"></i><b>4.4.1</b> Effects of cognitive therapy and drug therapy on mood</a></li>
+<li class="chapter" data-level="4.4.2" data-path="interactions.html"><a href="interactions.html#effects-in-a-factorial-design"><i class="fa fa-check"></i><b>4.4.2</b> Effects in a factorial design</a></li>
+<li class="chapter" data-level="4.4.3" data-path="interactions.html"><a href="interactions.html#higher-order-designs"><i class="fa fa-check"></i><b>4.4.3</b> Higher-order designs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="interactions.html"><a href="interactions.html#the-glm-for-a-factorial-design"><i class="fa fa-check"></i><b>4.5</b> The GLM for a factorial design</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="interactions.html"><a href="interactions.html#estimation-equations"><i class="fa fa-check"></i><b>4.5.1</b> Estimation equations</a></li>
+<li class="chapter" data-level="4.5.2" data-path="interactions.html"><a href="interactions.html#factorial-app"><i class="fa fa-check"></i><b>4.5.2</b> Factorial App</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="interactions.html"><a href="interactions.html#code-your-own-categorical-predictors-in-factorial-designs"><i class="fa fa-check"></i><b>4.6</b> Code your own categorical predictors in factorial designs</a></li>
+<li class="chapter" data-level="4.7" data-path="interactions.html"><a href="interactions.html#coding-schemes-for-categorical-variables"><i class="fa fa-check"></i><b>4.7</b> Coding schemes for categorical variables</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="interactions.html"><a href="interactions.html#simple-versus-main-effects"><i class="fa fa-check"></i><b>4.7.1</b> Simple versus main effects</a></li>
+<li class="chapter" data-level="4.7.2" data-path="interactions.html"><a href="interactions.html#the-key-coding-schemes"><i class="fa fa-check"></i><b>4.7.2</b> The key coding schemes</a></li>
+<li class="chapter" data-level="4.7.3" data-path="interactions.html"><a href="interactions.html#what-about-factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>4.7.3</b> What about factors with more than two levels?</a></li>
+<li class="chapter" data-level="4.7.4" data-path="interactions.html"><a href="interactions.html#example-three-level-factor"><i class="fa fa-check"></i><b>4.7.4</b> Example: Three-level factor</a></li>
+<li class="chapter" data-level="4.7.5" data-path="interactions.html"><a href="interactions.html#how-to-create-your-own-numeric-predictors"><i class="fa fa-check"></i><b>4.7.5</b> How to create your own numeric predictors</a></li>
+<li class="chapter" data-level="4.7.6" data-path="interactions.html"><a href="interactions.html#conclusion"><i class="fa fa-check"></i><b>4.7.6</b> Conclusion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
+<li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#no-pooling"><i class="fa fa-check"></i><b>5.3.2</b> No pooling</a></li>
+<li class="chapter" data-level="5.3.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#partial-pooling-using-mixed-effects-models"><i class="fa fa-check"></i><b>5.3.3</b> Partial pooling using mixed-effects models</a></li>
+<li class="chapter" data-level="5.3.4" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#the-variance-covariance-matrix"><i class="fa fa-check"></i><b>5.3.4</b> The variance-covariance matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#estimating-the-model-parameters"><i class="fa fa-check"></i><b>5.4</b> Estimating the model parameters</a></li>
+<li class="chapter" data-level="5.5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#interpreting-lmer-output-and-extracting-estimates"><i class="fa fa-check"></i><b>5.5</b> Interpreting <code>lmer()</code> output and extracting estimates</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#fixed-effects"><i class="fa fa-check"></i><b>5.5.1</b> Fixed effects</a></li>
+<li class="chapter" data-level="5.5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#random-effects"><i class="fa fa-check"></i><b>5.5.2</b> Random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
+<li class="chapter" data-level="6.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
+<li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#expressing-the-study-design-and-performing-tests-in-regression"><i class="fa fa-check"></i><b>6.4</b> Expressing the study design and performing tests in regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>6.4.1</b> Factors with more than two levels</a></li>
+<li class="chapter" data-level="6.4.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#multiparameter-tests"><i class="fa fa-check"></i><b>6.4.2</b> Multiparameter tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
+<li class="chapter" data-level="7.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
+<li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
+<li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
+<li class="chapter" data-level="7.5" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#specifying-random-effects"><i class="fa fa-check"></i><b>7.5</b> Specifying random effects</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#rules-for-choosing-random-effects-for-categorical-factors"><i class="fa fa-check"></i><b>7.5.1</b> Rules for choosing random effects for categorical factors</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#simulating-data-with-crossed-random-factors"><i class="fa fa-check"></i><b>7.6</b> Simulating data with crossed random factors</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#set-up-the-environment-and-define-the-parameters-for-the-dgp"><i class="fa fa-check"></i><b>7.6.1</b> Set up the environment and define the parameters for the DGP</a></li>
+<li class="chapter" data-level="7.6.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-stimuli"><i class="fa fa-check"></i><b>7.6.2</b> Generate a sample of stimuli</a></li>
+<li class="chapter" data-level="7.6.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-subjects"><i class="fa fa-check"></i><b>7.6.3</b> Generate a sample of subjects</a></li>
+<li class="chapter" data-level="7.6.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-encounters-trials"><i class="fa fa-check"></i><b>7.6.4</b> Generate a sample of encounters (trials)</a></li>
+<li class="chapter" data-level="7.6.5" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#join-subjects-items-and-trials"><i class="fa fa-check"></i><b>7.6.5</b> Join <code>subjects</code>, <code>items</code>, and <code>trials</code></a></li>
+<li class="chapter" data-level="7.6.6" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#create-the-response-variable"><i class="fa fa-check"></i><b>7.6.6</b> Create the response variable</a></li>
+<li class="chapter" data-level="7.6.7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#fitting-the-model"><i class="fa fa-check"></i><b>7.6.7</b> Fitting the model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
+<li class="chapter" data-level="8.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#generalized-linear-models"><i class="fa fa-check"></i><b>8.3</b> Generalized Linear Models</a></li>
+<li class="chapter" data-level="8.4" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#logistic-regression"><i class="fa fa-check"></i><b>8.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#terminology"><i class="fa fa-check"></i><b>8.4.1</b> Terminology</a></li>
+<li class="chapter" data-level="8.4.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#properties-of-log-odds"><i class="fa fa-check"></i><b>8.4.2</b> Properties of log odds</a></li>
+<li class="chapter" data-level="8.4.3" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#link-and-variance-functions"><i class="fa fa-check"></i><b>8.4.3</b> Link and variance functions</a></li>
+<li class="chapter" data-level="8.4.4" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#estimating-logistic-regression-models-in-r"><i class="fa fa-check"></i><b>8.4.4</b> Estimating logistic regression models in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modeling-ordinal-data.html"><a href="modeling-ordinal-data.html"><i class="fa fa-check"></i><b>9</b> Modeling Ordinal Data</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="symbols.html"><a href="symbols.html"><i class="fa fa-check"></i><b>A</b> Symbols</a><ul>
+<li class="chapter" data-level="A.1" data-path="symbols.html"><a href="symbols.html#general-notes"><i class="fa fa-check"></i><b>A.1</b> General notes</a></li>
+<li class="chapter" data-level="A.2" data-path="symbols.html"><a href="symbols.html#table-of-symbols"><i class="fa fa-check"></i><b>A.2</b> Table of symbols</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>B</b> Bibliography</a></li>
+<li class="divider"></li>
+<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
+    target="blank"><img alt="Creative Commons License" 
+    style="border-width:0" 
+    src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a></li>
+<li><a href="https://psyteachr.github.io/books" target="blank">PsyTeachR Books</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Learning Statistical Models Through Simulation in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-mixed-effects-models-with-crossed-random-factors" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Linear mixed-effects models with crossed random factors</h1>
+<div id="learning-objectives" class="section level2">
+<h2><span class="header-section-number">7.1</span> Learning objectives</h2>
+<ul>
+<li>analyze data from a design with crossed random factors of subjects and stimuli</li>
+<li>appropriately specify random effects to enable proper generalization</li>
+<li>simulate data for a design with crossed random factors</li>
+</ul>
+</div>
+<div id="web-app" class="section level2">
+<h2><span class="header-section-number">7.2</span> Web app</h2>
+<ul>
+<li><a href="https://shiny.psy.gla.ac.uk/Dale/crossed">Demo of crossed random effects</a></li>
+</ul>
+</div>
+<div id="generalizing-over-encounters-between-subjects-and-stimuli" class="section level2">
+<h2><span class="header-section-number">7.3</span> Generalizing over encounters between subjects and stimuli</h2>
+<p>A common goal of experiments in psychology is to test claims about behavior that arises in response to certain types of stimuli (or sometimes, the neural underpinning of that behavior). The stimuli might be, for instance, words, images, sounds, videos, or stories. Some examples of claims you might want to test are:</p>
+<ul>
+<li>when listening to words in a second language, do bilinguals experience interference from words in their native language?</li>
+<li>do people rate the attractiveness of faces differently when they are in a good mood than when they are in a bad mood?</li>
+<li>does viewing soothing images help reduce stress relative to more neutral images?</li>
+<li>when reading a scenario ambiguously describing a target individual, are people more likely to make assumptions about what social group the target belongs to after being subliminally primed?</li>
+</ul>
+<p>One thing to note about all these claims is that the are of the type, “what happens to our measurements when an individual of type X encounters a stimulus of type Y”, where X is drawn from a target population of subjects and Y is drawn from a target population of stimuli. In other words, we are attempt to make generalizable claims about a particular class of <strong>events</strong> involving <strong>encounters</strong> between sampling units of subjects and stimuli <span class="citation">(Barr <a href="#ref-Barr_2017">2017</a>)</span>. But just like we can’t sample all possible subjects from the target population of subjects, we also cannot sample all possible stimuli from the target population of stimuli. Thus, when drawing inferences, we need to account for the uncertainty introduced in our estimates by <em>both</em> sampling processes <span class="citation">(Coleman <a href="#ref-Coleman_1964">1964</a>; Clark <a href="#ref-Clark_1973">1973</a>; Judd, Westfall, and Kenny <a href="#ref-Judd_Westfall_Kenny_2012">2012</a>; Yarkoni <a href="#ref-yarkoni_2019">2019</a>)</span>. Linear mixed-effects models make it particularly easy to do this by allowing more than one random factor in our model formula <span class="citation">(Baayen, Davidson, and Bates <a href="#ref-Baayen_Davidson_Bates_2008">2008</a>)</span>.</p>
+<p>Here is a simple example of a study where you are interested in testing whether people rate pictures of cats, dogs, or sunsets as more soothing images to look at. You want to say something general about the category of cats, dogs, and sunsets and not something about the specific pictures that you happened to sample. Let’s say you randomly select four images from each of the three categories from Google Images (you would absolutely need to have more to be able to say something generalizable, but we chose a small number to keep the example simple). So your table of stimuli might look like the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">stimulus_id</th>
+<th align="left">category</th>
+<th align="left">file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">cat</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">cat</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">cat</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">cat</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">dog</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">dog</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">dog</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">dog</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">sunset</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">sunset</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="left">sunset</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="left">sunset</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+</tbody>
+</table>
+<p>Then you sample a set of four participants to perform the soothing ratings. Again, four would be too few for a real study, but we’re keeping it small just for expository purposes.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">subject_id</th>
+<th align="right">age</th>
+<th align="left">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">45</td>
+<td align="left">2020-05-05</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">42</td>
+<td align="left">2020-05-06</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">42</td>
+<td align="left">2020-05-12</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">54</td>
+<td align="left">2020-05-22</td>
+</tr>
+</tbody>
+</table>
+<p>Now, because each subject has given a “soothingness” rating for each picture, you’d have a full dataset consisting of all of the levels of <code>subject_id</code> crossed with all of the levels of <code>stimulus_id</code>. This is what we mean when we talk about “crossed random factors.” You can create the table containing all these combinations with the <code>crossing()</code> function from <code>tidyr</code> (which is loaded when you load in <code>tidyverse</code>).</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1"><span class="kw">crossing</span>(subjects <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(subject_id),</a>
+<a class="sourceLine" id="cb198-2" title="2">         stimuli <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>category)) </a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">subject_id</th>
+<th align="right">stimulus_id</th>
+<th align="left">file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+</tbody>
+</table>
+<p>Because you have 4 subjects responding to 12 stimuli, the resulting table will have 48 rows.</p>
+</div>
+<div id="lme4-syntax-for-crossed-random-factors" class="section level2">
+<h2><span class="header-section-number">7.4</span> lme4 syntax for crossed random factors</h2>
+<p>How should we analyze such data? Recall from the last chapter that the lme4 formula syntax for a model with by-subject random intercepts and slopes for predictor <code>x</code> would be given by <code>y ~ x + (1 + x | subject_id)</code> where the term in brackets with the vertical bar <code>|</code> provides the random effects specification. The variable to the right of the bar, <code>subject_id</code>, specifies the variable that identifies the levels of the random factor. The formula to the left of the bar within the brackets, <code>1 + x</code>, specifies the random effects associated with this factor, which in this case is a random intercept and random slope for <code>x</code>. The best way to think about this bracketed part of the formula <code>(1 + x | subject_id)</code> is <strong>as an instruction to <code>lme4::lmer()</code> about how to build a covariance matrix capturing the variance introduced by the random factor of subjects.</strong> By now you should realize that this instruction would result in the estimation of a two-dimensional covariance matrix, with one dimension for intercept variance and one for slope variance.</p>
+<p>But we are not limited to the estimation of random effects for subjects; we can also specify the estimation of random effects for stimuli by simply adding another term to the formula. For example,</p>
+<p><code>y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)</code></p>
+<p>regresses <code>y</code> on <code>x</code> with by-subject random intercepts and slopes and by-stimulus random intercepts. In this way, the fitted model will capture two sources of uncertainty about our estimates—the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating <strong>two independent covariance matrices</strong>, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar <code>|</code> symbol. For instance, if we have another predictor <code>w</code>, we might have:</p>
+<p><code>y ~ x + (x | subject_id) + (x + w | stimulus_id)</code></p>
+<p>which would estimate the same 2x2 matrix for subjects, but the covariance matrix for stimuli would now be a 3x3 matrix (intercepts, slope of x, and slope of w). Although this enables great flexibility, as the random effects structure becomes more complex, the estimation process becomes more difficult and less likely to converge upon a result.</p>
+</div>
+<div id="specifying-random-effects" class="section level2">
+<h2><span class="header-section-number">7.5</span> Specifying random effects</h2>
+<p>The choice of random effects structure is not a new problem that appeared with linear mixed-effects models. In traditional approaches using t-test and ANOVA, you choose the random effects structure implicitly when you choose what procedure to use. As discussed in the last chapter, if you choose a paired samples t-test over an independent samples t-test, that is analogous to choosing to fit <code>lme4::lmer(y ~ x + (1 | subject))</code> over <code>lm(y ~ x)</code>. Likewise, you can run a mixed model ANOVA as either <code>aov(y ~ x + Error(subject_id))</code>, which is equivalent to a random intercepts model, or <code>aov(y ~ x + Error(x / subject_id))</code>, which is equivalent to a random slopes model. The tradition in psychology when performing confirmatory analyses is to use the <em>maximal random effects structure justified by the design of your study</em>. So, if you have one-factor data with pseudoreplications, you would use <code>aov(y ~ x + Error(x / subject_id))</code> rather than <code>aov(y ~ x + Error(subject_id))</code>. Analogously, if you were to analyze the same data with pseudoreplications using a linear mixed effects model, you should use <code>lme4::lmer(y ~ x + (1 + x | subject_id))</code> rather than <code>lme4::lmer(y ~ x + (1 | subject_id))</code>. In other words, you should account for all sources of non-independence introduced by repeated sampling from the same subjects or stimuli. This approach is known as the <strong>maximal random effects</strong> approach or the <strong>design-driven approach</strong> to specifying random effects structure <span class="citation">(Barr et al. <a href="#ref-Barr_et_al_2013">2013</a>)</span>. Failing to account for dependencies introduced by the design is likely to lead to standard errors that are too small, which in turn, lead to p-values that are smaller than they should be, and thus, higher false positive (Type I error) rates. In some cases, it can lead to lower power, and thus a higher false negative (Type II error) rate. It is thus of critical importance to pay close attention to the random effects structure when performing analyses.</p>
+<p>Linear mixed-effects models almost inevitably include random intercepts for any random factor included in the design. So if your random factors are subjects and stimuli identified by <code>subject_id</code> and <code>stimulus_id</code> respectively, then at the very least, your model syntax will include <code>(1 | subject_id) + (1 | stimulus_id)</code>. But you will have various predictors in the model, so key question becomes: what predictors should I allow to vary over what sampling units? For instance, if the fixed-effects part of your model is a 2x2 factorial design with factors A and B, <code>y ~ a * b + ...</code>, you could have a large variety of random effects structures, including (but not limited to):</p>
+<ol style="list-style-type: decimal">
+<li>random intercepts only: <code>y ~ a * b + (1 | subject_id) + (1 | stimulus_id)</code></li>
+<li>by-subjects random intercepts for a and by-stimulus random intercepts: <code>y ~ a * b + (a | subject_id) + (1 | stimulus_id)</code></li>
+<li>by-subjects random intercepts and slopes for a and b and the ab interaction, with by-stimulus random intercepts: <code>y ~ a * b + (a * b | subject_id) + (1 | stimulus_id)</code></li>
+<li>by-subjects random intercepts and slopes for a and b and the ab interaction, by-stimulus random intercepts and slopes for a and b and the ab interaction, <code>y ~ a * b + (a * b | subject_id) + (a * b | stimulus_id)</code>.</li>
+</ol>
+<p>It is important to be clear about one thing.</p>
+<div class="info">
+<p>The “maximal random effects structure justified by the design” is not the same as the “maximum possible random effects structure”; that is, it does not entail automatically putting in all random slopes for all random factors for all predictors in your model. You have to follow the guidelines for random effects in the next section to decide whether inclusion of a particular random slope is, in fact, “justified by the design.”</p>
+</div>
+<p>Some authors suggest a “data-driven” alternative to design-driven random effects, suggesting that researchers should only include random slopes justified by the design if they are further justified by the data <span class="citation">(Matuschek et al. <a href="#ref-Matuschek_et_al_2017">2017</a>)</span>. For example, you might use a null-hypothesis test to determine whether including a by-subject random slope for <code>x</code> significantly improves the model fit, and only include that effect if it does. Although this could potentially improve power for the test of theoretical interest when random slopes are very small, it also exposes you to additional unknown risk of false positives, so it is questionable whether this the right approach in a confirmatory context. Thus, we do not recommend a data-driven approach.</p>
+<div id="rules-for-choosing-random-effects-for-categorical-factors" class="section level3">
+<h3><span class="header-section-number">7.5.1</span> Rules for choosing random effects for categorical factors</h3>
+<p>The random effects structure for a linear mixed-effects model—in other words, your assumptions about what effects vary over what sampling units—is absolutely critical for ensuring that your parameters reflect the uncertainty introduced by sampling <span class="citation">(Barr et al. <a href="#ref-Barr_et_al_2013">2013</a>)</span>. First off, note that we are focused on predictors representing <strong>design variables</strong> that are of theoretical interest and on which you will perform inferential tests. If you have predictors that represent <strong>control variables</strong>, over which you do not intend to perform statistical tests, it is unlikely that random slopes are needed.</p>
+<p>The following rules are derived from <span class="citation">Barr et al. (<a href="#ref-Barr_et_al_2013">2013</a>)</span> and <span class="citation">Barr (<a href="#ref-Barr_2013">2013</a>)</span>. Consult these papers if you wish to find out more about these guidelines. Keep in mind that you can only use a mixed effects model if you have repeated measures data, either because of pseudoreplications and/or the presence of within-subject (or within-stimulus) factors. With crossed random factors, you inevitably have pseudoreplications—multiple observations per subject due to multiple stimuli, multiple observations per stimulus due to multiple subjects. The key to determining random effects structure is figuring out which factors are within-subjects or within-stimuli, and where any pseudoreplications are located in the design. You apply the rules once for subjects to determine the form of the <code>(1 + ... | subject_id)</code> part of the formula, and once for stimuli to determine the form of the <code>(1 + ... | stimulus_id)</code> part of the formula. Where you see the word “unit” or “sampling unit” below, substitute “subject” or “stimuli” as needed.</p>
+<p>Here are the rules:</p>
+<ol style="list-style-type: decimal">
+<li>If there are repeated measures on sampling units, you need a random intercept for that random factor: <code>(1 | unit_id)</code>;</li>
+<li>If a factor <code>x</code> is between-unit, you do not need a random slope for that factor;</li>
+<li>Determine the highest order interaction of within-subject factors for the unit under consideration. If you have pseudoreplications within each cell defined by those combinations (i.e., multiple observations per cell), then for that unit you will need a slope for that interaction as well as for all lower order effects. If there are no pseudoreplications, then you do not need any random slopes.</li>
+</ol>
+<p>The first two rules are straightforward, but the third requires some explanation. Let’s first ask: how do we know whether some factor is between or within unit?</p>
+<p>A simple way to determine whether a factor is between or within is to use the <code>dplyr::count()</code> function, which gives frequency counts, and which is loaded when you load tidyverse. Let’s say you are interested in whether factor <span class="math inline">\(A\)</span> is within or between subjects, for the imaginary 2x2x2 factorial data <code>abc_data</code> below where <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> name the factors of your design.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb199-2" title="2"></a>
+<a class="sourceLine" id="cb199-3" title="3"><span class="co">## run this code to create the table &quot;abc_data&quot;</span></a>
+<a class="sourceLine" id="cb199-4" title="4">abc_subj &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">subject_id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb199-5" title="5">                   <span class="dt">B =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;B1&quot;</span>, <span class="st">&quot;B2&quot;</span>), <span class="dt">times =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb199-6" title="6"></a>
+<a class="sourceLine" id="cb199-7" title="7">abc_item  &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">stimulus_id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb199-8" title="8">                    <span class="dt">A =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;A1&quot;</span>, <span class="st">&quot;A2&quot;</span>), <span class="dt">each =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb199-9" title="9">                    <span class="dt">C =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;C1&quot;</span>, <span class="st">&quot;C2&quot;</span>), <span class="dt">times =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb199-10" title="10"></a>
+<a class="sourceLine" id="cb199-11" title="11">abc_data &lt;-<span class="st"> </span><span class="kw">crossing</span>(abc_subj, abc_item) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb199-12" title="12"><span class="st">  </span><span class="kw">select</span>(subject_id, stimulus_id, <span class="kw">everything</span>())</a></code></pre></div>
+<p>To see whether <span class="math inline">\(A\)</span> is within or between subjects, use:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb200-2" title="2"><span class="st">  </span><span class="kw">count</span>(subject_id, A)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   subject_id A         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 A1        2
+## 2          1 A2        2
+## 3          2 A1        2
+## 4          2 A2        2
+## 5          3 A1        2
+## 6          3 A2        2
+## 7          4 A1        2
+## 8          4 A2        2</code></pre>
+<p>In the resulting table, you can see that each subject gets both levels of <span class="math inline">\(A\)</span>, making it a within-subject factor. What about <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>?</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb202-2" title="2"><span class="st">  </span><span class="kw">count</span>(subject_id, B)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   subject_id B         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 B1        4
+## 2          2 B2        4
+## 3          3 B1        4
+## 4          4 B2        4</code></pre>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-2" title="2"><span class="st">  </span><span class="kw">count</span>(subject_id, C)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   subject_id C         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 C1        2
+## 2          1 C2        2
+## 3          2 C1        2
+## 4          2 C2        2
+## 5          3 C1        2
+## 6          3 C2        2
+## 7          4 C1        2
+## 8          4 C2        2</code></pre>
+<p>OK <span class="math inline">\(B\)</span> is between subjects (each subject gets only one level), and <span class="math inline">\(C\)</span> is within (each subject gets all levels).</p>
+<div class="try">
+<p><em>Exercise</em></p>
+<p>Answer these question about <code>abc_data</code>.</p>
+<ul>
+<li>Are the levels of factor <span class="math inline">\(A\)</span> administered between or within stimuli? <select class='solveme' name='q_1' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
+</ul>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb206-2" title="2"><span class="st">  </span><span class="kw">count</span>(stimulus_id, A)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   stimulus_id A         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 A1        4
+## 2           2 A1        4
+## 3           3 A2        4
+## 4           4 A2        4</code></pre>
+</div>
+<ul>
+<li>Are the levels of factor <span class="math inline">\(B\)</span> administered between or within stimuli? <select class='solveme' name='q_2' data-answer='["within"]'> <option></option> <option>between</option> <option>within</option></select></li>
+</ul>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb208-2" title="2"><span class="st">  </span><span class="kw">count</span>(stimulus_id, B)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   stimulus_id B         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 B1        2
+## 2           1 B2        2
+## 3           2 B1        2
+## 4           2 B2        2
+## 5           3 B1        2
+## 6           3 B2        2
+## 7           4 B1        2
+## 8           4 B2        2</code></pre>
+</div>
+<ul>
+<li>Are the levels of factor <span class="math inline">\(C\)</span> administered between or within stimuli? <select class='solveme' name='q_3' data-answer='["between"]'> <option></option> <option>between</option> <option>within</option></select></li>
+</ul>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb210-2" title="2"><span class="st">  </span><span class="kw">count</span>(stimulus_id, C)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   stimulus_id C         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 C1        4
+## 2           2 C2        4
+## 3           3 C1        4
+## 4           4 C2        4</code></pre>
+</div>
+</div>
+<p>OK, we’ve identified which factors are within and between subject, and which factors are within and between stimulus.</p>
+<p>The second rule tells us that if a factor is between-unit, you do not need a random slope for that factor. Indeed, it is not possible to estimate a random slope for a between unit factor. If you think about the fact that random slopes capture variation in the effect over units, then it makes sense that you have to measure your response variable across all levels of that factor to be able to estimate that variation. For instance, if you have a two-level factor called treatment group (experimental, control), you cannot estimate the effect of “treatment” for a particular subject unless the subject has experienced both levels of the factor (i.e., it would have to be within-subject).</p>
+<p>How do we now apply the third rule above to determine what random slopes are needed for our within-unit factors?</p>
+<p>Consider that <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> were within-subjects, and <span class="math inline">\(B\)</span> was between. So the highest-order interaction of within-subject factors is <span class="math inline">\(AC\)</span>. We will need random slopes for the <span class="math inline">\(AC\)</span> interaction as well as for the main effects <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> if we have pseudoreplications for each subject in each combination of <span class="math inline">\(AC\)</span>. How can we find out?</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb212-2" title="2"><span class="st">  </span><span class="kw">count</span>(subject_id, A, C)</a></code></pre></div>
+<pre><code>## # A tibble: 16 x 4
+##    subject_id A     C         n
+##         &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+##  1          1 A1    C1        1
+##  2          1 A1    C2        1
+##  3          1 A2    C1        1
+##  4          1 A2    C2        1
+##  5          2 A1    C1        1
+##  6          2 A1    C2        1
+##  7          2 A2    C1        1
+##  8          2 A2    C2        1
+##  9          3 A1    C1        1
+## 10          3 A1    C2        1
+## 11          3 A2    C1        1
+## 12          3 A2    C2        1
+## 13          4 A1    C1        1
+## 14          4 A1    C2        1
+## 15          4 A2    C1        1
+## 16          4 A2    C2        1</code></pre>
+<p>This shows us that we have <em>one</em> observation per combination of <span class="math inline">\(AC\)</span>, so we do not need random slopes for <span class="math inline">\(AC\)</span>, nor for <span class="math inline">\(A\)</span> or <span class="math inline">\(C\)</span>. The random effects part of the formula for subjects would just be <code>(1 | subject_id)</code>.</p>
+<div class="try">
+<p>What random slopes do you need for the random factor of stimulus?</p>
+<div class="solution">
+<button>
+Solution
+</button>
+<p>You have one within-stimulus factor, <span class="math inline">\(B\)</span>, which has pseudoreplications.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1">abc_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-2" title="2"><span class="st">  </span><span class="kw">count</span>(stimulus_id, B)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   stimulus_id B         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 B1        2
+## 2           1 B2        2
+## 3           2 B1        2
+## 4           2 B2        2
+## 5           3 B1        2
+## 6           3 B2        2
+## 7           4 B1        2
+## 8           4 B2        2</code></pre>
+<p>Therefore the formula you need for stimuli is <code>(B | stimulus_id)</code>, making the full <code>lme4</code> formula:</p>
+<p><code>y ~ A * B * C + (1 | subject_id) + (B | stimulus_id)</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="simulating-data-with-crossed-random-factors" class="section level2">
+<h2><span class="header-section-number">7.6</span> Simulating data with crossed random factors</h2>
+<p>For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items. Let’s imagine that the experiment involves lexical decisions to a set of words (e.g., is “PINT” a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb). We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words). You can play around with the web app (or <a href="https://shiny.psy.gla.ac.uk/Dale/crossed" target="_blank">click here to open it in a new window</a>), which allows you to manipulate the data-generating parameters and see their effect on the data.</p>
+<p>By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. <span class="citation">DeBruine and Barr (<a href="#ref-Debruine_Barr_2020">2020</a>)</span> provides a more detailed, step-by-step walkthrough of the exercise below.</p>
+<p>Here is the DGP for response time <span class="math inline">\(Y_{si}\)</span> for subject <span class="math inline">\(s\)</span> and item <span class="math inline">\(i\)</span>:</p>
+<p><em>Level 1:</em></p>
+<p><span class="math display">\[\begin{equation}
+Y_{si} = \beta_{0s} + \beta_{1} X_{i} + e_{si}
+\end{equation}\]</span></p>
+<p><em>Level 2:</em></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{0s} = \gamma_{00} + S_{0s} + I_{0i}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{1} = \gamma_{10} + S_{1s}
+\end{equation}\]</span></p>
+<p><em>Variance Components:</em></p>
+<p><span class="math display">\[\begin{equation}
+\langle S_{0s}, S_{1s} \rangle \sim N\left(\langle 0, 0 \rangle, \mathbf{\Sigma}\right) 
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{\Sigma} = \left(\begin{array}{cc}{\tau_{00}}^2 &amp; \rho\tau_{00}\tau_{11} \\
+         \rho\tau_{00}\tau_{11} &amp; {\tau_{11}}^2 \\
+         \end{array}\right) 
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+I_{0s} \sim N\left(0, {\omega_{00}}^2\right) 
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+e_{si} \sim N\left(0, \sigma^2\right)
+\end{equation}\]</span></p>
+<p>In the above equation, <span class="math inline">\(X_i\)</span> is a numerical predictor coding which condition the item <span class="math inline">\(i\)</span> is in; e.g., -.5 for noun, .5 for verb.</p>
+<p>We could just reduce levels 1 and 2 to</p>
+<p><span class="math display">\[Y_{si} = \beta_0 + S_{0s} + I_{0i} + (\beta_1 + S_{1s})X_{i} + e_{si}\]</span></p>
+<p>where:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Parameter</th>
+<th align="left">Symbol</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(Y_{si}\)</span></td>
+<td align="left"><code>Y</code></td>
+<td align="left">RT for subject <span class="math inline">\(s\)</span> responding to item <span class="math inline">\(i\)</span>;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\beta_0\)</span></td>
+<td align="left"><code>b0</code></td>
+<td align="left">grand mean;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(S_{0s}\)</span></td>
+<td align="left"><code>S_0s</code></td>
+<td align="left">random intercept for subject <span class="math inline">\(s\)</span> <span class="math inline">\(s\)</span>;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(I_{0i}\)</span></td>
+<td align="left"><code>I_0i</code></td>
+<td align="left">random intercept for item <span class="math inline">\(i\)</span> <span class="math inline">\(i\)</span>;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\beta_1\)</span></td>
+<td align="left"><code>b1</code></td>
+<td align="left">fixed effect of word type (slope);</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(S_{1s}\)</span></td>
+<td align="left"><code>S_1s</code></td>
+<td align="left">by-subject random slope;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(X_{i}\)</span></td>
+<td align="left"><code>cond</code></td>
+<td align="left">deviation-coded predictor variable for word type;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\tau_{00}\)</span></td>
+<td align="left"><code>tau_00</code></td>
+<td align="left">by-subject random intercept standard deviation</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\tau_{11}\)</span></td>
+<td align="left"><code>tau_11</code></td>
+<td align="left">by-subject random slope standard deviation</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\rho\)</span></td>
+<td align="left"><code>rho</code></td>
+<td align="left">correlation between random intercept and slope</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\omega_{00}\)</span></td>
+<td align="left"><code>omega_00</code></td>
+<td align="left">by-item random intercept standard deviation</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(e_{si}\)</span></td>
+<td align="left"><code>err</code></td>
+<td align="left">residual for subject <span class="math inline">\(s\)</span> item <span class="math inline">\(i\)</span> error</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sigma\)</span></td>
+<td align="left"><code>sig</code></td>
+<td align="left">residual error standard deviation</td>
+</tr>
+</tbody>
+</table>
+<div id="set-up-the-environment-and-define-the-parameters-for-the-dgp" class="section level3">
+<h3><span class="header-section-number">7.6.1</span> Set up the environment and define the parameters for the DGP</h3>
+<p>If you want to get the same results as everyone else for this exercise, then we all should seed the random number generator with the same value. While we’re at it, let’s load in the packages we need.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" title="1"><span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)</a>
+<a class="sourceLine" id="cb216-2" title="2"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb216-3" title="3"></a>
+<a class="sourceLine" id="cb216-4" title="4"><span class="kw">set.seed</span>(<span class="dv">11709</span>)  </a></code></pre></div>
+<p>Now let’s define the parameters for the DGP (data generating process).</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1">nsubj &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># number of subjects</span></a>
+<a class="sourceLine" id="cb217-2" title="2">nitem &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># must be an even number</span></a>
+<a class="sourceLine" id="cb217-3" title="3"></a>
+<a class="sourceLine" id="cb217-4" title="4">b0 &lt;-<span class="st"> </span><span class="dv">800</span> <span class="co"># grand mean</span></a>
+<a class="sourceLine" id="cb217-5" title="5">b1 &lt;-<span class="st"> </span><span class="dv">80</span> <span class="co"># 80 ms difference</span></a>
+<a class="sourceLine" id="cb217-6" title="6">effc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">5</span>, <span class="fl">.5</span>) <span class="co"># deviation codes</span></a>
+<a class="sourceLine" id="cb217-7" title="7"></a>
+<a class="sourceLine" id="cb217-8" title="8">omega_<span class="dv">00</span> &lt;-<span class="st"> </span><span class="dv">80</span> <span class="co"># by-item random intercept sd (omega_00)</span></a>
+<a class="sourceLine" id="cb217-9" title="9"></a>
+<a class="sourceLine" id="cb217-10" title="10"><span class="co">## for the by-subjects variance-covariance matrix</span></a>
+<a class="sourceLine" id="cb217-11" title="11">tau_<span class="dv">00</span> &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># by-subject random intercept sd</span></a>
+<a class="sourceLine" id="cb217-12" title="12">tau_<span class="dv">11</span> &lt;-<span class="st"> </span><span class="dv">40</span> <span class="co"># by-subject random slope sd</span></a>
+<a class="sourceLine" id="cb217-13" title="13">rho &lt;-<span class="st"> </span><span class="fl">.2</span> <span class="co"># correlation between intercept and slope</span></a>
+<a class="sourceLine" id="cb217-14" title="14"></a>
+<a class="sourceLine" id="cb217-15" title="15">sig &lt;-<span class="st"> </span><span class="dv">200</span> <span class="co"># residual (standard deviation)</span></a></code></pre></div>
+<p>You’ll create three tables:</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>subjects</code></td>
+<td align="left">table of subject data including <code>subj_id</code> and subject random effects</td>
+</tr>
+<tr class="even">
+<td align="left"><code>items</code></td>
+<td align="left">table of stimulus data including <code>item_id</code> and item random effect</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>trials</code></td>
+<td align="left">table of trials enumerating encounters between subjects/stimuli</td>
+</tr>
+</tbody>
+</table>
+<p>Then you will merge together the information in the three tables, and calculate the response variable according to the model formula above.</p>
+</div>
+<div id="generate-a-sample-of-stimuli" class="section level3">
+<h3><span class="header-section-number">7.6.2</span> Generate a sample of stimuli</h3>
+<p>Let’s randomly generate our 50 items. Create a tibble called <code>item</code> like the one below, where <code>iri</code> are the by-item random intercepts (drawn from a normal distribution with variance <span class="math inline">\(\omega_{00}^2\)</span> = 6400). Half of the words are of type NOUN (<code>cond = -.5</code>) and half of type VERB (<code>cond = .5</code>).</p>
+<div class="solution">
+<button>
+Click to reveal full table
+</button>
+<pre><code>## # A tibble: 50 x 3
+##    item_id  cond    I_0i
+##      &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1  -0.5   14.9 
+##  2       2   0.5  -86.3 
+##  3       3  -0.5  -12.8 
+##  4       4   0.5  -13.9 
+##  5       5  -0.5   55.6 
+##  6       6   0.5  -45.9 
+##  7       7  -0.5  -42.0 
+##  8       8   0.5  -87.6 
+##  9       9  -0.5  -97.4 
+## 10      10   0.5  -85.2 
+## 11      11  -0.5  135.  
+## 12      12   0.5   83.2 
+## 13      13  -0.5  -44.7 
+## 14      14   0.5    8.59
+## 15      15  -0.5 -156.  
+## 16      16   0.5  -57.6 
+## 17      17  -0.5  -38.7 
+## 18      18   0.5   39.6 
+## 19      19  -0.5  105.  
+## 20      20   0.5   30.3 
+## 21      21  -0.5 -115.  
+## 22      22   0.5   -3.40
+## 23      23  -0.5 -218.  
+## 24      24   0.5   53.0 
+## 25      25  -0.5  -86.9 
+## 26      26   0.5  -65.4 
+## 27      27  -0.5  172.  
+## 28      28   0.5 -152.  
+## 29      29  -0.5   25.1 
+## 30      30   0.5 -156.  
+## 31      31  -0.5   47.7 
+## 32      32   0.5  -46.3 
+## 33      33  -0.5   48.0 
+## 34      34   0.5   62.8 
+## 35      35  -0.5  -75.4 
+## 36      36   0.5  -35.9 
+## 37      37  -0.5  -48.5 
+## 38      38   0.5   29.3 
+## 39      39  -0.5  -55.5 
+## 40      40   0.5   69.5 
+## 41      41  -0.5  196.  
+## 42      42   0.5   77.6 
+## 43      43  -0.5  -45.0 
+## 44      44   0.5  204.  
+## 45      45  -0.5   32.1 
+## 46      46   0.5  -63.9 
+## 47      47  -0.5  145.  
+## 48      48   0.5   66.2 
+## 49      49  -0.5  -23.9 
+## 50      50   0.5   97.3</code></pre>
+</div>
+<div class="solution">
+<button>
+Hint for making cond
+</button>
+<p><code>rep()</code></p>
+</div>
+<div class="solution">
+<button>
+Hint for making item random effects
+</button>
+<p><code>rnorm()</code></p>
+</div>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1">items &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">item_id =</span> <span class="dv">1</span><span class="op">:</span>nitem,</a>
+<a class="sourceLine" id="cb219-2" title="2">                <span class="dt">cond =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="op">-</span>.<span class="dv">5</span>, <span class="fl">.5</span>), <span class="dt">times =</span> nitem <span class="op">/</span><span class="st"> </span><span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb219-3" title="3">                <span class="dt">I_0i =</span> <span class="kw">rnorm</span>(nitem, <span class="dv">0</span>, <span class="dt">sd =</span> omega_<span class="dv">00</span>))</a></code></pre></div>
+</div>
+</div>
+<div id="generate-a-sample-of-subjects" class="section level3">
+<h3><span class="header-section-number">7.6.3</span> Generate a sample of subjects</h3>
+<p>To generate the by-subject random effects, you will need to generate data from a <em>bivariate normal distribution</em>. To do this, we will use the function <code>MASS::mvrnorm</code>.</p>
+<div class="warning">
+<p>REMEMBER: do not run <code>library("MASS")</code> just to get this one function, because <code>MASS</code> has a function <code>select()</code> that will overwrite the tidyverse version. Since all we want from MASS is the <code>mvrnorm()</code> function, we can just access it directly by the <code>pkgname::function</code> syntax, i.e., <code>MASS::mvrnorm()</code>.</p>
+</div>
+<p>Your subjects table should look like this:</p>
+<div class="solution">
+<button>
+Click to reveal full table
+</button>
+<pre><code>## # A tibble: 100 x 3
+##     subj_id      S_0s     S_1s
+##       &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##   1       1  -80.0      -0.763
+##   2       2   44.6      54.5  
+##   3       3    8.74    -20.4  
+##   4       4  -38.6     -23.8  
+##   5       5  -83.3      29.2  
+##   6       6  -70.9     -13.8  
+##   7       7  -21.4      46.0  
+##   8       8    2.33      8.39 
+##   9       9   62.3     -58.2  
+##  10      10  238.        7.72 
+##  11      11  -92.5       2.14 
+##  12      12   58.5     -65.8  
+##  13      13 -204.      -38.8  
+##  14      14  -91.6       5.46 
+##  15      15   51.1     -38.8  
+##  16      16  142.      -12.9  
+##  17      17   46.0       6.60 
+##  18      18  -56.7     -54.8  
+##  19      19  -10.1      62.1  
+##  20      20 -226.      -19.3  
+##  21      21 -158.      -18.5  
+##  22      22  102.        8.99 
+##  23      23  -12.7     -70.6  
+##  24      24  135.       -9.50 
+##  25      25   62.0     -52.5  
+##  26      26    0.0653   32.8  
+##  27      27 -117.       70.8  
+##  28      28 -232.        3.43 
+##  29      29   70.9      50.8  
+##  30      30 -123.       22.8  
+##  31      31  268.       30.0  
+##  32      32  -18.7     -25.0  
+##  33      33   50.8     -31.0  
+##  34      34  -43.1     -28.9  
+##  35      35  -10.1      28.3  
+##  36      36   65.6      18.2  
+##  37      37 -123.       -4.63 
+##  38      38  -94.8      10.3  
+##  39      39   77.7     -22.5  
+##  40      40  -59.1      52.4  
+##  41      41  -91.2    -103.   
+##  42      42  -66.6      -2.14 
+##  43      43   -4.40      0.305
+##  44      44   69.7      10.2  
+##  45      45  -77.5     -10.4  
+##  46      46  -17.8     -48.2  
+##  47      47 -103.       47.0  
+##  48      48   22.8     -39.3  
+##  49      49  -31.1     -34.9  
+##  50      50  -26.4      40.0  
+##  51      51   47.8      26.0  
+##  52      52  -93.2     -42.7  
+##  53      53   28.9      51.4  
+##  54      54  -19.3      11.5  
+##  55      55   53.6      21.5  
+##  56      56  -27.4     -21.4  
+##  57      57  -67.7     -32.1  
+##  58      58   59.2      13.4  
+##  59      59  -53.1       2.44 
+##  60      60  104.        7.41 
+##  61      61  -20.7     -78.7  
+##  62      62   55.9     -15.7  
+##  63      63  114.      -29.1  
+##  64      64  -57.7     -34.7  
+##  65      65  -38.7      -9.14 
+##  66      66 -106.      -58.0  
+##  67      67   99.1     -37.6  
+##  68      68  -56.9      21.0  
+##  69      69  -50.4      -0.407
+##  70      70   27.5      -2.69 
+##  71      71  139.      -32.2  
+##  72      72   44.9       8.53 
+##  73      73  -14.8      71.7  
+##  74      74   33.7     -52.6  
+##  75      75    2.03     27.8  
+##  76      76 -134.       37.0  
+##  77      77   24.4      20.7  
+##  78      78  -60.6     -36.7  
+##  79      79   31.1      16.9  
+##  80      80  -34.9       9.68 
+##  81      81  206.       17.3  
+##  82      82   -7.19    -25.4  
+##  83      83  182.       46.0  
+##  84      84   55.7      21.7  
+##  85      85 -149.      -44.0  
+##  86      86 -193.      -73.2  
+##  87      87  167.       13.9  
+##  88      88  160.        3.87 
+##  89      89   84.1      82.1  
+##  90      90   97.2      -6.55 
+##  91      91 -205.     -125.   
+##  92      92  -75.1       6.76 
+##  93      93  -95.3     -46.5  
+##  94      94  106.       38.6  
+##  95      95  -42.4      11.3  
+##  96      96   74.0     -21.1  
+##  97      97 -245.      -25.3  
+##  98      98 -113.       -1.88 
+##  99      99   68.8      30.6  
+## 100     100  136.       44.2</code></pre>
+</div>
+<div class="solution">
+<button>
+Hint 1
+</button>
+<p>recall that:</p>
+<ul>
+<li><em><code>tau_00</code></em>: by-subject random intercept standard deviation</li>
+<li><em><code>tau_11</code></em>: by-subject random slope standard deviation</li>
+<li><em><code>rho</code></em> : correlation between intercept and slope</li>
+</ul>
+</div>
+<div class="solution">
+<button>
+Hint 2
+</button>
+<p><code>covariance = rho * tau_00 * tau_11</code></p>
+</div>
+<div class="solution">
+<button>
+Hint 3
+</button>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">matrix</span>(    tau_<span class="dv">00</span><span class="op">^</span><span class="dv">2</span>,            rho <span class="op">*</span><span class="st"> </span>tau_<span class="dv">00</span> <span class="op">*</span><span class="st"> </span>tau_<span class="dv">11</span>,</a>
+<a class="sourceLine" id="cb221-2" title="2">        rho <span class="op">*</span><span class="st"> </span>tau_<span class="dv">00</span> <span class="op">*</span><span class="st"> </span>tau_<span class="dv">11</span>,      tau_<span class="dv">11</span><span class="op">^</span><span class="dv">2</span>, ...)</a></code></pre></div>
+</div>
+<div class="solution">
+<button>
+Hint 4
+</button>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">as_tibble</span>(mx) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb222-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subj_id =</span> ...)</a></code></pre></div>
+</div>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1">cov &lt;-<span class="st"> </span>rho <span class="op">*</span><span class="st"> </span>tau_<span class="dv">00</span> <span class="op">*</span><span class="st"> </span>tau_<span class="dv">11</span></a>
+<a class="sourceLine" id="cb223-2" title="2"></a>
+<a class="sourceLine" id="cb223-3" title="3">mx &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(tau_<span class="dv">00</span><span class="op">^</span><span class="dv">2</span>, cov,</a>
+<a class="sourceLine" id="cb223-4" title="4">               cov,      tau_<span class="dv">11</span><span class="op">^</span><span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb223-5" title="5">             <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb223-6" title="6"></a>
+<a class="sourceLine" id="cb223-7" title="7">by_subj_rfx &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(nsubj, <span class="dt">mu =</span> <span class="kw">c</span>(<span class="dt">S_0s =</span> <span class="dv">0</span>, <span class="dt">S_1s =</span> <span class="dv">0</span>), <span class="dt">Sigma =</span> mx)</a>
+<a class="sourceLine" id="cb223-8" title="8"></a>
+<a class="sourceLine" id="cb223-9" title="9">subjects &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(by_subj_rfx) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb223-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subj_id =</span> <span class="kw">row_number</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb223-11" title="11"><span class="st">  </span><span class="kw">select</span>(subj_id, <span class="kw">everything</span>())</a></code></pre></div>
+</div>
+</div>
+<div id="generate-a-sample-of-encounters-trials" class="section level3">
+<h3><span class="header-section-number">7.6.4</span> Generate a sample of encounters (trials)</h3>
+<p>Each trial is an <em>encounter</em> between a particular subject and stimulus. In this experiment, each subject will see each stimulus. Generate a table <code>trials</code> that lists the encounters in the experiments. Note: each participant encounters each stimulus item once. Use the <code>crossing()</code> function to create all possible encounters.</p>
+<p>Now apply this example to generate the table below, where <code>err</code> is the residual term, drawn from <span class="math inline">\(N \sim \left(0, \sigma^2\right)\)</span>, where <span class="math inline">\(\sigma\)</span> is <code>err_sd</code>.</p>
+<pre><code>## # A tibble: 5,000 x 3
+##    subj_id item_id    err
+##      &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;
+##  1       1       1  382. 
+##  2       1       2  283. 
+##  3       1       3   30.4
+##  4       1       4 -282. 
+##  5       1       5 -239. 
+##  6       1       6   73.4
+##  7       1       7  -98.4
+##  8       1       8 -189. 
+##  9       1       9 -410. 
+## 10       1      10  102. 
+## # … with 4,990 more rows</code></pre>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" title="1">trials &lt;-<span class="st"> </span><span class="kw">crossing</span>(<span class="dt">subj_id =</span> subjects <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(subj_id),</a>
+<a class="sourceLine" id="cb225-2" title="2">                   <span class="dt">item_id =</span> items <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(item_id)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb225-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sig))</a></code></pre></div>
+</div>
+</div>
+<div id="join-subjects-items-and-trials" class="section level3">
+<h3><span class="header-section-number">7.6.5</span> Join <code>subjects</code>, <code>items</code>, and <code>trials</code></h3>
+<p>Merge the information in <code>subjects</code>, <code>items</code>, and <code>trials</code> to create the full dataset <code>dat_sim</code>, which looks like this:</p>
+<pre><code>## # A tibble: 5,000 x 7
+##    subj_id item_id  S_0s  I_0i   S_1s  cond    err
+##      &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1       1       1 -80.0  14.9 -0.763  -0.5  382. 
+##  2       1       2 -80.0 -86.3 -0.763   0.5  283. 
+##  3       1       3 -80.0 -12.8 -0.763  -0.5   30.4
+##  4       1       4 -80.0 -13.9 -0.763   0.5 -282. 
+##  5       1       5 -80.0  55.6 -0.763  -0.5 -239. 
+##  6       1       6 -80.0 -45.9 -0.763   0.5   73.4
+##  7       1       7 -80.0 -42.0 -0.763  -0.5  -98.4
+##  8       1       8 -80.0 -87.6 -0.763   0.5 -189. 
+##  9       1       9 -80.0 -97.4 -0.763  -0.5 -410. 
+## 10       1      10 -80.0 -85.2 -0.763   0.5  102. 
+## # … with 4,990 more rows</code></pre>
+<div class="solution">
+<button>
+Hint
+</button>
+<p><code>inner_join()</code></p>
+</div>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" title="1">dat_sim &lt;-<span class="st"> </span>subjects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb227-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(trials, <span class="st">&quot;subj_id&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb227-3" title="3"><span class="st">  </span><span class="kw">inner_join</span>(items, <span class="st">&quot;item_id&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb227-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(subj_id, item_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb227-5" title="5"><span class="st">  </span><span class="kw">select</span>(subj_id, item_id, S_0s, I_0i, S_1s, cond, err)</a></code></pre></div>
+</div>
+</div>
+<div id="create-the-response-variable" class="section level3">
+<h3><span class="header-section-number">7.6.6</span> Create the response variable</h3>
+<p>Add the response variable <code>Y</code> to dat according to the model formula:</p>
+<p><span class="math display">\[Y_{si} = \beta_0 + S_{0s} + I_{0i} + (\beta_1 + S_{1s})X_{i} + e_{si}\]</span></p>
+<p>so that the resulting table (<code>dat_sim2</code>) looks like this:</p>
+<pre><code>## # A tibble: 5,000 x 8
+##    subj_id item_id     Y  S_0s  I_0i   S_1s  cond    err
+##      &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1       1       1 1078. -80.0  14.9 -0.763  -0.5  382. 
+##  2       1       2  957. -80.0 -86.3 -0.763   0.5  283. 
+##  3       1       3  698. -80.0 -12.8 -0.763  -0.5   30.4
+##  4       1       4  464. -80.0 -13.9 -0.763   0.5 -282. 
+##  5       1       5  497. -80.0  55.6 -0.763  -0.5 -239. 
+##  6       1       6  787. -80.0 -45.9 -0.763   0.5   73.4
+##  7       1       7  540. -80.0 -42.0 -0.763  -0.5  -98.4
+##  8       1       8  483. -80.0 -87.6 -0.763   0.5 -189. 
+##  9       1       9  173. -80.0 -97.4 -0.763  -0.5 -410. 
+## 10       1      10  776. -80.0 -85.2 -0.763   0.5  102. 
+## # … with 4,990 more rows</code></pre>
+<p>Note: this is the full <strong>decomposition table</strong> for this model.</p>
+<div class="solution">
+<button>
+Hint
+</button>
+<pre><code>... %&gt;% 
+  mutate(Y = ...) %&gt;%
+  select(...)</code></pre>
+</div>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1">dat_sim2 &lt;-<span class="st"> </span>dat_sim <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb230-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Y =</span> b0 <span class="op">+</span><span class="st"> </span>S_0s <span class="op">+</span><span class="st"> </span>I_0i <span class="op">+</span><span class="st"> </span>(S_1s <span class="op">+</span><span class="st"> </span>b1) <span class="op">*</span><span class="st"> </span>cond <span class="op">+</span><span class="st"> </span>err) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb230-3" title="3"><span class="st">  </span><span class="kw">select</span>(subj_id, item_id, Y, <span class="kw">everything</span>())</a></code></pre></div>
+</div>
+</div>
+<div id="fitting-the-model" class="section level3">
+<h3><span class="header-section-number">7.6.7</span> Fitting the model</h3>
+<p>Now that you have created simulated data, estimate the model using <code>lme4::lmer()</code>, and run <code>summary()</code>.</p>
+<div class="solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" title="1">mod_sim &lt;-<span class="st"> </span><span class="kw">lmer</span>(Y <span class="op">~</span><span class="st"> </span>cond <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>cond <span class="op">|</span><span class="st"> </span>subj_id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>item_id),</a>
+<a class="sourceLine" id="cb231-2" title="2">                dat_sim2, <span class="dt">REML =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb231-3" title="3"></a>
+<a class="sourceLine" id="cb231-4" title="4"><span class="kw">summary</span>(mod_sim, <span class="dt">corr =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+## Formula: Y ~ cond + (1 + cond | subj_id) + (1 | item_id)
+##    Data: dat_sim2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  67639.4  67685.0 -33812.7  67625.4     4993 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.6357 -0.6599 -0.0251  0.6767  3.7685 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  subj_id  (Intercept)  9464.8   97.29       
+##           cond          597.7   24.45   0.68
+##  item_id  (Intercept)  8087.0   89.93       
+##  Residual             40305.0  200.76       
+## Number of obs: 5000, groups:  subj_id, 100; item_id, 50
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   793.29      16.26  48.782
+## cond           77.65      26.18   2.967</code></pre>
+</div>
+<p>Now see if you can identify the data generating parameters in the output of <code>summary()</code>.</p>
+<p>First, try to find <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="solution">
+<button>
+Solution: Fixed effects
+</button>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\beta}_0\)</span></td>
+<td align="left"><code>b0</code></td>
+<td align="right">800</td>
+<td align="right">793.293</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\beta}_1\)</span></td>
+<td align="left"><code>b1</code></td>
+<td align="right">80</td>
+<td align="right">77.652</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Now try to find estimates of random effects parameters <span class="math inline">\(\tau_{00}\)</span>, <span class="math inline">\(\tau_{11}\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\omega_{00}\)</span>, and <span class="math inline">\(\sigma\)</span>.</p>
+<div class="solution">
+<button>
+Solution: Random effects parameters
+</button>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\tau}_{00}\)</span></td>
+<td align="left"><code>tau_00</code></td>
+<td align="right">100.0</td>
+<td align="right">97.287</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\tau}_{11}\)</span></td>
+<td align="left"><code>tau_11</code></td>
+<td align="right">40.0</td>
+<td align="right">24.448</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\rho}\)</span></td>
+<td align="left"><code>rho</code></td>
+<td align="right">0.2</td>
+<td align="right">0.675</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\omega}_{00}\)</span></td>
+<td align="left"><code>omega_00</code></td>
+<td align="right">80.0</td>
+<td align="right">89.928</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\sigma}\)</span></td>
+<td align="left"><code>sig</code></td>
+<td align="right">200.0</td>
+<td align="right">200.761</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+</div>
+<h3><span class="header-section-number">B</span> Bibliography</h3>
+<div id="refs" class="references">
+<div id="ref-Baayen_Davidson_Bates_2008">
+<p>Baayen, R Harald, Douglas J Davidson, and Douglas M Bates. 2008. “Mixed-Effects Modeling with Crossed Random Effects for Subjects and Items.” <em>Journal of Memory and Language</em> 59 (4): 390–412.</p>
+</div>
+<div id="ref-Barr_2013">
+<p>Barr, Dale J. 2013. “Random Effects Structure for Testing Interactions in Linear Mixed-Effects Models.” <em>Frontiers in Psychology</em> 4: 328.</p>
+</div>
+<div id="ref-Barr_2017">
+<p>Barr, Dale J. 2017. “Generalizing over encounters: Statistical and theoretical considerations.” In <em>Oxford Handbook of Psycholinguistics</em>. Oxford University Press. <a href="https://psyarxiv.com/mcrzu/">https://psyarxiv.com/mcrzu/</a>.</p>
+</div>
+<div id="ref-Barr_et_al_2013">
+<p>Barr, Dale J, Roger Levy, Christoph Scheepers, and Harry J Tily. 2013. “Random Effects Structure for Confirmatory Hypothesis Testing: Keep It Maximal.” <em>Journal of Memory and Language</em> 68 (3): 255–78.</p>
+</div>
+<div id="ref-Clark_1973">
+<p>Clark, Herbert H. 1973. “The Language-as-Fixed-Effect Fallacy: A Critique of Language Statistics in Psychological Research.” <em>Journal of Verbal Learning and Verbal Behavior</em> 12 (4): 335–59.</p>
+</div>
+<div id="ref-Coleman_1964">
+<p>Coleman, Edmund B. 1964. “Generalizing to a Language Population.” <em>Psychological Reports</em> 14 (1): 219–26.</p>
+</div>
+<div id="ref-Debruine_Barr_2020">
+<p>DeBruine, Lisa, and Dale J Barr. 2020. “Understanding Mixed Effects Models Through Data Simulation.” <em>Advances in Methods and Practice in Psychological Science</em>. <a href="https://psyarxiv.com/xp5cy/">https://psyarxiv.com/xp5cy/</a>.</p>
+</div>
+<div id="ref-Judd_Westfall_Kenny_2012">
+<p>Judd, Charles M, Jacob Westfall, and David A Kenny. 2012. “Treating Stimuli as a Random Factor in Social Psychology: A New and Comprehensive Solution to a Pervasive but Largely Ignored Problem.” <em>Journal of Personality and Social Psychology</em> 103: 54–69.</p>
+</div>
+<div id="ref-Matuschek_et_al_2017">
+<p>Matuschek, Hannes, Reinhold Kliegl, Shravan Vasishth, Harald Baayen, and Douglas Bates. 2017. “Balancing Type I error and power in linear mixed models.” <em>Journal of Memory and Language</em> 94: 305–15.</p>
+</div>
+<div id="ref-yarkoni_2019">
+<p>Yarkoni, Tal. 2019. “The Generalizability Crisis.” <a href="https://doi.org/10.31234/osf.io/jqw35">https://doi.org/10.31234/osf.io/jqw35</a>.</p>
+</div>
+</div>
+<div class="psyteachr_footer">
+  
+</div>
+<script>
+
+/* update total correct if #total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("correct").length + " of " +
+      document.getElementsByClassName("solveme").length + " correct";
+  }
+}
+
+/* solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "");
+  }
+  
+  if (my_answer !== "" & real_answers.includes(my_answer)) {
+    cl.add("correct");
+  } else {
+    cl.remove("correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol){
+    var tol = JSON.parse(this.dataset.tol);  
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("correct");
+    } else {
+      cl.remove("correct");
+    }  
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("correct");
+    }  
+  }
+  
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+  
+  /* set up solveme inputs */
+  var solveme = document.getElementsByClassName("solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off"); 
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+    
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+    
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+  
+  update_total_correct();
+}
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-mixed-effects-models-with-one-random-factor.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-mixed-effects-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": {},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

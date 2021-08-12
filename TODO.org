@@ -1,0 +1,4 @@
+** TODO change starwars example [[file:02-bivariate-simulation.Rmd][in chapter 2]]
+- we need some survey data or something with lots of variables
+
+
