@@ -1,13 +1,19 @@
 --- 
 title: "Learning Statistical Models Through Simulation in R"
 author: "Dale J. Barr"
-date: "2021-08-12"
+date: "2021-08-25"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "Textbook on statistical models for social scientists."
+url: "https://psyteachr.github.io/stat-models-v1"
+github-repo: "psyteachr/stat-models-v1"
+cover-image: "images/logo.png"
+apple-touch-icon: "images/apple-touch-icon.png"
+apple-touch-icon-size: 180
+favicon: "images/favicon.ico"
 ---
 
 
@@ -31,7 +37,7 @@ Unlike other textbooks you may have encountered, this is an **interactive textbo
 
 ## How to cite this book {-}
 
-Barr, Dale J. (2021). *Learning statistical models through simulation in R: An interactive textbook*. Version 0.9.4. Retrieved from <https://psyteachr.github.io/book/ug3-stats>.
+Barr, Dale J. (2021). *Learning statistical models through simulation in R: An interactive textbook*. Version 1.0.0. Retrieved from <https://psyteachr.github.io/book/ug3-stats>.
 
 ## Found an issue? {-}
 

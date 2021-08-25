@@ -57,22 +57,925 @@ urban <- tibble(
 urban
 ```
 
-```
-## # A tibble: 100 x 7
-##    subj_id group    b0    b1 dist_level     err simple_rt
-##      <int> <chr> <dbl> <dbl>      <int>   <dbl>     <dbl>
-##  1       1 urban   450     2         59  -36.1       532.
-##  2       2 urban   450     2         45  128.        668.
-##  3       3 urban   450     2         55   23.5       584.
-##  4       4 urban   450     2          8    1.04      467.
-##  5       5 urban   450     2         47   48.7       593.
-##  6       6 urban   450     2         96   88.2       730.
-##  7       7 urban   450     2         62  110.        684.
-##  8       8 urban   450     2          8  -91.6       374.
-##  9       9 urban   450     2         15 -109.        371.
-## 10      10 urban   450     2         70   20.7       611.
-## # … with 90 more rows
-```
+<div class="kable-table">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> subj_id </th>
+   <th style="text-align:left;"> group </th>
+   <th style="text-align:right;"> b0 </th>
+   <th style="text-align:right;"> b1 </th>
+   <th style="text-align:right;"> dist_level </th>
+   <th style="text-align:right;"> err </th>
+   <th style="text-align:right;"> simple_rt </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 59 </td>
+   <td style="text-align:right;"> -36.1171499 </td>
+   <td style="text-align:right;"> 531.8829 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:right;"> 127.9482007 </td>
+   <td style="text-align:right;"> 667.9482 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> 23.5219347 </td>
+   <td style="text-align:right;"> 583.5219 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 1.0395438 </td>
+   <td style="text-align:right;"> 467.0395 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> 48.6612837 </td>
+   <td style="text-align:right;"> 592.6613 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 96 </td>
+   <td style="text-align:right;"> 88.2022195 </td>
+   <td style="text-align:right;"> 730.2022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 62 </td>
+   <td style="text-align:right;"> 109.9593042 </td>
+   <td style="text-align:right;"> 683.9593 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> -91.6285708 </td>
+   <td style="text-align:right;"> 374.3714 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> -108.6857876 </td>
+   <td style="text-align:right;"> 371.3142 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 70 </td>
+   <td style="text-align:right;"> 20.6835648 </td>
+   <td style="text-align:right;"> 610.6836 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 90 </td>
+   <td style="text-align:right;"> -145.3262629 </td>
+   <td style="text-align:right;"> 484.6737 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 80.1143977 </td>
+   <td style="text-align:right;"> 560.1144 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:right;"> 60.3225798 </td>
+   <td style="text-align:right;"> 694.3226 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 0.5953968 </td>
+   <td style="text-align:right;"> 476.5954 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> -145.0846795 </td>
+   <td style="text-align:right;"> 372.9153 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 75.5819356 </td>
+   <td style="text-align:right;"> 681.5819 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> -29.5911003 </td>
+   <td style="text-align:right;"> 484.4089 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 25.6540591 </td>
+   <td style="text-align:right;"> 635.6541 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 73 </td>
+   <td style="text-align:right;"> -11.3382581 </td>
+   <td style="text-align:right;"> 584.6617 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 151.8626794 </td>
+   <td style="text-align:right;"> 633.8627 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 107.6458090 </td>
+   <td style="text-align:right;"> 579.6458 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;"> 93.1527392 </td>
+   <td style="text-align:right;"> 695.1527 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 48 </td>
+   <td style="text-align:right;"> -10.0902888 </td>
+   <td style="text-align:right;"> 535.9097 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> -59.0585189 </td>
+   <td style="text-align:right;"> 532.9415 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 13.6554216 </td>
+   <td style="text-align:right;"> 467.6554 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:right;"> -11.1037621 </td>
+   <td style="text-align:right;"> 528.8962 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 27 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 70 </td>
+   <td style="text-align:right;"> 15.3503704 </td>
+   <td style="text-align:right;"> 605.3504 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 28 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 98 </td>
+   <td style="text-align:right;"> -11.6787052 </td>
+   <td style="text-align:right;"> 634.3213 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> -13.4532125 </td>
+   <td style="text-align:right;"> 496.5468 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> -22.6436282 </td>
+   <td style="text-align:right;"> 537.3564 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> -95.0374348 </td>
+   <td style="text-align:right;"> 390.9626 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:right;"> -124.4919149 </td>
+   <td style="text-align:right;"> 523.5081 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> -102.0980114 </td>
+   <td style="text-align:right;"> 389.9020 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> -73.3108188 </td>
+   <td style="text-align:right;"> 414.6892 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 35 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 62 </td>
+   <td style="text-align:right;"> 88.0201385 </td>
+   <td style="text-align:right;"> 662.0201 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 165.4715313 </td>
+   <td style="text-align:right;"> 625.4715 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> -60.6613416 </td>
+   <td style="text-align:right;"> 553.3387 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 38 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 86 </td>
+   <td style="text-align:right;"> -105.2708413 </td>
+   <td style="text-align:right;"> 516.7292 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> -39.0915631 </td>
+   <td style="text-align:right;"> 420.9084 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> -41.2048339 </td>
+   <td style="text-align:right;"> 522.7952 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 63.5170377 </td>
+   <td style="text-align:right;"> 565.5170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 42 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:right;"> -127.9356003 </td>
+   <td style="text-align:right;"> 506.0644 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 43 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 77 </td>
+   <td style="text-align:right;"> 46.5670839 </td>
+   <td style="text-align:right;"> 650.5671 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 44 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 87 </td>
+   <td style="text-align:right;"> 89.5913891 </td>
+   <td style="text-align:right;"> 713.5914 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> -43.7111397 </td>
+   <td style="text-align:right;"> 592.2889 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 46 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> -91.3874033 </td>
+   <td style="text-align:right;"> 368.6126 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 28 </td>
+   <td style="text-align:right;"> 20.4393535 </td>
+   <td style="text-align:right;"> 526.4394 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 48 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> -252.8619222 </td>
+   <td style="text-align:right;"> 239.1381 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 98 </td>
+   <td style="text-align:right;"> -1.1615882 </td>
+   <td style="text-align:right;"> 644.8384 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 82.1719478 </td>
+   <td style="text-align:right;"> 570.1719 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 79 </td>
+   <td style="text-align:right;"> -37.5463568 </td>
+   <td style="text-align:right;"> 570.4536 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 56 </td>
+   <td style="text-align:right;"> 60.9979975 </td>
+   <td style="text-align:right;"> 622.9980 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 53 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 84 </td>
+   <td style="text-align:right;"> -51.7897694 </td>
+   <td style="text-align:right;"> 566.2102 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 54 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:right;"> -21.2849109 </td>
+   <td style="text-align:right;"> 612.7151 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> -21.5017106 </td>
+   <td style="text-align:right;"> 522.4983 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 56 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:right;"> 82.5352851 </td>
+   <td style="text-align:right;"> 684.5353 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 44.2950790 </td>
+   <td style="text-align:right;"> 500.2951 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 58 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 27.2331569 </td>
+   <td style="text-align:right;"> 477.2332 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 59 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> 4.2097548 </td>
+   <td style="text-align:right;"> 640.2098 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 119.3901936 </td>
+   <td style="text-align:right;"> 719.3902 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:right;"> 30.1800294 </td>
+   <td style="text-align:right;"> 570.1800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 62 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 106.3541558 </td>
+   <td style="text-align:right;"> 692.3542 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 63 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> -43.9330452 </td>
+   <td style="text-align:right;"> 516.0670 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 64 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:right;"> -35.0009121 </td>
+   <td style="text-align:right;"> 480.9991 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> -11.7200626 </td>
+   <td style="text-align:right;"> 474.2799 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 66 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -7.3052117 </td>
+   <td style="text-align:right;"> 442.6948 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 67 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> -26.8972828 </td>
+   <td style="text-align:right;"> 579.1027 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:right;"> -116.8440256 </td>
+   <td style="text-align:right;"> 531.1560 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 69 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:right;"> -17.1874643 </td>
+   <td style="text-align:right;"> 596.8125 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 70 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 46.1406926 </td>
+   <td style="text-align:right;"> 498.1407 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 70.9849138 </td>
+   <td style="text-align:right;"> 580.9849 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 72 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:right;"> 28.5809985 </td>
+   <td style="text-align:right;"> 568.5810 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 73 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 0.5711981 </td>
+   <td style="text-align:right;"> 592.5712 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 74 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 84 </td>
+   <td style="text-align:right;"> 75.4981178 </td>
+   <td style="text-align:right;"> 693.4981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> -16.8766739 </td>
+   <td style="text-align:right;"> 467.1233 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> 25.6090895 </td>
+   <td style="text-align:right;"> 585.6091 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 77 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:right;"> 89.7890875 </td>
+   <td style="text-align:right;"> 613.7891 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> -88.1712556 </td>
+   <td style="text-align:right;"> 377.8287 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 79 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 92.6252879 </td>
+   <td style="text-align:right;"> 576.6253 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:right;"> 15.5458987 </td>
+   <td style="text-align:right;"> 649.5459 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 81 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 83.0053444 </td>
+   <td style="text-align:right;"> 561.0053 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 82 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 39.0927256 </td>
+   <td style="text-align:right;"> 533.0927 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 83 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> -18.9585577 </td>
+   <td style="text-align:right;"> 453.0414 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 84 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> -3.5425015 </td>
+   <td style="text-align:right;"> 506.4575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 85 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:right;"> -14.0266039 </td>
+   <td style="text-align:right;"> 617.9734 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 86 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 59 </td>
+   <td style="text-align:right;"> 70.7221689 </td>
+   <td style="text-align:right;"> 638.7222 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 87 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 89 </td>
+   <td style="text-align:right;"> 64.2733291 </td>
+   <td style="text-align:right;"> 692.2733 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 88 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 7.6957905 </td>
+   <td style="text-align:right;"> 577.6958 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 89 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> -82.2268526 </td>
+   <td style="text-align:right;"> 373.7731 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 90 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 148.4996665 </td>
+   <td style="text-align:right;"> 712.4997 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 91 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 72 </td>
+   <td style="text-align:right;"> 31.0778929 </td>
+   <td style="text-align:right;"> 625.0779 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 63.6022454 </td>
+   <td style="text-align:right;"> 585.6022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> -122.0763408 </td>
+   <td style="text-align:right;"> 527.9237 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 94 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> -1.6184372 </td>
+   <td style="text-align:right;"> 482.3816 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 95 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 58 </td>
+   <td style="text-align:right;"> 107.5425846 </td>
+   <td style="text-align:right;"> 673.5426 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 96 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 77 </td>
+   <td style="text-align:right;"> 21.2434173 </td>
+   <td style="text-align:right;"> 625.2434 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 97 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 67 </td>
+   <td style="text-align:right;"> -45.2520982 </td>
+   <td style="text-align:right;"> 538.7479 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 98 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 35 </td>
+   <td style="text-align:right;"> -34.3616389 </td>
+   <td style="text-align:right;"> 485.6384 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 54 </td>
+   <td style="text-align:right;"> 187.8401452 </td>
+   <td style="text-align:right;"> 745.8401 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:left;"> urban </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> -103.9046585 </td>
+   <td style="text-align:right;"> 460.0953 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 Let's plot the data we created, along with the line of best fit.
 
@@ -592,24 +1495,159 @@ An important mathematical fact is that the individual main and interaction effec
 
 The best way to understand these effects is to see them in a decomposition table. Study the decomposition table belo wfor 12 simulated observations from a 2x2 design with factors $A$ and $B$. The indexes $i$, $j$, and $k$ are provided just to help you keep track of what observation you are dealing with. Remember that $i$ indexes the level of factor $A$, $j$ indexes the level of factor $B$, and $k$ indexes the observation number within the cell $AB_{ij}$.
 
+<div class="kable-table">
 
-```
-## # A tibble: 12 x 9
-##        Y     i     j     k    mu   A_i   B_j AB_ij   err
-##    <dbl> <int> <int> <int> <dbl> <dbl> <dbl> <dbl> <int>
-##  1    11     1     1     1    10     4    -2    -1     0
-##  2    14     1     1     2    10     4    -2    -1     3
-##  3     8     1     1     3    10     4    -2    -1    -3
-##  4    17     1     2     1    10     4     2     1     0
-##  5    15     1     2     2    10     4     2     1    -2
-##  6    19     1     2     3    10     4     2     1     2
-##  7     8     2     1     1    10    -4    -2     1     3
-##  8     4     2     1     2    10    -4    -2     1    -1
-##  9     3     2     1     3    10    -4    -2     1    -2
-## 10    10     2     2     1    10    -4     2    -1     3
-## 11     7     2     2     2    10    -4     2    -1     0
-## 12     4     2     2     3    10    -4     2    -1    -3
-```
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Y </th>
+   <th style="text-align:right;"> i </th>
+   <th style="text-align:right;"> j </th>
+   <th style="text-align:right;"> k </th>
+   <th style="text-align:right;"> mu </th>
+   <th style="text-align:right;"> A_i </th>
+   <th style="text-align:right;"> B_j </th>
+   <th style="text-align:right;"> AB_ij </th>
+   <th style="text-align:right;"> err </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> -2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> -2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> -2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> -4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -3 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 
 ### Estimation equations
@@ -653,27 +1691,118 @@ First, let's define our little data set, `dat`.
   dat
 ```
 
-```
-## # A tibble: 16 x 4
-##    subject priming structure    RT
-##    <fct>   <chr>   <chr>     <dbl>
-##  1 1       yes     noun       792.
-##  2 2       yes     noun       771.
-##  3 3       yes     noun       760.
-##  4 4       yes     noun       811.
-##  5 5       yes     verb       787.
-##  6 6       yes     verb       820.
-##  7 7       yes     verb       768.
-##  8 8       yes     verb       806.
-##  9 9       no      noun       791.
-## 10 10      no      noun       824.
-## 11 11      no      noun       817.
-## 12 12      no      noun       790.
-## 13 13      no      verb       790.
-## 14 14      no      verb       813.
-## 15 15      no      verb       810.
-## 16 16      no      verb       763.
-```
+<div class="kable-table">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> subject </th>
+   <th style="text-align:left;"> priming </th>
+   <th style="text-align:left;"> structure </th>
+   <th style="text-align:right;"> RT </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 791.7904 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 771.1402 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 759.7695 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 811.2397 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 786.5728 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 819.9955 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 7 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 767.7781 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 8 </td>
+   <td style="text-align:left;"> yes </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 806.4457 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 9 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 791.1396 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 823.7542 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 11 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 817.3685 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 12 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> noun </td>
+   <td style="text-align:right;"> 790.0025 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 13 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 789.8465 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 14 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 813.2044 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 15 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 809.9732 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 16 </td>
+   <td style="text-align:left;"> no </td>
+   <td style="text-align:left;"> verb </td>
+   <td style="text-align:right;"> 763.2989 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 This is between subjects data, so we can fit a model using `lm()`.  In the model, we include effects of `priming` and `structure` as well as their interaction. Instead of typing `priming + structure + priming:structure` we can simply type the shortcut `priming * structure`.
 
@@ -741,15 +1870,40 @@ There are still 4 of them, and we're suddenly getting `primingyes:structureverb`
   anova(ps_mod_nopriming, ps_mod)
 ```
 
-```
-## Analysis of Variance Table
-## 
-## Model 1: RT ~ structure + priming:structure
-## Model 2: RT ~ priming * structure
-##   Res.Df  RSS Df  Sum of Sq F Pr(>F)
-## 1     12 5626                       
-## 2     12 5626  0 9.0949e-13
-```
+<div class="kable-table">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Res.Df </th>
+   <th style="text-align:right;"> RSS </th>
+   <th style="text-align:right;"> Df </th>
+   <th style="text-align:right;"> Sum of Sq </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> Pr(&gt;F) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 5625.973 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 5625.973 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 we'd get nonsensical results.
 
@@ -1393,24 +2547,94 @@ Let's assume that your data is contained in a table `dat` like the one below.
 <div class='webex-solution'><button>Click to view resulting table</button>
 
 
+<div class="kable-table">
 
-```
-## # A tibble: 12 x 4
-##          Y A      A2v1  A3v1
-##      <dbl> <chr> <int> <int>
-##  1 -0.752  A1        0     0
-##  2  0.0251 A1        0     0
-##  3 -0.218  A1        0     0
-##  4  1.09   A1        0     0
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1
-```
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Y </th>
+   <th style="text-align:left;"> A </th>
+   <th style="text-align:right;"> A2v1 </th>
+   <th style="text-align:right;"> A3v1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.7521597 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0251224 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.2181179 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1.0933535 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.4169492 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.6828335 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.0909298 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.3673523 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.2679510 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.4721752 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.9455713 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.1550651 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 
 </div>
@@ -1434,24 +2658,94 @@ dat_sum <- dat %>%
 <div class='webex-solution'><button>Click to view resulting table</button>
 
 
+<div class="kable-table">
 
-```
-## # A tibble: 12 x 4
-##          Y A      A2v1  A3v1
-##      <dbl> <chr> <int> <int>
-##  1 -0.752  A1       -1    -1
-##  2  0.0251 A1       -1    -1
-##  3 -0.218  A1       -1    -1
-##  4  1.09   A1       -1    -1
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1
-```
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Y </th>
+   <th style="text-align:left;"> A </th>
+   <th style="text-align:right;"> A2v1 </th>
+   <th style="text-align:right;"> A3v1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.7521597 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0251224 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.2181179 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1.0933535 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.4169492 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.6828335 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.0909298 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.3673523 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.2679510 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.4721752 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.9455713 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.1550651 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 
 </div>
@@ -1477,23 +2771,94 @@ dat_dev <- dat %>%
 dat_dev
 ```
 
-```
-## # A tibble: 12 x 4
-##          Y A       A2v1   A3v1
-##      <dbl> <chr>  <dbl>  <dbl>
-##  1 -0.752  A1    -0.333 -0.333
-##  2  0.0251 A1    -0.333 -0.333
-##  3 -0.218  A1    -0.333 -0.333
-##  4  1.09   A1    -0.333 -0.333
-##  5 -0.417  A2     0.667 -0.333
-##  6 -0.683  A2     0.667 -0.333
-##  7  2.09   A2     0.667 -0.333
-##  8 -1.37   A2     0.667 -0.333
-##  9  0.268  A3    -0.333  0.667
-## 10  0.472  A3    -0.333  0.667
-## 11 -0.946  A3    -0.333  0.667
-## 12  0.155  A3    -0.333  0.667
-```
+<div class="kable-table">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Y </th>
+   <th style="text-align:left;"> A </th>
+   <th style="text-align:right;"> A2v1 </th>
+   <th style="text-align:right;"> A3v1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.7521597 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0251224 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.2181179 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1.0933535 </td>
+   <td style="text-align:left;"> A1 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.4169492 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.6828335 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.0909298 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.3673523 </td>
+   <td style="text-align:left;"> A2 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.2679510 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.4721752 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.9455713 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.1550651 </td>
+   <td style="text-align:left;"> A3 </td>
+   <td style="text-align:right;"> -0.3333333 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 
 </div>

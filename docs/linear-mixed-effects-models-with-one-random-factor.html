@@ -1,319 +1,109 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
-  <meta name="description" content="Textbook on statistical models for social scientists." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R" />
-  <meta property="og:type" content="book" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate express various types of common designs in a regression...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
+<meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logo.png">
+<meta property="og:description" content="6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate express various types of common designs in a regression...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
+<meta name="twitter:description" content="6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate express various types of common designs in a regression...">
+<meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logo.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
   
-  
-  <meta property="og:description" content="Textbook on statistical models for social scientists." />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R" />
-  
-  <meta name="twitter:description" content="Textbook on statistical models for social scientists." />
-  
-
-<meta name="author" content="Dale J. Barr" />
-
-
-<meta name="date" content="2021-08-12" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="introducing-linear-mixed-effects-models.html"/>
-<link rel="next" href="linear-mixed-effects-models-with-crossed-random-factors.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-
-
-<style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/webex.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Statistical Models</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-cite-this-book"><i class="fa fa-check"></i>How to cite this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#found-an-issue"><i class="fa fa-check"></i>Found an issue?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#information-for-educators"><i class="fa fa-check"></i>Information for educators</a></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#goal-of-this-course"><i class="fa fa-check"></i><b>1.1</b> Goal of this course</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#flexibility"><i class="fa fa-check"></i><b>1.1.1</b> Flexibility</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#generalizability"><i class="fa fa-check"></i><b>1.2</b> Generalizability</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#reproduciblity-and-transparency"><i class="fa fa-check"></i><b>1.3</b> Reproduciblity and Transparency</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#a-simulation-based-approach"><i class="fa fa-check"></i><b>1.4</b> A simulation-based approach</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#what-you-will-learn"><i class="fa fa-check"></i><b>1.5</b> What you will learn</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html"><i class="fa fa-check"></i><b>2</b> Understanding correlation and regression through bivariate simulation</a><ul>
-<li class="chapter" data-level="2.1" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> Correlation matrices</a></li>
-<li class="chapter" data-level="2.2" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#simulating-bivariate-data"><i class="fa fa-check"></i><b>2.2</b> Simulating bivariate data</a></li>
-<li class="chapter" data-level="2.3" data-path="understanding-correlation-and-regression-through-bivariate-simulation.html"><a href="understanding-correlation-and-regression-through-bivariate-simulation.html#relationship-between-correlation-and-regression"><i class="fa fa-check"></i><b>2.3</b> Relationship between correlation and regression</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>3</b> Multiple regression</a><ul>
-<li class="chapter" data-level="3.1" data-path="multiple-regression.html"><a href="multiple-regression.html#an-example-how-to-get-a-good-grade-in-statistics"><i class="fa fa-check"></i><b>3.1</b> An example: How to get a good grade in statistics</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="multiple-regression.html"><a href="multiple-regression.html#data-import-and-visualization"><i class="fa fa-check"></i><b>3.1.1</b> Data import and visualization</a></li>
-<li class="chapter" data-level="3.1.2" data-path="multiple-regression.html"><a href="multiple-regression.html#estimation-and-interpretation"><i class="fa fa-check"></i><b>3.1.2</b> Estimation and interpretation</a></li>
-<li class="chapter" data-level="3.1.3" data-path="multiple-regression.html"><a href="multiple-regression.html#predictions-from-the-linear-model-using-predict"><i class="fa fa-check"></i><b>3.1.3</b> Predictions from the linear model using <code>predict()</code></a></li>
-<li class="chapter" data-level="3.1.4" data-path="multiple-regression.html"><a href="multiple-regression.html#visualizing-partial-effects"><i class="fa fa-check"></i><b>3.1.4</b> Visualizing partial effects</a></li>
-<li class="chapter" data-level="3.1.5" data-path="multiple-regression.html"><a href="multiple-regression.html#standardizing-coefficients"><i class="fa fa-check"></i><b>3.1.5</b> Standardizing coefficients</a></li>
-<li class="chapter" data-level="3.1.6" data-path="multiple-regression.html"><a href="multiple-regression.html#model-comparison"><i class="fa fa-check"></i><b>3.1.6</b> Model comparison</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dealing-with-categorical-predictors"><i class="fa fa-check"></i><b>3.2</b> Dealing with categorical predictors</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="multiple-regression.html"><a href="multiple-regression.html#dummy-coding"><i class="fa fa-check"></i><b>3.2.1</b> Dummy coding</a></li>
-<li class="chapter" data-level="3.2.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dummy-coding-when-k-2"><i class="fa fa-check"></i><b>3.2.2</b> Dummy coding when <span class="math inline">\(k &gt; 2\)</span></a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="multiple-regression.html"><a href="multiple-regression.html#equivalence-between-multiple-regression-and-one-way-anova"><i class="fa fa-check"></i><b>3.3</b> Equivalence between multiple regression and one-way ANOVA</a></li>
-<li class="chapter" data-level="3.4" data-path="multiple-regression.html"><a href="multiple-regression.html#solution-to-partial-effect-plot"><i class="fa fa-check"></i><b>3.4</b> Solution to partial effect plot</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="interactions.html"><a href="interactions.html"><i class="fa fa-check"></i><b>4</b> Interactions</a><ul>
-<li class="chapter" data-level="4.1" data-path="interactions.html"><a href="interactions.html#learning-objectives"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="4.2" data-path="interactions.html"><a href="interactions.html#interactions-1"><i class="fa fa-check"></i><b>4.2</b> Interactions</a></li>
-<li class="chapter" data-level="4.3" data-path="interactions.html"><a href="interactions.html#cont-by-cat"><i class="fa fa-check"></i><b>4.3</b> Continuous-by-Categorical Interactions</a></li>
-<li class="chapter" data-level="4.4" data-path="interactions.html"><a href="interactions.html#categorical-by-categorical-interactions"><i class="fa fa-check"></i><b>4.4</b> Categorical-by-Categorical Interactions</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="interactions.html"><a href="interactions.html#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><i class="fa fa-check"></i><b>4.4.1</b> Effects of cognitive therapy and drug therapy on mood</a></li>
-<li class="chapter" data-level="4.4.2" data-path="interactions.html"><a href="interactions.html#effects-in-a-factorial-design"><i class="fa fa-check"></i><b>4.4.2</b> Effects in a factorial design</a></li>
-<li class="chapter" data-level="4.4.3" data-path="interactions.html"><a href="interactions.html#higher-order-designs"><i class="fa fa-check"></i><b>4.4.3</b> Higher-order designs</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="interactions.html"><a href="interactions.html#the-glm-for-a-factorial-design"><i class="fa fa-check"></i><b>4.5</b> The GLM for a factorial design</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="interactions.html"><a href="interactions.html#estimation-equations"><i class="fa fa-check"></i><b>4.5.1</b> Estimation equations</a></li>
-<li class="chapter" data-level="4.5.2" data-path="interactions.html"><a href="interactions.html#factorial-app"><i class="fa fa-check"></i><b>4.5.2</b> Factorial App</a></li>
-</ul></li>
-<li class="chapter" data-level="4.6" data-path="interactions.html"><a href="interactions.html#code-your-own-categorical-predictors-in-factorial-designs"><i class="fa fa-check"></i><b>4.6</b> Code your own categorical predictors in factorial designs</a></li>
-<li class="chapter" data-level="4.7" data-path="interactions.html"><a href="interactions.html#coding-schemes-for-categorical-variables"><i class="fa fa-check"></i><b>4.7</b> Coding schemes for categorical variables</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="interactions.html"><a href="interactions.html#simple-versus-main-effects"><i class="fa fa-check"></i><b>4.7.1</b> Simple versus main effects</a></li>
-<li class="chapter" data-level="4.7.2" data-path="interactions.html"><a href="interactions.html#the-key-coding-schemes"><i class="fa fa-check"></i><b>4.7.2</b> The key coding schemes</a></li>
-<li class="chapter" data-level="4.7.3" data-path="interactions.html"><a href="interactions.html#what-about-factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>4.7.3</b> What about factors with more than two levels?</a></li>
-<li class="chapter" data-level="4.7.4" data-path="interactions.html"><a href="interactions.html#example-three-level-factor"><i class="fa fa-check"></i><b>4.7.4</b> Example: Three-level factor</a></li>
-<li class="chapter" data-level="4.7.5" data-path="interactions.html"><a href="interactions.html#how-to-create-your-own-numeric-predictors"><i class="fa fa-check"></i><b>4.7.5</b> How to create your own numeric predictors</a></li>
-<li class="chapter" data-level="4.7.6" data-path="interactions.html"><a href="interactions.html#conclusion"><i class="fa fa-check"></i><b>4.7.6</b> Conclusion</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>5</b> Introducing Linear Mixed-Effects Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#modeling-multi-level-data"><i class="fa fa-check"></i><b>5.2</b> Modeling multi-level data</a></li>
-<li class="chapter" data-level="5.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#how-to-model-these-data"><i class="fa fa-check"></i><b>5.3</b> How to model these data?</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#complete-pooling-one-size-fits-all"><i class="fa fa-check"></i><b>5.3.1</b> Complete pooling: One size fits all</a></li>
-<li class="chapter" data-level="5.3.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#no-pooling"><i class="fa fa-check"></i><b>5.3.2</b> No pooling</a></li>
-<li class="chapter" data-level="5.3.3" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#partial-pooling-using-mixed-effects-models"><i class="fa fa-check"></i><b>5.3.3</b> Partial pooling using mixed-effects models</a></li>
-<li class="chapter" data-level="5.3.4" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#the-variance-covariance-matrix"><i class="fa fa-check"></i><b>5.3.4</b> The variance-covariance matrix</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#estimating-the-model-parameters"><i class="fa fa-check"></i><b>5.4</b> Estimating the model parameters</a></li>
-<li class="chapter" data-level="5.5" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#interpreting-lmer-output-and-extracting-estimates"><i class="fa fa-check"></i><b>5.5</b> Interpreting <code>lmer()</code> output and extracting estimates</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#fixed-effects"><i class="fa fa-check"></i><b>5.5.1</b> Fixed effects</a></li>
-<li class="chapter" data-level="5.5.2" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#random-effects"><i class="fa fa-check"></i><b>5.5.2</b> Random effects</a></li>
-</ul></li>
-<li class="chapter" data-level="5.6" data-path="introducing-linear-mixed-effects-models.html"><a href="introducing-linear-mixed-effects-models.html#multi-level-app"><i class="fa fa-check"></i><b>5.6</b> Multi-level app</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html"><i class="fa fa-check"></i><b>6</b> Linear mixed-effects models with one random factor</a><ul>
-<li class="chapter" data-level="6.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#learning-objectives-2"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="6.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fa fa-check"></i><b>6.2</b> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
-<li class="chapter" data-level="6.3" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#example-independent-samples-t-test-on-multi-level-data"><i class="fa fa-check"></i><b>6.3</b> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#when-is-a-random-intercepts-model-appropriate"><i class="fa fa-check"></i><b>6.3.1</b> When is a random-intercepts model appropriate?</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#expressing-the-study-design-and-performing-tests-in-regression"><i class="fa fa-check"></i><b>6.4</b> Expressing the study design and performing tests in regression</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>6.4.1</b> Factors with more than two levels</a></li>
-<li class="chapter" data-level="6.4.2" data-path="linear-mixed-effects-models-with-one-random-factor.html"><a href="linear-mixed-effects-models-with-one-random-factor.html#multiparameter-tests"><i class="fa fa-check"></i><b>6.4.2</b> Multiparameter tests</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><i class="fa fa-check"></i><b>7</b> Linear mixed-effects models with crossed random factors</a><ul>
-<li class="chapter" data-level="7.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#learning-objectives-3"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="7.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#web-app"><i class="fa fa-check"></i><b>7.2</b> Web app</a></li>
-<li class="chapter" data-level="7.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fa fa-check"></i><b>7.3</b> Generalizing over encounters between subjects and stimuli</a></li>
-<li class="chapter" data-level="7.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#lme4-syntax-for-crossed-random-factors"><i class="fa fa-check"></i><b>7.4</b> lme4 syntax for crossed random factors</a></li>
-<li class="chapter" data-level="7.5" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#specifying-random-effects"><i class="fa fa-check"></i><b>7.5</b> Specifying random effects</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#rules-for-choosing-random-effects-for-categorical-factors"><i class="fa fa-check"></i><b>7.5.1</b> Rules for choosing random effects for categorical factors</a></li>
-</ul></li>
-<li class="chapter" data-level="7.6" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#simulating-data-with-crossed-random-factors"><i class="fa fa-check"></i><b>7.6</b> Simulating data with crossed random factors</a><ul>
-<li class="chapter" data-level="7.6.1" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#set-up-the-environment-and-define-the-parameters-for-the-dgp"><i class="fa fa-check"></i><b>7.6.1</b> Set up the environment and define the parameters for the DGP</a></li>
-<li class="chapter" data-level="7.6.2" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-stimuli"><i class="fa fa-check"></i><b>7.6.2</b> Generate a sample of stimuli</a></li>
-<li class="chapter" data-level="7.6.3" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-subjects"><i class="fa fa-check"></i><b>7.6.3</b> Generate a sample of subjects</a></li>
-<li class="chapter" data-level="7.6.4" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#generate-a-sample-of-encounters-trials"><i class="fa fa-check"></i><b>7.6.4</b> Generate a sample of encounters (trials)</a></li>
-<li class="chapter" data-level="7.6.5" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#join-subjects-items-and-trials"><i class="fa fa-check"></i><b>7.6.5</b> Join <code>subjects</code>, <code>items</code>, and <code>trials</code></a></li>
-<li class="chapter" data-level="7.6.6" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#create-the-response-variable"><i class="fa fa-check"></i><b>7.6.6</b> Create the response variable</a></li>
-<li class="chapter" data-level="7.6.7" data-path="linear-mixed-effects-models-with-crossed-random-factors.html"><a href="linear-mixed-effects-models-with-crossed-random-factors.html#fitting-the-model"><i class="fa fa-check"></i><b>7.6.7</b> Fitting the model</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html"><i class="fa fa-check"></i><b>8</b> Generalized linear mixed-effects models</a><ul>
-<li class="chapter" data-level="8.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#learning-objectives-4"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="8.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#discrete-versus-continuous-data"><i class="fa fa-check"></i><b>8.2</b> Discrete versus continuous data</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#why-not-model-discrete-data-as-continuous"><i class="fa fa-check"></i><b>8.2.1</b> Why not model discrete data as continuous?</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#generalized-linear-models"><i class="fa fa-check"></i><b>8.3</b> Generalized Linear Models</a></li>
-<li class="chapter" data-level="8.4" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#logistic-regression"><i class="fa fa-check"></i><b>8.4</b> Logistic regression</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#terminology"><i class="fa fa-check"></i><b>8.4.1</b> Terminology</a></li>
-<li class="chapter" data-level="8.4.2" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#properties-of-log-odds"><i class="fa fa-check"></i><b>8.4.2</b> Properties of log odds</a></li>
-<li class="chapter" data-level="8.4.3" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#link-and-variance-functions"><i class="fa fa-check"></i><b>8.4.3</b> Link and variance functions</a></li>
-<li class="chapter" data-level="8.4.4" data-path="generalized-linear-mixed-effects-models.html"><a href="generalized-linear-mixed-effects-models.html#estimating-logistic-regression-models-in-r"><i class="fa fa-check"></i><b>8.4.4</b> Estimating logistic regression models in R</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="modeling-ordinal-data.html"><a href="modeling-ordinal-data.html"><i class="fa fa-check"></i><b>9</b> Modeling Ordinal Data</a></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="symbols.html"><a href="symbols.html"><i class="fa fa-check"></i><b>A</b> Symbols</a><ul>
-<li class="chapter" data-level="A.1" data-path="symbols.html"><a href="symbols.html#general-notes"><i class="fa fa-check"></i><b>A.1</b> General notes</a></li>
-<li class="chapter" data-level="A.2" data-path="symbols.html"><a href="symbols.html#table-of-symbols"><i class="fa fa-check"></i><b>A.2</b> Table of symbols</a></li>
-</ul></li>
-<li class="chapter" data-level="B" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>B</b> Bibliography</a></li>
-<li class="divider"></li>
-<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
-    target="blank"><img alt="Creative Commons License" 
-    style="border-width:0" 
-    src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a></li>
-<li><a href="https://psyteachr.github.io/books" target="blank">PsyTeachR Books</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Learning Statistical Models Through Simulation in R</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Overview</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="understanding-correlation-and-regression-through-bivariate-simulation.html"><span class="header-section-number">2</span> Understanding correlation and regression through bivariate simulation</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">3</span> Multiple regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">4</span> Interactions</a></li>
+<li><a class="" href="introducing-linear-mixed-effects-models.html"><span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models</a></li>
+<li><a class="active" href="linear-mixed-effects-models-with-one-random-factor.html"><span class="header-section-number">6</span> Linear mixed-effects models with one random factor</a></li>
+<li><a class="" href="linear-mixed-effects-models-with-crossed-random-factors.html"><span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors</a></li>
+<li><a class="" href="generalized-linear-mixed-effects-models.html"><span class="header-section-number">8</span> Generalized linear mixed-effects models</a></li>
+<li><a class="" href="modeling-ordinal-data.html"><span class="header-section-number">9</span> Modeling Ordinal Data</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="symbols.html"><span class="header-section-number">A</span> Symbols</a></li>
+<li><a class="" href="bibliography.html"><span class="header-section-number">B</span> Bibliography</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="linear-mixed-effects-models-with-one-random-factor" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Linear mixed-effects models with one random factor</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models-with-one-random-factor" class="section level1">
+<h1>
+<span class="header-section-number">6</span> Linear mixed-effects models with one random factor<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-one-random-factor"><i class="fas fa-link"></i></a>
+</h1>
 <div id="learning-objectives-2" class="section level2">
-<h2><span class="header-section-number">6.1</span> Learning objectives</h2>
+<h2>
+<span class="header-section-number">6.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-2"><i class="fas fa-link"></i></a>
+</h2>
 <ul>
 <li>understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate</li>
 <li>express various types of common designs in a regression framework</li>
-<li>use model comparison (<code>anova()</code>) for testing effects</li>
+<li>use model comparison (<code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>) for testing effects</li>
 <li>express various study designs using the R regression formula syntax</li>
 </ul>
 </div>
 <div id="when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling" class="section level2">
-<h2><span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</h2>
+<h2>
+<span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?<a class="anchor" aria-label="anchor" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fas fa-link"></i></a>
+</h2>
 <p>We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below:</p>
-<table>
+<div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="15%" />
-<col width="31%" />
-<col width="15%" />
-<col width="37%" />
+<col width="15%">
+<col width="31%">
+<col width="15%">
+<col width="37%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th align="left">sampling design</th>
 <th align="left">type of data</th>
 <th align="left">function</th>
 <th align="left">description</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">single level</td>
@@ -330,50 +120,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td align="left">multilevel</td>
 <td align="left">continuous, normally distributed</td>
-<td align="left"><code>lme4::lmer()</code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code></td>
 <td align="left">linear mixed-effects model</td>
 </tr>
 <tr class="even">
 <td align="left">multilevel</td>
 <td align="left">count or categorical</td>
-<td align="left"><code>lme4::glmer()</code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code></td>
 <td align="left">generalized linear mixed-effects model</td>
 </tr>
 </tbody>
-</table>
-<p>To decide which function to use, you need to know the type of data you’re working with (continuous and normally distributed, or not) and how the data have been sampled (single-level or <a class='glossary' target='_blank' title='(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli).' href='https://psyteachr.github.io/glossary/m#multilevel'>multilevel</a>). Arguments to these functions are highly similar across all four versions. We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but many of the principles are identical.</p>
-<p>Here is a comparison chart for single-level data (data where you don’t have <a class='glossary' target='_blank' title='A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units.' href='https://psyteachr.github.io/glossary/r#repeated-measures'>repeated-measures</a>):</p>
-<table>
-<thead>
-<tr class="header">
+</table></div>
+<p>To decide which function to use, you need to know the type of data you're working with (continuous and normally distributed, or not) and how the data have been sampled (single-level or <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a>). Arguments to these functions are highly similar across all four versions. We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but many of the principles are identical.</p>
+<p>Here is a comparison chart for single-level data (data where you don't have <a class="glossary" target="_blank" title="A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units." href="https://psyteachr.github.io/glossary/r#repeated-measures">repeated-measures</a>):</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
 <th align="left">test</th>
 <th align="left">conventional approach</th>
 <th align="left">regression approach</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">one-sample t-test</td>
-<td align="left"><code>t.test(y, mu = c)</code></td>
-<td align="left"><code>lm(y ~ 1, offset = c)</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/t.test.html">t.test(y, mu = c)</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ 1, offset = c)</a></code></td>
 </tr>
 <tr class="even">
 <td align="left">independent samples t-test</td>
-<td align="left"><code>t.test(x, y)</code></td>
-<td align="left"><code>lm(y ~ x)</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/t.test.html">t.test(x, y)</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x)</a></code></td>
 </tr>
 <tr class="odd">
 <td align="left">one factor ANOVA</td>
-<td align="left"><code>aov(y ~ x)</code></td>
-<td align="left"><code>lm(y ~ x)</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x)</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x)</a></code></td>
 </tr>
 <tr class="even">
 <td align="left">factorial ANOVA</td>
-<td align="left"><code>aov(y ~ a * b)</code></td>
-<td align="left"><code>lm(y ~ a * b)</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ a * b)</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ a * b)</a></code></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>All of above designs are <em>between-subjects</em> designs without repeated measures. (Note that in the factorial case, we would probably replace <code>a</code> and <code>b</code> with our own deviation-coded numerical predictors, for reasons already discussed in <a href="interactions.html">the chapter on interactions</a>).</p>
 <p>Where mixed-effects models come into play is with multilevel data. Data is usually multilevel for one of the three reasons below (multiple reasons could simultaneously apply):</p>
 <ol style="list-style-type: decimal">
@@ -382,51 +170,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>you have multiple stimulus items (which we will discuss in the <a href="linear-mixed-effects-models-with-crossed-random-factors.html">next chapter</a>).</li>
 </ol>
 <p>(At this point, it would be a good idea to refresh your memory on the meaning of between- versus within- subject factors). In the <code>sleepstudy</code> data, you had the within-subject factor of <code>Day</code> (which is more a numeric variable, actually, than a factor; but it has multiple values varying within each participant).</p>
-<p><strong>Pseudoreplications</strong> occur when you take multiple measurements within the same condition. For instance, imagine a study where you randomly assign participants to consume one of two beverages—alcohol or water—before administering a simple response time task where they press a button as fast as possible when a light flashes. You would probably take more than one measurement of response time for each participant; let’s assume that you measured it over 100 trials. You’d have one between-subject factor (beverage) and 100 observations per subject, for say, 20 subjects in each group. One common mistake novices make when analyzing such data is to try to run a t-test. <strong>You can’t directly use the conventional a t-test when you have pseudoreplications (or multiple stimuli).</strong> You must first calculate means for each subject, and then run your analysis <strong>on the means, not on the raw data.</strong> There are versions of ANOVA that can deal with pseudoreplications, but you are probably better off using a linear-mixed effects model, which can better handle the complex dependency structure.</p>
+<p><strong>Pseudoreplications</strong> occur when you take multiple measurements within the same condition. For instance, imagine a study where you randomly assign participants to consume one of two beverages---alcohol or water---before administering a simple response time task where they press a button as fast as possible when a light flashes. You would probably take more than one measurement of response time for each participant; let's assume that you measured it over 100 trials. You'd have one between-subject factor (beverage) and 100 observations per subject, for say, 20 subjects in each group. One common mistake novices make when analyzing such data is to try to run a t-test. <strong>You can't directly use the conventional a t-test when you have pseudoreplications (or multiple stimuli).</strong> You must first calculate means for each subject, and then run your analysis <strong>on the means, not on the raw data.</strong> There are versions of ANOVA that can deal with pseudoreplications, but you are probably better off using a linear-mixed effects model, which can better handle the complex dependency structure.</p>
 <p>Here is a comparison chart for multi-level data:</p>
-<table>
+<div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="33%" />
-<col width="30%" />
-<col width="35%" />
+<col width="33%">
+<col width="30%">
+<col width="35%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th align="left">test</th>
 <th align="left">conventional approach</th>
 <th align="left">regression approach</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">one-sample t-test with pseudoreplications</td>
-<td align="left">calculate means and use <code>t.test(x_mean)</code></td>
-<td align="left"><code>lmer(y ~ (1 | subject), offset = c)</code></td>
+<td align="left">calculate means and use <code><a href="https://rdrr.io/r/stats/t.test.html">t.test(x_mean)</a></code>
+</td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ (1 | subject), offset = c)</a></code></td>
 </tr>
 <tr class="even">
 <td align="left">paired samples t-test, no pseudoreplications</td>
-<td align="left"><code>t.test(x, y, paired = TRUE)</code></td>
-<td align="left"><code>lmer(y ~ x + (1 | subject))</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/t.test.html">t.test(x, y, paired = TRUE)</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 | subject))</a></code></td>
 </tr>
 <tr class="odd">
 <td align="left">paired samples t-test with pseudoreplications</td>
-<td align="left">calculate means and use <code>t.test(x_mean, y_mean)</code></td>
-<td align="left"><code>lmer(y ~ x + (1 + x | subject))</code></td>
+<td align="left">calculate means and use <code><a href="https://rdrr.io/r/stats/t.test.html">t.test(x_mean, y_mean)</a></code>
+</td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 + x | subject))</a></code></td>
 </tr>
 <tr class="even">
 <td align="left">repeated-measures ANOVA no pseudoreplications</td>
-<td align="left"><code>aov(y ~ x + Error(subject))</code></td>
-<td align="left"><code>lmer(y ~ x + (1 | subject))</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(subject))</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 | subject))</a></code></td>
 </tr>
 <tr class="odd">
 <td align="left">repeated-measures ANOVA with pseudoreplications</td>
-<td align="left"><code>aov(y ~ x + Error(subject/x))</code></td>
-<td align="left"><code>lmer(y ~ x + (1 + x | subject))</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(subject/x))</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 + x | subject))</a></code></td>
 </tr>
 <tr class="even">
 <td align="left">factorial ANOVA, a &amp; b within, no pseudoreplications</td>
-<td align="left"><code>aov(y ~ a * b + Error(subject))</code></td>
-<td align="left"><code>lmer(y ~ a * b + (1 | subject))</code></td>
+<td align="left"><code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ a * b + Error(subject))</a></code></td>
+<td align="left"><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ a * b + (1 | subject))</a></code></td>
 </tr>
 <tr class="odd">
 <td align="left">factorial ANOVA with pseudoreplications</td>
@@ -434,43 +222,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left"><code>lmer(y ~ a * b + (1 + a * b | subject)</code></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>One of the main selling points of the general linear models / regression framework over t-test and ANOVA is its flexibility. We saw this in the last chapter with the <code>sleepstudy</code> data, which could only be properly handled within a linear mixed-effects modelling framework. Despite the many advantages of regression, if you are in a situation where you have balanced data and can reasonably apply t-test or ANOVA without violating any of the assumptions behind the test, it makes sense to do so; these approaches have a long history in psychology and are more widely understood.</p>
 </div>
 <div id="example-independent-samples-t-test-on-multi-level-data" class="section level2">
-<h2><span class="header-section-number">6.3</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data</h2>
-<p>Let’s consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let’s assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
+<h2>
+<span class="header-section-number">6.3</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data<a class="anchor" aria-label="anchor" href="#example-independent-samples-t-test-on-multi-level-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
 <p>This <a href="https://shiny.psy.gla.ac.uk/Dale/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb178-2" title="2"></a>
-<a class="sourceLine" id="cb178-3" title="3">dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/independent_samples.csv&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;cci&quot;</span>)</a>
-<a class="sourceLine" id="cb178-4" title="4"></a>
-<a class="sourceLine" id="cb178-5" title="5">subj_means &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(subject, cond) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-7" title="7"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_rt =</span> <span class="kw">mean</span>(RT)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-8" title="8"><span class="st">  </span><span class="kw">ungroup</span>()</a>
-<a class="sourceLine" id="cb178-9" title="9"></a>
-<a class="sourceLine" id="cb178-10" title="10">subj_means</a></code></pre></div>
-<pre><code>## # A tibble: 14 x 3
-##    subject cond  mean_rt
-##    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
-##  1 P01     P        354 
-##  2 P02     P        384.
-##  3 P03     P        391.
-##  4 P04     P        404.
-##  5 P05     P        421.
-##  6 P06     P        392 
-##  7 P07     P        400.
-##  8 T08     T        430.
-##  9 T09     T        432.
-## 10 T10     T        410.
-## 11 T11     T        455.
-## 12 T12     T        450.
-## 13 T13     T        418.
-## 14 T14     T        489.</code></pre>
-<p>Then, the <span class="math inline">\(t\)</span>-test can be run using the “formula” version of <code>t.test()</code>.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" title="1"><span class="kw">t.test</span>(mean_rt <span class="op">~</span><span class="st"> </span>cond, subj_means)</a></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/independent_samples.csv"</span>, col_types <span class="op">=</span> <span class="st">"cci"</span><span class="op">)</span>
+
+<span class="va">subj_means</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">subject</span>, <span class="va">cond</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarise</span><span class="op">(</span>mean_rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">RT</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">subj_means</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">subject</th>
+<th align="left">cond</th>
+<th align="right">mean_rt</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">P01</td>
+<td align="left">P</td>
+<td align="right">354.0</td>
+</tr>
+<tr class="even">
+<td align="left">P02</td>
+<td align="left">P</td>
+<td align="right">384.2</td>
+</tr>
+<tr class="odd">
+<td align="left">P03</td>
+<td align="left">P</td>
+<td align="right">390.9</td>
+</tr>
+<tr class="even">
+<td align="left">P04</td>
+<td align="left">P</td>
+<td align="right">403.9</td>
+</tr>
+<tr class="odd">
+<td align="left">P05</td>
+<td align="left">P</td>
+<td align="right">421.4</td>
+</tr>
+<tr class="even">
+<td align="left">P06</td>
+<td align="left">P</td>
+<td align="right">392.0</td>
+</tr>
+<tr class="odd">
+<td align="left">P07</td>
+<td align="left">P</td>
+<td align="right">399.8</td>
+</tr>
+<tr class="even">
+<td align="left">T08</td>
+<td align="left">T</td>
+<td align="right">429.7</td>
+</tr>
+<tr class="odd">
+<td align="left">T09</td>
+<td align="left">T</td>
+<td align="right">432.5</td>
+</tr>
+<tr class="even">
+<td align="left">T10</td>
+<td align="left">T</td>
+<td align="right">410.1</td>
+</tr>
+<tr class="odd">
+<td align="left">T11</td>
+<td align="left">T</td>
+<td align="right">455.1</td>
+</tr>
+<tr class="even">
+<td align="left">T12</td>
+<td align="left">T</td>
+<td align="right">450.2</td>
+</tr>
+<tr class="odd">
+<td align="left">T13</td>
+<td align="left">T</td>
+<td align="right">418.4</td>
+</tr>
+<tr class="even">
+<td align="left">T14</td>
+<td align="left">T</td>
+<td align="right">488.9</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Then, the <span class="math inline">\(t\)</span>-test can be run using the "formula" version of <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>.</p>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mean_rt</span> <span class="op">~</span> <span class="va">cond</span>, <span class="va">subj_means</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -511,23 +367,38 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p>A random-intercepts model would adequately capture the two sources of variability mentioned above: the inter-subject variability in overall mean RT in the parameter <span class="math inline">\({\tau_{00}}^2\)</span>, and the trial-by-trial variability in the parameter <span class="math inline">\(\sigma^2\)</span>. We can calculate the proportion of the total variability attributable to individual differences among subjects using the formula below.</p>
 <p><span class="math display">\[ICC = \frac{{\tau_{00}}^2}{{\tau_{00}}^2 + \sigma^2}\]</span></p>
 <p>This quantity, known as the <strong>intra-class correlation coefficient</strong>, and tells you how much clustering there is in your data. It ranges from 0 to 1, with 0 indicating that all the variability is due to residual variance, and 1 indicating that all the variability is due to individual differences among subjects.</p>
-<p>The lmer syntax for fitting a random intercepts model to the data is <code>lmer(RT ~ cond + (1 | subject), dat, REML=FALSE)</code>. Let’s create our own numerical predictor first, to make it explicit that we are using dummy coding.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" title="1">dat2 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb182-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cond_d =</span> <span class="kw">if_else</span>(cond <span class="op">==</span><span class="st"> &quot;T&quot;</span>, 1L, 0L))</a>
-<a class="sourceLine" id="cb182-3" title="3"></a>
-<a class="sourceLine" id="cb182-4" title="4"><span class="kw">distinct</span>(dat2, cond, cond_d)  <span class="co">## double check</span></a></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   cond  cond_d
-##   &lt;chr&gt;  &lt;int&gt;
-## 1 P          0
-## 2 T          1</code></pre>
+<p>The lmer syntax for fitting a random intercepts model to the data is <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(RT ~ cond + (1 | subject), dat, REML=FALSE)</a></code>. Let's create our own numerical predictor first, to make it explicit that we are using dummy coding.</p>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>cond_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"T"</span>, <span class="fl">1L</span>, <span class="fl">0L</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">distinct</span><span class="op">(</span><span class="va">dat2</span>, <span class="va">cond</span>, <span class="va">cond_d</span><span class="op">)</span>  <span class="co">## double check</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">cond</th>
+<th align="right">cond_d</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">P</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">T</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 <p>And now, estimate the model.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1"><span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)</a>
-<a class="sourceLine" id="cb184-2" title="2"></a>
-<a class="sourceLine" id="cb184-3" title="3">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(RT <span class="op">~</span><span class="st"> </span>cond_d <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>subject), dat2, <span class="dt">REML =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb184-4" title="4"></a>
-<a class="sourceLine" id="cb184-5" title="5"><span class="kw">summary</span>(mod)</a></code></pre></div>
-<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
+
+<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">cond_d</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, <span class="va">dat2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
 ## Formula: RT ~ cond_d + (1 | subject)
 ##    Data: dat2
 ## 
@@ -554,20 +425,24 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## cond_d -0.707</code></pre>
 <p>Play around with the sliders in the app above and check the lmer output panel until you understand how the output maps onto the model parameters.</p>
 <div id="when-is-a-random-intercepts-model-appropriate" class="section level3">
-<h3><span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?</h3>
-<p>Of course, a mixed-effects model is only appropriate when you have multilevel data. The random-intercepts model is appropriate for any one-sample or between-subjects data with pseudoreplications (if you don’t have pseudoreplications in this situation, you don’t have multilevel data, and you can just use vanilla regression, e.g., <code>lm()</code>).</p>
-<p>The “random-intercepts-only” model is also appropriate when you have within-subject factors in your design, but <strong>only if you don’t also have pseudoreplications</strong>; that is, it is <strong>only</strong> appropriate when you have a single observation per subject per level of the within-subject factor. If you have more than one observation per subject per level/cell, you need to enrich your random effects structure with random slopes, as described in the next section. If the reason you have multiple observations per subject per level is because you have each subject reacting to the same set of stimuli, then you might want to consider a mixed-effects model with crossed random effects for subjects and stimuli, as described in the <a href="linear-mixed-effects-models-with-crossed-random-factors.html">next chapter</a>.</p>
+<h3>
+<span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?<a class="anchor" aria-label="anchor" href="#when-is-a-random-intercepts-model-appropriate"><i class="fas fa-link"></i></a>
+</h3>
+<p>Of course, a mixed-effects model is only appropriate when you have multilevel data. The random-intercepts model is appropriate for any one-sample or between-subjects data with pseudoreplications (if you don't have pseudoreplications in this situation, you don't have multilevel data, and you can just use vanilla regression, e.g., <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>).</p>
+<p>The "random-intercepts-only" model is also appropriate when you have within-subject factors in your design, but <strong>only if you don't also have pseudoreplications</strong>; that is, it is <strong>only</strong> appropriate when you have a single observation per subject per level of the within-subject factor. If you have more than one observation per subject per level/cell, you need to enrich your random effects structure with random slopes, as described in the next section. If the reason you have multiple observations per subject per level is because you have each subject reacting to the same set of stimuli, then you might want to consider a mixed-effects model with crossed random effects for subjects and stimuli, as described in the <a href="linear-mixed-effects-models-with-crossed-random-factors.html">next chapter</a>.</p>
 <p>The same logic goes for factorial designs in which there is more than one within-subjects factor. In factorial designs, the random-intercepts model is appropriate if you have one observation per subject per <strong>cell</strong> formed by each combination of the within-subjects factors. For instance, if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two two-level within-subject factors, you need to check that you have only one observation for each subject in <span class="math inline">\(A_1B_1\)</span>, <span class="math inline">\(A_1B_2\)</span>, <span class="math inline">\(A_2B_1\)</span>, and <span class="math inline">\(A_2B_2\)</span>. If you have more than one observation, you will need to consider including a random slope in your model.</p>
 </div>
 </div>
 <div id="expressing-the-study-design-and-performing-tests-in-regression" class="section level2">
-<h2><span class="header-section-number">6.4</span> Expressing the study design and performing tests in regression</h2>
-<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you’ll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code>lme4::lmer()</code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke <a href="#ref-Luke_2017">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
-<p>First, let’s take a closer look at the regression formula syntax in R and <strong><code>lme4</code></strong>. For the regression model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span> with by-subject random effects you’d have:</p>
+<h2>
+<span class="header-section-number">6.4</span> Expressing the study design and performing tests in regression<a class="anchor" aria-label="anchor" href="#expressing-the-study-design-and-performing-tests-in-regression"><i class="fas fa-link"></i></a>
+</h2>
+<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke <a href="bibliography.html#ref-Luke_2017">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
+<p>First, let's take a closer look at the regression formula syntax in R and <strong><code>lme4</code></strong>. For the regression model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span> with by-subject random effects you'd have:</p>
 <p><code>y ~ 1 + x1 + x2 + ... + xm + (1 + x1 + ... | subject)</code></p>
-<p>The residual term is implied and so not mentioned; only the predictors. The left side (before the tilde <code>~</code>) specifies the response variable, the right side has the predictor variables. The term in brackets, <code>(... | ...)</code>, is specific to <strong><code>lme4</code></strong>. The right side of the vertical bar <code>|</code> specifies the name of a variable (in this case, <code>subject</code>) that codes the levels of the random factor. The left side specifies what regression coefficients you want to allow to vary over those levels. The <code>1</code> at the start of the formula specifies that you want an intercept, which is included by default anyway, and so can be omitted. The <code>1</code> within the bracket specifies a <strong>random intercept</strong>, which is also included by default; the predictor variables mentioned inside the brackets specify <strong>random slopes</strong>. So you could write the above formula equivalently as:</p>
+<p>The residual term is implied and so not mentioned; only the predictors. The left side (before the tilde <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>) specifies the response variable, the right side has the predictor variables. The term in brackets, <code>(... | ...)</code>, is specific to <strong><code>lme4</code></strong>. The right side of the vertical bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> specifies the name of a variable (in this case, <code>subject</code>) that codes the levels of the random factor. The left side specifies what regression coefficients you want to allow to vary over those levels. The <code>1</code> at the start of the formula specifies that you want an intercept, which is included by default anyway, and so can be omitted. The <code>1</code> within the bracket specifies a <strong>random intercept</strong>, which is also included by default; the predictor variables mentioned inside the brackets specify <strong>random slopes</strong>. So you could write the above formula equivalently as:</p>
 <p><code>y ~ x1 + x2 + ... + xm + (x1 + ... | subject)</code>.</p>
-<p>There is another important type of shortcut in R formulas, which we already saw in the <a href="interactions.html">chapter on interactions</a>; namely the “star syntax” <code>a * b</code> for specifying interactions. If you have two factors, <code>a</code> and <code>b</code> in your design, and you want all main effects and interactions in the model, you can use:</p>
+<p>There is another important type of shortcut in R formulas, which we already saw in the <a href="interactions.html">chapter on interactions</a>; namely the "star syntax" <code>a * b</code> for specifying interactions. If you have two factors, <code>a</code> and <code>b</code> in your design, and you want all main effects and interactions in the model, you can use:</p>
 <p><code>y ~ a * b</code></p>
 <p>which is equivalent to <code>y ~ a + b + a:b</code> where <code>a</code> and <code>b</code> are the predictors coding main effects of A and B respectively, and <code>a:b</code> codes the AB interaction. It saves a lot of typing (and mistakes) to use the star syntax for interactions rather than spelling them out. This can be seen more easily in the example below, which codes a 2x2x2 factorial design including factors A, B, and C:</p>
 <p><code>y ~ a * b * c</code></p>
@@ -579,17 +454,17 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p><code>y ~ a + b + c + a:b + a:c + b:c + a:b:c + (a + b + c + a:b + a:c + b:c + a:b:c | subject)</code></p>
 <p>which, despite its complexity, is a design that is not that uncommon in psychology (e.g., if you have all factors within and multiple stimuli per condition)!</p>
 <div id="factors-with-more-than-two-levels" class="section level3">
-<h3><span class="header-section-number">6.4.1</span> Factors with more than two levels</h3>
-<p>As noted above, you could conduct a one-factor ANOVA in regression using the formula <code>lm(y ~ x)</code> for single-level or <code>lmer(y ~ x + (1 | subject))</code> for the multilevel version without pseudoreplications. In the formula, the <code>x</code> predictor would be of type <code>factor()</code>, which R would (by default) convert to <span class="math inline">\(k-1\)</span> dummy-coded numerical predictors (one for each level; see the <a href="interactions.html">interaction chapter</a> for information).</p>
+<h3>
+<span class="header-section-number">6.4.1</span> Factors with more than two levels<a class="anchor" aria-label="anchor" href="#factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
+</h3>
+<p>As noted above, you could conduct a one-factor ANOVA in regression using the formula <code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x)</a></code> for single-level or <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 | subject))</a></code> for the multilevel version without pseudoreplications. In the formula, the <code>x</code> predictor would be of type <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>, which R would (by default) convert to <span class="math inline">\(k-1\)</span> dummy-coded numerical predictors (one for each level; see the <a href="interactions.html">interaction chapter</a> for information).</p>
 <p>It is often sensible to code your own numerical predictors, particularly if your goal is to do ANOVA-style tests of main effects and interactions, which can be difficult if any of your variables are of type <code>factor</code>. So for a design with one three-level factor called <code>meal</code> (<code>breakfast</code>, <code>lunch</code>, <code>dinner</code>) you could create two variables, <code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code> following the scheme below.</p>
-<table>
-<thead>
-<tr class="header">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
 <th align="left">factor level</th>
 <th align="right">lunch_v_breakfast</th>
 <th align="right">dinner_v_breakfast</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">breakfast</td>
@@ -607,62 +482,112 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <td align="right">+2/3</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>If your dependent variable is <code>calories</code>, your model would be:</p>
 <p><code>calories ~ lunch_v_breakfast + dinner_v_breakfast</code>.</p>
-<p>But what if you wanted to interact <code>meal</code> with another two-level factor—say, <code>time_of_week</code> (<code>weekday</code> versus <code>weekend</code>, coded as -.5 and +.5 respectively), because you think the calories consumed per meal would differ across the levels of this variable? Then your model would be:</p>
+<p>But what if you wanted to interact <code>meal</code> with another two-level factor---say, <code>time_of_week</code> (<code>weekday</code> versus <code>weekend</code>, coded as -.5 and +.5 respectively), because you think the calories consumed per meal would differ across the levels of this variable? Then your model would be:</p>
 <p><code>calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_of_week</code>.</p>
-<p><a href="interactions.html#coding-schemes-for-categorical-variables">(The inclusion of an interaction is the reason we chose the “deviation” coding scheme.)</a>. We put brackets around the predictors associated with the two-level variable so that each one interacts with <code>time_of_week</code>. The above star syntax is shorthand for:</p>
+<p><a href="interactions.html#coding-schemes-for-categorical-variables">(The inclusion of an interaction is the reason we chose the "deviation" coding scheme.)</a>. We put brackets around the predictors associated with the two-level variable so that each one interacts with <code>time_of_week</code>. The above star syntax is shorthand for:</p>
 <p><code>calories ~ lunch_v_breakfast + dinner_v_breakfast + time_of_week + lunch_v_breakfast:time_of_week + dinner_v_breakfast:time_of_week</code>.</p>
-<p>This is the “regression way” of estimating parameters for a 3x2 factorial design.</p>
+<p>This is the "regression way" of estimating parameters for a 3x2 factorial design.</p>
 </div>
 <div id="multiparameter-tests" class="section level3">
-<h3><span class="header-section-number">6.4.2</span> Multiparameter tests</h3>
-<p>Whenever you are dealing with designs where all categorical factors have no more than two levels, the test of the regression coefficient associated with a given factor will be equivalent to the test for the effect in the ANOVA framework, provided you use <a href="multiple-regression.html#dealing-with-categorical-predictors">sum or deviation coding</a>. But in the above example, we have a 3x2 design, with two predictor variables coding the main effect of <code>meal</code> (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>). Let’s simulate some data and run a one-factor ANOVA with <code>aov()</code>, and then we’ll replicate the analysis using the regression function <code>lm()</code> (note that the same procedure works for mixed-effects models on multilevel data, just using <code>lme4::lmer()</code> instead of <code>base::lm()</code>).</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1"><span class="co">## make up some data</span></a>
-<a class="sourceLine" id="cb186-2" title="2"><span class="kw">set.seed</span>(<span class="dv">62</span>)</a>
-<a class="sourceLine" id="cb186-3" title="3">meals &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">meal =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;breakfast&quot;</span>, <span class="st">&quot;lunch&quot;</span>, <span class="st">&quot;dinner&quot;</span>),</a>
-<a class="sourceLine" id="cb186-4" title="4">                                  <span class="dt">each =</span> <span class="dv">6</span>)),</a>
-<a class="sourceLine" id="cb186-5" title="5">                <span class="dt">time_of_week =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;weekday&quot;</span>, <span class="st">&quot;weekend&quot;</span>),</a>
-<a class="sourceLine" id="cb186-6" title="6">                                              <span class="dt">each =</span> <span class="dv">3</span>), <span class="dv">3</span>)),</a>
-<a class="sourceLine" id="cb186-7" title="7">                <span class="dt">calories =</span> <span class="kw">rnorm</span>(<span class="dv">18</span>, <span class="dv">450</span>, <span class="dv">50</span>))</a>
-<a class="sourceLine" id="cb186-8" title="8"></a>
-<a class="sourceLine" id="cb186-9" title="9"><span class="co">## use sum coding instead of default &#39;dummy&#39; (treatment) coding</span></a>
-<a class="sourceLine" id="cb186-10" title="10"><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="dt">unordered =</span> <span class="st">&quot;contr.sum&quot;</span>, <span class="dt">ordered =</span> <span class="st">&quot;contr.poly&quot;</span>))</a>
-<a class="sourceLine" id="cb186-11" title="11"></a>
-<a class="sourceLine" id="cb186-12" title="12"><span class="kw">aov</span>(calories <span class="op">~</span><span class="st"> </span>meal <span class="op">*</span><span class="st"> </span>time_of_week, <span class="dt">data =</span> meals) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb186-13" title="13"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<h3>
+<span class="header-section-number">6.4.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
+</h3>
+<p>Whenever you are dealing with designs where all categorical factors have no more than two levels, the test of the regression coefficient associated with a given factor will be equivalent to the test for the effect in the ANOVA framework, provided you use <a href="multiple-regression.html#dealing-with-categorical-predictors">sum or deviation coding</a>. But in the above example, we have a 3x2 design, with two predictor variables coding the main effect of <code>meal</code> (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>). Let's simulate some data and run a one-factor ANOVA with <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, and then we'll replicate the analysis using the regression function <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> (note that the same procedure works for mixed-effects models on multilevel data, just using <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> instead of <code>base::lm()</code>).</p>
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## make up some data</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
+<span class="va">meals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>meal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"breakfast"</span>, <span class="st">"lunch"</span>, <span class="st">"dinner"</span><span class="op">)</span>,
+                                  each <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span>,
+                time_of_week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"weekday"</span>, <span class="st">"weekend"</span><span class="op">)</span>,
+                                              each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,
+                calories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">450</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## use sum coding instead of default 'dummy' (treatment) coding</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>unordered <span class="op">=</span> <span class="st">"contr.sum"</span>, ordered <span class="op">=</span> <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">calories</span> <span class="op">~</span> <span class="va">meal</span> <span class="op">*</span> <span class="va">time_of_week</span>, data <span class="op">=</span> <span class="va">meals</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##                   Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## meal               2   2164    1082   0.380  0.692
 ## time_of_week       1   5084    5084   1.783  0.207
 ## meal:time_of_week  2   4767    2384   0.836  0.457
 ## Residuals         12  34209    2851</code></pre>
-<p>We get three <span class="math inline">\(F\)</span>-tests, one for each main effect (<code>meal</code> and <code>time_of_week</code>) one for the interaction. What happens if we fit a model using <code>lm()</code>?</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1"><span class="co">## add our own numeric predictors</span></a>
-<a class="sourceLine" id="cb188-2" title="2">meals2 &lt;-<span class="st"> </span>meals <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb188-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lunch_v_breakfast =</span> <span class="kw">if_else</span>(meal <span class="op">==</span><span class="st"> &quot;lunch&quot;</span>, <span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-1</span><span class="op">/</span><span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb188-4" title="4">         <span class="dt">dinner_v_breakfast =</span> <span class="kw">if_else</span>(meal <span class="op">==</span><span class="st"> &quot;dinner&quot;</span>, <span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-1</span><span class="op">/</span><span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb188-5" title="5">         <span class="dt">time_week =</span> <span class="kw">if_else</span>(time_of_week <span class="op">==</span><span class="st"> &quot;weekend&quot;</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">-1</span><span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb188-6" title="6"></a>
-<a class="sourceLine" id="cb188-7" title="7"><span class="co">## double check our coding</span></a>
-<a class="sourceLine" id="cb188-8" title="8"><span class="kw">distinct</span>(meals2, meal, time_of_week,</a>
-<a class="sourceLine" id="cb188-9" title="9">         lunch_v_breakfast, dinner_v_breakfast, time_week)</a>
-<a class="sourceLine" id="cb188-10" title="10"></a>
-<a class="sourceLine" id="cb188-11" title="11"><span class="co">## fit regression model</span></a>
-<a class="sourceLine" id="cb188-12" title="12">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(calories <span class="op">~</span><span class="st"> </span>(lunch_v_breakfast <span class="op">+</span><span class="st"> </span>dinner_v_breakfast) <span class="op">*</span></a>
-<a class="sourceLine" id="cb188-13" title="13"><span class="st">            </span>time_week, <span class="dt">data =</span> meals2)</a>
-<a class="sourceLine" id="cb188-14" title="14"></a>
-<a class="sourceLine" id="cb188-15" title="15"><span class="kw">summary</span>(mod)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
-##   meal      time_of_week lunch_v_breakfast dinner_v_breakfast time_week
-##   &lt;fct&gt;     &lt;fct&gt;                    &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;
-## 1 breakfast weekday                 -0.333             -0.333      -0.5
-## 2 breakfast weekend                 -0.333             -0.333       0.5
-## 3 lunch     weekday                  0.667             -0.333      -0.5
-## 4 lunch     weekend                  0.667             -0.333       0.5
-## 5 dinner    weekday                 -0.333              0.667      -0.5
-## 6 dinner    weekend                 -0.333              0.667       0.5
-## 
+<p>We get three <span class="math inline">\(F\)</span>-tests, one for each main effect (<code>meal</code> and <code>time_of_week</code>) one for the interaction. What happens if we fit a model using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>?</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## add our own numeric predictors</span>
+<span class="va">meals2</span> <span class="op">&lt;-</span> <span class="va">meals</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>lunch_v_breakfast <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">meal</span> <span class="op">==</span> <span class="st">"lunch"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
+         dinner_v_breakfast <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">meal</span> <span class="op">==</span> <span class="st">"dinner"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
+         time_week <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">time_of_week</span> <span class="op">==</span> <span class="st">"weekend"</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## double check our coding</span>
+<span class="fu">distinct</span><span class="op">(</span><span class="va">meals2</span>, <span class="va">meal</span>, <span class="va">time_of_week</span>,
+         <span class="va">lunch_v_breakfast</span>, <span class="va">dinner_v_breakfast</span>, <span class="va">time_week</span><span class="op">)</span>
+
+<span class="co">## fit regression model</span>
+<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">calories</span> <span class="op">~</span> <span class="op">(</span><span class="va">lunch_v_breakfast</span> <span class="op">+</span> <span class="va">dinner_v_breakfast</span><span class="op">)</span> <span class="op">*</span>
+            <span class="va">time_week</span>, data <span class="op">=</span> <span class="va">meals2</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">meal</th>
+<th align="left">time_of_week</th>
+<th align="right">lunch_v_breakfast</th>
+<th align="right">dinner_v_breakfast</th>
+<th align="right">time_week</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">breakfast</td>
+<td align="left">weekday</td>
+<td align="right">-0.3333333</td>
+<td align="right">-0.3333333</td>
+<td align="right">-0.5</td>
+</tr>
+<tr class="even">
+<td align="left">breakfast</td>
+<td align="left">weekend</td>
+<td align="right">-0.3333333</td>
+<td align="right">-0.3333333</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">lunch</td>
+<td align="left">weekday</td>
+<td align="right">0.6666667</td>
+<td align="right">-0.3333333</td>
+<td align="right">-0.5</td>
+</tr>
+<tr class="even">
+<td align="left">lunch</td>
+<td align="left">weekend</td>
+<td align="right">0.6666667</td>
+<td align="right">-0.3333333</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">dinner</td>
+<td align="left">weekday</td>
+<td align="right">-0.3333333</td>
+<td align="right">0.6666667</td>
+<td align="right">-0.5</td>
+</tr>
+<tr class="even">
+<td align="left">dinner</td>
+<td align="left">weekend</td>
+<td align="right">-0.3333333</td>
+<td align="right">0.6666667</td>
+<td align="right">0.5</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<pre><code>## 
 ## Call:
 ## lm(formula = calories ~ (lunch_v_breakfast + dinner_v_breakfast) * 
 ##     time_week, data = meals2)
@@ -680,77 +605,166 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## lunch_v_breakfast:time_week    -58.31      61.65  -0.946    0.363    
 ## dinner_v_breakfast:time_week    17.93      61.65   0.291    0.776    
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 53.39 on 12 degrees of freedom
 ## Multiple R-squared:  0.2599, Adjusted R-squared:  -0.04843 
 ## F-statistic: 0.843 on 5 and 12 DF,  p-value: 0.5447</code></pre>
 <p>OK, this output looks very different! How do you perform ANOVA-like tests in those situations? You have estimates for <code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code> but how would you convert this into a single test for the main effect of <code>meal</code>? Likewise, you have two interaction terms, <code>lunch_v_breakfast:tow</code> and <code>dinner_v_breakfast:tow</code>; how do you convert this into a single test for the interaction?</p>
-<p>The solution is to perform <strong>multiparameter tests</strong> using model comparison, implemented by the <code>anova()</code> function in R. To test for the main effect of <code>meal</code>, you’d compare a model containing the two predictor variables coding that factor (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>) to a model excluding these two predictors but that is otherwise identical. You can either re-fit the model by writing it out and excluding the terms, or by using the <code>update()</code> function and removing the terms (which is a shortcut). Let’s write it out first.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1"><span class="co">## fit the model</span></a>
-<a class="sourceLine" id="cb190-2" title="2">mod_main_eff &lt;-<span class="st"> </span><span class="kw">lm</span>(calories <span class="op">~</span><span class="st"> </span>time_week <span class="op">+</span></a>
-<a class="sourceLine" id="cb190-3" title="3"><span class="st">                     </span>lunch_v_breakfast<span class="op">:</span>time_week <span class="op">+</span><span class="st"> </span>dinner_v_breakfast<span class="op">:</span>time_week,</a>
-<a class="sourceLine" id="cb190-4" title="4">                   meals2)</a>
-<a class="sourceLine" id="cb190-5" title="5"></a>
-<a class="sourceLine" id="cb190-6" title="6"><span class="co">## compare models</span></a>
-<a class="sourceLine" id="cb190-7" title="7"><span class="kw">anova</span>(mod, mod_main_eff)</a></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
-## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
-##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     12 34209                           
-## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
-<p>OK, now here is an equivalent version using the shortcut <code>update()</code> function, which takes the model you want to update as the first argument and then a special syntax for the formula including your changes. For the formula, we use <code>. ~ . -lunch_v_breakfast -dinner_v_breakfast~</code> Although this formula seems weird, the dot <code>.</code> says “keep everything on this side of the model formula (left of <code>~</code>) as it is in the original model.” So the formula <code>. ~ .</code> would use the same formula as the original model; that is, <code>update(mod, . ~ .)</code> would fit the exact same model as above. In contrast, <code>. ~ . -x -y</code> means "everything the same on the left side (same DV), but remove variables <code>x</code> and <code>y</code> from the right side.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1">mod_main_eff2 &lt;-<span class="st"> </span><span class="kw">update</span>(mod, . <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>lunch_v_breakfast <span class="op">-</span>dinner_v_breakfast)</a>
-<a class="sourceLine" id="cb192-2" title="2"></a>
-<a class="sourceLine" id="cb192-3" title="3"><span class="kw">anova</span>(mod, mod_main_eff2)</a></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
-## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
-##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     12 34209                           
-## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
+<p>The solution is to perform <strong>multiparameter tests</strong> using model comparison, implemented by the <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> function in R. To test for the main effect of <code>meal</code>, you'd compare a model containing the two predictor variables coding that factor (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>) to a model excluding these two predictors but that is otherwise identical. You can either re-fit the model by writing it out and excluding the terms, or by using the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function and removing the terms (which is a shortcut). Let's write it out first.</p>
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## fit the model</span>
+<span class="va">mod_main_eff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">calories</span> <span class="op">~</span> <span class="va">time_week</span> <span class="op">+</span>
+                     <span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span> <span class="op">+</span> <span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>,
+                   <span class="va">meals2</span><span class="op">)</span>
+
+<span class="co">## compare models</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_main_eff</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">34209.44</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">36373.38</td>
+<td align="right">-2</td>
+<td align="right">-2163.936</td>
+<td align="right">0.3795331</td>
+<td align="right">0.6921084</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>OK, now here is an equivalent version using the shortcut <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function, which takes the model you want to update as the first argument and then a special syntax for the formula including your changes. For the formula, we use <code>. ~ . -lunch_v_breakfast -dinner_v_breakfast~</code> Although this formula seems weird, the dot <code>.</code> says "keep everything on this side of the model formula (left of <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>) as it is in the original model." So the formula <code>. ~ .</code> would use the same formula as the original model; that is, <code><a href="https://rdrr.io/r/stats/update.html">update(mod, . ~ .)</a></code> would fit the exact same model as above. In contrast, <code>. ~ . -x -y</code> means "everything the same on the left side (same DV), but remove variables <code>x</code> and <code>y</code> from the right side.</p>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_main_eff2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span> <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_main_eff2</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">34209.44</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">36373.38</td>
+<td align="right">-2</td>
+<td align="right">-2163.936</td>
+<td align="right">0.3795331</td>
+<td align="right">0.6921084</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 <p>As you can see, this gives us the same result as above.</p>
 <p>If we want to test the main effect of <code>time_of_week</code>, we remove that predictor.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1">mod_tow &lt;-<span class="st"> </span><span class="kw">update</span>(mod, . <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>time_week)</a>
-<a class="sourceLine" id="cb194-2" title="2"></a>
-<a class="sourceLine" id="cb194-3" title="3"><span class="kw">anova</span>(mod, mod_tow)</a></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
-## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + lunch_v_breakfast:time_week + 
-##     dinner_v_breakfast:time_week
-##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     12 34209                           
-## 2     13 39294 -1   -5084.1 1.7834 0.2065</code></pre>
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_tow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">time_week</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_tow</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">34209.44</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">39293.55</td>
+<td align="right">-1</td>
+<td align="right">-5084.104</td>
+<td align="right">1.783404</td>
+<td align="right">0.2065107</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 <p>Try to figure out how to test the interaction on your own.</p>
 <div class="webex-solution">
 <button>
 Click to see solution
 </button>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1">mod_interact &lt;-<span class="st"> </span><span class="kw">update</span>(mod, . <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>lunch_v_breakfast<span class="op">:</span>time_week</a>
-<a class="sourceLine" id="cb196-2" title="2">                       <span class="op">-</span>dinner_v_breakfast<span class="op">:</span>time_week)</a>
-<a class="sourceLine" id="cb196-3" title="3"></a>
-<a class="sourceLine" id="cb196-4" title="4"><span class="kw">anova</span>(mod, mod_interact)</a></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
-## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + time_week
-##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     12 34209                           
-## 2     14 38977 -2   -4767.4 0.8362 0.4571</code></pre>
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_interact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>
+                       <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_interact</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">34209.44</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">38976.82</td>
+<td align="right">-2</td>
+<td align="right">-4767.376</td>
+<td align="right">0.836151</td>
+<td align="right">0.4571278</td>
+</tr>
+</tbody>
+</table></div>
 </div>
-<p>We got the exact same results doing model comparison with <code>lm()</code> as we did using <code>aov()</code>. Although this involved more steps, it is worth learning this approach as it will ultimately give you much more flexibility.</p>
+</div>
+<p>We got the exact same results doing model comparison with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> as we did using <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>. Although this involved more steps, it is worth learning this approach as it will ultimately give you much more flexibility.</p>
 
 </div>
-</div>
-</div>
-<h3><span class="header-section-number">B</span> Bibliography</h3>
-<div id="refs" class="references">
-<div id="ref-Luke_2017">
-<p>Luke, Steven G. 2017. “Evaluating Significance in Linear Mixed-Effects Models in R.” <em>Behavior Research Methods</em> 49: 1494–1502.</p>
 </div>
 </div>
 <div class="psyteachr_footer">
@@ -758,16 +772,16 @@ Click to see solution
 </div>
 <script>
 
-/* update total correct if #total_correct exists */
+/* update total correct if #webex-total_correct exists */
 update_total_correct = function() {
-  if (t = document.getElementById("total_correct")) {
+  if (t = document.getElementById("webex-total_correct")) {
     t.innerHTML =
-      document.getElementsByClassName("correct").length + " of " +
-      document.getElementsByClassName("solveme").length + " correct";
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
   }
 }
 
-/* solution button toggling function */
+/* webex-solution button toggling function */
 b_func = function() {
   var cl = this.parentElement.classList;
   if (cl.contains('open')) {
@@ -786,23 +800,23 @@ solveme_func = function(e) {
     my_answer = my_answer.toLowerCase();
   }
   if (cl.contains("nospaces")) {
-    my_answer = my_answer.replace(/ /g, "");
+    my_answer = my_answer.replace(/ /g, "")
   }
   
   if (my_answer !== "" & real_answers.includes(my_answer)) {
-    cl.add("correct");
+    cl.add("webex-correct");
   } else {
-    cl.remove("correct");
+    cl.remove("webex-correct");
   }
 
   // match numeric answers within a specified tolerance
-  if(this.dataset.tol){
+  if(this.dataset.tol > 0){
     var tol = JSON.parse(this.dataset.tol);  
     var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
     if (matches.reduce((a, b) => a + b, 0) > 0) {
-      cl.add("correct");
+      cl.add("webex-correct");
     } else {
-      cl.remove("correct");
+      cl.remove("webex-correct");
     }  
   }
 
@@ -810,7 +824,7 @@ solveme_func = function(e) {
   if (cl.contains("regex")){
     answer_regex = RegExp(real_answers.join("|"))
     if (answer_regex.test(my_answer)) {
-      cl.add("correct");
+      cl.add("webex-correct");
     }  
   }
   
@@ -822,13 +836,13 @@ window.onload = function() {
   var buttons = document.getElementsByTagName("button");
 
   for (var i = 0; i < buttons.length; i++) {
-    if (buttons[i].parentElement.classList.contains('solution')) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
       buttons[i].onclick = b_func;
     }
   }
   
-  /* set up solveme inputs */
-  var solveme = document.getElementsByClassName("solveme");
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
 
   for (var i = 0; i < solveme.length; i++) {
     /* make sure input boxes don't auto-anything */
@@ -857,68 +871,49 @@ window.onload = function() {
   update_total_correct();
 }
 
-</script>
-            </section>
+</script><div class="chapter-nav">
+<div class="prev"><a href="introducing-linear-mixed-effects-models.html"><span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models</a></div>
+<div class="next"><a href="linear-mixed-effects-models-with-crossed-random-factors.html"><span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#linear-mixed-effects-models-with-one-random-factor"><span class="header-section-number">6</span> Linear mixed-effects models with one random factor</a></li>
+<li><a class="nav-link" href="#learning-objectives-2"><span class="header-section-number">6.1</span> Learning objectives</a></li>
+<li><a class="nav-link" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
+<li>
+<a class="nav-link" href="#example-independent-samples-t-test-on-multi-level-data"><span class="header-section-number">6.3</span> Example: Independent-samples \(t\)-test on multi-level data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#when-is-a-random-intercepts-model-appropriate"><span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#expressing-the-study-design-and-performing-tests-in-regression"><span class="header-section-number">6.4</span> Expressing the study design and performing tests in regression</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#factors-with-more-than-two-levels"><span class="header-section-number">6.4.1</span> Factors with more than two levels</a></li>
+<li><a class="nav-link" href="#multiparameter-tests"><span class="header-section-number">6.4.2</span> Multiparameter tests</a></li>
+</ul>
+</li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="introducing-linear-mixed-effects-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-mixed-effects-models-with-crossed-random-factors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-08-25.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
-"google": false
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": {},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -930,7 +925,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>

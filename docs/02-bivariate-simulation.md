@@ -61,14 +61,15 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-```
-## # A tibble: 3 x 4
-##   term       height   mass birth_year
-##   <chr>       <dbl>  <dbl>      <dbl>
-## 1 height     NA      0.134     -0.400
-## 2 mass        0.134 NA          0.478
-## 3 birth_year -0.400  0.478     NA
-```
+<div class="kable-table">
+
+|term       |     height|      mass| birth_year|
+|:----------|----------:|---------:|----------:|
+|height     |         NA| 0.1338842| -0.3998723|
+|mass       |  0.1338842|        NA|  0.4781391|
+|birth_year | -0.3998723| 0.4781391|         NA|
+
+</div>
 
 You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between `height` and `mass` is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only `choose(3, 2)` = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending `corrr::shave()` to our pipeline.
 
@@ -86,14 +87,15 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-```
-## # A tibble: 3 x 4
-##   term       height   mass birth_year
-##   <chr>       <dbl>  <dbl>      <dbl>
-## 1 height     NA     NA             NA
-## 2 mass        0.134 NA             NA
-## 3 birth_year -0.400  0.478         NA
-```
+<div class="kable-table">
+
+|term       |     height|      mass| birth_year|
+|:----------|----------:|---------:|----------:|
+|height     |         NA|        NA|         NA|
+|mass       |  0.1338842|        NA|         NA|
+|birth_year | -0.3998723| 0.4781391|         NA|
+
+</div>
 
 Now we've only got the lower triangle of the correlation matrix, but the `NA` values are ugly and so are the leading zeroes. The **`corrr`** package also provides the `fashion()` function that cleans things up (see `?corrr::fashion` for more options).
 
@@ -112,12 +114,15 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-```
-##         term height mass birth_year
-## 1     height                       
-## 2       mass    .13                
-## 3 birth_year   -.40  .48
-```
+<div class="kable-table">
+
+|term       |height |mass |birth_year |
+|:----------|:------|:----|:----------|
+|height     |       |     |           |
+|mass       |.13    |     |           |
+|birth_year |-.40   |.48  |           |
+
+</div>
 
 Correlations only provide a good description of the relationship if the relationship is (roughly) linear and there aren't severe outliers that are wielding too strong of an influence on the results. So it is always a good idea to visualize the correlations as well as to quantify them.  The `base::pairs()` function does this. The first argument to `pairs()` is simply of the form `~ v1 + v2 + v3 + ... + vn` where `v1`, `v2`, etc. are the names of the variables you want to correlate.
 
@@ -140,12 +145,13 @@ starwars %>%
   select(name, mass, height, birth_year)
 ```
 
-```
-## # A tibble: 1 x 4
-##   name                   mass height birth_year
-##   <chr>                 <dbl>  <int>      <dbl>
-## 1 Jabba Desilijic Tiure  1358    175        600
-```
+<div class="kable-table">
+
+|name                  | mass| height| birth_year|
+|:---------------------|----:|------:|----------:|
+|Jabba Desilijic Tiure | 1358|    175|        600|
+
+</div>
 
 OK, let's see how the data look without this massive creature.
 
@@ -171,12 +177,13 @@ starwars2 %>%
   select(name, height, mass, birth_year)
 ```
 
-```
-## # A tibble: 1 x 4
-##   name  height  mass birth_year
-##   <chr>  <int> <dbl>      <dbl>
-## 1 Yoda      66    17        896
-```
+<div class="kable-table">
+
+|name | height| mass| birth_year|
+|:----|------:|----:|----------:|
+|Yoda |     66|   17|        896|
+
+</div>
 
 It's Yoda. He's as old as the universe. Let's drop him and see how the plots look.
 
@@ -210,12 +217,15 @@ starwars3 %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-```
-##         term height mass birth_year
-## 1     height                       
-## 2       mass    .74                
-## 3 birth_year    .45  .24
-```
+<div class="kable-table">
+
+|term       |height |mass |birth_year |
+|:----------|:------|:----|:----------|
+|height     |       |     |           |
+|mass       |.74    |     |           |
+|birth_year |.45    |.24  |           |
+
+</div>
 
 Note that these values are quite different from the ones we started with.
 
@@ -236,12 +246,15 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-```
-##         term height mass birth_year
-## 1     height                       
-## 2       mass    .75                
-## 3 birth_year    .16  .15
-```
+<div class="kable-table">
+
+|term       |height |mass |birth_year |
+|:----------|:------|:----|:----------|
+|height     |       |     |           |
+|mass       |.75    |     |           |
+|birth_year |.16    |.15  |           |
+
+</div>
 
 Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use `knitr::kable()`.
 
@@ -272,7 +285,7 @@ It should be clear that you can't just run `rnorm()` twice and combine the varia
 The package **`MASS`** provides a function `mvrnorm()` which is the 'multivariate' version of rnorm (hence the function name, `mv` + `rnorm`, which makes it easy to remember.
 
 <div class="watchout">
-<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you’ll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code>library("MASS")</code>, it is preferable to use <code>MASS::mvrnorm()</code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don’t play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you’ll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code>MASS::mvrnorm()</code> without loading <code>library("MASS")</code>.</p>
+<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you'll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code>library("MASS")</code>, it is preferable to use <code>MASS::mvrnorm()</code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don't play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you'll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code>MASS::mvrnorm()</code> without loading <code>library("MASS")</code>.</p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
 MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the ass. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>

@@ -15,6 +15,11 @@ dplyr
 stringr
 forcats
 webex
+knitr
+faux
+rvest
+xml2
+glossary
 kableExtra
 Matrix
 lme4

@@ -67,13 +67,28 @@ rainy_days %>%
   summarise(sd = sd(days_of_rain))
 ```
 
-```
-## # A tibble: 2 x 2
-##   city         sd
-##   <chr>     <dbl>
-## 1 Barcelona  6.61
-## 2 Glasgow    9.74
-```
+<div class="kable-table">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> city </th>
+   <th style="text-align:right;"> sd </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Barcelona </td>
+   <td style="text-align:right;"> 6.434307 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Glasgow </td>
+   <td style="text-align:right;"> 9.659892 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 
 
 #### Spurious interactions due to scaling effects

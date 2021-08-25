@@ -91,22 +91,112 @@ dat <- tibble(group = rep(c("parent", "control"), c(length(parents), length(cont
 dat
 ```
 
-```
-## # A tibble: 100 x 2
-##    group     rt
-##    <chr>  <dbl>
-##  1 parent  495.
-##  2 parent  492.
-##  3 parent  436.
-##  4 parent  435.
-##  5 parent  368.
-##  6 parent  509.
-##  7 parent  518.
-##  8 parent  471.
-##  9 parent  550.
-## 10 parent  485.
-## # … with 90 more rows
-```
+<div class="kable-table">
+
+|group   |       rt|
+|:-------|--------:|
+|parent  | 495.0789|
+|parent  | 492.0619|
+|parent  | 436.0791|
+|parent  | 434.7838|
+|parent  | 368.1386|
+|parent  | 508.8229|
+|parent  | 517.5648|
+|parent  | 470.8249|
+|parent  | 550.3653|
+|parent  | 484.6947|
+|parent  | 445.8751|
+|parent  | 516.3704|
+|parent  | 527.8549|
+|parent  | 465.1366|
+|parent  | 475.0696|
+|parent  | 552.0017|
+|parent  | 548.1598|
+|parent  | 358.4494|
+|parent  | 388.4410|
+|parent  | 482.3321|
+|parent  | 566.9746|
+|parent  | 523.9273|
+|parent  | 492.7288|
+|parent  | 477.0741|
+|parent  | 513.3707|
+|parent  | 487.9500|
+|parent  | 531.9137|
+|parent  | 517.4687|
+|parent  | 474.1027|
+|parent  | 484.4173|
+|parent  | 447.4998|
+|parent  | 450.2519|
+|parent  | 523.8138|
+|parent  | 577.4149|
+|parent  | 495.5247|
+|parent  | 491.6251|
+|parent  | 468.5761|
+|parent  | 483.0406|
+|parent  | 457.5881|
+|parent  | 497.8875|
+|parent  | 516.3400|
+|parent  | 459.7976|
+|parent  | 467.9598|
+|parent  | 450.9586|
+|parent  | 432.7969|
+|parent  | 490.1230|
+|parent  | 465.1715|
+|parent  | 480.8872|
+|parent  | 506.4018|
+|parent  | 499.5517|
+|control | 492.4484|
+|control | 524.0544|
+|control | 473.0496|
+|control | 519.0420|
+|control | 504.7501|
+|control | 504.8491|
+|control | 492.5581|
+|control | 446.8692|
+|control | 477.3231|
+|control | 523.1534|
+|control | 576.3615|
+|control | 510.0303|
+|control | 436.0674|
+|control | 628.0653|
+|control | 538.2094|
+|control | 514.7458|
+|control | 536.9168|
+|control | 491.7791|
+|control | 503.7187|
+|control | 506.7305|
+|control | 531.8336|
+|control | 565.8402|
+|control | 431.3230|
+|control | 487.2663|
+|control | 463.8344|
+|control | 471.8403|
+|control | 428.8760|
+|control | 471.1098|
+|control | 501.8462|
+|control | 509.7463|
+|control | 525.1333|
+|control | 499.0145|
+|control | 592.5661|
+|control | 507.0884|
+|control | 459.0234|
+|control | 590.9873|
+|control | 424.4377|
+|control | 543.7581|
+|control | 573.8467|
+|control | 520.8413|
+|control | 438.6815|
+|control | 422.4254|
+|control | 519.4767|
+|control | 549.8095|
+|control | 491.3091|
+|control | 468.8163|
+|control | 513.9550|
+|control | 527.2690|
+|control | 478.7415|
+|control | 472.9043|
+
+</div>
 
 Here are some things to try with this simulated data.
 

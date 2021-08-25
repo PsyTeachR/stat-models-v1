@@ -72,7 +72,7 @@ div.color-theme-2 .book-body .page-wrapper .page-inner section.normal strong cod
 
 /* set styles for alert boxes */
 
-.watchout, .danger, .warning, .info , .alert, .try {
+.danger, .warning, .info , .alert, .try {
   padding: 1em 1em 0.25em 3.5em;
   margin-bottom: 10px;
   background-color: hsla(0, 0%, 100%, .1);
@@ -82,7 +82,7 @@ div.color-theme-2 .book-body .page-wrapper .page-inner section.normal strong cod
   border-radius: 0.5em;
 }
 
-.danger, .watchout {
+.danger {
   background-image: url("../images/alerts/danger.svg");
   background-color: hsla(315, 42%, 42%, .10);
   border: 1px solid var(--pink);
@@ -107,27 +107,6 @@ div.color-theme-2 .book-body .page-wrapper .page-inner section.normal strong cod
   background-position: 0.5em -.25em;
 }
 
-/* styles for webex-solveme */
-.webex-solveme { border: 2px dotted red; }
-.webex-solveme.webex-correct { border: 2px solid blue; }
-/* styles for hidden solutions */
-.webex-solution {
-    height: 2.5em;
-    overflow-y: hidden;
-    padding: 0.5em;
-}
-.webex-solution.open {
-    height: auto;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-.webex-solution button {
-    height: 2em;
-    margin-bottom: 0.5em;
-}
-.webex-solution pre.sourceCode {
-    border-color: green;
-}
 
 /* verbatim code chunks with ```{r ...} at top */
 
