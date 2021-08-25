@@ -633,16 +633,16 @@ fake_data
 
 |          Y|group |
 |----------:|:-----|
-|  0.4827963|A     |
-| -0.5740740|A     |
-|  0.5878810|A     |
-| -0.7380709|A     |
-| -0.3078509|A     |
-| -0.0508260|B     |
-| -0.8307008|B     |
-| -1.6521542|B     |
-| -0.3067577|B     |
-|  1.0981488|B     |
+|  0.7707267|A     |
+| -0.3581103|A     |
+|  0.0958458|A     |
+|  0.2285746|A     |
+| -0.1617313|A     |
+|  0.2599542|B     |
+| -0.5591656|B     |
+| -1.5333009|B     |
+|  0.9451036|B     |
+| -0.3915534|B     |
 
 </div>
 
@@ -660,16 +660,16 @@ fake_data2
 
 |          Y|group | group_d|
 |----------:|:-----|-------:|
-|  0.4827963|A     |       0|
-| -0.5740740|A     |       0|
-|  0.5878810|A     |       0|
-| -0.7380709|A     |       0|
-| -0.3078509|A     |       0|
-| -0.0508260|B     |       1|
-| -0.8307008|B     |       1|
-| -1.6521542|B     |       1|
-| -0.3067577|B     |       1|
-|  1.0981488|B     |       1|
+|  0.7707267|A     |       0|
+| -0.3581103|A     |       0|
+|  0.0958458|A     |       0|
+|  0.2285746|A     |       0|
+| -0.1617313|A     |       0|
+|  0.2599542|B     |       1|
+| -0.5591656|B     |       1|
+| -1.5333009|B     |       1|
+|  0.9451036|B     |       1|
+| -0.3915534|B     |       1|
 
 </div>
 
@@ -687,16 +687,16 @@ summary(lm(Y ~ group_d, fake_data2))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -1.30370 -0.47773 -0.07814  0.51890  1.44661 
+## -1.27751 -0.29673 -0.07749  0.41519  1.20090 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.1099     0.3743  -0.294    0.777
-## group_d      -0.2386     0.5293  -0.451    0.664
+## (Intercept)   0.1151     0.3238   0.355    0.732
+## group_d      -0.3709     0.4579  -0.810    0.441
 ## 
-## Residual standard error: 0.8369 on 8 degrees of freedom
-## Multiple R-squared:  0.02477,	Adjusted R-squared:  -0.09713 
-## F-statistic: 0.2032 on 1 and 8 DF,  p-value: 0.6641
+## Residual standard error: 0.7241 on 8 degrees of freedom
+## Multiple R-squared:  0.07576,	Adjusted R-squared:  -0.03976 
+## F-statistic: 0.6558 on 1 and 8 DF,  p-value: 0.4415
 ```
 
 Note that if we reverse the coding we get the same result, just the sign is different.
@@ -716,16 +716,16 @@ summary(lm(Y ~ group_d, fake_data3))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -1.30370 -0.47773 -0.07814  0.51890  1.44661 
+## -1.27751 -0.29673 -0.07749  0.41519  1.20090 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.3485     0.3743  -0.931    0.379
-## group_d       0.2386     0.5293   0.451    0.664
+## (Intercept)  -0.2558     0.3238   -0.79    0.452
+## group_d       0.3709     0.4579    0.81    0.441
 ## 
-## Residual standard error: 0.8369 on 8 degrees of freedom
-## Multiple R-squared:  0.02477,	Adjusted R-squared:  -0.09713 
-## F-statistic: 0.2032 on 1 and 8 DF,  p-value: 0.6641
+## Residual standard error: 0.7241 on 8 degrees of freedom
+## Multiple R-squared:  0.07576,	Adjusted R-squared:  -0.03976 
+## F-statistic: 0.6558 on 1 and 8 DF,  p-value: 0.4415
 ```
 
 The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, $\beta_1$ can be interpreted as the difference between the mean for the baseline group and the group coded as 1.
@@ -759,26 +759,26 @@ mydata
 
 |season | bodyweight_kg|
 |:------|-------------:|
-|winter |     104.06775|
-|winter |     106.02152|
-|winter |     102.34202|
-|winter |     102.12390|
-|winter |     102.84049|
-|spring |      99.26328|
-|spring |     100.93551|
-|spring |      99.64912|
-|spring |     103.64669|
-|spring |     107.41195|
-|summer |     102.73417|
-|summer |     105.78966|
-|summer |      98.66112|
-|summer |     103.88219|
-|summer |     101.56537|
-|fall   |     101.13225|
-|fall   |     105.23585|
-|fall   |     103.14270|
-|fall   |     104.94464|
-|fall   |     101.34257|
+|winter |     104.16689|
+|winter |     103.02393|
+|winter |     100.92044|
+|winter |     106.07710|
+|winter |     101.84872|
+|spring |     101.06252|
+|spring |     101.37693|
+|spring |     104.98141|
+|spring |     103.05045|
+|spring |     100.32848|
+|summer |      98.85887|
+|summer |     102.33980|
+|summer |      99.11723|
+|summer |     102.29492|
+|summer |     101.53384|
+|fall   |     100.12382|
+|fall   |     100.39926|
+|fall   |     100.49087|
+|fall   |     102.34831|
+|fall   |     103.00957|
 
 </div>
 
@@ -799,26 +799,26 @@ mydata2
 
 |season | bodyweight_kg| V1| V2| V3|
 |:------|-------------:|--:|--:|--:|
-|winter |     104.06775|  0|  0|  0|
-|winter |     106.02152|  0|  0|  0|
-|winter |     102.34202|  0|  0|  0|
-|winter |     102.12390|  0|  0|  0|
-|winter |     102.84049|  0|  0|  0|
-|spring |      99.26328|  1|  0|  0|
-|spring |     100.93551|  1|  0|  0|
-|spring |      99.64912|  1|  0|  0|
-|spring |     103.64669|  1|  0|  0|
-|spring |     107.41195|  1|  0|  0|
-|summer |     102.73417|  0|  1|  0|
-|summer |     105.78966|  0|  1|  0|
-|summer |      98.66112|  0|  1|  0|
-|summer |     103.88219|  0|  1|  0|
-|summer |     101.56537|  0|  1|  0|
-|fall   |     101.13225|  0|  0|  1|
-|fall   |     105.23585|  0|  0|  1|
-|fall   |     103.14270|  0|  0|  1|
-|fall   |     104.94464|  0|  0|  1|
-|fall   |     101.34257|  0|  0|  1|
+|winter |     104.16689|  0|  0|  0|
+|winter |     103.02393|  0|  0|  0|
+|winter |     100.92044|  0|  0|  0|
+|winter |     106.07710|  0|  0|  0|
+|winter |     101.84872|  0|  0|  0|
+|spring |     101.06252|  1|  0|  0|
+|spring |     101.37693|  1|  0|  0|
+|spring |     104.98141|  1|  0|  0|
+|spring |     103.05045|  1|  0|  0|
+|spring |     100.32848|  1|  0|  0|
+|summer |      98.85887|  0|  1|  0|
+|summer |     102.33980|  0|  1|  0|
+|summer |      99.11723|  0|  1|  0|
+|summer |     102.29492|  0|  1|  0|
+|summer |     101.53384|  0|  1|  0|
+|fall   |     100.12382|  0|  0|  1|
+|fall   |     100.39926|  0|  0|  1|
+|fall   |     100.49087|  0|  0|  1|
+|fall   |     102.34831|  0|  0|  1|
+|fall   |     103.00957|  0|  0|  1|
 
 </div>
 
@@ -838,8 +838,8 @@ summary(my_anova)
 
 ```
 ##             Df Sum Sq Mean Sq F value Pr(>F)
-## season       3   5.21   1.738   0.279   0.84
-## Residuals   16  99.64   6.227
+## season       3  16.56   5.519    1.81  0.186
+## Residuals   16  48.80   3.050
 ```
 
 OK, now can we replicate that result using the regression model below?
@@ -858,20 +858,20 @@ summary(lm(bodyweight_kg ~ V1 + V2 + V3, mydata3))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.8654 -1.4707 -0.3278  1.5453  5.2306 
+## -2.2870 -1.2026 -0.4833  1.1720  2.8697 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 103.4791     1.1160  92.723   <2e-16 ***
-## V1           -1.2978     1.5783  -0.822    0.423    
-## V2           -0.9526     1.5783  -0.604    0.555    
-## V3           -0.3195     1.5783  -0.202    0.842    
+## (Intercept)  103.207      0.781 132.145   <2e-16 ***
+## V1            -1.048      1.105  -0.948   0.3571    
+## V2            -2.378      1.105  -2.153   0.0469 *  
+## V3            -1.933      1.105  -1.750   0.0992 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.495 on 16 degrees of freedom
-## Multiple R-squared:  0.04973,	Adjusted R-squared:  -0.1285 
-## F-statistic: 0.2791 on 3 and 16 DF,  p-value: 0.8397
+## Residual standard error: 1.746 on 16 degrees of freedom
+## Multiple R-squared:  0.2533,	Adjusted R-squared:  0.1133 
+## F-statistic:  1.81 on 3 and 16 DF,  p-value: 0.186
 ```
 
 Note that the $F$ values and $p$ values are identical for the two methods!

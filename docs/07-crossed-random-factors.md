@@ -44,10 +44,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  19|2020-05-14 |
-|          2|  39|2020-05-17 |
-|          3|  55|2020-05-20 |
-|          4|  30|2020-05-23 |
+|          1|  67|2020-04-30 |
+|          2|  25|2020-05-06 |
+|          3|  21|2020-05-09 |
+|          4|  67|2020-05-10 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
@@ -312,6 +312,8 @@ abc_data %>%
 
 
 
+<div class='webex-solution'><button>Solution</button>
+
 ```r
 abc_data %>%
   count(stimulus_id, C)
@@ -326,6 +328,7 @@ abc_data %>%
 |           3|C1 |  4|
 |           4|C2 |  4|
 
+</div>
 </div>
 
 

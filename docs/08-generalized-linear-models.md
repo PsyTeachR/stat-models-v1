@@ -79,11 +79,11 @@ rainy_days %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> Barcelona </td>
-   <td style="text-align:right;"> 6.434307 </td>
+   <td style="text-align:right;"> 6.857233 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Glasgow </td>
-   <td style="text-align:right;"> 9.659892 </td>
+   <td style="text-align:right;"> 9.608025 </td>
   </tr>
 </tbody>
 </table>

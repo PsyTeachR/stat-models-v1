@@ -1,19 +1,21 @@
 --- 
 title: "Learning Statistical Models Through Simulation in R"
+subtitle: "psyteachr books"
 author: "Dale J. Barr"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-biblio-style: apalike
+biblio-style: apa
+csl: include/apa.csl
 link-citations: yes
 description: "Textbook on statistical models for social scientists."
 url: "https://psyteachr.github.io/stat-models-v1"
 github-repo: "psyteachr/stat-models-v1"
-cover-image: "images/logo.png"
-apple-touch-icon: "images/apple-touch-icon.png"
+cover-image: "images/logos/twitter_card.png"
+apple-touch-icon: "images/logos/apple-touch-icon.png"
 apple-touch-icon-size: 180
-favicon: "images/favicon.ico"
+favicon: "images/logos/favicon.ico"
 ---
 
 ```{r cite-packages, include = FALSE}
@@ -28,6 +30,9 @@ knitr::write_bib(c(
 # Overview {-}
 
 This textbook approaches statistical analysis through the General Linear Model, taking a simulation-based approach in the R software environment. The overarching goal is to teach students how to translate a description of the design of a study into a linear model to analyze data from that study. The focus is on the skills needed to analyze data from psychology experiments.
+
+<div class="small_right"><img src="images/logos/models.png" 
+     alt="Stat Models Hex Logo" /></div>
 
 The following topics are covered:
 
@@ -44,14 +49,14 @@ Unlike other textbooks you may have encountered, this is an **interactive textbo
 
 ## How to cite this book {-}
 
-Barr, Dale J. (2021). *Learning statistical models through simulation in R: An interactive textbook*. Version 1.0.0. Retrieved from <https://psyteachr.github.io/book/ug3-stats>.
+Barr, Dale J. (2021). *Learning statistical models through simulation in R: An interactive textbook*. Version 1.0.0. Retrieved from <https://psyteachr.github.io/stat-models-v1>.
 
 ## Found an issue? {-}
 
-If you find errors or typos, have questions or suggestions, please file an issue at <https://github.com/psyteachr/ug3-stats/issues>. Thanks!
+If you find errors or typos, have questions or suggestions, please file an issue at <https://github.com/psyteachr/stat-models-v1/issues>. Thanks!
 
 ## Information for educators {-}
 
 You are free to re-use and modify the material in this textbook for your own purposes, with the stipulation that you cite the original work. Please note additional terms of the [Creative Commons CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) governing re-use of this material.
 
-The book was built using the R [**`bookdown`**](https://bookdown.org) package. The source files are available at [github](https://github.com/psyteachr/ug3-stats).
+The book was built using the R [**`bookdown`**](https://bookdown.org) package. The source files are available at [github](https://github.com/psyteachr/stat-models-v1).
