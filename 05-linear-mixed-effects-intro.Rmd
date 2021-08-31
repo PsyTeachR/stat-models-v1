@@ -376,13 +376,9 @@ In the no-pooling model, we treated `Subject` as a `r glossary("fixed factor", d
 
 Partial pooling happens when you treat a factor as a random instead of fixed in your analysis. A `r glossary("random factor", display = "**random factor**")` is a factor whose levels are considered to represent a proper subset of all the levels in the population. Usually, you treat a factor as random when the levels you have in the data are the result of sampling, and you want to generalize beyond those levels. In this case, we have eighteen unique subjects and thus, eighteen levels of the `Subject` factor, and would like to say something general about effects of sleep deprivation on the population of potential subjects.
 
-Just as there are two types of factors---fixed and random---there are 
+<!-- Just as there are two types of factors---fixed and random---there are -->
 
-A way to include random factors in your analysis is to use a `r glossary("linear mixed-effects model")`. 
-
-estimates at each level of the factor (i.e., for each subject) become informed by information from other levels (i.e., other subjects). Rather than estimating the intercept and slope for each participant without considering the estimates for other subjects, the model estimates values for the population, and pulls the estimates for individual subjects toward those values, a statistical phenomenon known as `shrinkage`. 
-
-The population estimates are informed by the individual estimates, but each individual estimate is "pulled" toward the population value.
+A way to include random factors in your analysis is to use a `r glossary("linear mixed-effects model")`. When you do this, estimates at each level of the factor (i.e., for each subject) become informed by information at other levels (i.e., for other subjects). Rather than estimating the intercept and slope for each participant without considering the estimates for other subjects, the model estimates values for the population, and pulls the estimates for individual subjects toward those values, a statistical phenomenon known as `shrinkage`. 
 
 The multilevel model is below. It is important that you understand the math and what it means. It looks complicated at first, but there's really nothing below that you haven't seen before. We'll explain everything step by step.
 
@@ -570,7 +566,7 @@ newdata <- crossing(
   Subject = sleep2 %>% pull(Subject) %>% levels() %>% factor(),
   days_deprived = 0:7)
 
-newdata
+head(newdata, 17)
 ```
 
 Then, run this through `predict()`. Typically we will add the prediction in as a new variable in the data frame of new data, giving it the same name as our DV (`Reaction`).
