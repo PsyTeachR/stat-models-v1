@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Modeling Ordinal Data | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="It is perhaps easiest to think about ordinal data by viewing it as a more general case of logistic regression. In logistic regression, the response variable \(Y\) has two categories (e.g., 0, 1),...">
+<meta name="description" content='Nothing to see here (yet)! Stay tuned...     /* update total correct if #webex-total_correct exists */ update_total_correct = function() {  if (t = document.getElementById("webex-total_correct"))...'>
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Modeling Ordinal Data | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/modeling-ordinal-data.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="It is perhaps easiest to think about ordinal data by viewing it as a more general case of logistic regression. In logistic regression, the response variable \(Y\) has two categories (e.g., 0, 1),...">
+<meta property="og:description" content='Nothing to see here (yet)! Stay tuned...     /* update total correct if #webex-total_correct exists */ update_total_correct = function() {  if (t = document.getElementById("webex-total_correct"))...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 9 Modeling Ordinal Data | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="It is perhaps easiest to think about ordinal data by viewing it as a more general case of logistic regression. In logistic regression, the response variable \(Y\) has two categories (e.g., 0, 1),...">
+<meta name="twitter:description" content='Nothing to see here (yet)! Stay tuned...     /* update total correct if #webex-total_correct exists */ update_total_correct = function() {  if (t = document.getElementById("webex-total_correct"))...'>
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,27 +76,8 @@
 <h1>
 <span class="header-section-number">9</span> Modeling Ordinal Data<a class="anchor" aria-label="anchor" href="#modeling-ordinal-data"><i class="fas fa-link"></i></a>
 </h1>
-<p>It is perhaps easiest to think about ordinal data by viewing it as a more general case of logistic regression. In logistic regression, the response variable <span class="math inline">\(Y\)</span> has two categories (e.g., 0, 1), with the model intercept representing the point in log odds space where 0 and 1 are equiprobable.</p>
-<p><span class="math display">\[\eta = \beta_0 + \beta_1 X_i\]</span></p>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">xx</span> <span class="op">+</span> <span class="fl">3</span>
-<span class="va">yy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">ras</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="fu">crossing</span><span class="op">(</span><span class="va">xx</span>, <span class="va">yy</span><span class="op">)</span> <span class="op">%&gt;%</span>
-                 <span class="fu">mutate</span><span class="op">(</span>zz <span class="op">=</span> <span class="va">yy</span>, cat <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>,
-                 <span class="fu">crossing</span><span class="op">(</span><span class="va">xx</span>, <span class="va">yy</span><span class="op">)</span> <span class="op">%&gt;%</span>
-                 <span class="fu">mutate</span><span class="op">(</span>zz <span class="op">=</span> <span class="va">yy</span> <span class="op">+</span> <span class="fl">1.5</span>, cat <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span><span class="op">)</span>
-          
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">ras</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">xx</span>, <span class="va">yy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_raster</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">zz</span><span class="op">)</span>, interpolate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_gradient2</span><span class="op">(</span>high <span class="op">=</span> <span class="st">"green"</span>, low <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">cat</span><span class="op">)</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:start"></span>
-<img src="09-ordinal_files/figure-html/start-1.png" alt="TODO" width="100%"><p class="caption">
-Figure 9.1: TODO
-</p>
+<div class="warning">
+<p>Nothing to see here (yet)! Stay tuned...</p>
 </div>
 
 </div>
@@ -241,7 +222,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-25.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

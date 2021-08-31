@@ -1,5 +1,9 @@
 # Linear mixed-effects models with crossed random factors
 
+```{r chapter-status, echo=FALSE, results='asis'}
+chapter_status("incomplete")
+```
+
 ## Learning objectives
 
 * analyze data from a design with crossed random factors of subjects and stimuli

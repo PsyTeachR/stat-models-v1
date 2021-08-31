@@ -1,5 +1,9 @@
 # Introduction
 
+:::{.warning}
+This chapter is under construction as of August 31, 2021; contents may change!
+:::
+
 ## Goal of this course
 
 The goal of this course is to teach you how to simulate and analyze the various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral data---e.g., measures of reaction time, perceptual judgments, choices, decision, ratings on a survey, hours of sleep, etc.---usually collected in the context of a study or experiment. 

@@ -1,5 +1,9 @@
 # Understanding correlation and regression through bivariate simulation
 
+```{r chapter-status, echo=FALSE, results='asis'}
+chapter_status("incomplete")
+```
+
 * Packages used: 
     + **`tidyverse`**
     + **`corrr`**

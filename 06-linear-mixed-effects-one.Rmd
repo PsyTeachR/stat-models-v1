@@ -1,5 +1,9 @@
 # Linear mixed-effects models with one random factor
 
+```{r chapter-status, echo=FALSE, results='asis'}
+chapter_status("incomplete")
+```
+
 ## Learning objectives
 
 * understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate

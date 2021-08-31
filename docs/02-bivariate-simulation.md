@@ -1,5 +1,9 @@
 # Understanding correlation and regression through bivariate simulation
 
+:::{.warning}
+This chapter is under construction as of August 31, 2021; contents may change!
+:::
+
 * Packages used: 
     + **`tidyverse`**
     + **`corrr`**

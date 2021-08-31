@@ -1,5 +1,9 @@
 # Introducing Linear Mixed-Effects Models
 
+:::{.warning}
+This chapter is under construction as of August 31, 2021; contents may change!
+:::
+
 
 
 ## Learning objectives

@@ -1,5 +1,9 @@
 # Generalized linear mixed-effects models
 
+```{r chapter-status, echo=FALSE, results='asis'}
+chapter_status("incomplete")
+```
+
 ```{r setup, include=FALSE}
 library("kableExtra")
 library("tidyverse")

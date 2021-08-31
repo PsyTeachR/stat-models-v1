@@ -1,5 +1,9 @@
 # Generalized linear mixed-effects models
 
+:::{.warning}
+This chapter is under construction as of August 31, 2021; contents may change!
+:::
+
 
 
 ## Learning objectives
@@ -79,11 +83,11 @@ rainy_days %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> Barcelona </td>
-   <td style="text-align:right;"> 6.857233 </td>
+   <td style="text-align:right;"> 7.011794 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Glasgow </td>
-   <td style="text-align:right;"> 9.608025 </td>
+   <td style="text-align:right;"> 9.087307 </td>
   </tr>
 </tbody>
 </table>

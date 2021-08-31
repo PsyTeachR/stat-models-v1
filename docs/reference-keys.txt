@@ -25,7 +25,6 @@ fig:pp-plot
 fig:extrap-plot
 fig:rbinom
 fig:logit-app
-fig:start
 introduction
 goal-of-this-course
 flexibility

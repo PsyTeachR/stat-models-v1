@@ -1,5 +1,9 @@
 # Multiple regression
 
+```{r chapter-status, echo=FALSE, results='asis'}
+chapter_status("incomplete")
+```
+
 General model for single-level data with $m$ predictors:
 
 $$

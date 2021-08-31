@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \] The individual \(X_{hi}\) variables can be any...">
+<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/multiple-regression.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \] The individual \(X_{hi}\) variables can be any...">
+<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \] The individual \(X_{hi}\) variables can be any...">
+<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,6 +76,9 @@
 <h1>
 <span class="header-section-number">3</span> Multiple regression<a class="anchor" aria-label="anchor" href="#multiple-regression"><i class="fas fa-link"></i></a>
 </h1>
+<div class="warning">
+<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
+</div>
 <p>General model for single-level data with <span class="math inline">\(m\)</span> predictors:</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
@@ -1941,43 +1944,43 @@ z = \frac{X - \mu_x}{\sigma_x}
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">0.7707267</td>
+<td align="right">-0.0548731</td>
 <td align="left">A</td>
 </tr>
 <tr class="even">
-<td align="right">-0.3581103</td>
-<td align="left">A</td>
-</tr>
-<tr class="odd">
-<td align="right">0.0958458</td>
-<td align="left">A</td>
-</tr>
-<tr class="even">
-<td align="right">0.2285746</td>
+<td align="right">0.7537445</td>
 <td align="left">A</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.1617313</td>
+<td align="right">0.5065243</td>
 <td align="left">A</td>
 </tr>
 <tr class="even">
-<td align="right">0.2599542</td>
+<td align="right">1.5966796</td>
+<td align="left">A</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.2969751</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="right">0.2049147</td>
 <td align="left">B</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.5591656</td>
+<td align="right">1.1649721</td>
 <td align="left">B</td>
 </tr>
 <tr class="even">
-<td align="right">-1.5333009</td>
+<td align="right">-1.5696485</td>
 <td align="left">B</td>
 </tr>
 <tr class="odd">
-<td align="right">0.9451036</td>
+<td align="right">-0.3248692</td>
 <td align="left">B</td>
 </tr>
 <tr class="even">
-<td align="right">-0.3915534</td>
+<td align="right">-0.0727994</td>
 <td align="left">B</td>
 </tr>
 </tbody>
@@ -1998,52 +2001,52 @@ z = \frac{X - \mu_x}{\sigma_x}
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">0.7707267</td>
+<td align="right">-0.0548731</td>
 <td align="left">A</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="right">-0.3581103</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">0.0958458</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">0.2285746</td>
+<td align="right">0.7537445</td>
 <td align="left">A</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.1617313</td>
+<td align="right">0.5065243</td>
 <td align="left">A</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="right">0.2599542</td>
+<td align="right">1.5966796</td>
+<td align="left">A</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.2969751</td>
+<td align="left">A</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">0.2049147</td>
 <td align="left">B</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.5591656</td>
+<td align="right">1.1649721</td>
 <td align="left">B</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="right">-1.5333009</td>
+<td align="right">-1.5696485</td>
 <td align="left">B</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="right">0.9451036</td>
+<td align="right">-0.3248692</td>
 <td align="left">B</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="right">-0.3915534</td>
+<td align="right">-0.0727994</td>
 <td align="left">B</td>
 <td align="right">1</td>
 </tr>
@@ -2058,17 +2061,17 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## lm(formula = Y ~ group_d, data = fake_data2)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.27751 -0.29673 -0.07749  0.41519  1.20090 
+##     Min      1Q  Median      3Q     Max 
+## -1.4502 -0.4683  0.0261  0.3065  1.2845 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.1151     0.3238   0.355    0.732
-## group_d      -0.3709     0.4579  -0.810    0.441
+## (Intercept)   0.5010     0.3909   1.282    0.236
+## group_d      -0.6205     0.5528  -1.122    0.294
 ## 
-## Residual standard error: 0.7241 on 8 degrees of freedom
-## Multiple R-squared:  0.07576,    Adjusted R-squared:  -0.03976 
-## F-statistic: 0.6558 on 1 and 8 DF,  p-value: 0.4415</code></pre>
+## Residual standard error: 0.8741 on 8 degrees of freedom
+## Multiple R-squared:  0.136,  Adjusted R-squared:  0.02806 
+## F-statistic:  1.26 on 1 and 8 DF,  p-value: 0.2942</code></pre>
 <p>Note that if we reverse the coding we get the same result, just the sign is different.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
@@ -2080,17 +2083,17 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## lm(formula = Y ~ group_d, data = fake_data3)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.27751 -0.29673 -0.07749  0.41519  1.20090 
+##     Min      1Q  Median      3Q     Max 
+## -1.4502 -0.4683  0.0261  0.3065  1.2845 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  -0.2558     0.3238   -0.79    0.452
-## group_d       0.3709     0.4579    0.81    0.441
+## (Intercept)  -0.1195     0.3909  -0.306    0.768
+## group_d       0.6205     0.5528   1.122    0.294
 ## 
-## Residual standard error: 0.7241 on 8 degrees of freedom
-## Multiple R-squared:  0.07576,    Adjusted R-squared:  -0.03976 
-## F-statistic: 0.6558 on 1 and 8 DF,  p-value: 0.4415</code></pre>
+## Residual standard error: 0.8741 on 8 degrees of freedom
+## Multiple R-squared:  0.136,  Adjusted R-squared:  0.02806 
+## F-statistic:  1.26 on 1 and 8 DF,  p-value: 0.2942</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
 <!--
@@ -2123,83 +2126,83 @@ Why not just use **factors** as your predictors?
 <tbody>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">104.16689</td>
+<td align="right">107.55789</td>
 </tr>
 <tr class="even">
 <td align="left">winter</td>
-<td align="right">103.02393</td>
+<td align="right">100.26797</td>
 </tr>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">100.92044</td>
+<td align="right">107.78621</td>
 </tr>
 <tr class="even">
 <td align="left">winter</td>
-<td align="right">106.07710</td>
+<td align="right">104.55462</td>
 </tr>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">101.84872</td>
+<td align="right">103.05212</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">101.06252</td>
+<td align="right">102.09345</td>
 </tr>
 <tr class="odd">
 <td align="left">spring</td>
-<td align="right">101.37693</td>
+<td align="right">106.07493</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">104.98141</td>
+<td align="right">100.26337</td>
 </tr>
 <tr class="odd">
 <td align="left">spring</td>
-<td align="right">103.05045</td>
+<td align="right">111.19945</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">100.32848</td>
+<td align="right">106.91919</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">98.85887</td>
+<td align="right">102.51706</td>
 </tr>
 <tr class="even">
 <td align="left">summer</td>
-<td align="right">102.33980</td>
+<td align="right">98.03092</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">99.11723</td>
+<td align="right">99.92075</td>
 </tr>
 <tr class="even">
 <td align="left">summer</td>
-<td align="right">102.29492</td>
+<td align="right">100.06264</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">101.53384</td>
+<td align="right">92.47949</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">100.12382</td>
+<td align="right">96.52094</td>
 </tr>
 <tr class="odd">
 <td align="left">fall</td>
-<td align="right">100.39926</td>
+<td align="right">104.66900</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">100.49087</td>
+<td align="right">105.57964</td>
 </tr>
 <tr class="odd">
 <td align="left">fall</td>
-<td align="right">102.34831</td>
+<td align="right">101.82025</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">103.00957</td>
+<td align="right">105.26998</td>
 </tr>
 </tbody>
 </table></div>
@@ -2225,140 +2228,140 @@ Why not just use **factors** as your predictors?
 <tbody>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">104.16689</td>
+<td align="right">107.55789</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">winter</td>
-<td align="right">103.02393</td>
+<td align="right">100.26797</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">100.92044</td>
+<td align="right">107.78621</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">winter</td>
-<td align="right">106.07710</td>
+<td align="right">104.55462</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">winter</td>
-<td align="right">101.84872</td>
+<td align="right">103.05212</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">101.06252</td>
+<td align="right">102.09345</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">spring</td>
-<td align="right">101.37693</td>
+<td align="right">106.07493</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">104.98141</td>
+<td align="right">100.26337</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">spring</td>
-<td align="right">103.05045</td>
+<td align="right">111.19945</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">spring</td>
-<td align="right">100.32848</td>
+<td align="right">106.91919</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">98.85887</td>
+<td align="right">102.51706</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">summer</td>
-<td align="right">102.33980</td>
+<td align="right">98.03092</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">99.11723</td>
+<td align="right">99.92075</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">summer</td>
-<td align="right">102.29492</td>
+<td align="right">100.06264</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">summer</td>
-<td align="right">101.53384</td>
+<td align="right">92.47949</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">100.12382</td>
+<td align="right">96.52094</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">fall</td>
-<td align="right">100.39926</td>
+<td align="right">104.66900</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">100.49087</td>
+<td align="right">105.57964</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">fall</td>
-<td align="right">102.34831</td>
+<td align="right">101.82025</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">fall</td>
-<td align="right">103.00957</td>
+<td align="right">105.26998</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -2380,9 +2383,11 @@ Why not just use **factors** as your predictors?
 
 <span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">mydata3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
-## season       3  16.56   5.519    1.81  0.186
-## Residuals   16  48.80   3.050</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## season       3  136.6   45.53   3.189 0.0522 .
+## Residuals   16  228.4   14.28                 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
@@ -2392,21 +2397,21 @@ Why not just use **factors** as your predictors?
 ## lm(formula = bodyweight_kg ~ V1 + V2 + V3, data = mydata3)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.2870 -1.2026 -0.4833  1.1720  2.8697 
+##    Min     1Q Median     3Q    Max 
+## -6.251 -1.998  1.042  2.575  5.889 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  103.207      0.781 132.145   &lt;2e-16 ***
-## V1            -1.048      1.105  -0.948   0.3571    
-## V2            -2.378      1.105  -2.153   0.0469 *  
-## V3            -1.933      1.105  -1.750   0.0992 .  
+## (Intercept) 104.6438     1.6898  61.925   &lt;2e-16 ***
+## V1            0.6663     2.3898   0.279   0.7840    
+## V2           -6.0416     2.3898  -2.528   0.0224 *  
+## V3           -1.8718     2.3898  -0.783   0.4449    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.746 on 16 degrees of freedom
-## Multiple R-squared:  0.2533, Adjusted R-squared:  0.1133 
-## F-statistic:  1.81 on 3 and 16 DF,  p-value: 0.186</code></pre>
+## Residual standard error: 3.779 on 16 degrees of freedom
+## Multiple R-squared:  0.3742, Adjusted R-squared:  0.2568 
+## F-statistic: 3.189 on 3 and 16 DF,  p-value: 0.0522</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solution-to-partial-effect-plot" class="section level2">
@@ -2991,7 +2996,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-25.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
