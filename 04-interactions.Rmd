@@ -129,7 +129,7 @@ ggplot(urban, aes(dist_level, simple_rt)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-Now let's simulate data for the urban group. We assume that these participants should perhaps have a little higher intercept, maybe because they are less familiar with technology. Most importantly, we assume that they would have a steeper slope because they are more affected by the noise. Something like:
+Now let's simulate data for the rural group. We assume that these participants should perhaps have a little higher intercept, maybe because they are less familiar with technology. Most importantly, we assume that they would have a steeper slope because they are more affected by the noise. Something like:
 
 $$Y_i = 500 + 3 X_i + e_i$$
 
