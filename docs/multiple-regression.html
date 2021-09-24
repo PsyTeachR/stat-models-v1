@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
+<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/multiple-regression.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
+<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
+<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change! General model for single-level data with \(m\) predictors: \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} +...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +39,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="psyteachr books">Learning Statistical Models Through Simulation in R</a>:
-        <small class="text-muted">psyteachr books</small>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -77,7 +76,7 @@
 <span class="header-section-number">3</span> Multiple regression<a class="anchor" aria-label="anchor" href="#multiple-regression"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
 </div>
 <p>General model for single-level data with <span class="math inline">\(m\)</span> predictors:</p>
 <p><span class="math display">\[
@@ -96,627 +95,29 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <span class="header-section-number">3.1.1</span> Data import and visualization<a class="anchor" aria-label="anchor" href="#data-import-and-visualization"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let's load in the data <a href="data/grades.csv" target="_download">grades.csv</a> and have a look.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tidymodels/corrr">"corrr"</a></span><span class="op">)</span> <span class="co"># correlation matrices</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/grades.csv"</span>, col_types <span class="op">=</span> <span class="st">"ddii"</span><span class="op">)</span>
 
 <span class="va">grades</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">grade</th>
-<th align="right">GPA</th>
-<th align="right">lecture</th>
-<th align="right">nclicks</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">2.3951389</td>
-<td align="right">1.1341088</td>
-<td align="right">6</td>
-<td align="right">88</td>
-</tr>
-<tr class="even">
-<td align="right">3.6651591</td>
-<td align="right">0.9708817</td>
-<td align="right">6</td>
-<td align="right">96</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8527501</td>
-<td align="right">3.3432350</td>
-<td align="right">6</td>
-<td align="right">123</td>
-</tr>
-<tr class="even">
-<td align="right">1.3597001</td>
-<td align="right">2.7595763</td>
-<td align="right">9</td>
-<td align="right">99</td>
-</tr>
-<tr class="odd">
-<td align="right">2.3133351</td>
-<td align="right">1.0222222</td>
-<td align="right">4</td>
-<td align="right">66</td>
-</tr>
-<tr class="even">
-<td align="right">2.5828588</td>
-<td align="right">0.8413324</td>
-<td align="right">8</td>
-<td align="right">99</td>
-</tr>
-<tr class="odd">
-<td align="right">2.6946280</td>
-<td align="right">4.0000000</td>
-<td align="right">5</td>
-<td align="right">86</td>
-</tr>
-<tr class="even">
-<td align="right">3.0549095</td>
-<td align="right">2.2949328</td>
-<td align="right">7</td>
-<td align="right">118</td>
-</tr>
-<tr class="odd">
-<td align="right">3.2104521</td>
-<td align="right">3.3874844</td>
-<td align="right">9</td>
-<td align="right">98</td>
-</tr>
-<tr class="even">
-<td align="right">2.2441902</td>
-<td align="right">3.2666345</td>
-<td align="right">10</td>
-<td align="right">115</td>
-</tr>
-<tr class="odd">
-<td align="right">3.1338540</td>
-<td align="right">2.2291875</td>
-<td align="right">6</td>
-<td align="right">114</td>
-</tr>
-<tr class="even">
-<td align="right">2.2259639</td>
-<td align="right">1.7315937</td>
-<td align="right">5</td>
-<td align="right">84</td>
-</tr>
-<tr class="odd">
-<td align="right">0.0000000</td>
-<td align="right">0.4728941</td>
-<td align="right">3</td>
-<td align="right">95</td>
-</tr>
-<tr class="even">
-<td align="right">3.6278825</td>
-<td align="right">1.5600287</td>
-<td align="right">10</td>
-<td align="right">123</td>
-</tr>
-<tr class="odd">
-<td align="right">1.3405646</td>
-<td align="right">2.7518845</td>
-<td align="right">9</td>
-<td align="right">115</td>
-</tr>
-<tr class="even">
-<td align="right">2.0876289</td>
-<td align="right">2.0010052</td>
-<td align="right">5</td>
-<td align="right">101</td>
-</tr>
-<tr class="odd">
-<td align="right">0.4346968</td>
-<td align="right">2.1971687</td>
-<td align="right">5</td>
-<td align="right">84</td>
-</tr>
-<tr class="even">
-<td align="right">2.2624223</td>
-<td align="right">2.7121565</td>
-<td align="right">7</td>
-<td align="right">90</td>
-</tr>
-<tr class="odd">
-<td align="right">0.7232609</td>
-<td align="right">2.8904362</td>
-<td align="right">5</td>
-<td align="right">83</td>
-</tr>
-<tr class="even">
-<td align="right">3.3532095</td>
-<td align="right">1.8096567</td>
-<td align="right">8</td>
-<td align="right">102</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8653284</td>
-<td align="right">3.5056229</td>
-<td align="right">8</td>
-<td align="right">121</td>
-</tr>
-<tr class="even">
-<td align="right">2.7834847</td>
-<td align="right">1.9056691</td>
-<td align="right">2</td>
-<td align="right">85</td>
-</tr>
-<tr class="odd">
-<td align="right">3.7018629</td>
-<td align="right">2.4818014</td>
-<td align="right">10</td>
-<td align="right">87</td>
-</tr>
-<tr class="even">
-<td align="right">2.4481796</td>
-<td align="right">2.4502653</td>
-<td align="right">7</td>
-<td align="right">81</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7484218</td>
-<td align="right">3.7482459</td>
-<td align="right">8</td>
-<td align="right">110</td>
-</tr>
-<tr class="even">
-<td align="right">1.5854671</td>
-<td align="right">2.9709662</td>
-<td align="right">9</td>
-<td align="right">100</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4482854</td>
-<td align="right">2.9100299</td>
-<td align="right">10</td>
-<td align="right">129</td>
-</tr>
-<tr class="even">
-<td align="right">1.7412862</td>
-<td align="right">0.9462394</td>
-<td align="right">6</td>
-<td align="right">90</td>
-</tr>
-<tr class="odd">
-<td align="right">2.9308757</td>
-<td align="right">2.3993738</td>
-<td align="right">5</td>
-<td align="right">96</td>
-</tr>
-<tr class="even">
-<td align="right">2.8210166</td>
-<td align="right">2.4575954</td>
-<td align="right">8</td>
-<td align="right">129</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5831640</td>
-<td align="right">3.0110584</td>
-<td align="right">8</td>
-<td align="right">118</td>
-</tr>
-<tr class="even">
-<td align="right">0.9659023</td>
-<td align="right">1.7466986</td>
-<td align="right">7</td>
-<td align="right">94</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5080683</td>
-<td align="right">3.1387667</td>
-<td align="right">6</td>
-<td align="right">113</td>
-</tr>
-<tr class="even">
-<td align="right">3.8499634</td>
-<td align="right">3.3548881</td>
-<td align="right">9</td>
-<td align="right">122</td>
-</tr>
-<tr class="odd">
-<td align="right">0.8822343</td>
-<td align="right">1.5336613</td>
-<td align="right">10</td>
-<td align="right">84</td>
-</tr>
-<tr class="even">
-<td align="right">3.9024303</td>
-<td align="right">1.7277751</td>
-<td align="right">7</td>
-<td align="right">82</td>
-</tr>
-<tr class="odd">
-<td align="right">3.4712202</td>
-<td align="right">1.7162995</td>
-<td align="right">4</td>
-<td align="right">83</td>
-</tr>
-<tr class="even">
-<td align="right">2.5115666</td>
-<td align="right">2.6390593</td>
-<td align="right">6</td>
-<td align="right">112</td>
-</tr>
-<tr class="odd">
-<td align="right">3.5146988</td>
-<td align="right">3.3294875</td>
-<td align="right">7</td>
-<td align="right">89</td>
-</tr>
-<tr class="even">
-<td align="right">2.8290397</td>
-<td align="right">2.6533664</td>
-<td align="right">9</td>
-<td align="right">100</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7471315</td>
-<td align="right">2.8562607</td>
-<td align="right">4</td>
-<td align="right">84</td>
-</tr>
-<tr class="even">
-<td align="right">2.7449956</td>
-<td align="right">2.9568736</td>
-<td align="right">10</td>
-<td align="right">102</td>
-</tr>
-<tr class="odd">
-<td align="right">3.0977301</td>
-<td align="right">0.3793328</td>
-<td align="right">4</td>
-<td align="right">111</td>
-</tr>
-<tr class="even">
-<td align="right">2.9783206</td>
-<td align="right">2.4891591</td>
-<td align="right">6</td>
-<td align="right">96</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5125859</td>
-<td align="right">2.5350625</td>
-<td align="right">9</td>
-<td align="right">103</td>
-</tr>
-<tr class="even">
-<td align="right">2.8944945</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">77</td>
-</tr>
-<tr class="odd">
-<td align="right">1.8156094</td>
-<td align="right">2.2001745</td>
-<td align="right">5</td>
-<td align="right">96</td>
-</tr>
-<tr class="even">
-<td align="right">3.0011643</td>
-<td align="right">2.8021604</td>
-<td align="right">8</td>
-<td align="right">112</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8528217</td>
-<td align="right">2.8347729</td>
-<td align="right">10</td>
-<td align="right">76</td>
-</tr>
-<tr class="even">
-<td align="right">2.0496313</td>
-<td align="right">1.1178989</td>
-<td align="right">6</td>
-<td align="right">81</td>
-</tr>
-<tr class="odd">
-<td align="right">2.0300626</td>
-<td align="right">1.0270266</td>
-<td align="right">3</td>
-<td align="right">99</td>
-</tr>
-<tr class="even">
-<td align="right">2.6281108</td>
-<td align="right">1.8298851</td>
-<td align="right">7</td>
-<td align="right">106</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8726751</td>
-<td align="right">2.7044881</td>
-<td align="right">7</td>
-<td align="right">97</td>
-</tr>
-<tr class="even">
-<td align="right">3.5678280</td>
-<td align="right">1.6363600</td>
-<td align="right">6</td>
-<td align="right">85</td>
-</tr>
-<tr class="odd">
-<td align="right">3.7235079</td>
-<td align="right">1.6461525</td>
-<td align="right">6</td>
-<td align="right">88</td>
-</tr>
-<tr class="even">
-<td align="right">2.5045121</td>
-<td align="right">1.9153413</td>
-<td align="right">8</td>
-<td align="right">92</td>
-</tr>
-<tr class="odd">
-<td align="right">1.2359004</td>
-<td align="right">3.4497622</td>
-<td align="right">9</td>
-<td align="right">122</td>
-</tr>
-<tr class="even">
-<td align="right">2.9946271</td>
-<td align="right">2.9535615</td>
-<td align="right">7</td>
-<td align="right">110</td>
-</tr>
-<tr class="odd">
-<td align="right">2.3944125</td>
-<td align="right">3.7537037</td>
-<td align="right">6</td>
-<td align="right">106</td>
-</tr>
-<tr class="even">
-<td align="right">1.4451098</td>
-<td align="right">0.9303599</td>
-<td align="right">6</td>
-<td align="right">83</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4376733</td>
-<td align="right">3.1152237</td>
-<td align="right">9</td>
-<td align="right">95</td>
-</tr>
-<tr class="even">
-<td align="right">2.1284143</td>
-<td align="right">2.3039751</td>
-<td align="right">7</td>
-<td align="right">119</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8615197</td>
-<td align="right">1.7626461</td>
-<td align="right">6</td>
-<td align="right">99</td>
-</tr>
-<tr class="even">
-<td align="right">2.6672037</td>
-<td align="right">1.5447171</td>
-<td align="right">4</td>
-<td align="right">54</td>
-</tr>
-<tr class="odd">
-<td align="right">1.9934927</td>
-<td align="right">1.3665324</td>
-<td align="right">5</td>
-<td align="right">116</td>
-</tr>
-<tr class="even">
-<td align="right">2.7596577</td>
-<td align="right">2.2032136</td>
-<td align="right">7</td>
-<td align="right">61</td>
-</tr>
-<tr class="odd">
-<td align="right">3.6984273</td>
-<td align="right">1.1520123</td>
-<td align="right">7</td>
-<td align="right">103</td>
-</tr>
-<tr class="even">
-<td align="right">0.9500710</td>
-<td align="right">2.1250378</td>
-<td align="right">8</td>
-<td align="right">96</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5592971</td>
-<td align="right">3.7351342</td>
-<td align="right">9</td>
-<td align="right">80</td>
-</tr>
-<tr class="even">
-<td align="right">3.2861875</td>
-<td align="right">3.4664206</td>
-<td align="right">10</td>
-<td align="right">115</td>
-</tr>
-<tr class="odd">
-<td align="right">2.1222741</td>
-<td align="right">3.3947098</td>
-<td align="right">8</td>
-<td align="right">106</td>
-</tr>
-<tr class="even">
-<td align="right">2.5400241</td>
-<td align="right">1.8211989</td>
-<td align="right">7</td>
-<td align="right">84</td>
-</tr>
-<tr class="odd">
-<td align="right">4.0000000</td>
-<td align="right">2.4929632</td>
-<td align="right">10</td>
-<td align="right">127</td>
-</tr>
-<tr class="even">
-<td align="right">1.4398139</td>
-<td align="right">2.6862850</td>
-<td align="right">3</td>
-<td align="right">109</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4110543</td>
-<td align="right">1.4900472</td>
-<td align="right">3</td>
-<td align="right">92</td>
-</tr>
-<tr class="even">
-<td align="right">0.0000000</td>
-<td align="right">0.4014776</td>
-<td align="right">3</td>
-<td align="right">67</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5738293</td>
-<td align="right">2.9524421</td>
-<td align="right">6</td>
-<td align="right">105</td>
-</tr>
-<tr class="even">
-<td align="right">3.1142057</td>
-<td align="right">1.8539501</td>
-<td align="right">3</td>
-<td align="right">79</td>
-</tr>
-<tr class="odd">
-<td align="right">2.1363495</td>
-<td align="right">2.6226571</td>
-<td align="right">10</td>
-<td align="right">106</td>
-</tr>
-<tr class="even">
-<td align="right">2.6817641</td>
-<td align="right">2.2073880</td>
-<td align="right">8</td>
-<td align="right">110</td>
-</tr>
-<tr class="odd">
-<td align="right">3.3349288</td>
-<td align="right">1.7543494</td>
-<td align="right">9</td>
-<td align="right">105</td>
-</tr>
-<tr class="even">
-<td align="right">1.6988012</td>
-<td align="right">2.1246531</td>
-<td align="right">4</td>
-<td align="right">101</td>
-</tr>
-<tr class="odd">
-<td align="right">1.5526163</td>
-<td align="right">1.5286636</td>
-<td align="right">10</td>
-<td align="right">109</td>
-</tr>
-<tr class="even">
-<td align="right">2.8019608</td>
-<td align="right">2.8027352</td>
-<td align="right">7</td>
-<td align="right">102</td>
-</tr>
-<tr class="odd">
-<td align="right">3.3707676</td>
-<td align="right">1.6986526</td>
-<td align="right">7</td>
-<td align="right">105</td>
-</tr>
-<tr class="even">
-<td align="right">2.2348459</td>
-<td align="right">1.4769582</td>
-<td align="right">7</td>
-<td align="right">80</td>
-</tr>
-<tr class="odd">
-<td align="right">3.6601457</td>
-<td align="right">4.0000000</td>
-<td align="right">8</td>
-<td align="right">109</td>
-</tr>
-<tr class="even">
-<td align="right">2.7328271</td>
-<td align="right">3.0817157</td>
-<td align="right">10</td>
-<td align="right">94</td>
-</tr>
-<tr class="odd">
-<td align="right">2.2687056</td>
-<td align="right">3.1470495</td>
-<td align="right">6</td>
-<td align="right">106</td>
-</tr>
-<tr class="even">
-<td align="right">3.9933377</td>
-<td align="right">2.2272781</td>
-<td align="right">7</td>
-<td align="right">105</td>
-</tr>
-<tr class="odd">
-<td align="right">2.9514553</td>
-<td align="right">2.8082666</td>
-<td align="right">8</td>
-<td align="right">88</td>
-</tr>
-<tr class="even">
-<td align="right">3.7680715</td>
-<td align="right">3.8783317</td>
-<td align="right">7</td>
-<td align="right">120</td>
-</tr>
-<tr class="odd">
-<td align="right">3.2473376</td>
-<td align="right">2.0760349</td>
-<td align="right">5</td>
-<td align="right">67</td>
-</tr>
-<tr class="even">
-<td align="right">1.7682800</td>
-<td align="right">3.3295325</td>
-<td align="right">6</td>
-<td align="right">84</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8944518</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">102</td>
-</tr>
-<tr class="even">
-<td align="right">4.0000000</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">84</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7733935</td>
-<td align="right">3.5680159</td>
-<td align="right">7</td>
-<td align="right">107</td>
-</tr>
-<tr class="even">
-<td align="right">1.6120128</td>
-<td align="right">2.3200362</td>
-<td align="right">8</td>
-<td align="right">94</td>
-</tr>
-<tr class="odd">
-<td align="right">3.5397356</td>
-<td align="right">2.8607765</td>
-<td align="right">7</td>
-<td align="right">108</td>
-</tr>
-<tr class="even">
-<td align="right">3.5275687</td>
-<td align="right">2.8646434</td>
-<td align="right">10</td>
-<td align="right">109</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 100 × 4
+##    grade   GPA lecture nclicks
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
+##  1  2.40 1.13        6      88
+##  2  3.67 0.971       6      96
+##  3  2.85 3.34        6     123
+##  4  1.36 2.76        9      99
+##  5  2.31 1.02        4      66
+##  6  2.58 0.841       8      99
+##  7  2.69 4           5      86
+##  8  3.05 2.29        7     118
+##  9  3.21 3.39        9      98
+## 10  2.24 3.27       10     115
+## # … with 90 more rows</code></pre>
 <p>First let's look at all the pairwise correlations.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">grades</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -724,48 +125,12 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <pre><code>## 
 ## Correlation method: 'pearson'
 ## Missing treated using: 'pairwise.complete.obs'</code></pre>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">term</th>
-<th align="left">grade</th>
-<th align="left">GPA</th>
-<th align="left">lecture</th>
-<th align="left">nclicks</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">grade</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">GPA</td>
-<td align="left">.25</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">lecture</td>
-<td align="left">.24</td>
-<td align="left">.44</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">nclicks</td>
-<td align="left">.16</td>
-<td align="left">.30</td>
-<td align="left">.36</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<pre><code>##      term grade  GPA lecture nclicks
+## 1   grade                           
+## 2     GPA   .25                     
+## 3 lecture   .24  .44                
+## 4 nclicks   .16  .30     .36</code></pre>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">grades</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:pairs"></span>
@@ -786,7 +151,7 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <p><code><a href="https://rdrr.io/r/stats/lm.html">lm(Y ~ X1 + X2 + ... + Xm, data)</a></code></p>
 <p>The <code>Y</code> variable is your response variable, and the <code>X</code> variables are the predictor variables. Note that you don't need to explicitly specify the intercept or residual terms; those are included by default.</p>
 <p>For the current data, let's predict <code>grade</code> from <code>lecture</code> and <code>nclicks</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model</span><span class="op">)</span></code></pre></div>
@@ -840,7 +205,7 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 </p>
 </div>
 <p>Let's create a tibble with new values and try it out.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## a 'tribble' is a way to make a tibble by rows,</span>
 <span class="co">## rather than by columns. This is sometimes useful</span>
 <span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span><span class="op">~</span><span class="va">lecture</span>, <span class="op">~</span><span class="va">nclicks</span>,
@@ -852,50 +217,26 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 <p>The <code>tribble()</code> function provides a way to build a tibble row by row, whereas with <code>tibble()</code> the table is built column by column.</p>
 <p>The first row of the <code>tribble()</code> contains the column names, each preceded by a tilde (<code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>).</p>
 <p>This is sometimes easier to read than doing it row by row, although the result is the same. Consider that we could have made the above table using</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>lecture <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,
                    nclicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">70</span>, <span class="fl">130</span>, <span class="fl">20</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <p>Now that we've created our table <code>new_data</code>, we just pass it to <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> and it will return a vector with the predictions for <span class="math inline">\(Y\)</span> (<code>grade</code>).</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span></code></pre></div>
 <pre><code>##        1        2        3        4 
 ## 2.090214 3.033869 1.563087 2.424790</code></pre>
 <p>That's great, but maybe we want to line it up with the predictor values. We can do this by just adding it as a new column to <code>new_data</code>.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_data</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>predicted_grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">lecture</th>
-<th align="right">nclicks</th>
-<th align="right">predicted_grade</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">70</td>
-<td align="right">2.090214</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">130</td>
-<td align="right">3.033869</td>
-</tr>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">20</td>
-<td align="right">1.563087</td>
-</tr>
-<tr class="even">
-<td align="right">5</td>
-<td align="right">100</td>
-<td align="right">2.424790</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 4 × 3
+##   lecture nclicks predicted_grade
+##     &lt;dbl&gt;   &lt;dbl&gt;           &lt;dbl&gt;
+## 1       3      70            2.09
+## 2      10     130            3.03
+## 3       0      20            1.56
+## 4       5     100            2.42</code></pre>
 <p>Want to see more options for <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>? Check the help at <code><a href="https://rdrr.io/r/stats/predict.lm.html">?predict.lm</a></code>.</p>
 </div>
 <div id="visualizing-partial-effects" class="section level3">
@@ -904,7 +245,7 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 </h3>
 <p>As noted above the parameter estimates for each regression coefficient tell us about the <strong>partial</strong> effect of that variable; it's effect holding all of the others constant. Is there a way to visualize this partial effect? Yes, you can do this using the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function, by making a table with varying values for the focal predictor, while filling in all of the other predictors with their mean values.</p>
 <p>For example, let's visualize the partial effect of <code>lecture</code> on <code>grade</code> holding <code>nclicks</code> constant at its mean value.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nclicks_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">## new data for prediction</span>
@@ -916,74 +257,22 @@ You need to include <strong>all</strong> of the predictor variables in the new t
   <span class="fu">mutate</span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_lecture</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">new_lecture2</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">lecture</th>
-<th align="right">nclicks</th>
-<th align="right">grade</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">98.32</td>
-<td align="right">1.958798</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">98.32</td>
-<td align="right">2.050299</td>
-</tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">98.32</td>
-<td align="right">2.141799</td>
-</tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">98.32</td>
-<td align="right">2.233300</td>
-</tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">98.32</td>
-<td align="right">2.324801</td>
-</tr>
-<tr class="even">
-<td align="right">5</td>
-<td align="right">98.32</td>
-<td align="right">2.416302</td>
-</tr>
-<tr class="odd">
-<td align="right">6</td>
-<td align="right">98.32</td>
-<td align="right">2.507803</td>
-</tr>
-<tr class="even">
-<td align="right">7</td>
-<td align="right">98.32</td>
-<td align="right">2.599303</td>
-</tr>
-<tr class="odd">
-<td align="right">8</td>
-<td align="right">98.32</td>
-<td align="right">2.690804</td>
-</tr>
-<tr class="even">
-<td align="right">9</td>
-<td align="right">98.32</td>
-<td align="right">2.782305</td>
-</tr>
-<tr class="odd">
-<td align="right">10</td>
-<td align="right">98.32</td>
-<td align="right">2.873806</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 11 × 3
+##    lecture nclicks grade
+##      &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1       0    98.3  1.96
+##  2       1    98.3  2.05
+##  3       2    98.3  2.14
+##  4       3    98.3  2.23
+##  5       4    98.3  2.32
+##  6       5    98.3  2.42
+##  7       6    98.3  2.51
+##  8       7    98.3  2.60
+##  9       8    98.3  2.69
+## 10       9    98.3  2.78
+## 11      10    98.3  2.87</code></pre>
 <p>Now let's plot.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">grades</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">lecture</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_lecture2</span><span class="op">)</span></code></pre></div>
@@ -1012,828 +301,28 @@ z = \frac{X - \mu_x}{\sigma_x}
 \]</span></p>
 <p>A <span class="math inline">\(z\)</span> score represents the distance of a score <span class="math inline">\(X\)</span> from the sample mean (<span class="math inline">\(\mu_x\)</span>) in standard deviation units (<span class="math inline">\(\sigma_x\)</span>). So a <span class="math inline">\(z\)</span> score of 1 means that the score is one standard deviation about the mean; a <span class="math inline">\(z\)</span>-score of -2.5 means 2.5 standard deviations below the mean. <span class="math inline">\(Z\)</span>-scores give us a way of comparing things that come from different populations by calibrating them to the standard normal distribution (a distribution with a mean of 0 and a standard deviation of 1).</p>
 <p>So we re-scale our predictors by converting them to <span class="math inline">\(z\)</span>-scores. This is easy enough to do.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">grades2</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>lecture_c <span class="op">=</span> <span class="op">(</span><span class="va">lecture</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span>,
          nclicks_c <span class="op">=</span> <span class="op">(</span><span class="va">nclicks</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">grades2</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">grade</th>
-<th align="right">GPA</th>
-<th align="right">lecture</th>
-<th align="right">nclicks</th>
-<th align="right">lecture_c</th>
-<th align="right">nclicks_c</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">2.3951389</td>
-<td align="right">1.1341088</td>
-<td align="right">6</td>
-<td align="right">88</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.6664932</td>
-</tr>
-<tr class="even">
-<td align="right">3.6651591</td>
-<td align="right">0.9708817</td>
-<td align="right">6</td>
-<td align="right">96</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.1498318</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8527501</td>
-<td align="right">3.3432350</td>
-<td align="right">6</td>
-<td align="right">123</td>
-<td align="right">-0.4835417</td>
-<td align="right">1.5939004</td>
-</tr>
-<tr class="even">
-<td align="right">1.3597001</td>
-<td align="right">2.7595763</td>
-<td align="right">9</td>
-<td align="right">99</td>
-<td align="right">0.9817363</td>
-<td align="right">0.0439162</td>
-</tr>
-<tr class="odd">
-<td align="right">2.3133351</td>
-<td align="right">1.0222222</td>
-<td align="right">4</td>
-<td align="right">66</td>
-<td align="right">-1.4603938</td>
-<td align="right">-2.0873120</td>
-</tr>
-<tr class="even">
-<td align="right">2.5828588</td>
-<td align="right">0.8413324</td>
-<td align="right">8</td>
-<td align="right">99</td>
-<td align="right">0.4933103</td>
-<td align="right">0.0439162</td>
-</tr>
-<tr class="odd">
-<td align="right">2.6946280</td>
-<td align="right">4.0000000</td>
-<td align="right">5</td>
-<td align="right">86</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.7956586</td>
-</tr>
-<tr class="even">
-<td align="right">3.0549095</td>
-<td align="right">2.2949328</td>
-<td align="right">7</td>
-<td align="right">118</td>
-<td align="right">0.0048843</td>
-<td align="right">1.2709870</td>
-</tr>
-<tr class="odd">
-<td align="right">3.2104521</td>
-<td align="right">3.3874844</td>
-<td align="right">9</td>
-<td align="right">98</td>
-<td align="right">0.9817363</td>
-<td align="right">-0.0206665</td>
-</tr>
-<tr class="even">
-<td align="right">2.2441902</td>
-<td align="right">3.2666345</td>
-<td align="right">10</td>
-<td align="right">115</td>
-<td align="right">1.4701623</td>
-<td align="right">1.0772390</td>
-</tr>
-<tr class="odd">
-<td align="right">3.1338540</td>
-<td align="right">2.2291875</td>
-<td align="right">6</td>
-<td align="right">114</td>
-<td align="right">-0.4835417</td>
-<td align="right">1.0126563</td>
-</tr>
-<tr class="even">
-<td align="right">2.2259639</td>
-<td align="right">1.7315937</td>
-<td align="right">5</td>
-<td align="right">84</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="odd">
-<td align="right">0.0000000</td>
-<td align="right">0.4728941</td>
-<td align="right">3</td>
-<td align="right">95</td>
-<td align="right">-1.9488198</td>
-<td align="right">-0.2144145</td>
-</tr>
-<tr class="even">
-<td align="right">3.6278825</td>
-<td align="right">1.5600287</td>
-<td align="right">10</td>
-<td align="right">123</td>
-<td align="right">1.4701623</td>
-<td align="right">1.5939004</td>
-</tr>
-<tr class="odd">
-<td align="right">1.3405646</td>
-<td align="right">2.7518845</td>
-<td align="right">9</td>
-<td align="right">115</td>
-<td align="right">0.9817363</td>
-<td align="right">1.0772390</td>
-</tr>
-<tr class="even">
-<td align="right">2.0876289</td>
-<td align="right">2.0010052</td>
-<td align="right">5</td>
-<td align="right">101</td>
-<td align="right">-0.9719678</td>
-<td align="right">0.1730816</td>
-</tr>
-<tr class="odd">
-<td align="right">0.4346968</td>
-<td align="right">2.1971687</td>
-<td align="right">5</td>
-<td align="right">84</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="even">
-<td align="right">2.2624223</td>
-<td align="right">2.7121565</td>
-<td align="right">7</td>
-<td align="right">90</td>
-<td align="right">0.0048843</td>
-<td align="right">-0.5373279</td>
-</tr>
-<tr class="odd">
-<td align="right">0.7232609</td>
-<td align="right">2.8904362</td>
-<td align="right">5</td>
-<td align="right">83</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.9894066</td>
-</tr>
-<tr class="even">
-<td align="right">3.3532095</td>
-<td align="right">1.8096567</td>
-<td align="right">8</td>
-<td align="right">102</td>
-<td align="right">0.4933103</td>
-<td align="right">0.2376642</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8653284</td>
-<td align="right">3.5056229</td>
-<td align="right">8</td>
-<td align="right">121</td>
-<td align="right">0.4933103</td>
-<td align="right">1.4647351</td>
-</tr>
-<tr class="even">
-<td align="right">2.7834847</td>
-<td align="right">1.9056691</td>
-<td align="right">2</td>
-<td align="right">85</td>
-<td align="right">-2.4372458</td>
-<td align="right">-0.8602412</td>
-</tr>
-<tr class="odd">
-<td align="right">3.7018629</td>
-<td align="right">2.4818014</td>
-<td align="right">10</td>
-<td align="right">87</td>
-<td align="right">1.4701623</td>
-<td align="right">-0.7310759</td>
-</tr>
-<tr class="even">
-<td align="right">2.4481796</td>
-<td align="right">2.4502653</td>
-<td align="right">7</td>
-<td align="right">81</td>
-<td align="right">0.0048843</td>
-<td align="right">-1.1185719</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7484218</td>
-<td align="right">3.7482459</td>
-<td align="right">8</td>
-<td align="right">110</td>
-<td align="right">0.4933103</td>
-<td align="right">0.7543256</td>
-</tr>
-<tr class="even">
-<td align="right">1.5854671</td>
-<td align="right">2.9709662</td>
-<td align="right">9</td>
-<td align="right">100</td>
-<td align="right">0.9817363</td>
-<td align="right">0.1084989</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4482854</td>
-<td align="right">2.9100299</td>
-<td align="right">10</td>
-<td align="right">129</td>
-<td align="right">1.4701623</td>
-<td align="right">1.9813965</td>
-</tr>
-<tr class="even">
-<td align="right">1.7412862</td>
-<td align="right">0.9462394</td>
-<td align="right">6</td>
-<td align="right">90</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.5373279</td>
-</tr>
-<tr class="odd">
-<td align="right">2.9308757</td>
-<td align="right">2.3993738</td>
-<td align="right">5</td>
-<td align="right">96</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.1498318</td>
-</tr>
-<tr class="even">
-<td align="right">2.8210166</td>
-<td align="right">2.4575954</td>
-<td align="right">8</td>
-<td align="right">129</td>
-<td align="right">0.4933103</td>
-<td align="right">1.9813965</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5831640</td>
-<td align="right">3.0110584</td>
-<td align="right">8</td>
-<td align="right">118</td>
-<td align="right">0.4933103</td>
-<td align="right">1.2709870</td>
-</tr>
-<tr class="even">
-<td align="right">0.9659023</td>
-<td align="right">1.7466986</td>
-<td align="right">7</td>
-<td align="right">94</td>
-<td align="right">0.0048843</td>
-<td align="right">-0.2789972</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5080683</td>
-<td align="right">3.1387667</td>
-<td align="right">6</td>
-<td align="right">113</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.9480737</td>
-</tr>
-<tr class="even">
-<td align="right">3.8499634</td>
-<td align="right">3.3548881</td>
-<td align="right">9</td>
-<td align="right">122</td>
-<td align="right">0.9817363</td>
-<td align="right">1.5293177</td>
-</tr>
-<tr class="odd">
-<td align="right">0.8822343</td>
-<td align="right">1.5336613</td>
-<td align="right">10</td>
-<td align="right">84</td>
-<td align="right">1.4701623</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="even">
-<td align="right">3.9024303</td>
-<td align="right">1.7277751</td>
-<td align="right">7</td>
-<td align="right">82</td>
-<td align="right">0.0048843</td>
-<td align="right">-1.0539892</td>
-</tr>
-<tr class="odd">
-<td align="right">3.4712202</td>
-<td align="right">1.7162995</td>
-<td align="right">4</td>
-<td align="right">83</td>
-<td align="right">-1.4603938</td>
-<td align="right">-0.9894066</td>
-</tr>
-<tr class="even">
-<td align="right">2.5115666</td>
-<td align="right">2.6390593</td>
-<td align="right">6</td>
-<td align="right">112</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.8834910</td>
-</tr>
-<tr class="odd">
-<td align="right">3.5146988</td>
-<td align="right">3.3294875</td>
-<td align="right">7</td>
-<td align="right">89</td>
-<td align="right">0.0048843</td>
-<td align="right">-0.6019105</td>
-</tr>
-<tr class="even">
-<td align="right">2.8290397</td>
-<td align="right">2.6533664</td>
-<td align="right">9</td>
-<td align="right">100</td>
-<td align="right">0.9817363</td>
-<td align="right">0.1084989</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7471315</td>
-<td align="right">2.8562607</td>
-<td align="right">4</td>
-<td align="right">84</td>
-<td align="right">-1.4603938</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="even">
-<td align="right">2.7449956</td>
-<td align="right">2.9568736</td>
-<td align="right">10</td>
-<td align="right">102</td>
-<td align="right">1.4701623</td>
-<td align="right">0.2376642</td>
-</tr>
-<tr class="odd">
-<td align="right">3.0977301</td>
-<td align="right">0.3793328</td>
-<td align="right">4</td>
-<td align="right">111</td>
-<td align="right">-1.4603938</td>
-<td align="right">0.8189083</td>
-</tr>
-<tr class="even">
-<td align="right">2.9783206</td>
-<td align="right">2.4891591</td>
-<td align="right">6</td>
-<td align="right">96</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.1498318</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5125859</td>
-<td align="right">2.5350625</td>
-<td align="right">9</td>
-<td align="right">103</td>
-<td align="right">0.9817363</td>
-<td align="right">0.3022469</td>
-</tr>
-<tr class="even">
-<td align="right">2.8944945</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">77</td>
-<td align="right">0.9817363</td>
-<td align="right">-1.3769026</td>
-</tr>
-<tr class="odd">
-<td align="right">1.8156094</td>
-<td align="right">2.2001745</td>
-<td align="right">5</td>
-<td align="right">96</td>
-<td align="right">-0.9719678</td>
-<td align="right">-0.1498318</td>
-</tr>
-<tr class="even">
-<td align="right">3.0011643</td>
-<td align="right">2.8021604</td>
-<td align="right">8</td>
-<td align="right">112</td>
-<td align="right">0.4933103</td>
-<td align="right">0.8834910</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8528217</td>
-<td align="right">2.8347729</td>
-<td align="right">10</td>
-<td align="right">76</td>
-<td align="right">1.4701623</td>
-<td align="right">-1.4414853</td>
-</tr>
-<tr class="even">
-<td align="right">2.0496313</td>
-<td align="right">1.1178989</td>
-<td align="right">6</td>
-<td align="right">81</td>
-<td align="right">-0.4835417</td>
-<td align="right">-1.1185719</td>
-</tr>
-<tr class="odd">
-<td align="right">2.0300626</td>
-<td align="right">1.0270266</td>
-<td align="right">3</td>
-<td align="right">99</td>
-<td align="right">-1.9488198</td>
-<td align="right">0.0439162</td>
-</tr>
-<tr class="even">
-<td align="right">2.6281108</td>
-<td align="right">1.8298851</td>
-<td align="right">7</td>
-<td align="right">106</td>
-<td align="right">0.0048843</td>
-<td align="right">0.4959949</td>
-</tr>
-<tr class="odd">
-<td align="right">3.8726751</td>
-<td align="right">2.7044881</td>
-<td align="right">7</td>
-<td align="right">97</td>
-<td align="right">0.0048843</td>
-<td align="right">-0.0852491</td>
-</tr>
-<tr class="even">
-<td align="right">3.5678280</td>
-<td align="right">1.6363600</td>
-<td align="right">6</td>
-<td align="right">85</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.8602412</td>
-</tr>
-<tr class="odd">
-<td align="right">3.7235079</td>
-<td align="right">1.6461525</td>
-<td align="right">6</td>
-<td align="right">88</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.6664932</td>
-</tr>
-<tr class="even">
-<td align="right">2.5045121</td>
-<td align="right">1.9153413</td>
-<td align="right">8</td>
-<td align="right">92</td>
-<td align="right">0.4933103</td>
-<td align="right">-0.4081625</td>
-</tr>
-<tr class="odd">
-<td align="right">1.2359004</td>
-<td align="right">3.4497622</td>
-<td align="right">9</td>
-<td align="right">122</td>
-<td align="right">0.9817363</td>
-<td align="right">1.5293177</td>
-</tr>
-<tr class="even">
-<td align="right">2.9946271</td>
-<td align="right">2.9535615</td>
-<td align="right">7</td>
-<td align="right">110</td>
-<td align="right">0.0048843</td>
-<td align="right">0.7543256</td>
-</tr>
-<tr class="odd">
-<td align="right">2.3944125</td>
-<td align="right">3.7537037</td>
-<td align="right">6</td>
-<td align="right">106</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.4959949</td>
-</tr>
-<tr class="even">
-<td align="right">1.4451098</td>
-<td align="right">0.9303599</td>
-<td align="right">6</td>
-<td align="right">83</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.9894066</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4376733</td>
-<td align="right">3.1152237</td>
-<td align="right">9</td>
-<td align="right">95</td>
-<td align="right">0.9817363</td>
-<td align="right">-0.2144145</td>
-</tr>
-<tr class="even">
-<td align="right">2.1284143</td>
-<td align="right">2.3039751</td>
-<td align="right">7</td>
-<td align="right">119</td>
-<td align="right">0.0048843</td>
-<td align="right">1.3355697</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8615197</td>
-<td align="right">1.7626461</td>
-<td align="right">6</td>
-<td align="right">99</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.0439162</td>
-</tr>
-<tr class="even">
-<td align="right">2.6672037</td>
-<td align="right">1.5447171</td>
-<td align="right">4</td>
-<td align="right">54</td>
-<td align="right">-1.4603938</td>
-<td align="right">-2.8623041</td>
-</tr>
-<tr class="odd">
-<td align="right">1.9934927</td>
-<td align="right">1.3665324</td>
-<td align="right">5</td>
-<td align="right">116</td>
-<td align="right">-0.9719678</td>
-<td align="right">1.1418217</td>
-</tr>
-<tr class="even">
-<td align="right">2.7596577</td>
-<td align="right">2.2032136</td>
-<td align="right">7</td>
-<td align="right">61</td>
-<td align="right">0.0048843</td>
-<td align="right">-2.4102254</td>
-</tr>
-<tr class="odd">
-<td align="right">3.6984273</td>
-<td align="right">1.1520123</td>
-<td align="right">7</td>
-<td align="right">103</td>
-<td align="right">0.0048843</td>
-<td align="right">0.3022469</td>
-</tr>
-<tr class="even">
-<td align="right">0.9500710</td>
-<td align="right">2.1250378</td>
-<td align="right">8</td>
-<td align="right">96</td>
-<td align="right">0.4933103</td>
-<td align="right">-0.1498318</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5592971</td>
-<td align="right">3.7351342</td>
-<td align="right">9</td>
-<td align="right">80</td>
-<td align="right">0.9817363</td>
-<td align="right">-1.1831546</td>
-</tr>
-<tr class="even">
-<td align="right">3.2861875</td>
-<td align="right">3.4664206</td>
-<td align="right">10</td>
-<td align="right">115</td>
-<td align="right">1.4701623</td>
-<td align="right">1.0772390</td>
-</tr>
-<tr class="odd">
-<td align="right">2.1222741</td>
-<td align="right">3.3947098</td>
-<td align="right">8</td>
-<td align="right">106</td>
-<td align="right">0.4933103</td>
-<td align="right">0.4959949</td>
-</tr>
-<tr class="even">
-<td align="right">2.5400241</td>
-<td align="right">1.8211989</td>
-<td align="right">7</td>
-<td align="right">84</td>
-<td align="right">0.0048843</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="odd">
-<td align="right">4.0000000</td>
-<td align="right">2.4929632</td>
-<td align="right">10</td>
-<td align="right">127</td>
-<td align="right">1.4701623</td>
-<td align="right">1.8522311</td>
-</tr>
-<tr class="even">
-<td align="right">1.4398139</td>
-<td align="right">2.6862850</td>
-<td align="right">3</td>
-<td align="right">109</td>
-<td align="right">-1.9488198</td>
-<td align="right">0.6897430</td>
-</tr>
-<tr class="odd">
-<td align="right">2.4110543</td>
-<td align="right">1.4900472</td>
-<td align="right">3</td>
-<td align="right">92</td>
-<td align="right">-1.9488198</td>
-<td align="right">-0.4081625</td>
-</tr>
-<tr class="even">
-<td align="right">0.0000000</td>
-<td align="right">0.4014776</td>
-<td align="right">3</td>
-<td align="right">67</td>
-<td align="right">-1.9488198</td>
-<td align="right">-2.0227294</td>
-</tr>
-<tr class="odd">
-<td align="right">2.5738293</td>
-<td align="right">2.9524421</td>
-<td align="right">6</td>
-<td align="right">105</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.4314123</td>
-</tr>
-<tr class="even">
-<td align="right">3.1142057</td>
-<td align="right">1.8539501</td>
-<td align="right">3</td>
-<td align="right">79</td>
-<td align="right">-1.9488198</td>
-<td align="right">-1.2477373</td>
-</tr>
-<tr class="odd">
-<td align="right">2.1363495</td>
-<td align="right">2.6226571</td>
-<td align="right">10</td>
-<td align="right">106</td>
-<td align="right">1.4701623</td>
-<td align="right">0.4959949</td>
-</tr>
-<tr class="even">
-<td align="right">2.6817641</td>
-<td align="right">2.2073880</td>
-<td align="right">8</td>
-<td align="right">110</td>
-<td align="right">0.4933103</td>
-<td align="right">0.7543256</td>
-</tr>
-<tr class="odd">
-<td align="right">3.3349288</td>
-<td align="right">1.7543494</td>
-<td align="right">9</td>
-<td align="right">105</td>
-<td align="right">0.9817363</td>
-<td align="right">0.4314123</td>
-</tr>
-<tr class="even">
-<td align="right">1.6988012</td>
-<td align="right">2.1246531</td>
-<td align="right">4</td>
-<td align="right">101</td>
-<td align="right">-1.4603938</td>
-<td align="right">0.1730816</td>
-</tr>
-<tr class="odd">
-<td align="right">1.5526163</td>
-<td align="right">1.5286636</td>
-<td align="right">10</td>
-<td align="right">109</td>
-<td align="right">1.4701623</td>
-<td align="right">0.6897430</td>
-</tr>
-<tr class="even">
-<td align="right">2.8019608</td>
-<td align="right">2.8027352</td>
-<td align="right">7</td>
-<td align="right">102</td>
-<td align="right">0.0048843</td>
-<td align="right">0.2376642</td>
-</tr>
-<tr class="odd">
-<td align="right">3.3707676</td>
-<td align="right">1.6986526</td>
-<td align="right">7</td>
-<td align="right">105</td>
-<td align="right">0.0048843</td>
-<td align="right">0.4314123</td>
-</tr>
-<tr class="even">
-<td align="right">2.2348459</td>
-<td align="right">1.4769582</td>
-<td align="right">7</td>
-<td align="right">80</td>
-<td align="right">0.0048843</td>
-<td align="right">-1.1831546</td>
-</tr>
-<tr class="odd">
-<td align="right">3.6601457</td>
-<td align="right">4.0000000</td>
-<td align="right">8</td>
-<td align="right">109</td>
-<td align="right">0.4933103</td>
-<td align="right">0.6897430</td>
-</tr>
-<tr class="even">
-<td align="right">2.7328271</td>
-<td align="right">3.0817157</td>
-<td align="right">10</td>
-<td align="right">94</td>
-<td align="right">1.4701623</td>
-<td align="right">-0.2789972</td>
-</tr>
-<tr class="odd">
-<td align="right">2.2687056</td>
-<td align="right">3.1470495</td>
-<td align="right">6</td>
-<td align="right">106</td>
-<td align="right">-0.4835417</td>
-<td align="right">0.4959949</td>
-</tr>
-<tr class="even">
-<td align="right">3.9933377</td>
-<td align="right">2.2272781</td>
-<td align="right">7</td>
-<td align="right">105</td>
-<td align="right">0.0048843</td>
-<td align="right">0.4314123</td>
-</tr>
-<tr class="odd">
-<td align="right">2.9514553</td>
-<td align="right">2.8082666</td>
-<td align="right">8</td>
-<td align="right">88</td>
-<td align="right">0.4933103</td>
-<td align="right">-0.6664932</td>
-</tr>
-<tr class="even">
-<td align="right">3.7680715</td>
-<td align="right">3.8783317</td>
-<td align="right">7</td>
-<td align="right">120</td>
-<td align="right">0.0048843</td>
-<td align="right">1.4001524</td>
-</tr>
-<tr class="odd">
-<td align="right">3.2473376</td>
-<td align="right">2.0760349</td>
-<td align="right">5</td>
-<td align="right">67</td>
-<td align="right">-0.9719678</td>
-<td align="right">-2.0227294</td>
-</tr>
-<tr class="even">
-<td align="right">1.7682800</td>
-<td align="right">3.3295325</td>
-<td align="right">6</td>
-<td align="right">84</td>
-<td align="right">-0.4835417</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="odd">
-<td align="right">2.8944518</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">102</td>
-<td align="right">0.9817363</td>
-<td align="right">0.2376642</td>
-</tr>
-<tr class="even">
-<td align="right">4.0000000</td>
-<td align="right">4.0000000</td>
-<td align="right">9</td>
-<td align="right">84</td>
-<td align="right">0.9817363</td>
-<td align="right">-0.9248239</td>
-</tr>
-<tr class="odd">
-<td align="right">2.7733935</td>
-<td align="right">3.5680159</td>
-<td align="right">7</td>
-<td align="right">107</td>
-<td align="right">0.0048843</td>
-<td align="right">0.5605776</td>
-</tr>
-<tr class="even">
-<td align="right">1.6120128</td>
-<td align="right">2.3200362</td>
-<td align="right">8</td>
-<td align="right">94</td>
-<td align="right">0.4933103</td>
-<td align="right">-0.2789972</td>
-</tr>
-<tr class="odd">
-<td align="right">3.5397356</td>
-<td align="right">2.8607765</td>
-<td align="right">7</td>
-<td align="right">108</td>
-<td align="right">0.0048843</td>
-<td align="right">0.6251603</td>
-</tr>
-<tr class="even">
-<td align="right">3.5275687</td>
-<td align="right">2.8646434</td>
-<td align="right">10</td>
-<td align="right">109</td>
-<td align="right">1.4701623</td>
-<td align="right">0.6897430</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 100 × 6
+##    grade   GPA lecture nclicks lecture_c nclicks_c
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2.40 1.13        6      88  -0.484     -0.666 
+##  2  3.67 0.971       6      96  -0.484     -0.150 
+##  3  2.85 3.34        6     123  -0.484      1.59  
+##  4  1.36 2.76        9      99   0.982      0.0439
+##  5  2.31 1.02        4      66  -1.46      -2.09  
+##  6  2.58 0.841       8      99   0.493      0.0439
+##  7  2.69 4           5      86  -0.972     -0.796 
+##  8  3.05 2.29        7     118   0.00488    1.27  
+##  9  3.21 3.39        9      98   0.982     -0.0207
+## 10  2.24 3.27       10     115   1.47       1.08  
+## # … with 90 more rows</code></pre>
 <p>Now let's re-fit the model using the centered and scaled predictors.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_model_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture_c</span> <span class="op">+</span> <span class="va">nclicks_c</span>, <span class="va">grades2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model_scaled</span><span class="op">)</span></code></pre></div>
@@ -1874,41 +363,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 <p>But you might ask: maybe its the case that better students get better grades, and the relationship between <code>lecture</code>, <code>nclicks</code>, and <code>grade</code> is just mediated by student quality. After all, better students are more likely to go to lecture and download the materials. So we can ask, are attendance and downloads associated with better grades <strong>above and beyond</strong> student ability, as measured by GPA?</p>
 <p>The way we can test this hypothesis is by using <strong>model comparison</strong>. The logic is as follows. First, estimate a model containing any control predictors but excluding the focal predictors of interest. Second, estimate a model containing the control predictors as well as the focal predictors. Finally, compare the two models, to see if there is any statistically significant gain by including the predictors.</p>
 <p>Here is how you do this:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># control model</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span> <span class="op">+</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># bigger model</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Res.Df</th>
-<th align="right">RSS</th>
-<th align="right">Df</th>
-<th align="right">Sum of Sq</th>
-<th align="right">F</th>
-<th align="right">Pr(&gt;F)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">98</td>
-<td align="right">73.52823</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">96</td>
-<td align="right">71.57829</td>
-<td align="right">2</td>
-<td align="right">1.949939</td>
-<td align="right">1.307618</td>
-<td align="right">0.2752366</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: grade ~ GPA
+## Model 2: grade ~ GPA + lecture + nclicks
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     98 73.528                           
+## 2     96 71.578  2    1.9499 1.3076 0.2752</code></pre>
 <p>The null hypothesis is that we are just as good predicting <code>grade</code> from <code>GPA</code> as we are predicting it from <code>GPA</code> plus <code>lecture</code> and <code>nclicks</code>. We will reject the null if adding these two variables leads to a substantial enough reduction in the <strong>residual sums of squares</strong> (RSS); i.e., if they explain away enough residual variance.</p>
 <p>We see that this is not the case:
 <span class="math inline">\(F(2, 96 ) = 1.308\)</span>,
@@ -1931,149 +397,64 @@ z = \frac{X - \mu_x}{\sigma_x}
 </h3>
 <p>For a factor with two levels, choose one level as zero and the other as one. The choice is arbitrary, and will affect the sign of the coefficient, but not its standard error or p-value. Here is some code that will do this. Note that if you have a predictor of type character or factor, R will automatically do that for you. We don't want R to do this for reasons that will become apparent in the next lecture, so let's learn how to make our own numeric predictor.</p>
 <p>First, we gin up some fake data to use in our analysis.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
                     group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">fake_data</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Y</th>
-<th align="left">group</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">0.0254051</td>
-<td align="left">A</td>
-</tr>
-<tr class="even">
-<td align="right">-0.5815608</td>
-<td align="left">A</td>
-</tr>
-<tr class="odd">
-<td align="right">0.1467737</td>
-<td align="left">A</td>
-</tr>
-<tr class="even">
-<td align="right">0.3348717</td>
-<td align="left">A</td>
-</tr>
-<tr class="odd">
-<td align="right">-1.9854078</td>
-<td align="left">A</td>
-</tr>
-<tr class="even">
-<td align="right">-1.2045763</td>
-<td align="left">B</td>
-</tr>
-<tr class="odd">
-<td align="right">-0.8462039</td>
-<td align="left">B</td>
-</tr>
-<tr class="even">
-<td align="right">-2.1965004</td>
-<td align="left">B</td>
-</tr>
-<tr class="odd">
-<td align="right">0.1316380</td>
-<td align="left">B</td>
-</tr>
-<tr class="even">
-<td align="right">0.5297566</td>
-<td align="left">B</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 10 × 2
+##         Y group
+##     &lt;dbl&gt; &lt;chr&gt;
+##  1  1.30  A    
+##  2 -1.02  A    
+##  3 -0.213 A    
+##  4 -1.44  A    
+##  5  1.56  A    
+##  6 -0.142 B    
+##  7 -0.274 B    
+##  8 -0.990 B    
+##  9  0.158 B    
+## 10 -1.18  B</code></pre>
 <p>Now let's add a new variable, <code>group_d</code>, which is the dummy coded group variable. We will use the <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else()</a></code> function to define the new column.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data2</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">fake_data2</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Y</th>
-<th align="left">group</th>
-<th align="right">group_d</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">0.0254051</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">-0.5815608</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">0.1467737</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">0.3348717</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">-1.9854078</td>
-<td align="left">A</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">-1.2045763</td>
-<td align="left">B</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="right">-0.8462039</td>
-<td align="left">B</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">-2.1965004</td>
-<td align="left">B</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="right">0.1316380</td>
-<td align="left">B</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">0.5297566</td>
-<td align="left">B</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 10 × 3
+##         Y group group_d
+##     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1  1.30  A           0
+##  2 -1.02  A           0
+##  3 -0.213 A           0
+##  4 -1.44  A           0
+##  5  1.56  A           0
+##  6 -0.142 B           1
+##  7 -0.274 B           1
+##  8 -0.990 B           1
+##  9  0.158 B           1
+## 10 -1.18  B           1</code></pre>
 <p>Now we just run it as a regular regression model.</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ group_d, data = fake_data2)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.5734 -0.4079  0.1542  0.6998  1.2469 
+##      Min       1Q   Median       3Q      Max 
+## -1.47956 -0.64881 -0.01998  0.56950  1.52255 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  -0.4120     0.4551  -0.905    0.392
-## group_d      -0.3052     0.6436  -0.474    0.648
+## (Intercept)  0.03886    0.46366   0.084    0.935
+## group_d     -0.52543    0.65571  -0.801    0.446
 ## 
-## Residual standard error: 1.018 on 8 degrees of freedom
-## Multiple R-squared:  0.02734,    Adjusted R-squared:  -0.09424 
-## F-statistic: 0.2249 on 1 and 8 DF,  p-value: 0.648</code></pre>
+## Residual standard error: 1.037 on 8 degrees of freedom
+## Multiple R-squared:  0.0743, Adjusted R-squared:  -0.04141 
+## F-statistic: 0.6421 on 1 and 8 DF,  p-value: 0.4461</code></pre>
 <p>Note that if we reverse the coding we get the same result, just the sign is different.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"A"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
@@ -2083,17 +464,17 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## lm(formula = Y ~ group_d, data = fake_data3)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.5734 -0.4079  0.1542  0.6998  1.2469 
+##      Min       1Q   Median       3Q      Max 
+## -1.47956 -0.64881 -0.01998  0.56950  1.52255 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  -0.7172     0.4551  -1.576    0.154
-## group_d       0.3052     0.6436   0.474    0.648
+## (Intercept)  -0.4866     0.4637  -1.049    0.325
+## group_d       0.5254     0.6557   0.801    0.446
 ## 
-## Residual standard error: 1.018 on 8 degrees of freedom
-## Multiple R-squared:  0.02734,    Adjusted R-squared:  -0.09424 
-## F-statistic: 0.2249 on 1 and 8 DF,  p-value: 0.648</code></pre>
+## Residual standard error: 1.037 on 8 degrees of freedom
+## Multiple R-squared:  0.0743, Adjusted R-squared:  -0.04141 
+## F-statistic: 0.6421 on 1 and 8 DF,  p-value: 0.4461</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
 <!--
@@ -2109,7 +490,7 @@ Why not just use **factors** as your predictors?
 <span class="header-section-number">3.2.2</span> Dummy coding when <span class="math inline">\(k &gt; 2\)</span><a class="anchor" aria-label="anchor" href="#dummy-coding-when-k-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>When the predictor variable is a factor with <span class="math inline">\(k\)</span> levels where <span class="math inline">\(k&gt;2\)</span>, we need <span class="math inline">\(k-1\)</span> predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Here is code to do that. Try it out and see if you can figure out how it works.</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                  bodyweight_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">105</span>, <span class="fl">3</span><span class="op">)</span>,
                                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">103</span>, <span class="fl">3</span><span class="op">)</span>,
@@ -2117,98 +498,31 @@ Why not just use **factors** as your predictors?
                                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">102.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">mydata</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">season</th>
-<th align="right">bodyweight_kg</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">100.64124</td>
-</tr>
-<tr class="even">
-<td align="left">winter</td>
-<td align="right">104.83277</td>
-</tr>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">105.46014</td>
-</tr>
-<tr class="even">
-<td align="left">winter</td>
-<td align="right">107.23046</td>
-</tr>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">99.65956</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">104.29053</td>
-</tr>
-<tr class="odd">
-<td align="left">spring</td>
-<td align="right">100.97024</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">106.09726</td>
-</tr>
-<tr class="odd">
-<td align="left">spring</td>
-<td align="right">104.84310</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">95.46798</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">100.33105</td>
-</tr>
-<tr class="even">
-<td align="left">summer</td>
-<td align="right">98.54953</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">104.74848</td>
-</tr>
-<tr class="even">
-<td align="left">summer</td>
-<td align="right">95.28546</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">100.49402</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">106.32052</td>
-</tr>
-<tr class="odd">
-<td align="left">fall</td>
-<td align="right">104.57956</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">102.94745</td>
-</tr>
-<tr class="odd">
-<td align="left">fall</td>
-<td align="right">103.95605</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">100.17524</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 20 × 2
+##    season bodyweight_kg
+##    &lt;chr&gt;          &lt;dbl&gt;
+##  1 winter         102. 
+##  2 winter         106. 
+##  3 winter         101. 
+##  4 winter         104. 
+##  5 winter         106. 
+##  6 spring         107. 
+##  7 spring         105. 
+##  8 spring         100. 
+##  9 spring         103. 
+## 10 spring         104. 
+## 11 summer         104. 
+## 12 summer         100. 
+## 13 summer         102. 
+## 14 summer          97.7
+## 15 summer          95.1
+## 16 fall           106. 
+## 17 fall           104. 
+## 18 fall           101. 
+## 19 fall            96.9
+## 20 fall           106.</code></pre>
 <p>Now let's add three predictors to code the variable <code>season</code>.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## baseline value is 'winter'</span>
 <span class="va">mydata2</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>V1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
@@ -2216,159 +530,29 @@ Why not just use **factors** as your predictors?
          V3 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">mydata2</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">season</th>
-<th align="right">bodyweight_kg</th>
-<th align="right">V1</th>
-<th align="right">V2</th>
-<th align="right">V3</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">100.64124</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">winter</td>
-<td align="right">104.83277</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">105.46014</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">winter</td>
-<td align="right">107.23046</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">winter</td>
-<td align="right">99.65956</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">104.29053</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">spring</td>
-<td align="right">100.97024</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">106.09726</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">spring</td>
-<td align="right">104.84310</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">spring</td>
-<td align="right">95.46798</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">100.33105</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">summer</td>
-<td align="right">98.54953</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">104.74848</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">summer</td>
-<td align="right">95.28546</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">summer</td>
-<td align="right">100.49402</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">106.32052</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">fall</td>
-<td align="right">104.57956</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">102.94745</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">fall</td>
-<td align="right">103.95605</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">fall</td>
-<td align="right">100.17524</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 20 × 5
+##    season bodyweight_kg    V1    V2    V3
+##    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 winter         102.      0     0     0
+##  2 winter         106.      0     0     0
+##  3 winter         101.      0     0     0
+##  4 winter         104.      0     0     0
+##  5 winter         106.      0     0     0
+##  6 spring         107.      1     0     0
+##  7 spring         105.      1     0     0
+##  8 spring         100.      1     0     0
+##  9 spring         103.      1     0     0
+## 10 spring         104.      1     0     0
+## 11 summer         104.      0     1     0
+## 12 summer         100.      0     1     0
+## 13 summer         102.      0     1     0
+## 14 summer          97.7     0     1     0
+## 15 summer          95.1     0     1     0
+## 16 fall           106.      0     0     1
+## 17 fall           104.      0     0     1
+## 18 fall           101.      0     0     1
+## 19 fall            96.9     0     0     1
+## 20 fall           106.      0     0     1</code></pre>
 </div>
 </div>
 <div id="equivalence-between-multiple-regression-and-one-way-anova" class="section level2">
@@ -2376,7 +560,7 @@ Why not just use **factors** as your predictors?
 <span class="header-section-number">3.3</span> Equivalence between multiple regression and one-way ANOVA<a class="anchor" aria-label="anchor" href="#equivalence-between-multiple-regression-and-one-way-anova"><i class="fas fa-link"></i></a>
 </h2>
 <p>If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on <code>mydata2</code> like so.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make season into a factor with baseline level 'winter'</span>
 <span class="va">mydata3</span> <span class="op">&lt;-</span> <span class="va">mydata2</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">season</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -2384,32 +568,32 @@ Why not just use **factors** as your predictors?
 <span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">mydata3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
-## season       3   45.6   15.20   1.325  0.301
-## Residuals   16  183.5   11.47</code></pre>
+## season       3  57.79  19.263   2.081  0.143
+## Residuals   16 148.08   9.255</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span>, <span class="va">mydata3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyweight_kg ~ V1 + V2 + V3, data = mydata3)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -6.8658 -1.7536  0.5308  2.0948  4.8668 
+##    Min     1Q Median     3Q    Max 
+## -5.975 -2.025  0.600  2.260  3.831 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 103.56483    1.51463  68.376   &lt;2e-16 ***
-## V1           -1.23101    2.14201  -0.575    0.573    
-## V2           -3.68313    2.14201  -1.719    0.105    
-## V3            0.03093    2.14201   0.014    0.989    
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 104.0283     1.3605  76.462   &lt;2e-16 ***
+## V1           -0.3431     1.9241  -0.178    0.861    
+## V2           -4.3003     1.9241  -2.235    0.040 *  
+## V3           -1.1243     1.9241  -0.584    0.567    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.387 on 16 degrees of freedom
-## Multiple R-squared:  0.199,  Adjusted R-squared:  0.04884 
-## F-statistic: 1.325 on 3 and 16 DF,  p-value: 0.301</code></pre>
+## Residual standard error: 3.042 on 16 degrees of freedom
+## Multiple R-squared:  0.2807, Adjusted R-squared:  0.1458 
+## F-statistic: 2.081 on 3 and 16 DF,  p-value: 0.143</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solution-to-partial-effect-plot" class="section level2">
@@ -2417,7 +601,7 @@ Why not just use **factors** as your predictors?
 <span class="header-section-number">3.4</span> Solution to partial effect plot<a class="anchor" aria-label="anchor" href="#solution-to-partial-effect-plot"><i class="fas fa-link"></i></a>
 </h2>
 <p>First create a tibble with new predictors. We might also want to know the range of values that <code>nclicks</code> varies over.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lecture_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">min_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">max_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="op">)</span>
@@ -2431,399 +615,22 @@ Why not just use **factors** as your predictors?
   <span class="fu">mutate</span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_nclicks</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">new_nclicks2</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">lecture</th>
-<th align="right">nclicks</th>
-<th align="right">grade</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">54</td>
-<td align="right">2.374462</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">55</td>
-<td align="right">2.379514</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">56</td>
-<td align="right">2.384567</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">57</td>
-<td align="right">2.389619</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">58</td>
-<td align="right">2.394672</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">59</td>
-<td align="right">2.399724</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">60</td>
-<td align="right">2.404777</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">61</td>
-<td align="right">2.409829</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">62</td>
-<td align="right">2.414882</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">63</td>
-<td align="right">2.419934</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">64</td>
-<td align="right">2.424987</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">65</td>
-<td align="right">2.430039</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">66</td>
-<td align="right">2.435092</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">67</td>
-<td align="right">2.440144</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">68</td>
-<td align="right">2.445197</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">69</td>
-<td align="right">2.450249</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">70</td>
-<td align="right">2.455302</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">71</td>
-<td align="right">2.460354</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">72</td>
-<td align="right">2.465407</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">73</td>
-<td align="right">2.470459</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">74</td>
-<td align="right">2.475512</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">75</td>
-<td align="right">2.480564</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">76</td>
-<td align="right">2.485617</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">77</td>
-<td align="right">2.490669</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">78</td>
-<td align="right">2.495722</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">79</td>
-<td align="right">2.500774</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">80</td>
-<td align="right">2.505827</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">81</td>
-<td align="right">2.510879</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">82</td>
-<td align="right">2.515932</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">83</td>
-<td align="right">2.520984</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">84</td>
-<td align="right">2.526037</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">85</td>
-<td align="right">2.531089</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">86</td>
-<td align="right">2.536142</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">87</td>
-<td align="right">2.541194</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">88</td>
-<td align="right">2.546247</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">89</td>
-<td align="right">2.551299</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">90</td>
-<td align="right">2.556352</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">91</td>
-<td align="right">2.561404</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">92</td>
-<td align="right">2.566457</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">93</td>
-<td align="right">2.571509</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">94</td>
-<td align="right">2.576562</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">95</td>
-<td align="right">2.581614</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">96</td>
-<td align="right">2.586667</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">97</td>
-<td align="right">2.591719</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">98</td>
-<td align="right">2.596772</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">99</td>
-<td align="right">2.601824</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">100</td>
-<td align="right">2.606876</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">101</td>
-<td align="right">2.611929</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">102</td>
-<td align="right">2.616982</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">103</td>
-<td align="right">2.622034</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">104</td>
-<td align="right">2.627086</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">105</td>
-<td align="right">2.632139</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">106</td>
-<td align="right">2.637192</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">107</td>
-<td align="right">2.642244</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">108</td>
-<td align="right">2.647296</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">109</td>
-<td align="right">2.652349</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">110</td>
-<td align="right">2.657402</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">111</td>
-<td align="right">2.662454</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">112</td>
-<td align="right">2.667506</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">113</td>
-<td align="right">2.672559</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">114</td>
-<td align="right">2.677611</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">115</td>
-<td align="right">2.682664</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">116</td>
-<td align="right">2.687716</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">117</td>
-<td align="right">2.692769</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">118</td>
-<td align="right">2.697821</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">119</td>
-<td align="right">2.702874</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">120</td>
-<td align="right">2.707926</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">121</td>
-<td align="right">2.712979</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">122</td>
-<td align="right">2.718031</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">123</td>
-<td align="right">2.723084</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">124</td>
-<td align="right">2.728136</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">125</td>
-<td align="right">2.733189</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">126</td>
-<td align="right">2.738241</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">127</td>
-<td align="right">2.743294</td>
-</tr>
-<tr class="odd">
-<td align="right">6.99</td>
-<td align="right">128</td>
-<td align="right">2.748346</td>
-</tr>
-<tr class="even">
-<td align="right">6.99</td>
-<td align="right">129</td>
-<td align="right">2.753399</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 76 × 3
+##    lecture nclicks grade
+##      &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt;
+##  1    6.99      54  2.37
+##  2    6.99      55  2.38
+##  3    6.99      56  2.38
+##  4    6.99      57  2.39
+##  5    6.99      58  2.39
+##  6    6.99      59  2.40
+##  7    6.99      60  2.40
+##  8    6.99      61  2.41
+##  9    6.99      62  2.41
+## 10    6.99      63  2.42
+## # … with 66 more rows</code></pre>
 <p>Now plot.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">grades</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">nclicks</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_nclicks2</span><span class="op">)</span></code></pre></div>
@@ -2994,7 +801,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

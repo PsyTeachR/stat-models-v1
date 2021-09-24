@@ -3,7 +3,7 @@
 
 suppressPackageStartupMessages({
   library(tidyverse)
-  library(webex)
+  library(webexercises)
   library(glossary)
 })
 

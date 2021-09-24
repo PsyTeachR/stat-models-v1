@@ -1,7 +1,7 @@
 bookdown::bs4_book: 
   default: true
   md_extensions: -smart
-  df_print: kable
+  df_print: default
   repo:
     base: https://github.com/psyteachr/stat-models-v1
     branch: master

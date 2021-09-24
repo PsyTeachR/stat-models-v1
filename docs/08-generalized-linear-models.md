@@ -1,7 +1,7 @@
 # Generalized linear mixed-effects models
 
 :::{.warning}
-This chapter is under construction as of August 31, 2021; contents may change!
+This chapter is under construction as of September 24, 2021; contents may change!
 :::
 
 
@@ -71,28 +71,13 @@ rainy_days %>%
   summarise(sd = sd(days_of_rain))
 ```
 
-<div class="kable-table">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> city </th>
-   <th style="text-align:right;"> sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Barcelona </td>
-   <td style="text-align:right;"> 6.829612 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Glasgow </td>
-   <td style="text-align:right;"> 9.283592 </td>
-  </tr>
-</tbody>
-</table>
-
-</div>
+```
+## # A tibble: 2 × 2
+##   city         sd
+##   <chr>     <dbl>
+## 1 Barcelona  6.74
+## 2 Glasgow    9.70
+```
 
 
 #### Spurious interactions due to scaling effects
@@ -173,7 +158,7 @@ $$np(1 - p)$$.
 The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.
 
 <div class="figure" style="text-align: center">
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px"></iframe>
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px" data-external="1"></iframe>
 <p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://shiny.psy.gla.ac.uk/Dale/logit></p>
 </div>
 

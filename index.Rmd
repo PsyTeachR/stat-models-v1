@@ -1,6 +1,5 @@
 --- 
 title: "Learning Statistical Models Through Simulation in R"
-subtitle: "psyteachr books"
 author: "Dale J. Barr"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site

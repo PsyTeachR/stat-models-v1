@@ -1,3 +1,5 @@
+fig:basic-glm
+fig:tryptych
 fig:correlation-relationships
 fig:pairs
 fig:massive-creature
@@ -27,11 +29,11 @@ fig:rbinom
 fig:logit-app
 introduction
 goal-of-this-course
-flexibility
-generalizability
-reproduciblity-and-transparency
+generalized-linear-mixed-effects-models-glmms
+linear-models
+mixed-models
+a-note-on-reproducibility
 a-simulation-based-approach
-what-you-will-learn
 understanding-correlation-and-regression-through-bivariate-simulation
 correlation-matrices
 simulating-bivariate-data

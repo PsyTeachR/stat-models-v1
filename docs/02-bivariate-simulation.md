@@ -1,22 +1,6 @@
 # Understanding correlation and regression through bivariate simulation
 
-:::{.warning}
-This chapter is under construction as of August 31, 2021; contents may change!
-:::
 
-* Packages used: 
-    + **`tidyverse`**
-    + **`corrr`**
-    + **`MASS`** (built in)
-* Functions used: 
-    + `base::choose()` 
-    + `corrr::correlate()`
-    + `base::rbind()`
-    + `base::cor()`
-    + `base::log()` and `base::exp()` for log transformation (and back)
-
-* Review 
-    + [L2 lab materials on correlation](https://psyteachr.github.io/ug2-practical/correlations.html){target="_blank"}.
 
 ## Correlation matrices
 
@@ -65,15 +49,14 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-<div class="kable-table">
-
-|term       |     height|      mass| birth_year|
-|:----------|----------:|---------:|----------:|
-|height     |         NA| 0.1338842| -0.3998723|
-|mass       |  0.1338842|        NA|  0.4781391|
-|birth_year | -0.3998723| 0.4781391|         NA|
-
-</div>
+```
+## # A tibble: 3 × 4
+##   term       height   mass birth_year
+##   <chr>       <dbl>  <dbl>      <dbl>
+## 1 height     NA      0.134     -0.400
+## 2 mass        0.134 NA          0.478
+## 3 birth_year -0.400  0.478     NA
+```
 
 You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between `height` and `mass` is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only `choose(3, 2)` = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending `corrr::shave()` to our pipeline.
 
@@ -91,15 +74,14 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-<div class="kable-table">
-
-|term       |     height|      mass| birth_year|
-|:----------|----------:|---------:|----------:|
-|height     |         NA|        NA|         NA|
-|mass       |  0.1338842|        NA|         NA|
-|birth_year | -0.3998723| 0.4781391|         NA|
-
-</div>
+```
+## # A tibble: 3 × 4
+##   term       height   mass birth_year
+##   <chr>       <dbl>  <dbl>      <dbl>
+## 1 height     NA     NA             NA
+## 2 mass        0.134 NA             NA
+## 3 birth_year -0.400  0.478         NA
+```
 
 Now we've only got the lower triangle of the correlation matrix, but the `NA` values are ugly and so are the leading zeroes. The **`corrr`** package also provides the `fashion()` function that cleans things up (see `?corrr::fashion` for more options).
 
@@ -118,15 +100,12 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-<div class="kable-table">
-
-|term       |height |mass |birth_year |
-|:----------|:------|:----|:----------|
-|height     |       |     |           |
-|mass       |.13    |     |           |
-|birth_year |-.40   |.48  |           |
-
-</div>
+```
+##         term height mass birth_year
+## 1     height                       
+## 2       mass    .13                
+## 3 birth_year   -.40  .48
+```
 
 Correlations only provide a good description of the relationship if the relationship is (roughly) linear and there aren't severe outliers that are wielding too strong of an influence on the results. So it is always a good idea to visualize the correlations as well as to quantify them.  The `base::pairs()` function does this. The first argument to `pairs()` is simply of the form `~ v1 + v2 + v3 + ... + vn` where `v1`, `v2`, etc. are the names of the variables you want to correlate.
 
@@ -149,13 +128,12 @@ starwars %>%
   select(name, mass, height, birth_year)
 ```
 
-<div class="kable-table">
-
-|name                  | mass| height| birth_year|
-|:---------------------|----:|------:|----------:|
-|Jabba Desilijic Tiure | 1358|    175|        600|
-
-</div>
+```
+## # A tibble: 1 × 4
+##   name                   mass height birth_year
+##   <chr>                 <dbl>  <int>      <dbl>
+## 1 Jabba Desilijic Tiure  1358    175        600
+```
 
 OK, let's see how the data look without this massive creature.
 
@@ -181,13 +159,12 @@ starwars2 %>%
   select(name, height, mass, birth_year)
 ```
 
-<div class="kable-table">
-
-|name | height| mass| birth_year|
-|:----|------:|----:|----------:|
-|Yoda |     66|   17|        896|
-
-</div>
+```
+## # A tibble: 1 × 4
+##   name  height  mass birth_year
+##   <chr>  <int> <dbl>      <dbl>
+## 1 Yoda      66    17        896
+```
 
 It's Yoda. He's as old as the universe. Let's drop him and see how the plots look.
 
@@ -221,15 +198,12 @@ starwars3 %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-<div class="kable-table">
-
-|term       |height |mass |birth_year |
-|:----------|:------|:----|:----------|
-|height     |       |     |           |
-|mass       |.74    |     |           |
-|birth_year |.45    |.24  |           |
-
-</div>
+```
+##         term height mass birth_year
+## 1     height                       
+## 2       mass    .74                
+## 3 birth_year    .45  .24
+```
 
 Note that these values are quite different from the ones we started with.
 
@@ -250,15 +224,12 @@ starwars %>%
 ## Missing treated using: 'pairwise.complete.obs'
 ```
 
-<div class="kable-table">
-
-|term       |height |mass |birth_year |
-|:----------|:------|:----|:----------|
-|height     |       |     |           |
-|mass       |.75    |     |           |
-|birth_year |.16    |.15  |           |
-
-</div>
+```
+##         term height mass birth_year
+## 1     height                       
+## 2       mass    .75                
+## 3 birth_year    .16  .15
+```
 
 Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use `knitr::kable()`.
 

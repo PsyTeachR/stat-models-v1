@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 1 Introduction | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change!  1.1 Goal of this course The goal of this course is to teach you how to simulate and analyze the various types of...">
+<meta name="description" content="1.1 Goal of this course The goal of this course is to teach you how to analyze (and simulate!) various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 1 Introduction | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introduction.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change!  1.1 Goal of this course The goal of this course is to teach you how to simulate and analyze the various types of...">
+<meta property="og:description" content="1.1 Goal of this course The goal of this course is to teach you how to analyze (and simulate!) various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 1 Introduction | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change!  1.1 Goal of this course The goal of this course is to teach you how to simulate and analyze the various types of...">
+<meta name="twitter:description" content="1.1 Goal of this course The goal of this course is to teach you how to analyze (and simulate!) various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +39,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="psyteachr books">Learning Statistical Models Through Simulation in R</a>:
-        <small class="text-muted">psyteachr books</small>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -76,41 +75,99 @@
 <h1>
 <span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
 </h1>
-<div class="warning">
-<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
-</div>
 <div id="goal-of-this-course" class="section level2">
 <h2>
 <span class="header-section-number">1.1</span> Goal of this course<a class="anchor" aria-label="anchor" href="#goal-of-this-course"><i class="fas fa-link"></i></a>
 </h2>
-<p>The goal of this course is to teach you how to simulate and analyze the various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral data---e.g., measures of reaction time, perceptual judgments, choices, decision, ratings on a survey, hours of sleep, etc.---usually collected in the context of a study or experiment.</p>
-<p>In its approach to statistical analysis, this course attempts to maximize <strong>flexibility</strong>, <strong>generalizability</strong>, and <strong>reproducibility</strong>. You may have heard talk in the media about psychology being in the throes of various 'crises'. There have been some high-profile replication failures that have contributed to the impression that all is not well. There have also been a number of demonstrations that the standard approaches to data analysis in psychology are flawed, in that they allow researchers to present results as clean-cut and confirmatory while hiding various analyses that have been pursued and discarded while seeking to attain the desired result. But it is not just the field of psychology where such problems can be found---the problem is widespread, encompassing other fields of study as well. And the truth is that a certain level of self-criticism and self-reflection can also be seen positively---as a sign of a healthy discipline. Whatever your take, there is room for improvement, and the purpose of this course is to give you tools to ensure that your own analyses are not only statistically sound, but also as generalizable and reproducible as possible.</p>
-<div id="flexibility" class="section level3">
+<p>The goal of this course is to teach you how to analyze (and simulate!) various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral data usually collected in the context of a planned study or experiment—response time, perceptual judgments, choices, decisions, Likert ratings, eye movements, hours of sleep, etc.</p>
+<p>The course attempts to teach analytical techniques that are <strong>flexible</strong>, <strong>generalizabile</strong>, and <strong>reproducible</strong>. The techniques you will learn are flexible in the sense they can be applied to a wide variety of study designs and different types of data. They are maximally generalizable by attempting to fully account for the potential biasing influence of sampling on statistical inference—that is, they help support claims that go beyond the particular participants and stimuli involved in an experiment. Finally, the approach you will learn strives to be fully reproducible, inasmuch as your analyses will unambiguously document every single step in the transformation of raw data into research results in a plain-text script using R code.</p>
+</div>
+<div id="generalized-linear-mixed-effects-models-glmms" class="section level2">
+<h2>
+<span class="header-section-number">1.2</span> Generalized Linear Mixed-Effects Models (GLMMs)<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models-glmms"><i class="fas fa-link"></i></a>
+</h2>
+<p>This course emphasizes a flexible regression modeling framework rather than teaching 'recipes' for dealing with different types of data, and assumes that the fundamental type of data you will need to analyze will be <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a> and also that you will need to deal not only with continuous measurements but also ordinal measurements (ratings on a Likert scale), counts (number of times particular event types have taken place), and nominal data (what category something falls into).</p>
+<p>By the end of this course, you will have learned how to use Generalized Linear Mixed-Effects Models (GLMMs) to quantify the relationships between a <a class="glossary" target="_blank" title="The target variable that is being analyzed, whose value is assumed to depend on other variables." href="https://psyteachr.github.io/glossary/d#dependent-variable">dependent variable</a> and a set of <a class="glossary" target="_blank" title="A variable whose value is used (in a model) to predict the value of a response variable." href="https://psyteachr.github.io/glossary/p#predictor-variable">predictor variables</a>. To understand GLMMs, you'll have to learn about three parts:</p>
+<ol style="list-style-type: decimal">
+<li>the "linear model" part, including how to capture different types of
+predictor variables and their interactions;</li>
+<li>the "mixed" part, including ideas about how to use random effects
+to represent multilevel dependencies arising through repeated
+measurements on the same subjects or stimuli; and</li>
+<li>the "generalized" part, where we extend linear models to represent
+dependent variables that are not strictly normal, including count,
+ordinal, and binary variables.</li>
+</ol>
+<div id="linear-models" class="section level3">
 <h3>
-<span class="header-section-number">1.1.1</span> Flexibility<a class="anchor" aria-label="anchor" href="#flexibility"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.1</span> Linear models<a class="anchor" aria-label="anchor" href="#linear-models"><i class="fas fa-link"></i></a>
 </h3>
-<p>The approach taken in this course differs from other courses in that it emphasizes learning a flexible regression modeling framework rather than teaching 'recipes' for dealing with different types of data, and assumes that the fundamental type of data you will need to analyze will be <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a> and also that you will need to deal not only with continuous measurements but also ordinal measurements (ratings on a Likert scale), counts (number of times particular event types have taken place), and nominal data (what category something falls into).</p>
-<p>The most flexible approach available is the General Linear Model approach, in which some <a class="glossary" target="_blank" title="A variable (in a regression) whose value is assumed to be influenced by one or more predictor variables." href="https://psyteachr.github.io/glossary/r#response-variable">response variable</a> is modeled in terms of a weighted linear sum of <a class="glossary" target="_blank" title="A variable whose value is used (in a model) to predict the value of a response variable." href="https://psyteachr.github.io/glossary/p#predictor-variable">predictor variables</a>. A simple mathematical example of one such formula is</p>
+<p>GLMMs are an extension of the General Linear Model that underlies simpler approaches such as ANOVA, t-test, and classical regression. The main conceit of this course is that <strong>almost any data from almost any design you might encounter, can be analyzed using GLMMs</strong>.</p>
+<p>A simple example of a linear model is</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + e_i\]</span></p>
-<p>where <span class="math inline">\(Y_i\)</span> is the measured response for observation <span class="math inline">\(i\)</span>, modeled in terms of an <a class="glossary" target="_blank" title="Also referred to as y-intercept, this is a constant corresponding to the value of the \(y\) variable (in a regression context, the response variable) when all predictor variables are set to zero." href="https://psyteachr.github.io/glossary/i#intercept">intercept</a> term plus the effect of <a class="glossary" target="_blank" title="A variable whose value is used (in a model) to predict the value of a response variable." href="https://psyteachr.github.io/glossary/p#predictor-variable">predictor</a> <span class="math inline">\(X_i\)</span> weighted by coefficient <span class="math inline">\(\beta_1\)</span> and <a class="glossary" target="_blank" title="That part of an observation that cannot be captured by the statistical model, and thus is assumed to reflect unknown factors." href="https://psyteachr.github.io/glossary/r#residual-error">residual error</a> term <span class="math inline">\(e_i\)</span>, which reflects unmodeled variance.</p>
-<p>You might recognize the above equation as representing the equation for a line (<span class="math inline">\(y = mx + b\)</span>), with <span class="math inline">\(\beta_0\)</span> playing the role of the <a class="glossary" target="_blank" title="Also referred to as y-intercept, this is a constant corresponding to the value of the \(y\) variable (in a regression context, the response variable) when all predictor variables are set to zero." href="https://psyteachr.github.io/glossary/i#intercept">y-intercept</a> and <span class="math inline">\(\beta_1\)</span> playing the role of the <a class="glossary" target="_blank" title="A quantity that captures how much change in one variable is associated with a unit increase in another variable." href="https://psyteachr.github.io/glossary/s#slope">slope</a>. The <span class="math inline">\(e_i\)</span> term reflects what is left of observation <span class="math inline">\(i\)</span> after accounting for the the intercept and the predictor <span class="math inline">\(X_i\)</span>.</p>
-<p>A terminological convention in this course is that Greek letters (<span class="math inline">\(\beta\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\tau\)</span>) represent unobserved <a class="glossary" target="_blank" title="A quantity representing a property of a population of interest." href="https://psyteachr.github.io/glossary/p#population-parameter">population parameters</a> while Latin letters (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>) represent observed values.</p>
-<p>This linear formulation is highly general, and we will see how it can be used to model different kinds of relationships between different kinds of variables. One limitation of the current course is that it focuses mainly on <a class="glossary" target="_blank" title="Relating to a single variable." href="https://psyteachr.github.io/glossary/u#univariate">univariate</a> data, where a single <a class="glossary" target="_blank" title="A variable (in a regression) whose value is assumed to be influenced by one or more predictor variables." href="https://psyteachr.github.io/glossary/r#response-variable">response variable</a> is the focus of analysis. It is often the case that you will be dealing with multiple response variables on the same subjects, but modeling them all simultaneously is technically very difficult and beyond the scope of this course. A simpler approach (and the one adopted here) is to analyze each response variable in a separate univariate analysis.</p>
+<p>where <span class="math inline">\(Y_i\)</span> is the measured value of the dependent variable for observation <span class="math inline">\(i\)</span>, modeled in terms of an <a class="glossary" target="_blank" title="Also referred to as y-intercept, this is a constant corresponding to the value of the \(y\) variable (in a regression context, the response variable) when all predictor variables are set to zero." href="https://psyteachr.github.io/glossary/i#intercept">intercept</a> term plus the effect of predictor <span class="math inline">\(X_i\)</span> weighted by coefficient <span class="math inline">\(\beta_1\)</span> and <a class="glossary" target="_blank" title="The statistical error in a linear model is how much an observation's value differs from the (typically unobserved) true value of a population parameter." href="https://psyteachr.github.io/glossary/e#error">error</a> term <span class="math inline">\(e_i\)</span>. Simulated data representing the linear relationship <span class="math inline">\(Y_i = 3 + 2X_i + e_i\)</span> is shown in Figure <a href="introduction.html#fig:basic-glm">1.1</a>.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:basic-glm"></span>
+<img src="01-introduction_files/figure-html/basic-glm-1.png" alt="Simulated data illustrating the linear model Y = 3 + 2X" width="100%"><p class="caption">
+Figure 1.1: Simulated data illustrating the linear model Y = 3 + 2X
+</p>
+</div>
+<div class="webex-solution">
+<button>
+See the R code to make the plot
+</button>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span> <span class="co"># if needed</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
+
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,
+              Y <span class="op">=</span> <span class="fl">3</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_abline</span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">3</span>, slope <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+</div>
+<p>You might recognize the above equation as representing the equation for a line (<span class="math inline">\(y = mx + b\)</span>), with <span class="math inline">\(\beta_0\)</span> playing the role of the <a class="glossary" target="_blank" title="Also referred to as y-intercept, this is a constant corresponding to the value of the \(y\) variable (in a regression context, the response variable) when all predictor variables are set to zero." href="https://psyteachr.github.io/glossary/i#intercept">y-intercept</a> and <span class="math inline">\(\beta_1\)</span> playing the role of the <a class="glossary" target="_blank" title="A quantity that captures how much change in one variable is associated with a unit increase in another variable." href="https://psyteachr.github.io/glossary/s#slope">slope</a>. The <span class="math inline">\(e_i\)</span> term is the model <a class="glossary" target="_blank" title="The statistical error in a linear model is how much an observation's value differs from the (typically unobserved) true value of a population parameter." href="https://psyteachr.github.io/glossary/e#error">error</a> for observation <span class="math inline">\(i\)</span>, which is how far away an observation <span class="math inline">\(Y_i\)</span> is from the model's prediction for a given <span class="math inline">\(X_i\)</span>.</p>
+<div class="info">
+<p><strong>Notation Conventions</strong></p>
+<p>The math equations in this textbook obey the following conventions.</p>
+<p>Greek letters (<span class="math inline">\(\beta\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\tau\)</span>) represent <a class="glossary" target="_blank" title="A quantity representing a property of a population of interest." href="https://psyteachr.github.io/glossary/p#population-parameter">population parameters</a>, which are typically unobserved and estimated from the data. When we want to distinguish an <strong>estimated</strong> parameter from its true value, we will use a "hat": for instance, <span class="math inline">\(\hat{\beta}_0\)</span> is the value of <span class="math inline">\(\beta_0\)</span> that has been estimated from the data.</p>
+<p>Uppercase Latin letters (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>) represent observed values—i.e., things you have measured, and whose values are therefore, known. You will also see lowercase Latin letters (e.g., <span class="math inline">\(e_i\)</span>) to represent statistical errors or other things that I will refer to as 'derived' or 'virtual' quantities (which will be explained later in the course).</p>
+</div>
+<div class="warning">
+<p><strong>The "linear" in linear models doesn't mean what you think it means!</strong></p>
+<p>Many people assume that 'linear models' can only capture linear relationships, i.e., relationships that can be described by a straight line (or a plane). This is false.</p>
+<p>A linear model is a weighted sum of various terms, and each term has a single predictor (or a constant) that is multiplied by a coefficient. In the model above, the coefficients are <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. You can fit all kinds of complicated relationships with linear models, including relationships that are non-linear, like those shown below.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:tryptych"></span>
+<img src="01-introduction_files/figure-html/tryptych-1.png" alt="Nonlinear relationships that can be modeled using a linear model." width="100%"><p class="caption">
+Figure 1.2: Nonlinear relationships that can be modeled using a linear model.
+</p>
+</div>
+<p>In the left panel, we capture a quadratic (parabolic) function using the linear model <span class="math inline">\(Y = \beta_0 + \beta_1 X + \beta_2 X^2\)</span>. The relationship between X and Y is non-linear, but the model itself is linear; we have squared the predictor <span class="math inline">\(X\)</span> but the coefficients <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\beta_2\)</span> are not squared, cubed, or anything like that (they are all "to the power of one").</p>
+<p>In the middle panel, we have captured an S-shaped (or 'sigmoid') function using a linear model. Here, the Y variable represents a probability of some event, such as the probability of passing an exam based on the number of hours spent studying. In this case, we are modeling the relationship between X and Y by estimating a linear model in a special transformed space where the X-Y relationship is linear and then projecting the model back onto a probability space (using a 'link function') where it is not. The non-linearity comes from the 'link function', but the model itself is linear.</p>
+<p>Finally, the right panel shows a somewhat arbitrary wiggly pattern captured by a Generalized Additive Mixed Model—an advanced technique that we won't learn about in this course, but one that is still, fundamentally, a linear model, because it is again, just a weighted sum of complicated things (in this case, "basis functions"), with the coefficients providing the weights.</p>
+<p>A linear model is a model that is <strong>linear in the coefficients</strong>; each coefficient (<span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>) in the model is only allowed to be set to the power of one, and each term <span class="math inline">\(\beta_i X_j\)</span> involves a single coefficient. The terms can only be added with terms involving other coefficients but they cannot be multiplied or divided (e.g., <span class="math inline">\(Y = \frac{\beta_1}{\beta_2} X\)</span> would be prohibited).</p>
+</div>
+<p>One limitation of the current course is that it focuses mainly on <a class="glossary" target="_blank" title="Relating to a single variable." href="https://psyteachr.github.io/glossary/u#univariate">univariate</a> data, where a single <a class="glossary" target="_blank" title="A variable (in a regression) whose value is assumed to be influenced by one or more predictor variables." href="https://psyteachr.github.io/glossary/r#response-variable">response variable</a> is the focus of analysis. It is often the case that you will be dealing with multiple response variables on the same subjects, but modeling them all simultaneously is technically very difficult and beyond the scope of this course. A simpler approach (and the one adopted here) is to analyze each response variable in a separate univariate analysis.</p>
+</div>
+<div id="mixed-models" class="section level3">
+<h3>
+<span class="header-section-number">1.2.2</span> Mixed models<a class="anchor" aria-label="anchor" href="#mixed-models"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <a class="glossary" target="_blank" title="A term referring to the degree to which findings can be readily applied to situations beyond the particular context in which the data were collected." href="https://psyteachr.github.io/glossary/g#generalizability">generalizability</a> of an inference or interpretation of a study result refers to the degree to which it can be readily applied to situations beyond the particular study context (subjects, stimuli, task, etc.). At best, our findings would apply to all members of the human species across a wide variety of stimuli and tasks; at worst, they would apply only to those specific people encountering the specific stimuli we used, observed in the specific context of our study.</p>
+<p>The generalizability of a finding depends on several factors: how the study was designed, what materials were used, how subjects were recruited, the nature of the task given to the subjects, <strong>and the way the data were analyzed</strong>. It is this last point that we will focus on in this course. When analyzing a dataset, if you want to make generalizable claims, you must make decisions about what you would count as a replication of your study—about which aspects should remain fixed across replications, and which you would allow to vary.</p>
+<p>Unfortunately, you will sometimes find that data have been analyzed in a way that does not support generalization in the broadest sense, often because analyses underestimate the influence of ideosyncratic features of stimulus materials or experimental task on the observed result <span class="citation">(Yarkoni, <a href="bibliography.html#ref-yarkoni_2019">2019</a>)</span>.</p>
 </div>
 </div>
-<div id="generalizability" class="section level2">
+<div id="a-note-on-reproducibility" class="section level2">
 <h2>
-<span class="header-section-number">1.2</span> Generalizability<a class="anchor" aria-label="anchor" href="#generalizability"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.3</span> A note on reproducibility<a class="anchor" aria-label="anchor" href="#a-note-on-reproducibility"><i class="fas fa-link"></i></a>
 </h2>
-<p>The term <a class="glossary" target="_blank" title="A term referring to the degree to which findings can be readily applied to situations beyond the particular context in which the data were collected." href="https://psyteachr.github.io/glossary/g#generalizability">generalizability</a> refers to the degree to which findings from a study can be readily applied to situations beyond the particular context (subjects, stimuli, task, etc.) in which the data were collected. At best, our findings would apply to all members of the human species across a wide variety of contexts; at worst, they would apply only to those specific people observed in the specific context of our study. Most studies fall somewhere between these two opposing poles.</p>
-<p>The generalizability of a finding depends on several factors: how the study was designed, what materials were used, how subjects were recruited, the nature of the task given to the subjects, <strong>and the way the data were analyzed</strong>. It is this last point that we will focus on in this course. When analyzing a dataset, if you want to make generalizable claims, you must make decisions about what would count as a replication of your study---about which aspects would remain fixed across replications, and which aspects you would allow to vary. Unfortunately, you will sometimes find that data have been analyzed in a way that does not support generalization in the broadest sense, often because analyses underestimate the influence of ideosyncratic features of stimulus materials or experimental task on the observed result <span class="citation">(Yarkoni, <a href="bibliography.html#ref-yarkoni_2019">2019</a>)</span>.</p>
-</div>
-<div id="reproduciblity-and-transparency" class="section level2">
-<h2>
-<span class="header-section-number">1.3</span> Reproduciblity and Transparency<a class="anchor" aria-label="anchor" href="#reproduciblity-and-transparency"><i class="fas fa-link"></i></a>
-</h2>
+<p>The approach to data analysis in this course is to write scripts in R.</p>
 <p>The term <a class="glossary" target="_blank" title="The extent to which the findings of a study can be repeated in some other context" href="https://psyteachr.github.io/glossary/r#reproducibility">reproducibility</a> refers to the degree to which it is possible to reproduce the pattern of findings in a study under various circumstances.</p>
-<p>We say a finding is <em>analytically</em> or <em>computationally</em> reproducible if, given the raw data, we can obtain the same pattern of results. Note that this is different from saying a finding is <strong>replicable</strong>, which refers to being able to reproduce the finding in <strong>new samples.</strong> There is not widespread agreement about these terms, but it is convenient to view analytic reproducibility and replicability as two different but related types of reproducibility, with the former capturing reproducibility across analysts (or among the same analysts over time) and the latter reflecting reproducibility across participants.</p>
+<p>We say a finding is <em>analytically</em> or <em>computationally</em> reproducible if, given the raw data, we can obtain the same pattern of results. Note that this is different from saying a finding is <strong>replicable</strong>, which refers to being able to reproduce the finding in <strong>new samples.</strong> There is not widespread agreement about these terms, but it is convenient to view analytic reproducibility and replicability as two different but related types of reproducibility, with the former capturing reproducibility across analysts (or among the same analysts over time) and the latter reflecting reproducibility across participant samples or subpopulations.</p>
 <p>Ensuring that analyses are reproducible is a hard problem. If you fail to properly document your own analyses, or the software that you used gets modified or goes out of date and becomes unavailable, you may have trouble reproducing your own findings!</p>
 <p>Another important property of analyses is <a class="glossary" target="_blank" title="The degree to which all the steps and decisions in a study have been documented and made available for verification." href="https://psyteachr.github.io/glossary/t#transparency">transparency</a>: the extent to which all the steps in some research study have been made available. A study may be transparent but not reproducible, and vice versa. It is important to use a workflow that promotes transparency. This makes the 'edit-and-execute' workflow of script programming ideal for data analysis, far superior to the 'point-and-click' workflow of most commercial statistical programs. By writing code, you make the logic and decision process explicit to others and easy to reconstruct.</p>
 </div>
@@ -118,445 +175,47 @@
 <h2>
 <span class="header-section-number">1.4</span> A simulation-based approach<a class="anchor" aria-label="anchor" href="#a-simulation-based-approach"><i class="fas fa-link"></i></a>
 </h2>
-<p>A final characteristic that distinguishes this course is that it uses a <strong>simulation-based approach</strong> to learning about statistical models. By data simulation we mean specifying a model to characterize a population of interest and then using the computer's random number generator to simulate the process of sampling data from that population. We will look at a simple example of this below.</p>
+<p>A final important characteristic of this course is that it uses a <strong>simulation-based approach</strong> to learning about statistical models. By data simulation we mean specifying a model to characterize a population of interest and then using the computer's random number generator to simulate the process of sampling data from that population. We will look at a simple example of this below.</p>
 <p>The typical problem that you will face when you analyze data is that you won't know the 'ground truth' about the population you are studying. You take a sample from that population, make some assumptions about how the observed data have been generated, and then use the observed data to estimate unknown population parameters and the uncertainty around these parameters.</p>
 <p>Data simulation inverts this process. You to define the parameters of a model representing the ground truth about a (hypothetical) population and then generate data from it. You can then analyze the resulting data in the way that you normally would, and see how well your parameter estimates correspond to the true values.</p>
-<p>Let's look at an example. Let's assume you are interested in the question of whether being a parent of a toddler 'sharpens' your reflexes. If you've ever taken care of a toddler, you know that physical danger always seems imminent---they could fall of the chair they just climbed on, slam their finger in a door, bang their head on the corner of a table, etc.---so you need to be attentive and ready to act fast. You hypothesize that this vigilance will translate into faster response times in other situations where a toddler is not around, such as in a psychological laboratory. So you recruit a set of parents of toddlers to come into the lab. You give each parent the task of pressing a button as quickly as possible in response to a flashing light, and measure their response time (in milliseconds). For each parent, you calculate their mean response time over all trials. We can simulate the mean response time for each of say, 50 parents using the <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> function in R. But before we do that, we will load in the packages that we need (tidyverse) and set the <a class="glossary" target="_blank" title="A value used to set the initial state of a random number generator." href="https://psyteachr.github.io/glossary/r#random-seed">random seed</a> to make sure that you (the reader) get the same random values as me (the author).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>Let's look at an example. Let's assume you are interested in the question of whether being a parent of a toddler 'sharpens' your reflexes. If you've ever taken care of a toddler, you know that physical danger always seems imminent—they could fall of the chair they just climbed on, slam their finger in a door, bang their head on the corner of a table, etc.—so you need to be attentive and ready to act fast. You hypothesize that this vigilance will translate into faster response times in other situations where a toddler is not around, such as in a psychological laboratory. So you recruit a set of parents of toddlers to come into the lab. You give each parent the task of pressing a button as quickly as possible in response to a flashing light, and measure their response time (in milliseconds). For each parent, you calculate their mean response time over all trials. We can simulate the mean response time for each of say, 50 parents using the <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> function in R. But before we do that, we will load in the packages that we need (tidyverse) and set the <a class="glossary" target="_blank" title="A value used to set the initial state of a random number generator." href="https://psyteachr.github.io/glossary/r#random-seed">random seed</a> to make sure that you (the reader) get the same random values as me (the author).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>  <span class="co"># can be any arbitrary integer</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">parents</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">480</span>, sd <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-
-<span class="va">parents</span></code></pre></div>
-<pre><code>##  [1] 495.0789 492.0619 436.0791 434.7838 368.1386 508.8229 517.5648 470.8249
-##  [9] 550.3653 484.6947 445.8751 516.3704 527.8549 465.1366 475.0696 552.0017
-## [17] 548.1598 358.4494 388.4410 482.3321 566.9746 523.9273 492.7288 477.0741
-## [25] 513.3707 487.9500 531.9137 517.4687 474.1027 484.4173 447.4998 450.2519
-## [33] 523.8138 577.4149 495.5247 491.6251 468.5761 483.0406 457.5881 497.8875
-## [41] 516.3400 459.7976 467.9598 450.9586 432.7969 490.1230 465.1715 480.8872
-## [49] 506.4018 499.5517</code></pre>
-<p>We chose to generate the data using <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code>---a function that generates random numbers from a normal distribution---reflecting our assumption that mean response time is normally distributed in the population. A normal distribution is defined by two parameters, a mean (usually notated with the Greek letter <span class="math inline">\(\mu\)</span>, pronounced "myoo"), and a standard deviation (usually notated with the Greek letter <span class="math inline">\(\sigma\)</span>, pronounced "sigma"). Since we have generated the data ourselves, both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are known, and in the call to <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code>, we set them to the values 480 and 40 respectively.</p>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>  <span class="co"># can be any arbitrary integer</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">parents</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">480</span>, sd <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></code></pre></div>
+<pre><code>##  [1] 475.1016 502.0983 493.9460 494.3853 515.9221 403.0972 490.4698 516.6227
+##  [9] 480.5509 549.1985 436.7118 469.0870 487.2798 540.3417 544.1788 406.3410
+## [17] 544.9324 485.2556 539.2449 540.5327 442.3023 472.5726 435.9550 528.3246
+## [25] 415.0025 484.2151 421.7823 465.8394 476.2520 524.0267 401.4470 422.0822
+## [33] 520.7777 423.1433 455.8187 416.6610 428.5627 421.8126 476.5172 500.1895
+## [41] 484.6555 550.4085 466.1953 564.8000 478.6249 448.3138 539.0206 450.9777
+## [49] 492.4952 507.6786</code></pre>
+<p>We chose to generate the data using <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code>—a function that generates random numbers from a normal distribution—reflecting our assumption that mean response time is normally distributed in the population. A normal distribution is defined by two parameters, a mean (usually notated with the Greek letter <span class="math inline">\(\mu\)</span>, pronounced "myoo"), and a standard deviation (usually notated with the Greek letter <span class="math inline">\(\sigma\)</span>, pronounced "sigma"). Since we have generated the data ourselves, both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are known, and in the call to <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code>, we set them to the values 480 and 40 respectively.</p>
 <p>But of course, to test our hypothesis, we need a comparison group, so we define a control group of non-parents. We generate data from this control group in the same way as above, but changing the mean.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">500</span>, sd <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></code></pre></div>
 <p>Let's put them into a <a class="glossary" target="_blank" title="A container for tabular data with some different properties to a data frame" href="https://psyteachr.github.io/glossary/t#tibble">tibble</a> to make it easier to plot and analyze the data. Each row from this table represents the mean response time from a particular subject.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"parent"</span>, <span class="st">"control"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">parents</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">control</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"parent"</span>, <span class="st">"control"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
               rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">parents</span>, <span class="va">control</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">dat</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">group</th>
-<th align="right">rt</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">495.0789</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">492.0619</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">436.0791</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">434.7838</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">368.1386</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">508.8229</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">517.5648</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">470.8249</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">550.3653</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">484.6947</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">445.8751</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">516.3704</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">527.8549</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">465.1366</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">475.0696</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">552.0017</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">548.1598</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">358.4494</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">388.4410</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">482.3321</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">566.9746</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">523.9273</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">492.7288</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">477.0741</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">513.3707</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">487.9500</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">531.9137</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">517.4687</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">474.1027</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">484.4173</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">447.4998</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">450.2519</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">523.8138</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">577.4149</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">495.5247</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">491.6251</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">468.5761</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">483.0406</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">457.5881</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">497.8875</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">516.3400</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">459.7976</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">467.9598</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">450.9586</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">432.7969</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">490.1230</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">465.1715</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">480.8872</td>
-</tr>
-<tr class="odd">
-<td align="left">parent</td>
-<td align="right">506.4018</td>
-</tr>
-<tr class="even">
-<td align="left">parent</td>
-<td align="right">499.5517</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">492.4484</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">524.0544</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">473.0496</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">519.0420</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">504.7501</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">504.8491</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">492.5581</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">446.8692</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">477.3231</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">523.1534</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">576.3615</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">510.0303</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">436.0674</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">628.0653</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">538.2094</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">514.7458</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">536.9168</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">491.7791</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">503.7187</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">506.7305</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">531.8336</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">565.8402</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">431.3230</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">487.2663</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">463.8344</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">471.8403</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">428.8760</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">471.1098</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">501.8462</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">509.7463</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">525.1333</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">499.0145</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">592.5661</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">507.0884</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">459.0234</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">590.9873</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">424.4377</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">543.7581</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">573.8467</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">520.8413</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">438.6815</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">422.4254</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">519.4767</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">549.8095</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">491.3091</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">468.8163</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">513.9550</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">527.2690</td>
-</tr>
-<tr class="odd">
-<td align="left">control</td>
-<td align="right">478.7415</td>
-</tr>
-<tr class="even">
-<td align="left">control</td>
-<td align="right">472.9043</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 100 × 2
+##    group     rt
+##    &lt;chr&gt;  &lt;dbl&gt;
+##  1 parent  475.
+##  2 parent  502.
+##  3 parent  494.
+##  4 parent  494.
+##  5 parent  516.
+##  6 parent  403.
+##  7 parent  490.
+##  8 parent  517.
+##  9 parent  481.
+## 10 parent  549.
+## # … with 90 more rows</code></pre>
 <p>Here are some things to try with this simulated data.</p>
 <ol style="list-style-type: decimal">
 <li>Plot the data in some sensible way.</li>
@@ -564,20 +223,7 @@
 <li>Run a t-test on these data. Is the effect of group significant?</li>
 </ol>
 <p>Once you have done these things, do them again, but changing the sample size, population parameters or both.</p>
-</div>
-<div id="what-you-will-learn" class="section level2">
-<h2>
-<span class="header-section-number">1.5</span> What you will learn<a class="anchor" aria-label="anchor" href="#what-you-will-learn"><i class="fas fa-link"></i></a>
-</h2>
-<p>By the end of this course, you should be able to:</p>
-<ul>
-<li>simulate bivariate data</li>
-<li>understand the relationship between correlation and regression</li>
-<li>specify regression models to reflect various study designs</li>
-<li>specify and interpret various types of interactions</li>
-<li>simulate data from these models, including multilevel data</li>
-<li>handle continuous, count, or nominal dependent variables.</li>
-</ul>
+
 </div>
 </div>
 <script>
@@ -703,13 +349,15 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="nav-link" href="#goal-of-this-course"><span class="header-section-number">1.1</span> Goal of this course</a></li>
 <li>
-<a class="nav-link" href="#goal-of-this-course"><span class="header-section-number">1.1</span> Goal of this course</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#flexibility"><span class="header-section-number">1.1.1</span> Flexibility</a></li></ul>
+<a class="nav-link" href="#generalized-linear-mixed-effects-models-glmms"><span class="header-section-number">1.2</span> Generalized Linear Mixed-Effects Models (GLMMs)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#linear-models"><span class="header-section-number">1.2.1</span> Linear models</a></li>
+<li><a class="nav-link" href="#mixed-models"><span class="header-section-number">1.2.2</span> Mixed models</a></li>
+</ul>
 </li>
-<li><a class="nav-link" href="#generalizability"><span class="header-section-number">1.2</span> Generalizability</a></li>
-<li><a class="nav-link" href="#reproduciblity-and-transparency"><span class="header-section-number">1.3</span> Reproduciblity and Transparency</a></li>
+<li><a class="nav-link" href="#a-note-on-reproducibility"><span class="header-section-number">1.3</span> A note on reproducibility</a></li>
 <li><a class="nav-link" href="#a-simulation-based-approach"><span class="header-section-number">1.4</span> A simulation-based approach</a></li>
-<li><a class="nav-link" href="#what-you-will-learn"><span class="header-section-number">1.5</span> What you will learn</a></li>
 </ul>
 
       <div class="book-extra">
@@ -727,7 +375,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

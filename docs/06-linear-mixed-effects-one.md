@@ -1,7 +1,7 @@
 # Linear mixed-effects models with one random factor
 
 :::{.warning}
-This chapter is under construction as of August 31, 2021; contents may change!
+This chapter is under construction as of September 24, 2021; contents may change!
 :::
 
 ## Learning objectives
@@ -84,26 +84,25 @@ subj_means <- dat %>%
 subj_means
 ```
 
-<div class="kable-table">
-
-|subject |cond | mean_rt|
-|:-------|:----|-------:|
-|P01     |P    |   354.0|
-|P02     |P    |   384.2|
-|P03     |P    |   390.9|
-|P04     |P    |   403.9|
-|P05     |P    |   421.4|
-|P06     |P    |   392.0|
-|P07     |P    |   399.8|
-|T08     |T    |   429.7|
-|T09     |T    |   432.5|
-|T10     |T    |   410.1|
-|T11     |T    |   455.1|
-|T12     |T    |   450.2|
-|T13     |T    |   418.4|
-|T14     |T    |   488.9|
-
-</div>
+```
+## # A tibble: 14 × 3
+##    subject cond  mean_rt
+##    <chr>   <chr>   <dbl>
+##  1 P01     P        354 
+##  2 P02     P        384.
+##  3 P03     P        391.
+##  4 P04     P        404.
+##  5 P05     P        421.
+##  6 P06     P        392 
+##  7 P07     P        400.
+##  8 T08     T        430.
+##  9 T09     T        432.
+## 10 T10     T        410.
+## 11 T11     T        455.
+## 12 T12     T        450.
+## 13 T13     T        418.
+## 14 T14     T        489.
+```
 
 Then, the $t$-test can be run using the "formula" version of `t.test()`.
 
@@ -182,14 +181,13 @@ dat2 <- dat %>%
 distinct(dat2, cond, cond_d)  ## double check
 ```
 
-<div class="kable-table">
-
-|cond | cond_d|
-|:----|------:|
-|P    |      0|
-|T    |      1|
-
-</div>
+```
+## # A tibble: 2 × 2
+##   cond  cond_d
+##   <chr>  <int>
+## 1 P          0
+## 2 T          1
+```
 
 And now, estimate the model.
 
@@ -351,20 +349,16 @@ mod <- lm(calories ~ (lunch_v_breakfast + dinner_v_breakfast) *
 summary(mod)
 ```
 
-<div class="kable-table">
-
-|meal      |time_of_week | lunch_v_breakfast| dinner_v_breakfast| time_week|
-|:---------|:------------|-----------------:|------------------:|---------:|
-|breakfast |weekday      |        -0.3333333|         -0.3333333|      -0.5|
-|breakfast |weekend      |        -0.3333333|         -0.3333333|       0.5|
-|lunch     |weekday      |         0.6666667|         -0.3333333|      -0.5|
-|lunch     |weekend      |         0.6666667|         -0.3333333|       0.5|
-|dinner    |weekday      |        -0.3333333|          0.6666667|      -0.5|
-|dinner    |weekend      |        -0.3333333|          0.6666667|       0.5|
-
-</div>
-
 ```
+## # A tibble: 6 × 5
+##   meal      time_of_week lunch_v_breakfast dinner_v_breakfast time_week
+##   <fct>     <fct>                    <dbl>              <dbl>     <dbl>
+## 1 breakfast weekday                 -0.333             -0.333      -0.5
+## 2 breakfast weekend                 -0.333             -0.333       0.5
+## 3 lunch     weekday                  0.667             -0.333      -0.5
+## 4 lunch     weekend                  0.667             -0.333       0.5
+## 5 dinner    weekday                 -0.333              0.667      -0.5
+## 6 dinner    weekend                 -0.333              0.667       0.5
 ## 
 ## Call:
 ## lm(formula = calories ~ (lunch_v_breakfast + dinner_v_breakfast) * 
@@ -405,14 +399,15 @@ mod_main_eff <- lm(calories ~ time_week +
 anova(mod, mod_main_eff)
 ```
 
-<div class="kable-table">
-
-| Res.Df|      RSS| Df| Sum of Sq|         F|    Pr(>F)|
-|------:|--------:|--:|---------:|---------:|---------:|
-|     12| 34209.44| NA|        NA|        NA|        NA|
-|     14| 36373.38| -2| -2163.936| 0.3795331| 0.6921084|
-
-</div>
+```
+## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
+## 1     12 34209                           
+## 2     14 36373 -2   -2163.9 0.3795 0.6921
+```
 
 OK, now here is an equivalent version using the shortcut `update()` function, which takes the model you want to update as the first argument and then a special syntax for the formula including your changes. For the formula, we use `. ~ . -lunch_v_breakfast -dinner_v_breakfast~` Although this formula seems weird, the dot `.` says "keep everything on this side of the model formula (left of `~`) as it is in the original model." So the formula `. ~ .` would use the same formula as the original model; that is, `update(mod, . ~ .)` would fit the exact same model as above. In contrast, `. ~ . -x -y` means "everything the same on the left side (same DV), but remove variables `x` and `y` from the right side.
 
@@ -423,14 +418,15 @@ mod_main_eff2 <- update(mod, . ~ . -lunch_v_breakfast -dinner_v_breakfast)
 anova(mod, mod_main_eff2)
 ```
 
-<div class="kable-table">
-
-| Res.Df|      RSS| Df| Sum of Sq|         F|    Pr(>F)|
-|------:|--------:|--:|---------:|---------:|---------:|
-|     12| 34209.44| NA|        NA|        NA|        NA|
-|     14| 36373.38| -2| -2163.936| 0.3795331| 0.6921084|
-
-</div>
+```
+## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
+## 1     12 34209                           
+## 2     14 36373 -2   -2163.9 0.3795 0.6921
+```
 
 As you can see, this gives us the same result as above.
 
@@ -443,14 +439,16 @@ mod_tow <- update(mod, . ~ . -time_week)
 anova(mod, mod_tow)
 ```
 
-<div class="kable-table">
-
-| Res.Df|      RSS| Df| Sum of Sq|        F|    Pr(>F)|
-|------:|--------:|--:|---------:|--------:|---------:|
-|     12| 34209.44| NA|        NA|       NA|        NA|
-|     13| 39293.55| -1| -5084.104| 1.783404| 0.2065107|
-
-</div>
+```
+## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + lunch_v_breakfast:time_week + 
+##     dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
+## 1     12 34209                           
+## 2     13 39294 -1   -5084.1 1.7834 0.2065
+```
 
 Try to figure out how to test the interaction on your own.
 
@@ -466,14 +464,15 @@ mod_interact <- update(mod, . ~ . -lunch_v_breakfast:time_week
 anova(mod, mod_interact)
 ```
 
-<div class="kable-table">
-
-| Res.Df|      RSS| Df| Sum of Sq|        F|    Pr(>F)|
-|------:|--------:|--:|---------:|--------:|---------:|
-|     12| 34209.44| NA|        NA|       NA|        NA|
-|     14| 38976.82| -2| -4767.376| 0.836151| 0.4571278|
-
-</div>
+```
+## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
+## 1     12 34209                           
+## 2     14 38977 -2   -4767.4 0.8362 0.4571
+```
 
 
 </div>

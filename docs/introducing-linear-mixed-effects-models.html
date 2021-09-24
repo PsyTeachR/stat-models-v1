@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introducing-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +39,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="psyteachr books">Learning Statistical Models Through Simulation in R</a>:
-        <small class="text-muted">psyteachr books</small>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -77,7 +76,7 @@
 <span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models<a class="anchor" aria-label="anchor" href="#introducing-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
 </div>
 <div id="learning-objectives-1" class="section level2">
 <h2>
@@ -138,7 +137,7 @@ References:
 <p>Multi-level data of this type is extremely common in psychology. However, if you open up most introductory statistics textbooks and read through to the end, you'll learn about t-tests, repeated-measures and mixed-model ANOVA, and multiple regression, but none of the techniques that you learn would be applicable to this type of data. It suggests a serious gap in training. Because most data is multi-level, multi-level modeling should be taught as the <strong>default</strong> approach, not as an advanced approach that is far beyond the reach of undergraduates. All of the other techniques---t-test, ANOVA, multiple regression---can be seen as special cases of the more general multi-level approach.</p>
 <p>Let's consider the <code>sleepstudy</code> data. The dataset contains eighteen participants from the three-hour sleep condition. Each day, over 10 days, participants performed a ten-minute "psychomotor vigilance test" where they had to monitor a display and press a button as quickly as possible each time a stimulus appeared. The dependent measure in the dataset is the participant's average response time (RT) on the task for that day.</p>
 <p>It is always good to start by looking at the data. Here is data for a single subject.</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
@@ -175,7 +174,7 @@ Hint, please
 Show me
 </button>
 <p>Same as above, except you just add one line: <code>facet_wrap(~Subject)</code></p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleepstudy</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Days</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span> <span class="op">+</span>
@@ -193,242 +192,44 @@ Show me
 </blockquote>
 <p>There were seven nights of sleep restriction, with the first night of restriction occurring after the third day. The first two days, coded as <code>0</code>, <code>1</code>, were adaptation and training. The day coded as <code>2</code>, where the baseline measurement was taken, should be the place where we start our analysis. If we include the days <code>0</code> and <code>1</code> in our analysis, this might bias our results, since any changes in performance during the first two days have to do with training, not sleep restriction.</p>
 <div class="try">
-
-<div id="exercise-1" class="section level3 unnumbered">
-<h3>Exercise<a class="anchor" aria-label="anchor" href="#exercise-1"><i class="fas fa-link"></i></a>
-</h3>
+<h3 id="exercise-1" class="unnumbered">Exercise</h3>
 <p>Remove from the dataset observations where <code>Days</code> is coded <code>0</code> or <code>1</code>, and then make a new variable <code>days_deprived</code> from the <code>Days</code> variable so that the sequence starts at day 2, with day 2 being re-coded as day 0, day 3 as day 1, day 4 as day 2, etc. This new variable now tracks the number of days of sleep deprivation. Store the new table as <code>sleep2</code>.</p>
 <div class="webex-solution">
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sleep2</span> <span class="op">&lt;-</span> <span class="va">sleepstudy</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Days</span> <span class="op">&gt;=</span> <span class="fl">2L</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>days_deprived <span class="op">=</span> <span class="va">Days</span> <span class="op">-</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
 <p>It is always a good idea to double check that the code works as intended. First, look at it:</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sleep2</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-Reaction
-</th>
-<th style="text-align:right;">
-Days
-</th>
-<th style="text-align:left;">
-Subject
-</th>
-<th style="text-align:right;">
-days_deprived
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-250.8006
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-321.4398
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-356.8519
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-414.6901
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-382.2038
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-290.1486
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>##   Reaction Days Subject days_deprived
+## 1 250.8006    2     308             0
+## 2 321.4398    3     308             1
+## 3 356.8519    4     308             2
+## 4 414.6901    5     308             3
+## 5 382.2038    6     308             4
+## 6 290.1486    7     308             5</code></pre>
 <p>And check that <code>Days</code> and <code>days_deprived</code> match up.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sleep2</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">days_deprived</span>, <span class="va">Days</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-days_deprived
-</th>
-<th style="text-align:right;">
-Days
-</th>
-<th style="text-align:right;">
-n
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>##   days_deprived Days  n
+## 1             0    2 18
+## 2             1    3 18
+## 3             2    4 18
+## 4             3    5 18
+## 5             4    6 18
+## 6             5    7 18
+## 7             6    8 18
+## 8             7    9 18</code></pre>
 <p>Looks good. Note that the variable <code>n</code> in generated by <code>count()</code> and tells you how many rows there are for each unique combination of <code>Days</code> and <code>days_deprived</code>. In this case, there were 18, one row for each participant.</p>
 </div>
 </div>
 <p>Now let's re-plot the data looking at just these eight data points from Day 0 to Day 7. We've just copied the code from above, substituting <code>sleep2</code> for <code>sleepstudy</code> and using <code>days_deprived</code> for our <code>x</code> variable.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleep2</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_deprived</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">+</span>
@@ -446,7 +247,6 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 <p>where <span class="math inline">\(\beta_0\)</span> is the y-intercept and <span class="math inline">\(\beta_1\)</span> is the slope, parameters whose values we estimate from the data.</p>
 <p>The lines will all differ in intercept (mean RT at day zero, before the sleep deprivation began) and slope (the change in RT with each additional day of sleep deprivation). But should we fit the same line to everyone? Or a totally different line for each subject? Or something somewhere in between?</p>
 <p>Let's start by considering three different approaches we might take. Following McElreath, we will distinguish these approaches by calling them <strong>complete pooling</strong>, <strong>no pooling</strong>, and <strong>partial pooling</strong>.</p>
-</div>
 <div id="complete-pooling-one-size-fits-all" class="section level3">
 <h3>
 <span class="header-section-number">5.3.1</span> Complete pooling: One size fits all<a class="anchor" aria-label="anchor" href="#complete-pooling-one-size-fits-all"><i class="fas fa-link"></i></a>
@@ -457,7 +257,7 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 <p><span class="math display">\[e_{sd} \sim N\left(0, \sigma^2\right)\]</span></p>
 <p>where <span class="math inline">\(Y_{sd}\)</span> is the mean RT for subject <span class="math inline">\(s\)</span> on day <span class="math inline">\(d\)</span>, <span class="math inline">\(X_{sd}\)</span> is the value of <code>Day</code> associated with that case (0-7), and <span class="math inline">\(e_{sd}\)</span> is the error.</p>
 <p>We would fit such a model in R using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function, e.g.:</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cp_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">days_deprived</span>, <span class="va">sleep2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span></code></pre></div>
@@ -481,11 +281,11 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 ## F-statistic: 38.23 on 1 and 142 DF,  p-value: 6.316e-09</code></pre>
 <p>According to this model, the predicted mean response time on Day 0 is about 268 milliseconds, with an increase of about 11 milliseconds per day of deprivation, on average. We can't trust the standard errors for our regression coefficients, however, because we are assuming that all of the observations are independent (technically, that the residuals are). However, we can be pretty sure this is a bad assumption.</p>
 <p>Let's add the model predictions to the graph that we created above. We can use <code>geom_abline()</code> to do so, specifying the intercept and slope for the line using the regression coefficients from the model fit, <code><a href="https://rdrr.io/r/stats/coef.html">coef(cp_model)</a></code>, which returns a two-element vector with intercept and slope, respectively.</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##     267.96742      11.43543</code></pre>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleep2</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_deprived</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_abline</span><span class="op">(</span>intercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
               slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
@@ -511,7 +311,7 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 <div class="danger">
 <p>The variable <code>Subject</code> in the <code>sleep2</code> dataset is nominal. We just use numbers as labels to preserve anonymity, without intending to imply that Subject 310 is one point better than Subject 309 and two points better than 308. Make sure that you define it as a factor so that it is not included as a continuous variable!</p>
 <p>We can test whether something is a factor in various ways. One is to use <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on the table.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sleep2</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##     Reaction          Days         Subject   days_deprived 
 ##  Min.   :203.0   Min.   :2.00   308    : 8   Min.   :0.00  
@@ -523,12 +323,12 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 ##                                 (Other):96</code></pre>
 <p>Here you can see that it is not treated as a number because rather than giving you distributional information (means, etc.) it tells you how many observations there are at each level.</p>
 <p>You can also test it directly:</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sleep2</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Subject</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">is.factor</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>If something is not a factor, you can make it one be re-defining it using the <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> function.</p>
 </div>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">np_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">days_deprived</span> <span class="op">+</span> <span class="va">Subject</span> <span class="op">+</span> <span class="va">days_deprived</span><span class="op">:</span><span class="va">Subject</span>,
                data <span class="op">=</span> <span class="va">sleep2</span><span class="op">)</span>
 
@@ -616,7 +416,7 @@ Answers and Explanation
 </div>
 </div>
 <p>In the "no pooling" model, there is no <em>overall</em> population intercept and slope that is being estimated; in this case, <code>(Intercept)</code> and <code>days_deprived</code> are estimates of the intercept and slope for subject 308, which was (arbitrarily) chosen as the baseline subject. To get population estimates, we could introduce a second stage of analysis where we calculate means of the individual intercepts and slopes. Let's use the model estimates to calculate the intercepts and slopes for each subject.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_intercepts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">np_model</span><span class="op">)</span><span class="op">[</span><span class="st">"(Intercept)"</span><span class="op">]</span>,
                     <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">np_model</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">19</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">np_model</span><span class="op">)</span><span class="op">[</span><span class="st">"(Intercept)"</span><span class="op">]</span><span class="op">)</span>
 
@@ -631,224 +431,29 @@ Answers and Explanation
                   slope <span class="op">=</span> <span class="va">all_slopes</span><span class="op">)</span>
 
 <span class="va">np_coef</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-Subject
-</th>
-<th style="text-align:right;">
-intercept
-</th>
-<th style="text-align:right;">
-slope
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-288.2175
-</td>
-<td style="text-align:right;">
-21.690495
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-200.2913
-</td>
-<td style="text-align:right;">
-4.357144
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-310
-</td>
-<td style="text-align:right;">
-225.9318
-</td>
-<td style="text-align:right;">
-3.898995
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-330
-</td>
-<td style="text-align:right;">
-273.2642
-</td>
-<td style="text-align:right;">
-8.005643
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-331
-</td>
-<td style="text-align:right;">
-298.1833
-</td>
-<td style="text-align:right;">
-4.867369
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-332
-</td>
-<td style="text-align:right;">
-316.0332
-</td>
-<td style="text-align:right;">
-2.395811
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-333
-</td>
-<td style="text-align:right;">
-285.4593
-</td>
-<td style="text-align:right;">
-10.875389
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-334
-</td>
-<td style="text-align:right;">
-238.0123
-</td>
-<td style="text-align:right;">
-18.115979
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-335
-</td>
-<td style="text-align:right;">
-262.8746
-</td>
-<td style="text-align:right;">
--4.208992
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-337
-</td>
-<td style="text-align:right;">
-312.8318
-</td>
-<td style="text-align:right;">
-22.442266
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-349
-</td>
-<td style="text-align:right;">
-228.9991
-</td>
-<td style="text-align:right;">
-16.426131
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-350
-</td>
-<td style="text-align:right;">
-248.0152
-</td>
-<td style="text-align:right;">
-23.291223
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-351
-</td>
-<td style="text-align:right;">
-263.9708
-</td>
-<td style="text-align:right;">
-8.522405
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-352
-</td>
-<td style="text-align:right;">
-331.2829
-</td>
-<td style="text-align:right;">
-7.288607
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-369
-</td>
-<td style="text-align:right;">
-266.7134
-</td>
-<td style="text-align:right;">
-13.795664
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-370
-</td>
-<td style="text-align:right;">
-234.9102
-</td>
-<td style="text-align:right;">
-20.641012
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-371
-</td>
-<td style="text-align:right;">
-257.7279
-</td>
-<td style="text-align:right;">
-12.346217
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-372
-</td>
-<td style="text-align:right;">
-290.6947
-</td>
-<td style="text-align:right;">
-11.086360
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 18 × 3
+##    Subject intercept slope
+##    &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1 308          288. 21.7 
+##  2 309          200.  4.36
+##  3 310          226.  3.90
+##  4 330          273.  8.01
+##  5 331          298.  4.87
+##  6 332          316.  2.40
+##  7 333          285. 10.9 
+##  8 334          238. 18.1 
+##  9 335          263. -4.21
+## 10 337          313. 22.4 
+## 11 349          229. 16.4 
+## 12 350          248. 23.3 
+## 13 351          264.  8.52
+## 14 352          331.  7.29
+## 15 369          267. 13.8 
+## 16 370          235. 20.6 
+## 17 371          258. 12.3 
+## 18 372          291. 11.1</code></pre>
 <p>Let's see how well this model fits our data.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleep2</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_deprived</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_abline</span><span class="op">(</span>data <span class="op">=</span> <span class="va">np_coef</span>,
               mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>intercept <span class="op">=</span> <span class="va">intercept</span>,
@@ -865,7 +470,7 @@ Figure 5.5: Data plotted against fits from the no-pooling approach.
 </p>
 </div>
 <p>This is much better than the complete pooling model. If we want to test the null hypothesis that the fixed slope is zero, we could do using a one-sample test.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">np_coef</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">slope</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
@@ -1119,7 +724,7 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 \end{equation*}\]</span></p>
 <p>The most reasonable model for these data is Model 2, so we'll stick with that.</p>
 <p>Let's fit the model, storing the result in object <code>pp_mod</code>.</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pp_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">days_deprived</span> <span class="op">+</span> <span class="op">(</span><span class="va">days_deprived</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, <span class="va">sleep2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span></code></pre></div>
@@ -1150,169 +755,38 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 ## days_deprvd -0.062</code></pre>
 <p>Before discussing how to interpret the output, let's first plot the data against our model predictions. We can get model predictions using the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function (see <code><a href="https://rdrr.io/pkg/lme4/man/predict.merMod.html">?predict.merMod</a></code> for information about use with mixed-effects models).</p>
 <p>First, create a new data frame with predictor values for <code>Subject</code> and <code>days_deprived</code>.</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span>
   Subject <span class="op">=</span> <span class="va">sleep2</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Subject</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span>,
   days_deprived <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">newdata</span>, <span class="fl">17</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-Subject
-</th>
-<th style="text-align:right;">
-days_deprived
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
-7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-310
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 17 × 2
+##    Subject days_deprived
+##    &lt;fct&gt;           &lt;int&gt;
+##  1 308                 0
+##  2 308                 1
+##  3 308                 2
+##  4 308                 3
+##  5 308                 4
+##  6 308                 5
+##  7 308                 6
+##  8 308                 7
+##  9 309                 0
+## 10 309                 1
+## 11 309                 2
+## 12 309                 3
+## 13 309                 4
+## 14 309                 5
+## 15 309                 6
+## 16 309                 7
+## 17 310                 0</code></pre>
 <p>Then, run this through <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>. Typically we will add the prediction in as a new variable in the data frame of new data, giving it the same name as our DV (<code>Reaction</code>).</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">newdata2</span> <span class="op">&lt;-</span> <span class="va">newdata</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Reaction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">pp_mod</span>, <span class="va">newdata</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now we are ready to plot.</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleep2</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_deprived</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">newdata2</span>,
             color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span> <span class="op">+</span>
@@ -1347,12 +821,12 @@ with each day of sleep deprivation adding an additional
 11 milliseconds
 to the response time, on average.</p>
 <p>If we need to get the fixed effects from the model, we can extract them using <code><a href="https://rdrr.io/pkg/lme4/man/fixef.html">fixef()</a></code>.</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/fixef.html">fixef</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##     267.96742      11.43543</code></pre>
 <p>The standard errors give us estimates of the variability for these parameters due to sampling error. You could use these to calculate the <span class="math inline">\(t\)</span>-values or derive confidence intervals. Extract them using <code><a href="https://rdrr.io/r/stats/vcov.html">vcov(pp_mod)</a></code> which gives a variance-covariance matrix (<em>not</em> the one associated with the random effects), pull out the diagonal using <code><a href="https://rdrr.io/r/base/diag.html">diag()</a></code> and then take the square root using <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code>.</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># OR, equivalently using pipes:</span>
@@ -1360,20 +834,20 @@ to the response time, on average.</p>
 <pre><code>## [1] 8.265896 1.845293</code></pre>
 <p>Note that these <span class="math inline">\(t\)</span> values do not appear with <span class="math inline">\(p\)</span> values, as is customary in simpler modeling frameworks. There are multiple approaches for getting <span class="math inline">\(p\)</span> values from mixed-effects models, with advantages and disadvantages to each; see <span class="citation">Luke (<a href="bibliography.html#ref-Luke_2017">2017</a>)</span> for a survey of options. The <span class="math inline">\(t\)</span> values do not appear with degrees of freedom, because the degrees of freedom in a mixed-effects model are not well-defined. Often people will treat them as Wald <span class="math inline">\(z\)</span> values, i.e., as observations from the standard normal distribution. Because the <span class="math inline">\(t\)</span> distribution asymptotes the standard normal distribution as the number of observations goes to infinity, this "t-as-z" practice is legitimate if you have a large enough set of observations.</p>
 <p>To calculate the Wald <span class="math inline">\(z\)</span> values, just divide the fixed effect estimate by its standard error:</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/fixef.html">fixef</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">tvals</span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##     32.418437      6.197082</code></pre>
 <p>You can get the associated <span class="math inline">\(p\)</span>-values using the following formula:</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">tvals</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##   0.00000e+00   5.75197e-10</code></pre>
 <p>This gives us strong evidence against the null hypothesis <span class="math inline">\(H_0: \gamma_1 = 0\)</span>. Sleep deprivation does appear to increase response time.</p>
 <p>You can get confidence intervals for the estimates using <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> (this technique uses the <em>parametric bootstrap</em>). <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> is a generic function, so to get help on this function, use <code><a href="https://rdrr.io/pkg/lme4/man/confint.merMod.html">?confint.merMod</a></code>.</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span></code></pre></div>
 <pre><code>## Computing profile confidence intervals ...</code></pre>
 <pre><code>##                     2.5 %      97.5 %
@@ -1399,7 +873,7 @@ to the response time, on average.</p>
 651.6. The value in the next column,
 25.526, is just the standard deviation, <span class="math inline">\(\sigma\)</span>, which is the square root of the variance.</p>
 <p>We extract the residual standard deviation using the <code><a href="https://rdrr.io/pkg/lme4/man/sigma.html">sigma()</a></code> function.</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/sigma.html">sigma</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span> <span class="co"># residual</span></code></pre></div>
 <pre><code>## [1] 25.5264</code></pre>
 <p>The two lines above the <code>Residual</code> line give us information about the variance-covariance matrix for the <code>Subject</code> random factor.</p>
@@ -1408,7 +882,7 @@ to the response time, on average.</p>
 ##           days_deprived  45.78    6.766   0.18</code></pre>
 <p>The values in the <code>Variance</code> column gives us the main diagonal of the matrix, and the <code>Std.Dev.</code> values are just the square roots of these values. The <code>Corr</code> column tells us the correlation between the intercept and slope.</p>
 <p>We can extract these values from the fitted object <code>pp_mod</code> using the <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code> function. This returns a named list, with one element for each random factor. We have <code>Subject</code> as our only random factor, so the list will just be of length 1.</p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># variance-covariance matrix for random factor Subject</span>
 <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"Subject"</span><span class="op">]</span><span class="op">]</span> <span class="co"># equivalently: VarCorr(pp_mod)[[1]]</span></code></pre></div>
 <pre><code>##               (Intercept) days_deprived
@@ -1422,16 +896,16 @@ to the response time, on average.</p>
 ## (Intercept)     1.0000000     0.1776263
 ## days_deprived   0.1776263     1.0000000</code></pre>
 <p>The first few lines are a printout of the variance covariance matrix. You can see the variances in the main diagonal. We can get these with:</p>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"Subject"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># just the variances</span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##     958.35165      45.77766</code></pre>
 <p>We can get the correlation between the intecepts and slopes in two ways. First, by extracting the <code>"correlation"</code> attribute and then pulling out the element in row 1 column 2 (<code>[1, 2]</code>):</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"Subject"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"correlation"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span> <span class="co"># the correlation</span></code></pre></div>
 <pre><code>## [1] 0.1776263</code></pre>
 <p>Or we can directly compute the value from the variance-covariance matrix itself.</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># directly compute correlation from variance-covariance matrix</span>
 <span class="va">mx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"Subject"</span><span class="op">]</span><span class="op">]</span>
 
@@ -1440,226 +914,30 @@ to the response time, on average.</p>
 <span class="va">mx</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mx</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mx</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.1776263</code></pre>
 <p>We can pull out the estimated random effects (BLUPS) using <code><a href="https://rdrr.io/pkg/lme4/man/ranef.html">ranef()</a></code>. Like <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code> , the result is a named list, with each element corresponding to a single random factor.</p>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/ranef.html">ranef</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"Subject"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-(Intercept)
-</th>
-<th style="text-align:right;">
-days_deprived
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-308
-</td>
-<td style="text-align:right;">
-24.4992891
-</td>
-<td style="text-align:right;">
-8.6020000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-309
-</td>
-<td style="text-align:right;">
--59.3723102
-</td>
-<td style="text-align:right;">
--8.1277534
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-310
-</td>
-<td style="text-align:right;">
--39.4762764
-</td>
-<td style="text-align:right;">
--7.4292365
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-330
-</td>
-<td style="text-align:right;">
-1.3500428
-</td>
-<td style="text-align:right;">
--2.3845976
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-331
-</td>
-<td style="text-align:right;">
-18.4576169
-</td>
-<td style="text-align:right;">
--3.7477340
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-332
-</td>
-<td style="text-align:right;">
-30.5270040
-</td>
-<td style="text-align:right;">
--4.8936899
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-333
-</td>
-<td style="text-align:right;">
-13.3682027
-</td>
-<td style="text-align:right;">
-0.2888639
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-334
-</td>
-<td style="text-align:right;">
--18.1583020
-</td>
-<td style="text-align:right;">
-3.8436686
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-335
-</td>
-<td style="text-align:right;">
--16.9737887
-</td>
-<td style="text-align:right;">
--12.0702333
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-337
-</td>
-<td style="text-align:right;">
-44.5850842
-</td>
-<td style="text-align:right;">
-10.1760837
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-349
-</td>
-<td style="text-align:right;">
--26.6839022
-</td>
-<td style="text-align:right;">
-2.1946699
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-350
-</td>
-<td style="text-align:right;">
--5.9657957
-</td>
-<td style="text-align:right;">
-8.1758613
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-351
-</td>
-<td style="text-align:right;">
--5.5710355
-</td>
-<td style="text-align:right;">
--2.3718494
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-352
-</td>
-<td style="text-align:right;">
-46.6347253
-</td>
-<td style="text-align:right;">
--0.5616377
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-369
-</td>
-<td style="text-align:right;">
-0.9616395
-</td>
-<td style="text-align:right;">
-1.7385130
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-370
-</td>
-<td style="text-align:right;">
--18.5216778
-</td>
-<td style="text-align:right;">
-5.6317534
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-371
-</td>
-<td style="text-align:right;">
--7.3431320
-</td>
-<td style="text-align:right;">
-0.2729282
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-372
-</td>
-<td style="text-align:right;">
-17.6826159
-</td>
-<td style="text-align:right;">
-0.6623897
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>##     (Intercept) days_deprived
+## 308  24.4992891     8.6020000
+## 309 -59.3723102    -8.1277534
+## 310 -39.4762764    -7.4292365
+## 330   1.3500428    -2.3845976
+## 331  18.4576169    -3.7477340
+## 332  30.5270040    -4.8936899
+## 333  13.3682027     0.2888639
+## 334 -18.1583020     3.8436686
+## 335 -16.9737887   -12.0702333
+## 337  44.5850842    10.1760837
+## 349 -26.6839022     2.1946699
+## 350  -5.9657957     8.1758613
+## 351  -5.5710355    -2.3718494
+## 352  46.6347253    -0.5616377
+## 369   0.9616395     1.7385130
+## 370 -18.5216778     5.6317534
+## 371  -7.3431320     0.2729282
+## 372  17.6826159     0.6623897</code></pre>
 <p>There are other extractor functions that are useful. See <code>?merMod-class</code> for details.</p>
 <p>We can get fitted values from the model using <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code> and residuals using <code><a href="https://rdrr.io/r/stats/residuals.html">residuals()</a></code>. (These functions take into account "the conditional modes of the random effects", i.e., the BLUPS).</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">mutate</span><span class="op">(</span><span class="va">sleep2</span>,
        fit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span>,
        resid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -1689,12 +967,12 @@ days_deprived
 ## 17     278.     2 371                 0  261.  17.3 
 ## 18     298.     2 372                 0  286.  11.9</code></pre>
 <p>Finally, we can get predictions for new data using <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, as we did above. Below we use <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> to imagine what might have happened had we continued our study for three extra days.</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## create the table with new predictor values</span>
 <span class="va">ndat</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span>Subject <span class="op">=</span> <span class="va">sleep2</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Subject</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span>,
                  days_deprived <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Reaction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">pp_mod</span>, newdata <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sleep2</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_deprived</span>, y <span class="op">=</span> <span class="va">Reaction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">newdata2</span>, <span class="va">ndat</span><span class="op">)</span>,
             color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span> <span class="op">+</span>
@@ -1845,7 +1123,6 @@ $( document ).ready(function() {
 <li><a class="nav-link" href="#modeling-multi-level-data"><span class="header-section-number">5.2</span> Modeling multi-level data</a></li>
 <li>
 <a class="nav-link" href="#how-to-model-these-data"><span class="header-section-number">5.3</span> How to model these data?</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercise-1">Exercise</a></li>
 <li><a class="nav-link" href="#complete-pooling-one-size-fits-all"><span class="header-section-number">5.3.1</span> Complete pooling: One size fits all</a></li>
 <li><a class="nav-link" href="#no-pooling"><span class="header-section-number">5.3.2</span> No pooling</a></li>
 <li><a class="nav-link" href="#partial-pooling-using-mixed-effects-models"><span class="header-section-number">5.3.3</span> Partial pooling using mixed-effects models</a></li>
@@ -1877,7 +1154,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

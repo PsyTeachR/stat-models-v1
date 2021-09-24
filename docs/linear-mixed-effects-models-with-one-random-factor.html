@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
+<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
+<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
+<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +39,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="psyteachr books">Learning Statistical Models Through Simulation in R</a>:
-        <small class="text-muted">psyteachr books</small>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -77,7 +76,7 @@
 <span class="header-section-number">6</span> Linear mixed-effects models with one random factor<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-one-random-factor"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
 </div>
 <div id="learning-objectives-2" class="section level2">
 <h2>
@@ -236,7 +235,7 @@
 <p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
 <p>This <a href="https://shiny.psy.gla.ac.uk/Dale/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/independent_samples.csv"</span>, col_types <span class="op">=</span> <span class="st">"cci"</span><span class="op">)</span>
@@ -247,89 +246,25 @@
   <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">subj_means</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">subject</th>
-<th align="left">cond</th>
-<th align="right">mean_rt</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">P01</td>
-<td align="left">P</td>
-<td align="right">354.0</td>
-</tr>
-<tr class="even">
-<td align="left">P02</td>
-<td align="left">P</td>
-<td align="right">384.2</td>
-</tr>
-<tr class="odd">
-<td align="left">P03</td>
-<td align="left">P</td>
-<td align="right">390.9</td>
-</tr>
-<tr class="even">
-<td align="left">P04</td>
-<td align="left">P</td>
-<td align="right">403.9</td>
-</tr>
-<tr class="odd">
-<td align="left">P05</td>
-<td align="left">P</td>
-<td align="right">421.4</td>
-</tr>
-<tr class="even">
-<td align="left">P06</td>
-<td align="left">P</td>
-<td align="right">392.0</td>
-</tr>
-<tr class="odd">
-<td align="left">P07</td>
-<td align="left">P</td>
-<td align="right">399.8</td>
-</tr>
-<tr class="even">
-<td align="left">T08</td>
-<td align="left">T</td>
-<td align="right">429.7</td>
-</tr>
-<tr class="odd">
-<td align="left">T09</td>
-<td align="left">T</td>
-<td align="right">432.5</td>
-</tr>
-<tr class="even">
-<td align="left">T10</td>
-<td align="left">T</td>
-<td align="right">410.1</td>
-</tr>
-<tr class="odd">
-<td align="left">T11</td>
-<td align="left">T</td>
-<td align="right">455.1</td>
-</tr>
-<tr class="even">
-<td align="left">T12</td>
-<td align="left">T</td>
-<td align="right">450.2</td>
-</tr>
-<tr class="odd">
-<td align="left">T13</td>
-<td align="left">T</td>
-<td align="right">418.4</td>
-</tr>
-<tr class="even">
-<td align="left">T14</td>
-<td align="left">T</td>
-<td align="right">488.9</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 14 × 3
+##    subject cond  mean_rt
+##    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+##  1 P01     P        354 
+##  2 P02     P        384.
+##  3 P03     P        391.
+##  4 P04     P        404.
+##  5 P05     P        421.
+##  6 P06     P        392 
+##  7 P07     P        400.
+##  8 T08     T        430.
+##  9 T09     T        432.
+## 10 T10     T        410.
+## 11 T11     T        455.
+## 12 T12     T        450.
+## 13 T13     T        418.
+## 14 T14     T        489.</code></pre>
 <p>Then, the <span class="math inline">\(t\)</span>-test can be run using the "formula" version of <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mean_rt</span> <span class="op">~</span> <span class="va">cond</span>, <span class="va">subj_means</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
@@ -372,31 +307,18 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p><span class="math display">\[ICC = \frac{{\tau_{00}}^2}{{\tau_{00}}^2 + \sigma^2}\]</span></p>
 <p>This quantity, known as the <strong>intra-class correlation coefficient</strong>, and tells you how much clustering there is in your data. It ranges from 0 to 1, with 0 indicating that all the variability is due to residual variance, and 1 indicating that all the variability is due to individual differences among subjects.</p>
 <p>The lmer syntax for fitting a random intercepts model to the data is <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(RT ~ cond + (1 | subject), dat, REML=FALSE)</a></code>. Let's create our own numerical predictor first, to make it explicit that we are using dummy coding.</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>cond_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"T"</span>, <span class="fl">1L</span>, <span class="fl">0L</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">distinct</span><span class="op">(</span><span class="va">dat2</span>, <span class="va">cond</span>, <span class="va">cond_d</span><span class="op">)</span>  <span class="co">## double check</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">cond</th>
-<th align="right">cond_d</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">P</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">T</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 2 × 2
+##   cond  cond_d
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 P          0
+## 2 T          1</code></pre>
 <p>And now, estimate the model.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
 
 <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">cond_d</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, <span class="va">dat2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -500,7 +422,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <span class="header-section-number">6.4.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
 </h3>
 <p>Whenever you are dealing with designs where all categorical factors have no more than two levels, the test of the regression coefficient associated with a given factor will be equivalent to the test for the effect in the ANOVA framework, provided you use <a href="multiple-regression.html#dealing-with-categorical-predictors">sum or deviation coding</a>. But in the above example, we have a 3x2 design, with two predictor variables coding the main effect of <code>meal</code> (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>). Let's simulate some data and run a one-factor ANOVA with <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, and then we'll replicate the analysis using the regression function <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> (note that the same procedure works for mixed-effects models on multilevel data, just using <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> instead of <code>base::lm()</code>).</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make up some data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
 <span class="va">meals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>meal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"breakfast"</span>, <span class="st">"lunch"</span>, <span class="st">"dinner"</span><span class="op">)</span>,
@@ -520,7 +442,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## meal:time_of_week  2   4767    2384   0.836  0.457
 ## Residuals         12  34209    2851</code></pre>
 <p>We get three <span class="math inline">\(F\)</span>-tests, one for each main effect (<code>meal</code> and <code>time_of_week</code>) one for the interaction. What happens if we fit a model using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>?</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## add our own numeric predictors</span>
 <span class="va">meals2</span> <span class="op">&lt;-</span> <span class="va">meals</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>lunch_v_breakfast <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">meal</span> <span class="op">==</span> <span class="st">"lunch"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
@@ -536,62 +458,16 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
             <span class="va">time_week</span>, data <span class="op">=</span> <span class="va">meals2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">meal</th>
-<th align="left">time_of_week</th>
-<th align="right">lunch_v_breakfast</th>
-<th align="right">dinner_v_breakfast</th>
-<th align="right">time_week</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">breakfast</td>
-<td align="left">weekday</td>
-<td align="right">-0.3333333</td>
-<td align="right">-0.3333333</td>
-<td align="right">-0.5</td>
-</tr>
-<tr class="even">
-<td align="left">breakfast</td>
-<td align="left">weekend</td>
-<td align="right">-0.3333333</td>
-<td align="right">-0.3333333</td>
-<td align="right">0.5</td>
-</tr>
-<tr class="odd">
-<td align="left">lunch</td>
-<td align="left">weekday</td>
-<td align="right">0.6666667</td>
-<td align="right">-0.3333333</td>
-<td align="right">-0.5</td>
-</tr>
-<tr class="even">
-<td align="left">lunch</td>
-<td align="left">weekend</td>
-<td align="right">0.6666667</td>
-<td align="right">-0.3333333</td>
-<td align="right">0.5</td>
-</tr>
-<tr class="odd">
-<td align="left">dinner</td>
-<td align="left">weekday</td>
-<td align="right">-0.3333333</td>
-<td align="right">0.6666667</td>
-<td align="right">-0.5</td>
-</tr>
-<tr class="even">
-<td align="left">dinner</td>
-<td align="left">weekend</td>
-<td align="right">-0.3333333</td>
-<td align="right">0.6666667</td>
-<td align="right">0.5</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<pre><code>## 
+<pre><code>## # A tibble: 6 × 5
+##   meal      time_of_week lunch_v_breakfast dinner_v_breakfast time_week
+##   &lt;fct&gt;     &lt;fct&gt;                    &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;
+## 1 breakfast weekday                 -0.333             -0.333      -0.5
+## 2 breakfast weekend                 -0.333             -0.333       0.5
+## 3 lunch     weekday                  0.667             -0.333      -0.5
+## 4 lunch     weekend                  0.667             -0.333       0.5
+## 5 dinner    weekday                 -0.333              0.667      -0.5
+## 6 dinner    weekend                 -0.333              0.667       0.5
+## 
 ## Call:
 ## lm(formula = calories ~ (lunch_v_breakfast + dinner_v_breakfast) * 
 ##     time_week, data = meals2)
@@ -616,7 +492,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## F-statistic: 0.843 on 5 and 12 DF,  p-value: 0.5447</code></pre>
 <p>OK, this output looks very different! How do you perform ANOVA-like tests in those situations? You have estimates for <code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code> but how would you convert this into a single test for the main effect of <code>meal</code>? Likewise, you have two interaction terms, <code>lunch_v_breakfast:tow</code> and <code>dinner_v_breakfast:tow</code>; how do you convert this into a single test for the interaction?</p>
 <p>The solution is to perform <strong>multiparameter tests</strong> using model comparison, implemented by the <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> function in R. To test for the main effect of <code>meal</code>, you'd compare a model containing the two predictor variables coding that factor (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>) to a model excluding these two predictors but that is otherwise identical. You can either re-fit the model by writing it out and excluding the terms, or by using the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function and removing the terms (which is a shortcut). Let's write it out first.</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit the model</span>
 <span class="va">mod_main_eff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">calories</span> <span class="op">~</span> <span class="va">time_week</span> <span class="op">+</span>
                      <span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span> <span class="op">+</span> <span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>,
@@ -624,147 +500,56 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 
 <span class="co">## compare models</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_main_eff</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Res.Df</th>
-<th align="right">RSS</th>
-<th align="right">Df</th>
-<th align="right">Sum of Sq</th>
-<th align="right">F</th>
-<th align="right">Pr(&gt;F)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">12</td>
-<td align="right">34209.44</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">36373.38</td>
-<td align="right">-2</td>
-<td align="right">-2163.936</td>
-<td align="right">0.3795331</td>
-<td align="right">0.6921084</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     12 34209                           
+## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
 <p>OK, now here is an equivalent version using the shortcut <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function, which takes the model you want to update as the first argument and then a special syntax for the formula including your changes. For the formula, we use <code>. ~ . -lunch_v_breakfast -dinner_v_breakfast~</code> Although this formula seems weird, the dot <code>.</code> says "keep everything on this side of the model formula (left of <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>) as it is in the original model." So the formula <code>. ~ .</code> would use the same formula as the original model; that is, <code><a href="https://rdrr.io/r/stats/update.html">update(mod, . ~ .)</a></code> would fit the exact same model as above. In contrast, <code>. ~ . -x -y</code> means "everything the same on the left side (same DV), but remove variables <code>x</code> and <code>y</code> from the right side.</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_main_eff2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span> <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_main_eff2</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Res.Df</th>
-<th align="right">RSS</th>
-<th align="right">Df</th>
-<th align="right">Sum of Sq</th>
-<th align="right">F</th>
-<th align="right">Pr(&gt;F)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">12</td>
-<td align="right">34209.44</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">36373.38</td>
-<td align="right">-2</td>
-<td align="right">-2163.936</td>
-<td align="right">0.3795331</td>
-<td align="right">0.6921084</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ time_week + lunch_v_breakfast:time_week + dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     12 34209                           
+## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
 <p>As you can see, this gives us the same result as above.</p>
 <p>If we want to test the main effect of <code>time_of_week</code>, we remove that predictor.</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_tow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">time_week</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_tow</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Res.Df</th>
-<th align="right">RSS</th>
-<th align="right">Df</th>
-<th align="right">Sum of Sq</th>
-<th align="right">F</th>
-<th align="right">Pr(&gt;F)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">12</td>
-<td align="right">34209.44</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">13</td>
-<td align="right">39293.55</td>
-<td align="right">-1</td>
-<td align="right">-5084.104</td>
-<td align="right">1.783404</td>
-<td align="right">0.2065107</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + lunch_v_breakfast:time_week + 
+##     dinner_v_breakfast:time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     12 34209                           
+## 2     13 39294 -1   -5084.1 1.7834 0.2065</code></pre>
 <p>Try to figure out how to test the interaction on your own.</p>
 <div class="webex-solution">
 <button>
 Click to see solution
 </button>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_interact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>
                        <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_interact</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">Res.Df</th>
-<th align="right">RSS</th>
-<th align="right">Df</th>
-<th align="right">Sum of Sq</th>
-<th align="right">F</th>
-<th align="right">Pr(&gt;F)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">12</td>
-<td align="right">34209.44</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">38976.82</td>
-<td align="right">-2</td>
-<td align="right">-4767.376</td>
-<td align="right">0.836151</td>
-<td align="right">0.4571278</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: calories ~ (lunch_v_breakfast + dinner_v_breakfast) * time_week
+## Model 2: calories ~ lunch_v_breakfast + dinner_v_breakfast + time_week
+##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     12 34209                           
+## 2     14 38977 -2   -4767.4 0.8362 0.4571</code></pre>
 </div>
 <p>We got the exact same results doing model comparison with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> as we did using <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>. Although this involved more steps, it is worth learning this approach as it will ultimately give you much more flexibility.</p>
 
@@ -922,7 +707,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

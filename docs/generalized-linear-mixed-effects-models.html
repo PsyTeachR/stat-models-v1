@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of August 31, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of August 31, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of August 31, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +39,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="psyteachr books">Learning Statistical Models Through Simulation in R</a>:
-        <small class="text-muted">psyteachr books</small>
+        <a href="index.html" title="">Learning Statistical Models Through Simulation in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -77,7 +76,7 @@
 <span class="header-section-number">8</span> Generalized linear mixed-effects models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of August 31, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
 </div>
 <div id="learning-objectives-4" class="section level2">
 <h2>
@@ -123,7 +122,7 @@
 </h4>
 <p>In most settings with continuous data, the variance is assumed to be independent of the mean; this is essentially the assumption of homogeneity of variance in a model with a continuous predictor. For discrete data, this assumption of the independence of the mean from the variance is often not met.</p>
 <p>We can see this through data simulation. The <code><a href="https://rdrr.io/r/stats/Binomial.html">rbinom()</a></code> function makes it possible to simulate data from a <strong>binomial</strong> distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K. According to <a href="https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php">this website</a>, Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assumimg the climate remains constant).</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>city <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Barcelona"</span>, <span class="st">"Glasgow"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>,
        days_of_rain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">55</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>,
                         <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">170</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
@@ -140,41 +139,15 @@ Figure 8.1: <strong>Distribution of number of rainy days for 500 years of simula
 </p>
 </div>
 <p>The distribution for Glasgow is slightly fatter than the distribution for Barcelona. We can also see the greater variability in Glasgow if we look at the standard deviations of these variables.</p>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">summarise</span><span class="op">(</span>sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">days_of_rain</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="kable-table">
-
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-city
-</th>
-<th style="text-align:right;">
-sd
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Barcelona
-</td>
-<td style="text-align:right;">
-6.829612
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Glasgow
-</td>
-<td style="text-align:right;">
-9.283592
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
+<pre><code>## # A tibble: 2 × 2
+##   city         sd
+##   &lt;chr&gt;     &lt;dbl&gt;
+## 1 Barcelona  6.74
+## 2 Glasgow    9.70</code></pre>
 </div>
 <div id="spurious-interactions-due-to-scaling-effects" class="section level4">
 <h4>
@@ -271,7 +244,7 @@ The (natural) log of the odds
 <p>The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:logit-app"></span>
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px">
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px" data-external="1">
 </iframe>
 <p class="caption">
 Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://shiny.psy.gla.ac.uk/Dale/logit" class="uri">https://shiny.psy.gla.ac.uk/Dale/logit</a>
@@ -443,7 +416,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>: psyteachr books" was written by Dale J. Barr. It was last built on 2021-08-31.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,22 +1,8 @@
 # Understanding correlation and regression through bivariate simulation
 
 ```{r chapter-status, echo=FALSE, results='asis'}
-chapter_status("incomplete")
+# chapter_status("incomplete")
 ```
-
-* Packages used: 
-    + **`tidyverse`**
-    + **`corrr`**
-    + **`MASS`** (built in)
-* Functions used: 
-    + `base::choose()` 
-    + `corrr::correlate()`
-    + `base::rbind()`
-    + `base::cor()`
-    + `base::log()` and `base::exp()` for log transformation (and back)
-
-* Review 
-    + [L2 lab materials on correlation](https://psyteachr.github.io/ug2-practical/correlations.html){target="_blank"}.
 
 ## Correlation matrices
 
