@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="description" content="This chapter is under construction as of September 30, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta property="og:description" content="This chapter is under construction as of September 30, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta name="twitter:description" content="This chapter is under construction as of September 30, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,7 +76,7 @@
 <span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 30, 2021; contents may change!</p>
 </div>
 <div id="learning-objectives-3" class="section level2">
 <h2>
@@ -188,28 +188,28 @@
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">41</td>
-<td align="left">2020-05-11</td>
+<td align="right">25</td>
+<td align="left">2020-05-04</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">22</td>
-<td align="left">2020-05-19</td>
+<td align="right">29</td>
+<td align="left">2020-05-21</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">28</td>
-<td align="left">2020-05-22</td>
+<td align="right">39</td>
+<td align="left">2020-05-23</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">19</td>
-<td align="left">2020-05-28</td>
+<td align="right">50</td>
+<td align="left">2020-05-26</td>
 </tr>
 </tbody>
 </table></div>
 <p>Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of <code>subject_id</code> crossed with all of the levels of <code>stimulus_id</code>. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the <code>crossing()</code> function from <code>tidyr</code> (which is loaded when you load in <code>tidyverse</code>).</p>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">crossing</span><span class="op">(</span><span class="va">subjects</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">subject_id</span><span class="op">)</span>,
          <span class="va">stimuli</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">category</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <div class="inline-table"><table class="table table-sm">
@@ -508,8 +508,8 @@
 </ol>
 <p>The first two rules are straightforward, but the third requires some explanation. Let's first ask: how do we know whether some factor is between or within unit?</p>
 <p>A simple way to determine whether a factor is between or within is to use the <code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code> function, which gives frequency counts, and which is loaded when you load tidyverse. Let's say you are interested in whether factor <span class="math inline">\(A\)</span> is within or between subjects, for the imaginary 2x2x2 factorial data <code>abc_data</code> below where <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> name the factors of your design.</p>
-<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="co">## run this code to create the table "abc_data"</span>
 <span class="va">abc_subj</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>subject_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,
@@ -522,7 +522,7 @@
 <span class="va">abc_data</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span><span class="va">abc_subj</span>, <span class="va">abc_item</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">stimulus_id</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>To see whether <span class="math inline">\(A\)</span> is within or between subjects, use:</p>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
@@ -537,7 +537,7 @@
 ## 7          4 A1        2
 ## 8          4 A2        2</code></pre>
 <p>In the resulting table, you can see that each subject gets both levels of <span class="math inline">\(A\)</span>, making it a within-subject factor. What about <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>?</p>
-<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
@@ -547,7 +547,7 @@
 ## 2          2 B2        4
 ## 3          3 B1        4
 ## 4          4 B2        4</code></pre>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
@@ -575,7 +575,7 @@
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">A</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
@@ -596,7 +596,7 @@ Solution
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
@@ -625,7 +625,7 @@ Solution
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
@@ -642,7 +642,7 @@ Solution
 <p>The second rule tells us that if a factor is between-unit, you do not need a random slope for that factor. Indeed, it is not possible to estimate a random slope for a between unit factor. If you think about the fact that random slopes capture variation in the effect over units, then it makes sense that you have to measure your response variable across all levels of that factor to be able to estimate that variation. For instance, if you have a two-level factor called treatment group (experimental, control), you cannot estimate the effect of "treatment" for a particular subject unless the subject has experienced both levels of the factor (i.e., it would have to be within-subject).</p>
 <p>How do we now apply the third rule above to determine what random slopes are needed for our within-unit factors?</p>
 <p>Consider that <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> were within-subjects, and <span class="math inline">\(B\)</span> was between. So the highest-order interaction of within-subject factors is <span class="math inline">\(AC\)</span>. We will need random slopes for the <span class="math inline">\(AC\)</span> interaction as well as for the main effects <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> if we have pseudoreplications for each subject in each combination of <span class="math inline">\(AC\)</span>. How can we find out?</p>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 16 × 4
@@ -672,7 +672,7 @@ Solution
 Solution
 </button>
 <p>You have one within-stimulus factor, <span class="math inline">\(B\)</span>, which has pseudoreplications.</p>
-<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
@@ -808,13 +808,13 @@ e_{si} \sim N\left(0, \sigma^2\right)
 <span class="header-section-number">7.6.1</span> Set up the environment and define the parameters for the DGP<a class="anchor" aria-label="anchor" href="#set-up-the-environment-and-define-the-parameters-for-the-dgp"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you want to get the same results as everyone else for this exercise, then we all should seed the random number generator with the same value. While we're at it, let's load in the packages we need.</p>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">11709</span><span class="op">)</span>  </code></pre></div>
 <p>Now let's define the parameters for the DGP (data generating process).</p>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nsubj</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># number of subjects</span>
 <span class="va">nitem</span> <span class="op">&lt;-</span> <span class="fl">50</span>  <span class="co"># must be an even number</span>
 
@@ -936,7 +936,7 @@ Hint for making item random effects
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>item_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nitem</span>,
                 cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">nitem</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,
                 I_0i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nitem</span>, <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">omega_00</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1083,7 +1083,7 @@ Hint 2
 <button>
 Hint 3
 </button>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>    <span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>,            <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,
         <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,      <span class="va">tau_11</span><span class="op">^</span><span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1091,7 +1091,7 @@ Hint 3
 <button>
 Hint 4
 </button>
-<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">mx</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">...</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1099,7 +1099,7 @@ Hint 4
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cov</span> <span class="op">&lt;-</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>
 
 <span class="va">mx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cov</span>,
@@ -1137,7 +1137,7 @@ Solution
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">subjects</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">subj_id</span><span class="op">)</span>,
                    item_id <span class="op">=</span> <span class="va">items</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">item_id</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sig</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1172,7 +1172,7 @@ Hint
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat_sim</span> <span class="op">&lt;-</span> <span class="va">subjects</span> <span class="op">%&gt;%</span>
   <span class="fu">inner_join</span><span class="op">(</span><span class="va">trials</span>, <span class="st">"subj_id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">inner_join</span><span class="op">(</span><span class="va">items</span>, <span class="st">"item_id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -1214,7 +1214,7 @@ Hint
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat_sim2</span> <span class="op">&lt;-</span> <span class="va">dat_sim</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Y <span class="op">=</span> <span class="va">b0</span> <span class="op">+</span> <span class="va">S_0s</span> <span class="op">+</span> <span class="va">I_0i</span> <span class="op">+</span> <span class="op">(</span><span class="va">S_1s</span> <span class="op">+</span> <span class="va">b1</span><span class="op">)</span> <span class="op">*</span> <span class="va">cond</span> <span class="op">+</span> <span class="va">err</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">Y</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1229,7 +1229,7 @@ Solution
 <button>
 Solution
 </button>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">cond</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">cond</span> <span class="op">|</span> <span class="va">subj_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">item_id</span><span class="op">)</span>,
                 <span class="va">dat_sim2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
@@ -1495,7 +1495,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

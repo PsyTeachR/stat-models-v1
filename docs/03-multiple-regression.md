@@ -1,16 +1,16 @@
 # Multiple regression
 
-:::{.warning}
-This chapter is under construction as of September 24, 2021; contents may change!
-:::
+NULL
 
-General model for single-level data with $m$ predictors:
+The general model for single-level data with $m$ predictors is
 
 $$
 Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 $$
 
-The individual $X_{hi}$ variables can be any combination of continuous and/or categorical predictors, including interactions among variables.
+with $e_i \sim \mathcal{N}\left(0, \sigma^2\right)$—in other words, with the assumption that the errors are from a normal distribution having a mean of zero and variance $\sigma^2$. 
+
+Note that the key assumption here is **not** that the response variable (the $Y$s) is normally distributed, **nor** that the individual predictor variables (the $X$s) are normally distributed; it is **only** that the model residuals are normally distributed (for discussion, see [this blog post](https://datahowler.wordpress.com/2018/08/04/checking-model-assumptions-look-at-the-residuals-not-the-raw-data/)). The individual $X$ predictor variables can be any combination of continuous and/or categorical predictors, including interactions among variables. Further assumptions behind this particular model are that the relationship is "planar" (can be described by a flat surface, analogous to the linearity assumption in simple regression) and that the error variance is independent of the predictor values.
 
 The $\beta$ values are referred to as **regression coefficients**. Each $\beta_h$ is interpreted as the **partial effect of $\beta_h$ holding constant all other predictor variables.** If you have $m$ predictor variables, you have $m+1$ regression coefficients: one for the intercept, and one for each predictor.
 
@@ -179,7 +179,7 @@ new_data <- tribble(~lecture, ~nclicks,
                     5, 100)
 ```
 
-<div class="info">
+:::{.info}
 
 The `tribble()` function provides a way to build a tibble row by row, whereas with `tibble()` the table is built column by column.
 
@@ -193,7 +193,7 @@ new_data <- tibble(lecture = c(3, 10, 0, 5),
                    nclicks = c(70, 130, 20, 100))
 ```
 
-</div>
+:::
 
 Now that we've created our table `new_data`, we just pass it to `predict()` and it will return a vector with the predictions for $Y$ (`grade`).
 
@@ -279,13 +279,13 @@ ggplot(grades, aes(lecture, grade)) +
 <p class="caption">(\#fig:partial-lecture-plot)Partial effect of 'lecture' on grade, with nclicks at its mean value.</p>
 </div>
 
-<div class="warning">
+:::{.warning}
 
 Partial effect plots only make sense when there are no interactions in the model between the focal predictor and any other predictor.
 
 The reason is that when there are interactions, the partial effect of focal predictor $X_i$ will differ across the values of the other variables it interacts with.
 
-</div>
+:::
 
 Now can you visualize the partial effect of `nclicks` on `grade`?
 
@@ -368,6 +368,23 @@ summary(my_model_scaled)
 
 This tells us that lecture_c has a relatively larger influence; for each standard deviation increase in this variable, `grade` increases by about 0.19.
 
+Another common approach to standardization involves standardizing the response variable as well as the predictors, i.e., $z$-scoring the $Y$ values as well as the $X$ values. The relative rank order of the predictors will be the same under this approach. The main difference would be that the predictors will not be expressed in standard deviation ($SD$) units of the response variable, rather than in raw units.
+
+:::{.info}
+
+**Multicollinearity and its discontents**
+
+In discussions about multiple regression you may hear concerns expressed about "multicollinearity", which is a fancy way of referring to the existence of intercorrelations between the predictor variables. This is only a potential problem insofar as it potentially affects the interpretation of the effects of individual predictor variables. When predictor variables are correlated, $\beta$ values can change depending upon which predictors are included or excluded from the model, sometimes even changing signs. The key things to keep in mind about this are:
+
+- correlated predictors are probably unavoidable in observational studies; 
+- it is not an assumption underlying regression that your predictors have to be independent (in other words, findingcorrelations amongst your predictors does not invalidate your model);
+- when strong correlations are present, use caution in interpreting individual regression coefficients;
+- there is no known "remedy" for it, nor is it clear that any such remedy is desireable, and many so-called remedies do more harm than good.
+
+For more information and guidance, see [@Vanhove_2021].
+
+:::
+
 ### Model comparison
 
 Another common kind of question multiple regression is also used to address is of the form: Does some predictor or set of predictors of interest significantly impact my response variable **over and above the effects of some control variables**?
@@ -425,7 +442,7 @@ $p = 0.275$. So we don't have evidence that lecture attendance and downloading t
 
 You can include categorical predictors in a regression model, but first you have to code them as numerical variables. There are a couple of important considerations here. 
 
-<div type="danger">
+:::{.danger}
 
 A **nominal** variable is a categorical variable for which there is no inherent ordering among the levels of the variable. Pet ownership (cat, dog, ferret) is a nominal variable; cat is not greater than dog and dog is not greater than ferret.
 
@@ -433,7 +450,7 @@ It is common to code nominal variables using numbers. However, you have to be **
 
 It is far too easy to make this mistake, and difficult to catch if authors do not share their data and code. In 2016, [a paper on religious affiliation and altruism in children that was published in Current Biology had to be retracted for just this kind of mistake](https://www.sciencedirect.com/science/article/pii/S0960982216306704).
 
-</div>
+:::
 
 ### Dummy coding
 
@@ -453,16 +470,16 @@ fake_data
 ## # A tibble: 10 × 2
 ##         Y group
 ##     <dbl> <chr>
-##  1  1.30  A    
-##  2 -1.02  A    
-##  3 -0.213 A    
-##  4 -1.44  A    
-##  5  1.56  A    
-##  6 -0.142 B    
-##  7 -0.274 B    
-##  8 -0.990 B    
-##  9  0.158 B    
-## 10 -1.18  B
+##  1  1.17  A    
+##  2  0.687 A    
+##  3 -0.756 A    
+##  4  0.195 A    
+##  5  1.59  A    
+##  6 -0.315 B    
+##  7 -0.694 B    
+##  8 -0.721 B    
+##  9 -1.20  B    
+## 10 -1.01  B
 ```
 
 Now let's add a new variable, `group_d`, which is the dummy coded group variable. We will use the `dplyr::if_else()` function to define the new column.
@@ -479,16 +496,16 @@ fake_data2
 ## # A tibble: 10 × 3
 ##         Y group group_d
 ##     <dbl> <chr>   <dbl>
-##  1  1.30  A           0
-##  2 -1.02  A           0
-##  3 -0.213 A           0
-##  4 -1.44  A           0
-##  5  1.56  A           0
-##  6 -0.142 B           1
-##  7 -0.274 B           1
-##  8 -0.990 B           1
-##  9  0.158 B           1
-## 10 -1.18  B           1
+##  1  1.17  A           0
+##  2  0.687 A           0
+##  3 -0.756 A           0
+##  4  0.195 A           0
+##  5  1.59  A           0
+##  6 -0.315 B           1
+##  7 -0.694 B           1
+##  8 -0.721 B           1
+##  9 -1.20  B           1
+## 10 -1.01  B           1
 ```
 
 Now we just run it as a regular regression model.
@@ -504,17 +521,19 @@ summary(lm(Y ~ group_d, fake_data2))
 ## lm(formula = Y ~ group_d, data = fake_data2)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.47956 -0.64881 -0.01998  0.56950  1.52255 
+##     Min      1Q  Median      3Q     Max 
+## -1.3326 -0.3415  0.0805  0.3822  1.0101 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  0.03886    0.46366   0.084    0.935
-## group_d     -0.52543    0.65571  -0.801    0.446
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)   0.5767     0.3067   1.880   0.0969 .
+## group_d      -1.3645     0.4338  -3.146   0.0137 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.037 on 8 degrees of freedom
-## Multiple R-squared:  0.0743,	Adjusted R-squared:  -0.04141 
-## F-statistic: 0.6421 on 1 and 8 DF,  p-value: 0.4461
+## Residual standard error: 0.6858 on 8 degrees of freedom
+## Multiple R-squared:  0.553,	Adjusted R-squared:  0.4971 
+## F-statistic: 9.896 on 1 and 8 DF,  p-value: 0.01368
 ```
 
 Note that if we reverse the coding we get the same result, just the sign is different.
@@ -533,30 +552,24 @@ summary(lm(Y ~ group_d, fake_data3))
 ## lm(formula = Y ~ group_d, data = fake_data3)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.47956 -0.64881 -0.01998  0.56950  1.52255 
+##     Min      1Q  Median      3Q     Max 
+## -1.3326 -0.3415  0.0805  0.3822  1.0101 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.4866     0.4637  -1.049    0.325
-## group_d       0.5254     0.6557   0.801    0.446
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  -0.7878     0.3067  -2.569   0.0332 *
+## group_d       1.3645     0.4338   3.146   0.0137 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.037 on 8 degrees of freedom
-## Multiple R-squared:  0.0743,	Adjusted R-squared:  -0.04141 
-## F-statistic: 0.6421 on 1 and 8 DF,  p-value: 0.4461
+## Residual standard error: 0.6858 on 8 degrees of freedom
+## Multiple R-squared:  0.553,	Adjusted R-squared:  0.4971 
+## F-statistic: 9.896 on 1 and 8 DF,  p-value: 0.01368
 ```
 
 The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, $\beta_1$ can be interpreted as the difference between the mean for the baseline group and the group coded as 1.
 
 $$\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i $$
-
-<!--
-<div type="info">
-
-Why not just use **factors** as your predictors?
-
-</div>
--->
 
 ### Dummy coding when $k > 2$
 
@@ -564,7 +577,8 @@ When the predictor variable is a factor with $k$ levels where $k>2$, we need $k-
 
 
 ```r
-mydata <- tibble(season = rep(c("winter", "spring", "summer", "fall"), each = 5),
+mydata <- tibble(season = rep(c("winter", "spring", "summer", "fall"),
+                              each = 5),
                  bodyweight_kg = c(rnorm(5, 105, 3),
                                    rnorm(5, 103, 3),
                                    rnorm(5, 101, 3),
@@ -579,24 +593,24 @@ mydata
 ##    <chr>          <dbl>
 ##  1 winter         102. 
 ##  2 winter         106. 
-##  3 winter         101. 
-##  4 winter         104. 
-##  5 winter         106. 
-##  6 spring         107. 
-##  7 spring         105. 
+##  3 winter         108. 
+##  4 winter          99.7
+##  5 winter         105. 
+##  6 spring         105. 
+##  7 spring         102. 
 ##  8 spring         100. 
-##  9 spring         103. 
-## 10 spring         104. 
-## 11 summer         104. 
+##  9 spring         102. 
+## 10 spring         105. 
+## 11 summer         101. 
 ## 12 summer         100. 
-## 13 summer         102. 
-## 14 summer          97.7
-## 15 summer          95.1
-## 16 fall           106. 
-## 17 fall           104. 
-## 18 fall           101. 
-## 19 fall            96.9
-## 20 fall           106.
+## 13 summer         101. 
+## 14 summer          99.0
+## 15 summer          99.9
+## 16 fall           102. 
+## 17 fall            99.4
+## 18 fall           105. 
+## 19 fall           103. 
+## 20 fall           104.
 ```
 
 Now let's add three predictors to code the variable `season`.
@@ -618,25 +632,101 @@ mydata2
 ##    <chr>          <dbl> <dbl> <dbl> <dbl>
 ##  1 winter         102.      0     0     0
 ##  2 winter         106.      0     0     0
-##  3 winter         101.      0     0     0
-##  4 winter         104.      0     0     0
-##  5 winter         106.      0     0     0
-##  6 spring         107.      1     0     0
-##  7 spring         105.      1     0     0
+##  3 winter         108.      0     0     0
+##  4 winter          99.7     0     0     0
+##  5 winter         105.      0     0     0
+##  6 spring         105.      1     0     0
+##  7 spring         102.      1     0     0
 ##  8 spring         100.      1     0     0
-##  9 spring         103.      1     0     0
-## 10 spring         104.      1     0     0
-## 11 summer         104.      0     1     0
+##  9 spring         102.      1     0     0
+## 10 spring         105.      1     0     0
+## 11 summer         101.      0     1     0
 ## 12 summer         100.      0     1     0
-## 13 summer         102.      0     1     0
-## 14 summer          97.7     0     1     0
-## 15 summer          95.1     0     1     0
-## 16 fall           106.      0     0     1
-## 17 fall           104.      0     0     1
-## 18 fall           101.      0     0     1
-## 19 fall            96.9     0     0     1
-## 20 fall           106.      0     0     1
+## 13 summer         101.      0     1     0
+## 14 summer          99.0     0     1     0
+## 15 summer          99.9     0     1     0
+## 16 fall           102.      0     0     1
+## 17 fall            99.4     0     0     1
+## 18 fall           105.      0     0     1
+## 19 fall           103.      0     0     1
+## 20 fall           104.      0     0     1
 ```
+
+:::{.warning}
+
+**Why not just use 'factor' variables as predictors?**
+
+If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type `character` or `factor` to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.
+
+
+```r
+my_data <- tibble(group = rep(c("A", "B", "C"),
+                              each = 6),
+                  Y = rnorm(18))
+
+lm(Y ~ group, my_data) %>%
+  summary()
+```
+
+```
+## 
+## Call:
+## lm(formula = Y ~ group, data = my_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1855 -0.7148  0.0357  0.5429  1.4828 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -0.1628     0.3491  -0.466    0.648
+## groupB        0.1844     0.4938   0.373    0.714
+## groupC        0.0839     0.4938   0.170    0.867
+## 
+## Residual standard error: 0.8552 on 15 degrees of freedom
+## Multiple R-squared:  0.009234,	Adjusted R-squared:  -0.1229 
+## F-statistic: 0.0699 on 2 and 15 DF,  p-value: 0.9328
+```
+
+Here, R implicitly creates two dummy variables that it calls `groupB` and `groupC`. The variable `groupB` takes on the value of `1` when `group == "B"` and is `0` otherwise; `groupC` takes on the value of `1` when `group == "C"` and is `0` otherwise. R automatically identifies that the `group` variable has three levels, `A`, `B`, and `C`, and arbitrarily chooses as baseline the level that comes earliest when the levels are sequenced alphabetically.
+
+This seems like a handy thing to have R do for us, but dangers lurk in relying on the default. We'll learn more about these dangers in the next chapter, but consider what would happen if, instead of labeling the levels of `group` using letters "A", "B", and "C", we had used integer values 1, 2, and 3.
+
+
+```r
+my_data2 <- tibble(group = rep(c(1, 2, 3),
+                               each = 6),
+                   Y = rnorm(18))
+
+lm(Y ~ group, my_data2) %>%
+  summary()
+```
+
+```
+## 
+## Call:
+## lm(formula = Y ~ group, data = my_data2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8742 -0.2223  0.1019  0.7840  1.4999 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  0.15770    0.69536   0.227    0.823
+## group        0.07857    0.32189   0.244    0.810
+## 
+## Residual standard error: 1.115 on 16 degrees of freedom
+## Multiple R-squared:  0.00371,	Adjusted R-squared:  -0.05856 
+## F-statistic: 0.05958 on 1 and 16 DF,  p-value: 0.8103
+```
+
+R didn't understand that `group` was meant to be a continuous variable, and so it is treating it as continuous. The estimate for `group` is a nonsense estimate.
+
+Moral: rather than letting R guess whether something is meant as a continuous or categorical variable, take control of your destiny and make your choice explicit. This also avoids further snags we'll encounter in the next chapter.
+
+:::
+
 
 ## Equivalence between multiple regression and one-way ANOVA
 
@@ -646,16 +736,19 @@ If we wanted to see whether our bodyweight varies over season, we could do a one
 ```r
 ## make season into a factor with baseline level 'winter'
 mydata3 <- mydata2 %>%
-  mutate(season = factor(season, levels = c("winter", "spring", "summer", "fall")))
+  mutate(season = factor(season, levels = c("winter", "spring",
+                                            "summer", "fall")))
 
 my_anova <- aov(bodyweight_kg ~ season, mydata3)
 summary(my_anova)
 ```
 
 ```
-##             Df Sum Sq Mean Sq F value Pr(>F)
-## season       3  57.79  19.263   2.081  0.143
-## Residuals   16 148.08   9.255
+##             Df Sum Sq Mean Sq F value Pr(>F)  
+## season       3  42.78  14.261   2.606 0.0876 .
+## Residuals   16  87.56   5.473                 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 OK, now can we replicate that result using the regression model below?
@@ -673,26 +766,30 @@ summary(lm(bodyweight_kg ~ V1 + V2 + V3, mydata3))
 ## lm(formula = bodyweight_kg ~ V1 + V2 + V3, data = mydata3)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -5.975 -2.025  0.600  2.260  3.831 
+##     Min      1Q  Median      3Q     Max 
+## -4.5843 -1.0563  0.1967  1.6833  3.9939 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 104.0283     1.3605  76.462   <2e-16 ***
-## V1           -0.3431     1.9241  -0.178    0.861    
-## V2           -4.3003     1.9241  -2.235    0.040 *  
-## V3           -1.1243     1.9241  -0.584    0.567    
+## (Intercept)  104.305      1.046  99.699   <2e-16 ***
+## V1            -1.534      1.480  -1.037   0.3152    
+## V2            -4.087      1.480  -2.762   0.0139 *  
+## V3            -1.661      1.480  -1.123   0.2781    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.042 on 16 degrees of freedom
-## Multiple R-squared:  0.2807,	Adjusted R-squared:  0.1458 
-## F-statistic: 2.081 on 3 and 16 DF,  p-value: 0.143
+## Residual standard error: 2.339 on 16 degrees of freedom
+## Multiple R-squared:  0.3282,	Adjusted R-squared:  0.2023 
+## F-statistic: 2.606 on 3 and 16 DF,  p-value: 0.08761
 ```
 
 Note that the $F$ values and $p$ values are identical for the two methods!
 
-## Solution to partial effect plot
+## Solutions to exercises
+
+
+<div class='webex-solution'><button>Solution to partial effect plot</button>
+
 
 First create a tibble with new predictors. We might also want to know the range of values that `nclicks` varies over.
 
@@ -743,3 +840,7 @@ ggplot(grades, aes(nclicks, grade)) +
 <img src="03-multiple-regression_files/figure-html/partial-nclicks-1.png" alt="Partial effect plot of nclicks on grade." width="100%" />
 <p class="caption">(\#fig:partial-nclicks)Partial effect plot of nclicks on grade.</p>
 </div>
+
+
+</div>
+

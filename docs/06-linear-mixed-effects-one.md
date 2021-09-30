@@ -1,7 +1,7 @@
 # Linear mixed-effects models with one random factor
 
 :::{.warning}
-This chapter is under construction as of September 24, 2021; contents may change!
+This chapter is under construction as of September 30, 2021; contents may change!
 :::
 
 ## Learning objectives

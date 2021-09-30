@@ -50,7 +50,7 @@ dealing-with-categorical-predictors
 dummy-coding
 dummy-coding-when-k-2
 equivalence-between-multiple-regression-and-one-way-anova
-solution-to-partial-effect-plot
+solutions-to-exercises
 interactions
 learning-objectives
 interactions-1

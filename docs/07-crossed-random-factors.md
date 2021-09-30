@@ -1,7 +1,7 @@
 # Linear mixed-effects models with crossed random factors
 
 :::{.warning}
-This chapter is under construction as of September 24, 2021; contents may change!
+This chapter is under construction as of September 30, 2021; contents may change!
 :::
 
 ## Learning objectives
@@ -48,10 +48,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  41|2020-05-11 |
-|          2|  22|2020-05-19 |
-|          3|  28|2020-05-22 |
-|          4|  19|2020-05-28 |
+|          1|  25|2020-05-04 |
+|          2|  29|2020-05-21 |
+|          3|  39|2020-05-23 |
+|          4|  50|2020-05-26 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 

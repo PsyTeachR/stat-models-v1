@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Interactions | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of September 24, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/interactions.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of September 24, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta property="og:description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of September 24, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta name="twitter:description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,7 +76,7 @@
 <span class="header-section-number">4</span> Interactions<a class="anchor" aria-label="anchor" href="#interactions"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of September 24, 2021; contents may change!</p>
+<p>This chapter is under construction as of September 30, 2021; contents may change!</p>
 </div>
 <div id="learning-objectives" class="section level2">
 <h2>
@@ -111,8 +111,8 @@
 <p><span class="math display">\[Y_i = 450 + 2 X_i + e_i\]</span></p>
 <p>where <span class="math inline">\(X_i\)</span> is the amount of sonic distraction.</p>
 <p>Let's simulate data for 100 participants as below with <span class="math inline">\(\sigma = 80\)</span>, setting the seed before we begin.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1031</span><span class="op">)</span>
 
 <span class="va">n_subj</span> <span class="op">&lt;-</span> <span class="fl">100L</span>  <span class="co"># simulate data for 100 subjects</span>
@@ -145,7 +145,7 @@
 ## 10      10 urban   450     2         70   20.7       611.
 ## # … with 90 more rows</code></pre>
 <p>Let's plot the data we created, along with the line of best fit.</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">urban</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">dist_level</span>, <span class="va">simple_rt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
@@ -158,7 +158,7 @@ Figure 4.1: <em>Effect of sonic distraction on simple RT, urban group.</em>
 </div>
 <p>Now let's simulate data for the rural group. We assume that these participants should perhaps have a little higher intercept, maybe because they are less familiar with technology. Most importantly, we assume that they would have a steeper slope because they are more affected by the noise. Something like:</p>
 <p><span class="math display">\[Y_i = 500 + 3 X_i + e_i\]</span></p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">b0_rural</span> <span class="op">&lt;-</span> <span class="fl">500</span>
 <span class="va">b1_rural</span> <span class="op">&lt;-</span> <span class="fl">3</span>
 
@@ -171,7 +171,7 @@ Figure 4.1: <em>Effect of sonic distraction on simple RT, urban group.</em>
   err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_subj</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">80</span><span class="op">)</span>,
   simple_rt <span class="op">=</span> <span class="va">b0</span> <span class="op">+</span> <span class="va">b1</span> <span class="op">*</span> <span class="va">dist_level</span> <span class="op">+</span> <span class="va">err</span><span class="op">)</span></code></pre></div>
 <p>Now let's plot the data from the two groups side by side.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">urban</span>, <span class="va">rural</span><span class="op">)</span>
 
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">all_data</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>group <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">group</span>, <span class="st">"urban"</span><span class="op">)</span><span class="op">)</span>, 
@@ -238,10 +238,10 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <p>Compare this to <span class="math inline">\(Y_{i\_rural}\)</span> above. The dummy-coding trick works!</p>
 <p>Now let's see how to estimate the regression in R. Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>, because <span class="math inline">\(\beta_3\)</span> is our slope offset.</p>
 <p>We have already created the dataset <code>all_data</code> combining the simulated data for our two groups. The way we express our model using R formula syntax is <code>Y ~ X1 + X2 + X1:X2</code> where <code>X1:X2</code> tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut <code>Y ~ X1 * X2</code> which tells R to calculate all possible main effects and interactions. First we'll add a dummy predictor to our model, storing the result in <code>all_data2</code>.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_data2</span> <span class="op">&lt;-</span> <span class="va">all_data</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>grp <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"rural"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sonic_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">simple_rt</span> <span class="op">~</span> <span class="va">dist_level</span> <span class="op">+</span> <span class="va">grp</span> <span class="op">+</span> <span class="va">dist_level</span><span class="op">:</span><span class="va">grp</span>, <span class="va">all_data2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">sonic_mod</span><span class="op">)</span></code></pre></div>
@@ -799,7 +799,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 <p>Let's say you have 2x2 designed experiment with factors priming condition (priming vs. no priming) and linguistic structure (noun vs verb). These columns can be represented as type <code>character</code> or <code>factor</code>; in the latter case, they are implicitly converted to type <code>factor</code> before fitting the model, and then R will apply the default numerical coding for factors, which is 'treatment' (0, 1) coding.</p>
 <p>If you're used to running ANOVAs, the results that you get from fitting a linear model will <em>not</em> match ANOVA output, as we'll see below. That is because you need to use a different coding scheme to get ANOVA-like output.</p>
 <p>First, let's define our little data set, <code>dat</code>.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">## demo for why you should avoid factors</span>
   <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
     subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span>,
@@ -828,7 +828,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 ## 15 15      no      verb       810.
 ## 16 16      no      verb       763.</code></pre>
 <p>This is between subjects data, so we can fit a model using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. In the model, we include effects of <code>priming</code> and <code>structure</code> as well as their interaction. Instead of typing <code>priming + structure + priming:structure</code> we can simply type the shortcut <code>priming * structure</code>.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="va">ps_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">priming</span> <span class="op">*</span> <span class="va">structure</span>, <span class="va">dat</span><span class="op">)</span>
 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ps_mod</span><span class="op">)</span></code></pre></div>
@@ -855,10 +855,10 @@ Comparing the significance of the simple effects is **not the same** as testing 
 <p>Note that in the output the predictors are shown as <code>primingyes</code> and <code>structureverb</code>. The value <code>yes</code> is a level of <code>priming</code>; the level <strong>not shown</strong> is the one chosen as baseline, and in the default treatment coding scheme, the not-shown level (<code>no</code>) is coded as 0, and the shown level (<code>yes</code>) is coded as 1. Likewise, for <code>structure</code>, <code>noun</code> is coded as 0 and <code>verb</code> is coded as 1.</p>
 <p>This is not ideal, for reasons we will discuss further below. But I want to show you a further quirk of using factor variables as predictors.</p>
 <p>Let's say we wanted to test the effect of <code>priming</code> by itself using model comparison. To do this, we would fit another model where we exclude this effect while keeping the interaction. Despite what you may have heard to the contrary, in a fully randomized, balanced experiment, all factors are orthogonal, and so it is completely legitimate to drop a main effect while leaving an interaction term in the model.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="va">ps_mod_nopriming</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">structure</span> <span class="op">+</span> <span class="va">priming</span><span class="op">:</span><span class="va">structure</span>, <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <p>OK, now that we've dropped <code>priming</code>, we should have 3 parameter estimates instead of 4. Let's check.</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">## not right!</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">ps_mod_nopriming</span><span class="op">)</span></code></pre></div>
 <pre><code>##              (Intercept)            structureverb structurenoun:primingyes 
@@ -866,7 +866,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 ## structureverb:primingyes 
 ##                 1.117333</code></pre>
 <p>There are still 4 of them, and we're suddenly getting <code>primingyes:structureverb</code>. This is weird and <em>not at all</em> what we intended. If we try to do the model comparison:</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">## nonsense result</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ps_mod_nopriming</span>, <span class="va">ps_mod</span><span class="op">)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
@@ -1865,7 +1865,7 @@ A5
 <span class="header-section-number">4.7.5</span> How to create your own numeric predictors<a class="anchor" aria-label="anchor" href="#how-to-create-your-own-numeric-predictors"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let's assume that your data is contained in a table <code>dat</code> like the one below.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="co">## create your own numeric predictors</span>
  <span class="co">## make an example table</span>
  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>,
@@ -1992,7 +1992,7 @@ A3
 <h4>
 <span class="header-section-number">4.7.5.2</span> Treatment<a class="anchor" aria-label="anchor" href="#treatment"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">## examples of three level factors</span>
   <span class="co">## treatment coding</span>
   <span class="va">dat_treat</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
@@ -2023,7 +2023,7 @@ Click to view resulting table
 <h4>
 <span class="header-section-number">4.7.5.3</span> Sum<a class="anchor" aria-label="anchor" href="#sum-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## sum coding</span>
 <span class="va">dat_sum</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>A2v1 <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="st">"A1"</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1L</span>, <span class="co"># baseline</span>
@@ -2057,7 +2057,7 @@ Click to view resulting table
 <h4>
 <span class="header-section-number">4.7.5.4</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## deviation coding</span>
 <span class="co">## baseline A1</span>
 <span class="va">dat_dev</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
@@ -2067,7 +2067,7 @@ Click to view resulting table
 <button>
 Click to view resulting table
 </button>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat_dev</span></code></pre></div>
 <pre><code>## # A tibble: 12 × 4
 ##          Y A       A2v1   A3v1
@@ -2271,7 +2271,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-24.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
