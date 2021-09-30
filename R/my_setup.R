@@ -11,4 +11,5 @@ chapter_status <- function(status = "finished") {
   } else {
     ## do nothing; chapter is finished
   }
+  invisible(NULL)
 }
