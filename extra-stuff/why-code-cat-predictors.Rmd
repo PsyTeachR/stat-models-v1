@@ -1,0 +1,54 @@
+Let's say you have 2x2 designed experiment with factors priming condition (priming vs. no priming) and linguistic structure (noun vs verb). These columns can be represented as type `character` or `factor`; in the latter case, they are implicitly converted to type `factor` before fitting the model, and then R will apply the default numerical coding for factors, which is 'treatment' (0, 1) coding.
+
+If you're used to running ANOVAs, the results that you get from fitting a linear model will *not* match ANOVA output, as we'll see below.  That is because you need to use a different coding scheme to get ANOVA-like output.
+
+First, let's define our little data set, `dat`.
+
+```{r demo-no-factors}
+  ## demo for why you should avoid factors
+  dat <- tibble(
+    subject = factor(1:16),
+    priming = rep(c("yes", "no"), each = 8),
+    structure = rep(rep(c("noun", "verb"), each = 4), 2),
+    RT = rnorm(16, 800, 20))
+
+  dat
+```
+
+This is between subjects data, so we can fit a model using `lm()`.  In the model, we include effects of `priming` and `structure` as well as their interaction. Instead of typing `priming + structure + priming:structure` we can simply type the shortcut `priming * structure`.
+
+```{r specify-fixed}
+  ps_mod <- lm(RT ~ priming * structure, dat)
+
+  summary(ps_mod)
+```
+
+Note that in the output the predictors are shown as `primingyes` and `structureverb`. The value `yes` is a level of `priming`; the level **not shown** is the one chosen as baseline, and in the default treatment coding scheme, the not-shown level (`no`) is coded as 0, and the shown level (`yes`) is coded as 1. Likewise, for `structure`, `noun` is coded as 0 and `verb` is coded as 1.
+
+This is not ideal, for reasons we will discuss further below. But I want to show you a further quirk of using factor variables as predictors.
+
+Let's say we wanted to test the effect of `priming` by itself using model comparison. To do this, we would fit another model where we exclude this effect while keeping the interaction. Despite what you may have heard to the contrary, in a fully randomized, balanced experiment, all factors are orthogonal, and so it is completely legitimate to drop a main effect while leaving an interaction term in the model.
+
+```{r drop-factor}
+  ps_mod_nopriming <- lm(RT ~ structure + priming:structure, dat)
+```
+
+OK, now that we've dropped `priming`, we should have 3 parameter estimates instead of 4. Let's check.
+
+```{r check-factor}
+  ## not right!
+  coef(ps_mod_nopriming)
+```
+
+There are still 4 of them, and we're suddenly getting `primingyes:structureverb`. This is weird and *not at all* what we intended.  If we try to do the model comparison:
+
+```{r mod-compare}
+  ## nonsense result
+  anova(ps_mod_nopriming, ps_mod)
+```
+
+we'd get nonsensical results.
+
+Is this a bug? No. It was a (in my view, heavy handed) design choice by the R creators to try to prevent everyone from doing something that at least some of us should be able to do at least some of the time.
+
+But we can do whatever we please if instead of using factors we define our own numerical predictors. This adds a bit of work but avoids other headaches and mistakes that we might make by using factors. Also, being very explicit about how predictors are defined is probably a good thing.

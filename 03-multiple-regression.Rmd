@@ -240,10 +240,10 @@ Another common approach to standardization involves standardizing the response v
 
 **Multicollinearity and its discontents**
 
-In discussions about multiple regression you may hear concerns expressed about "multicollinearity", which is a fancy way of referring to the existence of intercorrelations between the predictor variables. This is only a potential problem insofar as it potentially affects the interpretation of the effects of individual predictor variables. When predictor variables are correlated, $\beta$ values can change depending upon which predictors are included or excluded from the model, sometimes even changing signs. The key things to keep in mind about this are:
+In discussions about multiple regression you may hear concerns expressed about "multicollinearity", which is a fancy way of referring to the existence of intercorrelations among the predictor variables. This is only a potential problem insofar as it potentially affects the interpretation of the effects of individual predictor variables. When predictor variables are correlated, $\beta$ values can change depending upon which predictors are included or excluded from the model, sometimes even changing signs. The key things to keep in mind about this are:
 
 - correlated predictors are probably unavoidable in observational studies; 
-- it is not an assumption underlying regression that your predictors have to be independent (in other words, findingcorrelations amongst your predictors does not invalidate your model);
+- regression does *not* assume that your predictor variables are independent from one another (in other words, finding correlations amongst your predictors is not itself a reason to question your model);
 - when strong correlations are present, use caution in interpreting individual regression coefficients;
 - there is no known "remedy" for it, nor is it clear that any such remedy is desireable, and many so-called remedies do more harm than good.
 

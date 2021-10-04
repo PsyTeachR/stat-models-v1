@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of September 30, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="description" content="This chapter is under construction as of October 04, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of September 30, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta property="og:description" content="This chapter is under construction as of October 04, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of September 30, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="twitter:description" content="This chapter is under construction as of October 04, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,11 +76,11 @@
 <span class="header-section-number">8</span> Generalized linear mixed-effects models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of September 30, 2021; contents may change!</p>
+<p>This chapter is under construction as of October 04, 2021; contents may change!</p>
 </div>
-<div id="learning-objectives-4" class="section level2">
+<div id="learning-objectives-3" class="section level2">
 <h2>
-<span class="header-section-number">8.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-3"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>distinguish discrete from continuous data</li>
@@ -122,7 +122,7 @@
 </h4>
 <p>In most settings with continuous data, the variance is assumed to be independent of the mean; this is essentially the assumption of homogeneity of variance in a model with a continuous predictor. For discrete data, this assumption of the independence of the mean from the variance is often not met.</p>
 <p>We can see this through data simulation. The <code><a href="https://rdrr.io/r/stats/Binomial.html">rbinom()</a></code> function makes it possible to simulate data from a <strong>binomial</strong> distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K. According to <a href="https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php">this website</a>, Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assumimg the climate remains constant).</p>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>city <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Barcelona"</span>, <span class="st">"Glasgow"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>,
        days_of_rain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">55</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>,
                         <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">170</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
@@ -139,15 +139,15 @@ Figure 8.1: <strong>Distribution of number of rainy days for 500 years of simula
 </p>
 </div>
 <p>The distribution for Glasgow is slightly fatter than the distribution for Barcelona. We can also see the greater variability in Glasgow if we look at the standard deviations of these variables.</p>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">summarise</span><span class="op">(</span>sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">days_of_rain</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   city         sd
 ##   &lt;chr&gt;     &lt;dbl&gt;
-## 1 Barcelona  6.68
-## 2 Glasgow    9.45</code></pre>
+## 1 Barcelona  6.78
+## 2 Glasgow    9.69</code></pre>
 </div>
 <div id="spurious-interactions-due-to-scaling-effects" class="section level4">
 <h4>
@@ -386,7 +386,7 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#generalized-linear-mixed-effects-models"><span class="header-section-number">8</span> Generalized linear mixed-effects models</a></li>
-<li><a class="nav-link" href="#learning-objectives-4"><span class="header-section-number">8.1</span> Learning objectives</a></li>
+<li><a class="nav-link" href="#learning-objectives-3"><span class="header-section-number">8.1</span> Learning objectives</a></li>
 <li>
 <a class="nav-link" href="#discrete-versus-continuous-data"><span class="header-section-number">8.2</span> Discrete versus continuous data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#why-not-model-discrete-data-as-continuous"><span class="header-section-number">8.2.1</span> Why not model discrete data as continuous?</a></li></ul>
 </li>
@@ -416,7 +416,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-30.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

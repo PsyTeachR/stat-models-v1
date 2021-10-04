@@ -1,21 +1,10 @@
 # Interactions
 
-:::{.warning}
-This chapter is under construction as of September 30, 2021; contents may change!
-:::
 
 
 
-## Learning objectives
-
-* model and interpret continuous-by-categorical interactions
-* model and interpret categorical-by-categorical interactions in factorial designs
-* estimate and test effects in factorial designs using ANOVA or regression
 
 <!-- understand a common fallacy regarding interactions -->
-
-
-## Interactions
 
 Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations where the effect of one predictor on the response depends on the value of another predictor variable. We can actually estimate and interpret this dependency as well, by including an **interaction** term in our model.
 
@@ -145,7 +134,10 @@ Note that we can represent one of the regression lines in terms of 'offset' valu
 * y-intercept: $\beta_{0\_rural} = \beta_{0\_urban} + \beta_2$
 * slope: $\beta_{1\_rural} = \beta_{1\_urban} + \beta_3$
 
-Our urban group had parameters $\beta_{0\_urban} = 450$ (`b0_urban <- 450`) and $\beta_{1\_urban} = 2$ (`b1_urban <- 2`), whereas the rural broup had $\beta_{0\_rural} = 500$ (`b0_rural <- 500`) and $\beta_{1\_rural} = 3$ (`b1_rural <- 3`). It directly follows that $\beta_2 = 50$ and $\beta_3 = 1$ for our simulated example.
+Our urban group had parameters $\beta_{0\_urban} = 450$ and $\beta_{1\_urban} = 2$, whereas the rural group had $\beta_{0\_rural} = 500$ and $\beta_{1\_rural} = 3$. It directly follows that:
+
+- $\beta_2 = 50$, because $\beta_{0\_rural} - \beta_{0\_urban} = 500 - 450 = 50$, and
+- $\beta_3 = 1$, because $\beta_{1\_rural} - \beta_{1\_urban} = 3 - 2 = 1$.
 
 So our two regression models are now:
 
@@ -155,9 +147,9 @@ and
 
 $$Y_{i\_rural} = (\beta_{0\_urban} + \beta_2) + (\beta_{1\_urban} + \beta_3) X_i + e_i.$$
 
-OK, we feel like we're closer to getting these into a single regression model. Here's the final trick. We define an additional dummy predictor variable that takes on the value 0 for the urban group (which we chose as our 'baseline' group) and 1 for the other group. Our final model takes the following form.
+OK, it seems like we're closer to getting these into a single regression model. Here's the final trick. We define an additional dummy predictor variable that takes on the value 0 for the urban group (which we chose as our 'baseline' group) and 1 for the other group. The box below contains our final model.
 
-<div class="try">
+:::{.info}
 
 **Regression model with a continuous-by-categorical interaction.**
 
@@ -181,17 +173,19 @@ Estimation in R:
 
 `lm(Y ~ X1 * X2)` where `*` means "all possible main effects and interactions of X1 and X2"
 
-</div>
+:::
 
-The term associated with $\beta_3$ is an **interaction term**, where the predictor is the product of predictor values.  Let's now show that the above GLM gives us the two regression lines that we want.  Plugging in 0 for $X_{2i}$ and reducing gives us
+The term $\beta_3 X_{1i} X_{2i}$, which has the two predictors multiplied together, is called an **interaction term**.  Let's now show that the above GLM gives us the two regression lines that we want.  
+
+To derive the regression equation for the urban group, we plug in 0 for $X_{2i}$. This gives us
 
 $$Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 0 + \beta_3 X_{1i} 0 + e_i$$
 
-which is just
+which, dropping terms that are zero, is just
 
 $$Y_{i} = \beta_0 + \beta_1 X_{1i} + e_i,$$
 
-the regression equation for our baseline (urban) group. Compare this to $Y_{i\_urban}$ above.
+which is the regression equation for our baseline (urban) group. Compare this to $Y_{i\_urban}$ above.
 
 Plugging in 1 for $X_{2i}$ should give us the equation for our rural group. We get
 
@@ -203,7 +197,23 @@ $$Y_{i} = \beta_0 + \beta_2 + (\beta_1 + \beta_3) X_{1i} + e_i.$$
 
 Compare this to $Y_{i\_rural}$ above. The dummy-coding trick works!
 
-Now let's see how to estimate the regression in R.  Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that $\beta_3 = 0$, because $\beta_3$ is our slope offset.
+How do we estimate the regression coefficients in R.  Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that $\beta_3 = 0$, because $\beta_3$ is our slope offset. If this parameter is zero, that means there is a single slope for both groups (although they can have different intercepts). In other words, that means the two slopes are **parallel**. If it is non-zero, that means that the two groups have different slopes; that is, the two slopes are **not parallel**.
+
+:::{.warning}
+
+**Parallel lines in the sample versus in the population**
+
+I just said that two non-parallel lines mean there is an *interaction* between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class='glossary' target='_blank' title='All members of a group that we wish to generalise our findings to. E.g. all students taking Psychology at the University of Glasgow. We draw our testing sample from the population.' href='https://psyteachr.github.io/glossary/p#population'>population</a>. Whether or not they are parallel in the <a class='glossary' target='_blank' title='A subset of the population that you wish to make an inference about through your test.' href='https://psyteachr.github.io/glossary/s#sample'>sample</a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small. 
+
+Generally, you will be interested in whether the slopes are the same or different in the population, not in the sample. For this reason, you can't just look at a graph of sample data and reason, "the lines are not parallel and so there must be an interaction", or vice versa, "the lines look parallel, so there is no interaction." You must run an inferential statistical test.
+
+When the interaction term is statistically significant at some $\alpha$ level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., $H_0: \beta_3 = 0$), which implies the lines are not parallel in the population.
+
+However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
+
+The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see @Lakens_Scheel_Isager_2018 for a tutorial.
+
+:::
 
 We have already created the dataset `all_data` combining the simulated data for our two groups. The way we express our model using R formula syntax is `Y ~ X1 + X2 + X1:X2` where `X1:X2` tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut `Y ~ X1 * X2` which tells R to calculate all possible main effects and interactions.  First we'll add a dummy predictor to our model, storing the result in `all_data2`.
 
@@ -216,7 +226,8 @@ all_data2 <- all_data %>%
 
 
 ```r
-sonic_mod <- lm(simple_rt ~ dist_level + grp + dist_level:grp, all_data2)
+sonic_mod <- lm(simple_rt ~ dist_level + grp + dist_level:grp,
+                all_data2)
 
 summary(sonic_mod)
 ```
@@ -244,11 +255,61 @@ summary(sonic_mod)
 ## F-statistic: 83.99 on 3 and 196 DF,  p-value: < 2.2e-16
 ```
 
-Can you identify the values of the regression coefficients in the output?
+:::{.try}
+
+**Exercises**
+
+Fill in the blanks below. Type your answers to at least two decimal places.
+
+Given the regression model
+
+$$Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{1i} X_{2i} + e_{i}$$
+
+(where $X_{1i}$ is the continuous predictor and $X_{2i}$ is the categorical predictor) and the output from `lm()` above, identify the following parameter estimates.
+
+- $\hat{\beta}_0$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["460.109764033163"]'/>
+- $\hat{\beta}_1$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["1.91232184349596"]'/>
+- $\hat{\beta}_2$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["4.82504807369759"]'/>
+- $\hat{\beta}_3$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["1.58653315274424"]'/>
+
+Based on these parameter estimates, the regression line for the (baseline) urban group is:
+
+$Y_i =$ <input class='webex-solveme nospaces' data-tol='0.01' size='2' data-answer='["460.109764033163"]'/> $+$ <input class='webex-solveme nospaces' data-tol='0.01' size='2' data-answer='["1.91232184349596"]'/> $X_{1i}$
+
+and the regression line for the rural group is:
+
+$Y_i =$ <input class='webex-solveme nospaces' data-tol='0.01' size='2' data-answer='["464.934812106861"]'/> $+$ <input class='webex-solveme nospaces' data-tol='0.01' size='2' data-answer='["3.4988549962402"]'/> $X_{1i}$
+
+
+<div class='webex-solution'><button>Show answers</button>
+
+
+- $\beta_0=$ 460.11
+- $\beta_1=$ 1.91
+- $\beta_2=$ 4.83
+- $\beta_3=$ 1.59
+
+The regression line for the urban group is just
+
+$Y_i = \beta_0 + \beta_1 X_{1i}$ which is
+
+$Y_i =$ 460.11 $+$ 1.91 $X_{1i}$
+
+while the line for the rural group is
+
+$Y_i = \beta_0 + \beta_2 + \left(\beta_1 + \beta_3\right) X_{1i}$ or
+
+$Y_i=$ 464.93 $+$ 3.5 $X_{1i}$
+
+
+</div>
+
+
+:::
 
 ## Categorical-by-Categorical Interactions
 
-**Factorial designs** are very common in psychology, and are most often analyzed using ANOVA-based techniques, which can obscure that they are also just models.
+**Factorial designs** are very common in psychology, and are most often analyzed using ANOVA-based techniques, which can obscure the fact that ANOVA, like regression, also assumes an underlying linear model.
 
 A factorial design is one in which the predictors (IVs) are all categorical: each is a **factor** having a fixed number of **levels**.  In a full-factorial design, the factors are fully crossed with each other such that each possible combination of factors is represented.  We call each unique combination a **cell** of the design. You will often hear designs referred to as "a two-by-two design" (2x2), which means that there are two factors, each of which has three levels. A "three-by-three" (3x3) design is one where there are two factors, each with three levels; a "two-by-two-by-two" 2x2x2 design is one in which there are three factors, each with two levels; and so on.
 
@@ -375,11 +436,11 @@ Imagine you've running a study looking at effects of two different types of ther
 
 Let's imagine that the means we obtain below are the population means, free of measurement or sampling error.  We'll take a moment to consider three different possible outcomes and what they imply about how these therapies might work independently or interactively to affect mood.
 
-<div class="warning">
+:::{.warning}
 
-Keep in mind that you will almost **never** know the true means of any population that you care about, unless you have measured all members of the population, and done so without measurement error. Below, we're talking about the hypothetical situation where you actually know the population means and can draw conclusions without any statistical tests. Any real sample means you look at will include sampling and measurement error, and any inferences you'd make would depend on the outcome of statistical tests, rather than the observed pattern of means.
+The reminder about populations and samples for categorical-by-continuous interactions also applies here. Except when simulating data, you will almost **never** know the true means of any population that you are studying. Below, we're talking about the hypothetical situation where you actually know the population means and can draw conclusions without any statistical tests. Any real sample means you look at will include sampling and measurement error, and any inferences you'd make would depend on the outcome of statistical tests, rather than the observed pattern of means.
 
-</div>
+:::
 
 #### Scenario A {-}
 
@@ -637,131 +698,9 @@ Note that the $Y$ variable with the dots in the subscripts are means of $Y$, tak
 
 
 
-Many studies in psychology---especially experimental psychology---involve categorical independent variables. Analyzing data from these studies requires care in specifying the predictors, because the defaults in R are not ideal for experimental situations.
+Many studies in psychology---especially experimental psychology---involve categorical independent variables. Analyzing data from these studies requires care in specifying the predictors, because the defaults in R are not ideal for experimental situations. The main problem is that the default coding of categorical predictors gives you **simple effects** rather than **main effects** in the output, when what you usually want are the latter. People are sometimes unaware of this and misinterpret their output. It also happens that researchers report results from a regression with categorical predictors but do not explicitly report how they coded them, making their findings potentially difficult to interpret and irreproducible. In the interest of reproducibility, transparency, and accurate interpretation, it is a good idea to learn how to code categorical predictors "by hand" and to get into the habit of reporting them in your reports.
 
-Let's say you have 2x2 designed experiment with factors priming condition (priming vs. no priming) and linguistic structure (noun vs verb). These columns can be represented as type `character` or `factor`; in the latter case, they are implicitly converted to type `factor` before fitting the model, and then R will apply the default numerical coding for factors, which is 'treatment' (0, 1) coding.
-
-If you're used to running ANOVAs, the results that you get from fitting a linear model will *not* match ANOVA output, as we'll see below.  That is because you need to use a different coding scheme to get ANOVA-like output.
-
-First, let's define our little data set, `dat`.
-
-
-```r
-  ## demo for why you should avoid factors
-  dat <- tibble(
-    subject = factor(1:16),
-    priming = rep(c("yes", "no"), each = 8),
-    structure = rep(rep(c("noun", "verb"), each = 4), 2),
-    RT = rnorm(16, 800, 20))
-
-  dat
-```
-
-```
-## # A tibble: 16 × 4
-##    subject priming structure    RT
-##    <fct>   <chr>   <chr>     <dbl>
-##  1 1       yes     noun       792.
-##  2 2       yes     noun       771.
-##  3 3       yes     noun       760.
-##  4 4       yes     noun       811.
-##  5 5       yes     verb       787.
-##  6 6       yes     verb       820.
-##  7 7       yes     verb       768.
-##  8 8       yes     verb       806.
-##  9 9       no      noun       791.
-## 10 10      no      noun       824.
-## 11 11      no      noun       817.
-## 12 12      no      noun       790.
-## 13 13      no      verb       790.
-## 14 14      no      verb       813.
-## 15 15      no      verb       810.
-## 16 16      no      verb       763.
-```
-
-This is between subjects data, so we can fit a model using `lm()`.  In the model, we include effects of `priming` and `structure` as well as their interaction. Instead of typing `priming + structure + priming:structure` we can simply type the shortcut `priming * structure`.
-
-
-```r
-  ps_mod <- lm(RT ~ priming * structure, dat)
-
-  summary(ps_mod)
-```
-
-```
-## 
-## Call:
-## lm(formula = RT ~ priming * structure, data = dat)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -30.782 -14.711   2.036  16.466  27.755 
-## 
-## Coefficients:
-##                          Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)                805.57      10.83  74.409   <2e-16 ***
-## primingyes                 -22.08      15.31  -1.442    0.175    
-## structureverb              -11.49      15.31  -0.750    0.468    
-## primingyes:structureverb    23.20      21.65   1.071    0.305    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 21.65 on 12 degrees of freedom
-## Multiple R-squared:  0.1481,	Adjusted R-squared:  -0.06493 
-## F-statistic: 0.6951 on 3 and 12 DF,  p-value: 0.5726
-```
-
-Note that in the output the predictors are shown as `primingyes` and `structureverb`. The value `yes` is a level of `priming`; the level **not shown** is the one chosen as baseline, and in the default treatment coding scheme, the not-shown level (`no`) is coded as 0, and the shown level (`yes`) is coded as 1. Likewise, for `structure`, `noun` is coded as 0 and `verb` is coded as 1.
-
-This is not ideal, for reasons we will discuss further below. But I want to show you a further quirk of using factor variables as predictors.
-
-Let's say we wanted to test the effect of `priming` by itself using model comparison. To do this, we would fit another model where we exclude this effect while keeping the interaction. Despite what you may have heard to the contrary, in a fully randomized, balanced experiment, all factors are orthogonal, and so it is completely legitimate to drop a main effect while leaving an interaction term in the model.
-
-
-```r
-  ps_mod_nopriming <- lm(RT ~ structure + priming:structure, dat)
-```
-
-OK, now that we've dropped `priming`, we should have 3 parameter estimates instead of 4. Let's check.
-
-
-```r
-  ## not right!
-  coef(ps_mod_nopriming)
-```
-
-```
-##              (Intercept)            structureverb structurenoun:primingyes 
-##               805.566187               -11.485457               -22.081224 
-## structureverb:primingyes 
-##                 1.117333
-```
-
-There are still 4 of them, and we're suddenly getting `primingyes:structureverb`. This is weird and *not at all* what we intended.  If we try to do the model comparison:
-
-
-```r
-  ## nonsense result
-  anova(ps_mod_nopriming, ps_mod)
-```
-
-```
-## Analysis of Variance Table
-## 
-## Model 1: RT ~ structure + priming:structure
-## Model 2: RT ~ priming * structure
-##   Res.Df  RSS Df  Sum of Sq F Pr(>F)
-## 1     12 5626                       
-## 2     12 5626  0 9.0949e-13
-```
-
-we'd get nonsensical results.
-
-Is this a bug? No. It was a (in my view, heavy handed) design choice by the R creators to try to prevent everyone from doing something that at least some of us should be able to do at least some of the time.
-
-But we can do whatever we please if instead of using factors we define our own numerical predictors. This adds a bit of work but avoids other headaches and mistakes that we might make by using factors. Also, being very explicit about how predictors are defined is probably a good thing.
-
-You'll sometimes need `factor` variables. I often use them to get things to plot in the right way using `ggplot2`, or when I need to tabulating observations and there are some combinations with zero counts. But I recommend against using `factors` in statistical models, especially if your model includes interactions. Use numerical predictors instead.
+Because the R defaults aren't good for factorial designs, I'm going to suggest that you should always code your own categorical variables when including them as predictors in linear models. Don't include them as `factor` variables. 
 
 ## Coding schemes for categorical variables
 
@@ -1326,51 +1265,51 @@ Let's assume that your data is contained in a table `dat` like the one below.
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> -0.75 </td>
+   <td style="text-align:right;"> -0.41 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> -1.44 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.22 </td>
+   <td style="text-align:right;"> -2.01 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 1.09 </td>
+   <td style="text-align:right;"> 0.56 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.42 </td>
+   <td style="text-align:right;"> -0.67 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.68 </td>
+   <td style="text-align:right;"> 1.00 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 2.09 </td>
+   <td style="text-align:right;"> -1.61 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -1.37 </td>
+   <td style="text-align:right;"> 0.32 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.27 </td>
+   <td style="text-align:right;"> -0.44 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.47 </td>
+   <td style="text-align:right;"> 1.19 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.95 </td>
+   <td style="text-align:right;"> 0.87 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.16 </td>
+   <td style="text-align:right;"> -0.50 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
 </tbody>
@@ -1400,20 +1339,20 @@ Let's assume that your data is contained in a table `dat` like the one below.
 
 ```
 ## # A tibble: 12 × 4
-##          Y A      A2v1  A3v1
-##      <dbl> <chr> <int> <int>
-##  1 -0.752  A1        0     0
-##  2  0.0251 A1        0     0
-##  3 -0.218  A1        0     0
-##  4  1.09   A1        0     0
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1
+##         Y A      A2v1  A3v1
+##     <dbl> <chr> <int> <int>
+##  1 -0.410 A1        0     0
+##  2 -1.44  A1        0     0
+##  3 -2.01  A1        0     0
+##  4  0.562 A1        0     0
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1
 ```
 
 
@@ -1441,20 +1380,20 @@ dat_sum <- dat %>%
 
 ```
 ## # A tibble: 12 × 4
-##          Y A      A2v1  A3v1
-##      <dbl> <chr> <int> <int>
-##  1 -0.752  A1       -1    -1
-##  2  0.0251 A1       -1    -1
-##  3 -0.218  A1       -1    -1
-##  4  1.09   A1       -1    -1
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1
+##         Y A      A2v1  A3v1
+##     <dbl> <chr> <int> <int>
+##  1 -0.410 A1       -1    -1
+##  2 -1.44  A1       -1    -1
+##  3 -2.01  A1       -1    -1
+##  4  0.562 A1       -1    -1
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1
 ```
 
 
@@ -1483,20 +1422,20 @@ dat_dev
 
 ```
 ## # A tibble: 12 × 4
-##          Y A       A2v1   A3v1
-##      <dbl> <chr>  <dbl>  <dbl>
-##  1 -0.752  A1    -0.333 -0.333
-##  2  0.0251 A1    -0.333 -0.333
-##  3 -0.218  A1    -0.333 -0.333
-##  4  1.09   A1    -0.333 -0.333
-##  5 -0.417  A2     0.667 -0.333
-##  6 -0.683  A2     0.667 -0.333
-##  7  2.09   A2     0.667 -0.333
-##  8 -1.37   A2     0.667 -0.333
-##  9  0.268  A3    -0.333  0.667
-## 10  0.472  A3    -0.333  0.667
-## 11 -0.946  A3    -0.333  0.667
-## 12  0.155  A3    -0.333  0.667
+##         Y A       A2v1   A3v1
+##     <dbl> <chr>  <dbl>  <dbl>
+##  1 -0.410 A1    -0.333 -0.333
+##  2 -1.44  A1    -0.333 -0.333
+##  3 -2.01  A1    -0.333 -0.333
+##  4  0.562 A1    -0.333 -0.333
+##  5 -0.671 A2     0.667 -0.333
+##  6  1.00  A2     0.667 -0.333
+##  7 -1.61  A2     0.667 -0.333
+##  8  0.322 A2     0.667 -0.333
+##  9 -0.443 A3    -0.333  0.667
+## 10  1.19  A3    -0.333  0.667
+## 11  0.868 A3    -0.333  0.667
+## 12 -0.500 A3    -0.333  0.667
 ```
 
 

@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Interactions | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta name="description" content="Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/interactions.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta property="og:description" content="Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of September 30, 2021; contents may change!  4.1 Learning objectives model and interpret continuous-by-categorical interactions model and interpret...">
+<meta name="twitter:description" content="Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -75,29 +75,11 @@
 <h1>
 <span class="header-section-number">4</span> Interactions<a class="anchor" aria-label="anchor" href="#interactions"><i class="fas fa-link"></i></a>
 </h1>
-<div class="warning">
-<p>This chapter is under construction as of September 30, 2021; contents may change!</p>
-</div>
-<div id="learning-objectives" class="section level2">
-<h2>
-<span class="header-section-number">4.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
-</h2>
-<ul>
-<li>model and interpret continuous-by-categorical interactions</li>
-<li>model and interpret categorical-by-categorical interactions in factorial designs</li>
-<li>estimate and test effects in factorial designs using ANOVA or regression</li>
-</ul>
 <!-- understand a common fallacy regarding interactions -->
-</div>
-<div id="interactions-1" class="section level2">
-<h2>
-<span class="header-section-number">4.2</span> Interactions<a class="anchor" aria-label="anchor" href="#interactions-1"><i class="fas fa-link"></i></a>
-</h2>
 <p>Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations where the effect of one predictor on the response depends on the value of another predictor variable. We can actually estimate and interpret this dependency as well, by including an <strong>interaction</strong> term in our model.</p>
-</div>
 <div id="cont-by-cat" class="section level2">
 <h2>
-<span class="header-section-number">4.3</span> Continuous-by-Categorical Interactions<a class="anchor" aria-label="anchor" href="#cont-by-cat"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> Continuous-by-Categorical Interactions<a class="anchor" aria-label="anchor" href="#cont-by-cat"><i class="fas fa-link"></i></a>
 </h2>
 <p>One common example of this is when you are interested in whether a linear relationship between a continous predictor and a continuous response is different for two groups.</p>
 <p>Let's consider a simple fictional example. Say you are interested in the effects of sonic distraction on cognitive performance. Each participant in your study is randomly assigned to receive a particular amount of sonic distraction while they perform a simple reaction time task (respond as quickly as possible to a flashing light). You have a technique that allows you to automatically generate different levels of background noise (e.g., frequency and amplitude of city sounds, such as sirens, jackhammers, people yelling, glass breaking, etc.). Each participant performs the task for a randomly chosen level of distraction (0 to 100). Your hypothesis is that urban living makes people's task performance more immune to sonic distraction. You want to compare the relationship between distraction and performance for city dwellers to the relationship for people from quieter rural environments.</p>
@@ -195,13 +177,19 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <li>slope: <span class="math inline">\(\beta_{1\_rural} = \beta_{1\_urban} + \beta_3\)</span>
 </li>
 </ul>
-<p>Our urban group had parameters <span class="math inline">\(\beta_{0\_urban} = 450\)</span> (<code>b0_urban &lt;- 450</code>) and <span class="math inline">\(\beta_{1\_urban} = 2\)</span> (<code>b1_urban &lt;- 2</code>), whereas the rural broup had <span class="math inline">\(\beta_{0\_rural} = 500\)</span> (<code>b0_rural &lt;- 500</code>) and <span class="math inline">\(\beta_{1\_rural} = 3\)</span> (<code>b1_rural &lt;- 3</code>). It directly follows that <span class="math inline">\(\beta_2 = 50\)</span> and <span class="math inline">\(\beta_3 = 1\)</span> for our simulated example.</p>
+<p>Our urban group had parameters <span class="math inline">\(\beta_{0\_urban} = 450\)</span> and <span class="math inline">\(\beta_{1\_urban} = 2\)</span>, whereas the rural group had <span class="math inline">\(\beta_{0\_rural} = 500\)</span> and <span class="math inline">\(\beta_{1\_rural} = 3\)</span>. It directly follows that:</p>
+<ul>
+<li>
+<span class="math inline">\(\beta_2 = 50\)</span>, because <span class="math inline">\(\beta_{0\_rural} - \beta_{0\_urban} = 500 - 450 = 50\)</span>, and</li>
+<li>
+<span class="math inline">\(\beta_3 = 1\)</span>, because <span class="math inline">\(\beta_{1\_rural} - \beta_{1\_urban} = 3 - 2 = 1\)</span>.</li>
+</ul>
 <p>So our two regression models are now:</p>
 <p><span class="math display">\[Y_{i\_urban} = \beta_{0\_urban} + \beta_{1\_urban} X_i + e_i\]</span></p>
 <p>and</p>
 <p><span class="math display">\[Y_{i\_rural} = (\beta_{0\_urban} + \beta_2) + (\beta_{1\_urban} + \beta_3) X_i + e_i.\]</span></p>
-<p>OK, we feel like we're closer to getting these into a single regression model. Here's the final trick. We define an additional dummy predictor variable that takes on the value 0 for the urban group (which we chose as our 'baseline' group) and 1 for the other group. Our final model takes the following form.</p>
-<div class="try">
+<p>OK, it seems like we're closer to getting these into a single regression model. Here's the final trick. We define an additional dummy predictor variable that takes on the value 0 for the urban group (which we chose as our 'baseline' group) and 1 for the other group. The box below contains our final model.</p>
+<div class="info">
 <p><strong>Regression model with a continuous-by-categorical interaction.</strong></p>
 <p><span class="math display">\[Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{1i} X_{2i} + e_{i}\]</span></p>
 <p>where</p>
@@ -226,23 +214,33 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <p><code><a href="https://rdrr.io/r/stats/lm.html">lm(Y ~ X1 + X2 + X1:X2, data)</a></code> or, as a shortcut:</p>
 <p><code><a href="https://rdrr.io/r/stats/lm.html">lm(Y ~ X1 * X2)</a></code> where <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> means "all possible main effects and interactions of X1 and X2"</p>
 </div>
-<p>The term associated with <span class="math inline">\(\beta_3\)</span> is an <strong>interaction term</strong>, where the predictor is the product of predictor values. Let's now show that the above GLM gives us the two regression lines that we want. Plugging in 0 for <span class="math inline">\(X_{2i}\)</span> and reducing gives us</p>
+<p>The term <span class="math inline">\(\beta_3 X_{1i} X_{2i}\)</span>, which has the two predictors multiplied together, is called an <strong>interaction term</strong>. Let's now show that the above GLM gives us the two regression lines that we want.</p>
+<p>To derive the regression equation for the urban group, we plug in 0 for <span class="math inline">\(X_{2i}\)</span>. This gives us</p>
 <p><span class="math display">\[Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 0 + \beta_3 X_{1i} 0 + e_i\]</span></p>
-<p>which is just</p>
+<p>which, dropping terms that are zero, is just</p>
 <p><span class="math display">\[Y_{i} = \beta_0 + \beta_1 X_{1i} + e_i,\]</span></p>
-<p>the regression equation for our baseline (urban) group. Compare this to <span class="math inline">\(Y_{i\_urban}\)</span> above.</p>
+<p>which is the regression equation for our baseline (urban) group. Compare this to <span class="math inline">\(Y_{i\_urban}\)</span> above.</p>
 <p>Plugging in 1 for <span class="math inline">\(X_{2i}\)</span> should give us the equation for our rural group. We get</p>
 <p><span class="math display">\[Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 1 + \beta_3 X_{1i} 1 + e_i\]</span></p>
 <p>which, after reducing and applying a little algebra, can also be expressed as</p>
 <p><span class="math display">\[Y_{i} = \beta_0 + \beta_2 + (\beta_1 + \beta_3) X_{1i} + e_i.\]</span></p>
 <p>Compare this to <span class="math inline">\(Y_{i\_rural}\)</span> above. The dummy-coding trick works!</p>
-<p>Now let's see how to estimate the regression in R. Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>, because <span class="math inline">\(\beta_3\)</span> is our slope offset.</p>
+<p>How do we estimate the regression coefficients in R. Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>, because <span class="math inline">\(\beta_3\)</span> is our slope offset. If this parameter is zero, that means there is a single slope for both groups (although they can have different intercepts). In other words, that means the two slopes are <strong>parallel</strong>. If it is non-zero, that means that the two groups have different slopes; that is, the two slopes are <strong>not parallel</strong>.</p>
+<div class="warning">
+<p><strong>Parallel lines in the sample versus in the population</strong></p>
+<p>I just said that two non-parallel lines mean there is an <em>interaction</em> between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class="glossary" target="_blank" title="All members of a group that we wish to generalise our findings to. E.g. all students taking Psychology at the University of Glasgow. We draw our testing sample from the population." href="https://psyteachr.github.io/glossary/p#population">population</a>. Whether or not they are parallel in the <a class="glossary" target="_blank" title="A subset of the population that you wish to make an inference about through your test." href="https://psyteachr.github.io/glossary/s#sample">sample</a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small.</p>
+<p>Generally, you will be interested in whether the slopes are the same or different in the population, not in the sample. For this reason, you can't just look at a graph of sample data and reason, "the lines are not parallel and so there must be an interaction", or vice versa, "the lines look parallel, so there is no interaction." You must run an inferential statistical test.</p>
+<p>When the interaction term is statistically significant at some <span class="math inline">\(\alpha\)</span> level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., <span class="math inline">\(H_0: \beta_3 = 0\)</span>), which implies the lines are not parallel in the population.</p>
+<p>However, a non-significant interaction does <em>not</em> necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class="glossary" target="_blank" title="The probability of rejecting the null hypothesis when it is false." href="https://psyteachr.github.io/glossary/p#power">power</a> to detect the difference.</p>
+<p>The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see <span class="citation">Lakens et al. (<a href="bibliography.html#ref-Lakens_Scheel_Isager_2018">2018</a>)</span> for a tutorial.</p>
+</div>
 <p>We have already created the dataset <code>all_data</code> combining the simulated data for our two groups. The way we express our model using R formula syntax is <code>Y ~ X1 + X2 + X1:X2</code> where <code>X1:X2</code> tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut <code>Y ~ X1 * X2</code> which tells R to calculate all possible main effects and interactions. First we'll add a dummy predictor to our model, storing the result in <code>all_data2</code>.</p>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_data2</span> <span class="op">&lt;-</span> <span class="va">all_data</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>grp <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"rural"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sonic_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">simple_rt</span> <span class="op">~</span> <span class="va">dist_level</span> <span class="op">+</span> <span class="va">grp</span> <span class="op">+</span> <span class="va">dist_level</span><span class="op">:</span><span class="va">grp</span>, <span class="va">all_data2</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sonic_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">simple_rt</span> <span class="op">~</span> <span class="va">dist_level</span> <span class="op">+</span> <span class="va">grp</span> <span class="op">+</span> <span class="va">dist_level</span><span class="op">:</span><span class="va">grp</span>,
+                <span class="va">all_data2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">sonic_mod</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -265,13 +263,58 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 ## Residual standard error: 81.14 on 196 degrees of freedom
 ## Multiple R-squared:  0.5625, Adjusted R-squared:  0.5558 
 ## F-statistic: 83.99 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Can you identify the values of the regression coefficients in the output?</p>
+<div class="try">
+<p><strong>Exercises</strong></p>
+<p>Fill in the blanks below. Type your answers to at least two decimal places.</p>
+<p>Given the regression model</p>
+<p><span class="math display">\[Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{1i} X_{2i} + e_{i}\]</span></p>
+<p>(where <span class="math inline">\(X_{1i}\)</span> is the continuous predictor and <span class="math inline">\(X_{2i}\)</span> is the categorical predictor) and the output from <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> above, identify the following parameter estimates.</p>
+<ul>
+<li>
+<span class="math inline">\(\hat{\beta}_0\)</span>: <input class="webex-solveme nospaces" data-tol="0.01" size="4" data-answer='["460.109764033163"]'>
+</li>
+<li>
+<span class="math inline">\(\hat{\beta}_1\)</span>: <input class="webex-solveme nospaces" data-tol="0.01" size="4" data-answer='["1.91232184349596"]'>
+</li>
+<li>
+<span class="math inline">\(\hat{\beta}_2\)</span>: <input class="webex-solveme nospaces" data-tol="0.01" size="4" data-answer='["4.82504807369759"]'>
+</li>
+<li>
+<span class="math inline">\(\hat{\beta}_3\)</span>: <input class="webex-solveme nospaces" data-tol="0.01" size="4" data-answer='["1.58653315274424"]'>
+</li>
+</ul>
+<p>Based on these parameter estimates, the regression line for the (baseline) urban group is:</p>
+<p><span class="math inline">\(Y_i =\)</span> <input class="webex-solveme nospaces" data-tol="0.01" size="2" data-answer='["460.109764033163"]'><span class="math inline">\(+\)</span> <input class="webex-solveme nospaces" data-tol="0.01" size="2" data-answer='["1.91232184349596"]'><span class="math inline">\(X_{1i}\)</span></p>
+<p>and the regression line for the rural group is:</p>
+<p><span class="math inline">\(Y_i =\)</span> <input class="webex-solveme nospaces" data-tol="0.01" size="2" data-answer='["464.934812106861"]'><span class="math inline">\(+\)</span> <input class="webex-solveme nospaces" data-tol="0.01" size="2" data-answer='["3.4988549962402"]'><span class="math inline">\(X_{1i}\)</span></p>
+<div class="webex-solution">
+<button>
+Show answers
+</button>
+<ul>
+<li>
+<span class="math inline">\(\beta_0=\)</span> 460.11</li>
+<li>
+<span class="math inline">\(\beta_1=\)</span> 1.91</li>
+<li>
+<span class="math inline">\(\beta_2=\)</span> 4.83</li>
+<li>
+<span class="math inline">\(\beta_3=\)</span> 1.59</li>
+</ul>
+<p>The regression line for the urban group is just</p>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i}\)</span> which is</p>
+<p><span class="math inline">\(Y_i =\)</span> 460.11 <span class="math inline">\(+\)</span> 1.91 <span class="math inline">\(X_{1i}\)</span></p>
+<p>while the line for the rural group is</p>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_2 + \left(\beta_1 + \beta_3\right) X_{1i}\)</span> or</p>
+<p><span class="math inline">\(Y_i=\)</span> 464.93 <span class="math inline">\(+\)</span> 3.5 <span class="math inline">\(X_{1i}\)</span></p>
+</div>
+</div>
 </div>
 <div id="categorical-by-categorical-interactions" class="section level2">
 <h2>
-<span class="header-section-number">4.4</span> Categorical-by-Categorical Interactions<a class="anchor" aria-label="anchor" href="#categorical-by-categorical-interactions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> Categorical-by-Categorical Interactions<a class="anchor" aria-label="anchor" href="#categorical-by-categorical-interactions"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Factorial designs</strong> are very common in psychology, and are most often analyzed using ANOVA-based techniques, which can obscure that they are also just models.</p>
+<p><strong>Factorial designs</strong> are very common in psychology, and are most often analyzed using ANOVA-based techniques, which can obscure the fact that ANOVA, like regression, also assumes an underlying linear model.</p>
 <p>A factorial design is one in which the predictors (IVs) are all categorical: each is a <strong>factor</strong> having a fixed number of <strong>levels</strong>. In a full-factorial design, the factors are fully crossed with each other such that each possible combination of factors is represented. We call each unique combination a <strong>cell</strong> of the design. You will often hear designs referred to as "a two-by-two design" (2x2), which means that there are two factors, each of which has three levels. A "three-by-three" (3x3) design is one where there are two factors, each with three levels; a "two-by-two-by-two" 2x2x2 design is one in which there are three factors, each with two levels; and so on.</p>
 <p>Typically, factorial designs are given a tabular representation, showing all the combinations of factor levels. Below is a tabular representation of a 2x2 design.</p>
 <div class="inline-table"><table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -441,13 +484,13 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <p>You can find out how many cells a design has by multiplying the number of levels of each factor. So, a 2x3x4 design would have 24 cells in the design.</p>
 <div id="effects-of-cognitive-therapy-and-drug-therapy-on-mood" class="section level3">
 <h3>
-<span class="header-section-number">4.4.1</span> Effects of cognitive therapy and drug therapy on mood<a class="anchor" aria-label="anchor" href="#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.1</span> Effects of cognitive therapy and drug therapy on mood<a class="anchor" aria-label="anchor" href="#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let's consider a simple factorial design and think about the types of patterns our data can show. After we get the concepts down from this concrete example, we'll map them onto the more abstract statistical terminology.</p>
 <p>Imagine you've running a study looking at effects of two different types of therapy for depressed patients, cognitive therapy and drug therapy. Half of the participants are randomly assigned to receive Cognitive Behavioral Therapy (CBT) and the other half get some other kind of control activity. Also, you further divide your patients through random assignment into a drug therapy group, whose members receive anti-depressants, and an control group, whose members receive a placebo. After treatment (or control/placebo), you measure their mood on a scale, with higher numbers corresponding to a more positive mood.</p>
 <p>Let's imagine that the means we obtain below are the population means, free of measurement or sampling error. We'll take a moment to consider three different possible outcomes and what they imply about how these therapies might work independently or interactively to affect mood.</p>
 <div class="warning">
-<p>Keep in mind that you will almost <strong>never</strong> know the true means of any population that you care about, unless you have measured all members of the population, and done so without measurement error. Below, we're talking about the hypothetical situation where you actually know the population means and can draw conclusions without any statistical tests. Any real sample means you look at will include sampling and measurement error, and any inferences you'd make would depend on the outcome of statistical tests, rather than the observed pattern of means.</p>
+<p>The reminder about populations and samples for categorical-by-continuous interactions also applies here. Except when simulating data, you will almost <strong>never</strong> know the true means of any population that you are studying. Below, we're talking about the hypothetical situation where you actually know the population means and can draw conclusions without any statistical tests. Any real sample means you look at will include sampling and measurement error, and any inferences you'd make would depend on the outcome of statistical tests, rather than the observed pattern of means.</p>
 </div>
 <div id="scenario-a" class="section level4 unnumbered">
 <h4>Scenario A<a class="anchor" aria-label="anchor" href="#scenario-a"><i class="fas fa-link"></i></a>
@@ -665,12 +708,12 @@ Drug
 </div>
 <div id="effects-in-a-factorial-design" class="section level3">
 <h3>
-<span class="header-section-number">4.4.2</span> Effects in a factorial design<a class="anchor" aria-label="anchor" href="#effects-in-a-factorial-design"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.2</span> Effects in a factorial design<a class="anchor" aria-label="anchor" href="#effects-in-a-factorial-design"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you understand the basic patterns of effects described in the previous section, you are then ready to map these concepts onto statistical language.</p>
 <div id="main-effect" class="section level4">
 <h4>
-<span class="header-section-number">4.4.2.1</span> Main effect<a class="anchor" aria-label="anchor" href="#main-effect"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.2.1</span> Main effect<a class="anchor" aria-label="anchor" href="#main-effect"><i class="fas fa-link"></i></a>
 </h4>
 <p><strong>Main effect</strong>: The effect of a factor on the DV <strong>ignoring</strong> the other factors in the design.</p>
 <p>The test of a main effect is a test of the equivalence of marginal means. So in Scenario A above, when you compared the row means for drug therapy, you were assessing the main effect of this factor on mood. The null hypothesis would be that the two marginal means are equal:</p>
@@ -682,7 +725,7 @@ Drug
 </div>
 <div id="simple-effect" class="section level4">
 <h4>
-<span class="header-section-number">4.4.2.2</span> Simple effect<a class="anchor" aria-label="anchor" href="#simple-effect"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.2.2</span> Simple effect<a class="anchor" aria-label="anchor" href="#simple-effect"><i class="fas fa-link"></i></a>
 </h4>
 <p>A <strong>Simple effect</strong> is the effect of one factor at a specific level of another factor (i.e., holding that factor constant at a particular value).</p>
 <p>So for instance, in Scenario C, we talked about the effect of CBT for participants in the anti-depressant group. In that case, the simple effect of CBT for participants receiving anti-depressants was 40 units.</p>
@@ -690,7 +733,7 @@ Drug
 </div>
 <div id="interaction" class="section level4">
 <h4>
-<span class="header-section-number">4.4.2.3</span> Interaction<a class="anchor" aria-label="anchor" href="#interaction"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.2.3</span> Interaction<a class="anchor" aria-label="anchor" href="#interaction"><i class="fas fa-link"></i></a>
 </h4>
 <p>We say that an <strong>interaction</strong> is present when the effect of one variable differs across the levels of another variable.</p>
 <p>A more mathematical definition is that an interaction is present when the simple effects of one factor differ across the levels of another factor. We saw this in Scenario C, with a 40 point boost of CBT for the anti-depressant group, compared to a boost of 20 for the placebo group. Perhaps the elevated mood caused by the anti-depressants made patients more susceptable to CBT.</p>
@@ -699,7 +742,7 @@ Drug
 </div>
 <div id="higher-order-designs" class="section level3">
 <h3>
-<span class="header-section-number">4.4.3</span> Higher-order designs<a class="anchor" aria-label="anchor" href="#higher-order-designs"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2.3</span> Higher-order designs<a class="anchor" aria-label="anchor" href="#higher-order-designs"><i class="fas fa-link"></i></a>
 </h3>
 <p>Two-factor (also known as "two-way") designs are very common in psychology and neuroscience, but sometimes you will also see designs with more than two factors, such as a 2x2x2 design.</p>
 <p>To figure out the number of effects we have of different kinds, we use the formula below, which gives us the number of possible combinations for <span class="math inline">\(n\)</span> elements take <span class="math inline">\(k\)</span> at a time:</p>
@@ -726,7 +769,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 </div>
 <div id="the-glm-for-a-factorial-design" class="section level2">
 <h2>
-<span class="header-section-number">4.5</span> The GLM for a factorial design<a class="anchor" aria-label="anchor" href="#the-glm-for-a-factorial-design"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> The GLM for a factorial design<a class="anchor" aria-label="anchor" href="#the-glm-for-a-factorial-design"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now let's look at the math behind these models. The typically way you'll see the GLM for an ANOVA written for a 2x2 factorial design uses "ANOVA" notation, like so:</p>
 <p><span class="math display">\[Y_{ijk} = \mu + A_i + B_j + AB_{ij} + S(AB)_{ijk}.\]</span></p>
@@ -772,7 +815,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 ## 12     4     2     2     3    10    -4     2    -1    -3</code></pre>
 <div id="estimation-equations" class="section level3">
 <h3>
-<span class="header-section-number">4.5.1</span> Estimation equations<a class="anchor" aria-label="anchor" href="#estimation-equations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3.1</span> Estimation equations<a class="anchor" aria-label="anchor" href="#estimation-equations"><i class="fas fa-link"></i></a>
 </h3>
 <p>These are the equations you would used to estimate effects in an ANOVA.</p>
 <ul>
@@ -785,7 +828,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 </div>
 <div id="factorial-app" class="section level3">
 <h3>
-<span class="header-section-number">4.5.2</span> Factorial App<a class="anchor" aria-label="anchor" href="#factorial-app"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3.2</span> Factorial App<a class="anchor" aria-label="anchor" href="#factorial-app"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-figure"><img src="images/04-interactions_factorial_app.png"></div>
 <p><a href="https://shiny.psy.gla.ac.uk/Dale/factorial2" target="_blank">Launch this web application</a> and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.</p>
@@ -793,103 +836,20 @@ Comparing the significance of the simple effects is **not the same** as testing 
 </div>
 <div id="code-your-own-categorical-predictors-in-factorial-designs" class="section level2">
 <h2>
-<span class="header-section-number">4.6</span> Code your own categorical predictors in factorial designs<a class="anchor" aria-label="anchor" href="#code-your-own-categorical-predictors-in-factorial-designs"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4</span> Code your own categorical predictors in factorial designs<a class="anchor" aria-label="anchor" href="#code-your-own-categorical-predictors-in-factorial-designs"><i class="fas fa-link"></i></a>
 </h2>
-<p>Many studies in psychology---especially experimental psychology---involve categorical independent variables. Analyzing data from these studies requires care in specifying the predictors, because the defaults in R are not ideal for experimental situations.</p>
-<p>Let's say you have 2x2 designed experiment with factors priming condition (priming vs. no priming) and linguistic structure (noun vs verb). These columns can be represented as type <code>character</code> or <code>factor</code>; in the latter case, they are implicitly converted to type <code>factor</code> before fitting the model, and then R will apply the default numerical coding for factors, which is 'treatment' (0, 1) coding.</p>
-<p>If you're used to running ANOVAs, the results that you get from fitting a linear model will <em>not</em> match ANOVA output, as we'll see below. That is because you need to use a different coding scheme to get ANOVA-like output.</p>
-<p>First, let's define our little data set, <code>dat</code>.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">## demo for why you should avoid factors</span>
-  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
-    subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span>,
-    priming <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"no"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,
-    structure <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"noun"</span>, <span class="st">"verb"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,
-    RT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">800</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="va">dat</span></code></pre></div>
-<pre><code>## # A tibble: 16 × 4
-##    subject priming structure    RT
-##    &lt;fct&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
-##  1 1       yes     noun       792.
-##  2 2       yes     noun       771.
-##  3 3       yes     noun       760.
-##  4 4       yes     noun       811.
-##  5 5       yes     verb       787.
-##  6 6       yes     verb       820.
-##  7 7       yes     verb       768.
-##  8 8       yes     verb       806.
-##  9 9       no      noun       791.
-## 10 10      no      noun       824.
-## 11 11      no      noun       817.
-## 12 12      no      noun       790.
-## 13 13      no      verb       790.
-## 14 14      no      verb       813.
-## 15 15      no      verb       810.
-## 16 16      no      verb       763.</code></pre>
-<p>This is between subjects data, so we can fit a model using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. In the model, we include effects of <code>priming</code> and <code>structure</code> as well as their interaction. Instead of typing <code>priming + structure + priming:structure</code> we can simply type the shortcut <code>priming * structure</code>.</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="va">ps_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">priming</span> <span class="op">*</span> <span class="va">structure</span>, <span class="va">dat</span><span class="op">)</span>
-
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ps_mod</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = RT ~ priming * structure, data = dat)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -30.782 -14.711   2.036  16.466  27.755 
-## 
-## Coefficients:
-##                          Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                805.57      10.83  74.409   &lt;2e-16 ***
-## primingyes                 -22.08      15.31  -1.442    0.175    
-## structureverb              -11.49      15.31  -0.750    0.468    
-## primingyes:structureverb    23.20      21.65   1.071    0.305    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 21.65 on 12 degrees of freedom
-## Multiple R-squared:  0.1481, Adjusted R-squared:  -0.06493 
-## F-statistic: 0.6951 on 3 and 12 DF,  p-value: 0.5726</code></pre>
-<p>Note that in the output the predictors are shown as <code>primingyes</code> and <code>structureverb</code>. The value <code>yes</code> is a level of <code>priming</code>; the level <strong>not shown</strong> is the one chosen as baseline, and in the default treatment coding scheme, the not-shown level (<code>no</code>) is coded as 0, and the shown level (<code>yes</code>) is coded as 1. Likewise, for <code>structure</code>, <code>noun</code> is coded as 0 and <code>verb</code> is coded as 1.</p>
-<p>This is not ideal, for reasons we will discuss further below. But I want to show you a further quirk of using factor variables as predictors.</p>
-<p>Let's say we wanted to test the effect of <code>priming</code> by itself using model comparison. To do this, we would fit another model where we exclude this effect while keeping the interaction. Despite what you may have heard to the contrary, in a fully randomized, balanced experiment, all factors are orthogonal, and so it is completely legitimate to drop a main effect while leaving an interaction term in the model.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="va">ps_mod_nopriming</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">structure</span> <span class="op">+</span> <span class="va">priming</span><span class="op">:</span><span class="va">structure</span>, <span class="va">dat</span><span class="op">)</span></code></pre></div>
-<p>OK, now that we've dropped <code>priming</code>, we should have 3 parameter estimates instead of 4. Let's check.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">## not right!</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">ps_mod_nopriming</span><span class="op">)</span></code></pre></div>
-<pre><code>##              (Intercept)            structureverb structurenoun:primingyes 
-##               805.566187               -11.485457               -22.081224 
-## structureverb:primingyes 
-##                 1.117333</code></pre>
-<p>There are still 4 of them, and we're suddenly getting <code>primingyes:structureverb</code>. This is weird and <em>not at all</em> what we intended. If we try to do the model comparison:</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">## nonsense result</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ps_mod_nopriming</span>, <span class="va">ps_mod</span><span class="op">)</span></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: RT ~ structure + priming:structure
-## Model 2: RT ~ priming * structure
-##   Res.Df  RSS Df  Sum of Sq F Pr(&gt;F)
-## 1     12 5626                       
-## 2     12 5626  0 9.0949e-13</code></pre>
-<p>we'd get nonsensical results.</p>
-<p>Is this a bug? No. It was a (in my view, heavy handed) design choice by the R creators to try to prevent everyone from doing something that at least some of us should be able to do at least some of the time.</p>
-<p>But we can do whatever we please if instead of using factors we define our own numerical predictors. This adds a bit of work but avoids other headaches and mistakes that we might make by using factors. Also, being very explicit about how predictors are defined is probably a good thing.</p>
-<p>You'll sometimes need <code>factor</code> variables. I often use them to get things to plot in the right way using <code>ggplot2</code>, or when I need to tabulating observations and there are some combinations with zero counts. But I recommend against using <code>factors</code> in statistical models, especially if your model includes interactions. Use numerical predictors instead.</p>
+<p>Many studies in psychology---especially experimental psychology---involve categorical independent variables. Analyzing data from these studies requires care in specifying the predictors, because the defaults in R are not ideal for experimental situations. The main problem is that the default coding of categorical predictors gives you <strong>simple effects</strong> rather than <strong>main effects</strong> in the output, when what you usually want are the latter. People are sometimes unaware of this and misinterpret their output. It also happens that researchers report results from a regression with categorical predictors but do not explicitly report how they coded them, making their findings potentially difficult to interpret and irreproducible. In the interest of reproducibility, transparency, and accurate interpretation, it is a good idea to learn how to code categorical predictors "by hand" and to get into the habit of reporting them in your reports.</p>
+<p>Because the R defaults aren't good for factorial designs, I'm going to suggest that you should always code your own categorical variables when including them as predictors in linear models. Don't include them as <code>factor</code> variables.</p>
 </div>
 <div id="coding-schemes-for-categorical-variables" class="section level2">
 <h2>
-<span class="header-section-number">4.7</span> Coding schemes for categorical variables<a class="anchor" aria-label="anchor" href="#coding-schemes-for-categorical-variables"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5</span> Coding schemes for categorical variables<a class="anchor" aria-label="anchor" href="#coding-schemes-for-categorical-variables"><i class="fas fa-link"></i></a>
 </h2>
 <p>Many experimentalists who are trying to make the leap from ANOVA to linear mixed-effects models (LMEMs) in R struggle with the coding of categorical predictors. It is unexpectedly complicated, and the defaults provided in R turn out to be wholly inappropriate for factorial experiments. Indeed, using those defaults with factorial experiments can lead researchers to draw erroneous conclusions from their data.</p>
 <p>To keep things simple, we'll start with situations where design factors have no more than two levels before moving on to designs with more than three levels.</p>
 <div id="simple-versus-main-effects" class="section level3">
 <h3>
-<span class="header-section-number">4.7.1</span> Simple versus main effects<a class="anchor" aria-label="anchor" href="#simple-versus-main-effects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.1</span> Simple versus main effects<a class="anchor" aria-label="anchor" href="#simple-versus-main-effects"><i class="fas fa-link"></i></a>
 </h3>
 <p>It is important that you understand the difference between a <strong>simple effect</strong> and a <strong>main effect</strong>, and between a <strong>simple interaction</strong> and a <strong>main interaction</strong> in a three-way design.</p>
 <p>In an <span class="math inline">\(A{\times}B\)</span> design, the simple effect of <span class="math inline">\(A\)</span> is the effect of <span class="math inline">\(A\)</span> <strong>controlling</strong> for <span class="math inline">\(B\)</span>, while the main effect of <span class="math inline">\(A\)</span> is the effect of <span class="math inline">\(A\)</span> <strong>ignoring</strong> <span class="math inline">\(B\)</span>. Another way of looking at this is to consider the cell means (<span class="math inline">\(\bar{Y}_{11}\)</span>, <span class="math inline">\(\bar{Y}_{12}\)</span>, <span class="math inline">\(\bar{Y}_{21}\)</span>, and <span class="math inline">\(\bar{Y}_{22}\)</span>) and marginal means (<span class="math inline">\(\bar{Y}_{1.}\)</span>, <span class="math inline">\(\bar{Y}_{2.}\)</span>, <span class="math inline">\(\bar{Y}_{.1}\)</span>, and <span class="math inline">\(\bar{Y}_{.2}\)</span>) in a factorial design. (The dot subscript tells you to "ignore" the dimension containing the dot; e.g., <span class="math inline">\(\bar{Y}_{.1}\)</span> tells you to take the mean of the first column ignoring the row variable.) To test the main effect of A is to test the null hypothesis that <span class="math inline">\(\bar{Y}_{1.}=\bar{Y}_{2.}\)</span>. To test a simple effect of <span class="math inline">\(A\)</span>—the effect of <span class="math inline">\(A\)</span> at a particular level of <span class="math inline">\(B\)</span>—would be, for instance, to test the null hypothesis that <span class="math inline">\(\bar{Y}_{11}=\bar{Y}_{21}\)</span>.</p>
@@ -973,7 +933,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 </div>
 <div id="the-key-coding-schemes" class="section level3">
 <h3>
-<span class="header-section-number">4.7.2</span> The key coding schemes<a class="anchor" aria-label="anchor" href="#the-key-coding-schemes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.2</span> The key coding schemes<a class="anchor" aria-label="anchor" href="#the-key-coding-schemes"><i class="fas fa-link"></i></a>
 </h3>
 <p>Generally, the choice of a coding scheme impacts the interpretation of:</p>
 <ol style="list-style-type: decimal">
@@ -1350,7 +1310,7 @@ deviation
 </div>
 <div id="what-about-factors-with-more-than-two-levels" class="section level3">
 <h3>
-<span class="header-section-number">4.7.3</span> What about factors with more than two levels?<a class="anchor" aria-label="anchor" href="#what-about-factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.3</span> What about factors with more than two levels?<a class="anchor" aria-label="anchor" href="#what-about-factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
 </h3>
 <p>A factor with <span class="math inline">\(k\)</span> levels requires <span class="math inline">\(k-1\)</span> variables. Each predictor contrasts a particular "target" level of the factor with a level that you (arbitrarily) choose as the "baseline" level. For instance, for a three-level factor <span class="math inline">\(A\)</span> with <span class="math inline">\(A1\)</span> chosen as the baseline, you'd have two predictor variables, one of which compares <span class="math inline">\(A2\)</span> to <span class="math inline">\(A1\)</span> and the other of which compares <span class="math inline">\(A3\)</span> to <span class="math inline">\(A1\)</span>.</p>
 <p>For treatment (dummy) coding, the target level is set to 1, otherwise 0.</p>
@@ -1360,11 +1320,11 @@ deviation
 </div>
 <div id="example-three-level-factor" class="section level3">
 <h3>
-<span class="header-section-number">4.7.4</span> Example: Three-level factor<a class="anchor" aria-label="anchor" href="#example-three-level-factor"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4</span> Example: Three-level factor<a class="anchor" aria-label="anchor" href="#example-three-level-factor"><i class="fas fa-link"></i></a>
 </h3>
 <div id="treatment-dummy" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.1</span> Treatment (Dummy)<a class="anchor" aria-label="anchor" href="#treatment-dummy"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.1</span> Treatment (Dummy)<a class="anchor" aria-label="anchor" href="#treatment-dummy"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1417,7 +1377,7 @@ A3
 </div>
 <div id="sum" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.2</span> Sum<a class="anchor" aria-label="anchor" href="#sum"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.2</span> Sum<a class="anchor" aria-label="anchor" href="#sum"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1470,7 +1430,7 @@ A3
 </div>
 <div id="deviation" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.3</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.3</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1523,12 +1483,12 @@ A3
 </div>
 <div id="example-five-level-factor" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.4</span> Example: Five-level factor<a class="anchor" aria-label="anchor" href="#example-five-level-factor"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.4</span> Example: Five-level factor<a class="anchor" aria-label="anchor" href="#example-five-level-factor"><i class="fas fa-link"></i></a>
 </h4>
 </div>
 <div id="treatment-dummy-1" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.5</span> Treatment (Dummy)<a class="anchor" aria-label="anchor" href="#treatment-dummy-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.5</span> Treatment (Dummy)<a class="anchor" aria-label="anchor" href="#treatment-dummy-1"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1639,7 +1599,7 @@ A5
 </div>
 <div id="sum-1" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.6</span> Sum<a class="anchor" aria-label="anchor" href="#sum-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.6</span> Sum<a class="anchor" aria-label="anchor" href="#sum-1"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1750,7 +1710,7 @@ A5
 </div>
 <div id="deviation-1" class="section level4">
 <h4>
-<span class="header-section-number">4.7.4.7</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.4.7</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation-1"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1862,10 +1822,10 @@ A5
 </div>
 <div id="how-to-create-your-own-numeric-predictors" class="section level3">
 <h3>
-<span class="header-section-number">4.7.5</span> How to create your own numeric predictors<a class="anchor" aria-label="anchor" href="#how-to-create-your-own-numeric-predictors"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.5</span> How to create your own numeric predictors<a class="anchor" aria-label="anchor" href="#how-to-create-your-own-numeric-predictors"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let's assume that your data is contained in a table <code>dat</code> like the one below.</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="co">## create your own numeric predictors</span>
  <span class="co">## make an example table</span>
  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>,
@@ -1886,7 +1846,7 @@ A
 <tbody>
 <tr>
 <td style="text-align:right;">
--0.75
+-0.41
 </td>
 <td style="text-align:left;">
 A1
@@ -1894,7 +1854,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
-0.03
+-1.44
 </td>
 <td style="text-align:left;">
 A1
@@ -1902,7 +1862,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
--0.22
+-2.01
 </td>
 <td style="text-align:left;">
 A1
@@ -1910,7 +1870,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
-1.09
+0.56
 </td>
 <td style="text-align:left;">
 A1
@@ -1918,7 +1878,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
--0.42
+-0.67
 </td>
 <td style="text-align:left;">
 A2
@@ -1926,7 +1886,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
--0.68
+1.00
 </td>
 <td style="text-align:left;">
 A2
@@ -1934,7 +1894,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
-2.09
+-1.61
 </td>
 <td style="text-align:left;">
 A2
@@ -1942,7 +1902,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
--1.37
+0.32
 </td>
 <td style="text-align:left;">
 A2
@@ -1950,7 +1910,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
-0.27
+-0.44
 </td>
 <td style="text-align:left;">
 A3
@@ -1958,7 +1918,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
-0.47
+1.19
 </td>
 <td style="text-align:left;">
 A3
@@ -1966,7 +1926,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
--0.95
+0.87
 </td>
 <td style="text-align:left;">
 A3
@@ -1974,7 +1934,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
-0.16
+-0.50
 </td>
 <td style="text-align:left;">
 A3
@@ -1985,14 +1945,14 @@ A3
 </div>
 <div id="the-mutate-if_else-case_when-approach-for-a-three-level-factor" class="section level4">
 <h4>
-<span class="header-section-number">4.7.5.1</span> The <code>mutate()</code> / <code>if_else()</code> / <code>case_when()</code> approach for a three-level factor<a class="anchor" aria-label="anchor" href="#the-mutate-if_else-case_when-approach-for-a-three-level-factor"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.5.1</span> The <code>mutate()</code> / <code>if_else()</code> / <code>case_when()</code> approach for a three-level factor<a class="anchor" aria-label="anchor" href="#the-mutate-if_else-case_when-approach-for-a-three-level-factor"><i class="fas fa-link"></i></a>
 </h4>
 </div>
 <div id="treatment" class="section level4">
 <h4>
-<span class="header-section-number">4.7.5.2</span> Treatment<a class="anchor" aria-label="anchor" href="#treatment"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.5.2</span> Treatment<a class="anchor" aria-label="anchor" href="#treatment"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">## examples of three level factors</span>
   <span class="co">## treatment coding</span>
   <span class="va">dat_treat</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
@@ -2003,27 +1963,27 @@ A3
 Click to view resulting table
 </button>
 <pre><code>## # A tibble: 12 × 4
-##          Y A      A2v1  A3v1
-##      &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 -0.752  A1        0     0
-##  2  0.0251 A1        0     0
-##  3 -0.218  A1        0     0
-##  4  1.09   A1        0     0
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1</code></pre>
+##         Y A      A2v1  A3v1
+##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -0.410 A1        0     0
+##  2 -1.44  A1        0     0
+##  3 -2.01  A1        0     0
+##  4  0.562 A1        0     0
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1</code></pre>
 </div>
 </div>
 <div id="sum-2" class="section level4">
 <h4>
-<span class="header-section-number">4.7.5.3</span> Sum<a class="anchor" aria-label="anchor" href="#sum-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.5.3</span> Sum<a class="anchor" aria-label="anchor" href="#sum-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## sum coding</span>
 <span class="va">dat_sum</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>A2v1 <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="st">"A1"</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1L</span>, <span class="co"># baseline</span>
@@ -2037,27 +1997,27 @@ Click to view resulting table
 Click to view resulting table
 </button>
 <pre><code>## # A tibble: 12 × 4
-##          Y A      A2v1  A3v1
-##      &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 -0.752  A1       -1    -1
-##  2  0.0251 A1       -1    -1
-##  3 -0.218  A1       -1    -1
-##  4  1.09   A1       -1    -1
-##  5 -0.417  A2        1     0
-##  6 -0.683  A2        1     0
-##  7  2.09   A2        1     0
-##  8 -1.37   A2        1     0
-##  9  0.268  A3        0     1
-## 10  0.472  A3        0     1
-## 11 -0.946  A3        0     1
-## 12  0.155  A3        0     1</code></pre>
+##         Y A      A2v1  A3v1
+##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -0.410 A1       -1    -1
+##  2 -1.44  A1       -1    -1
+##  3 -2.01  A1       -1    -1
+##  4  0.562 A1       -1    -1
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1</code></pre>
 </div>
 </div>
 <div id="deviation-2" class="section level4">
 <h4>
-<span class="header-section-number">4.7.5.4</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.5.4</span> Deviation<a class="anchor" aria-label="anchor" href="#deviation-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## deviation coding</span>
 <span class="co">## baseline A1</span>
 <span class="va">dat_dev</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
@@ -2067,29 +2027,29 @@ Click to view resulting table
 <button>
 Click to view resulting table
 </button>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat_dev</span></code></pre></div>
 <pre><code>## # A tibble: 12 × 4
-##          Y A       A2v1   A3v1
-##      &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1 -0.752  A1    -0.333 -0.333
-##  2  0.0251 A1    -0.333 -0.333
-##  3 -0.218  A1    -0.333 -0.333
-##  4  1.09   A1    -0.333 -0.333
-##  5 -0.417  A2     0.667 -0.333
-##  6 -0.683  A2     0.667 -0.333
-##  7  2.09   A2     0.667 -0.333
-##  8 -1.37   A2     0.667 -0.333
-##  9  0.268  A3    -0.333  0.667
-## 10  0.472  A3    -0.333  0.667
-## 11 -0.946  A3    -0.333  0.667
-## 12  0.155  A3    -0.333  0.667</code></pre>
+##         Y A       A2v1   A3v1
+##     &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 -0.410 A1    -0.333 -0.333
+##  2 -1.44  A1    -0.333 -0.333
+##  3 -2.01  A1    -0.333 -0.333
+##  4  0.562 A1    -0.333 -0.333
+##  5 -0.671 A2     0.667 -0.333
+##  6  1.00  A2     0.667 -0.333
+##  7 -1.61  A2     0.667 -0.333
+##  8  0.322 A2     0.667 -0.333
+##  9 -0.443 A3    -0.333  0.667
+## 10  1.19  A3    -0.333  0.667
+## 11  0.868 A3    -0.333  0.667
+## 12 -0.500 A3    -0.333  0.667</code></pre>
 </div>
 </div>
 </div>
 <div id="conclusion" class="section level3">
 <h3>
-<span class="header-section-number">4.7.6</span> Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.6</span> Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>The interpretation of all but the highest order effect depends on the coding scheme.</strong></p>
 <p>With treatment coding, you are looking at <strong>simple</strong> effects and <strong>simple</strong> interactions, not <strong>main</strong> effects and <strong>main</strong> interactions.</p>
@@ -2227,31 +2187,29 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#interactions"><span class="header-section-number">4</span> Interactions</a></li>
-<li><a class="nav-link" href="#learning-objectives"><span class="header-section-number">4.1</span> Learning objectives</a></li>
-<li><a class="nav-link" href="#interactions-1"><span class="header-section-number">4.2</span> Interactions</a></li>
-<li><a class="nav-link" href="#cont-by-cat"><span class="header-section-number">4.3</span> Continuous-by-Categorical Interactions</a></li>
+<li><a class="nav-link" href="#cont-by-cat"><span class="header-section-number">4.1</span> Continuous-by-Categorical Interactions</a></li>
 <li>
-<a class="nav-link" href="#categorical-by-categorical-interactions"><span class="header-section-number">4.4</span> Categorical-by-Categorical Interactions</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><span class="header-section-number">4.4.1</span> Effects of cognitive therapy and drug therapy on mood</a></li>
-<li><a class="nav-link" href="#effects-in-a-factorial-design"><span class="header-section-number">4.4.2</span> Effects in a factorial design</a></li>
-<li><a class="nav-link" href="#higher-order-designs"><span class="header-section-number">4.4.3</span> Higher-order designs</a></li>
+<a class="nav-link" href="#categorical-by-categorical-interactions"><span class="header-section-number">4.2</span> Categorical-by-Categorical Interactions</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#effects-of-cognitive-therapy-and-drug-therapy-on-mood"><span class="header-section-number">4.2.1</span> Effects of cognitive therapy and drug therapy on mood</a></li>
+<li><a class="nav-link" href="#effects-in-a-factorial-design"><span class="header-section-number">4.2.2</span> Effects in a factorial design</a></li>
+<li><a class="nav-link" href="#higher-order-designs"><span class="header-section-number">4.2.3</span> Higher-order designs</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#the-glm-for-a-factorial-design"><span class="header-section-number">4.5</span> The GLM for a factorial design</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#estimation-equations"><span class="header-section-number">4.5.1</span> Estimation equations</a></li>
-<li><a class="nav-link" href="#factorial-app"><span class="header-section-number">4.5.2</span> Factorial App</a></li>
+<a class="nav-link" href="#the-glm-for-a-factorial-design"><span class="header-section-number">4.3</span> The GLM for a factorial design</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#estimation-equations"><span class="header-section-number">4.3.1</span> Estimation equations</a></li>
+<li><a class="nav-link" href="#factorial-app"><span class="header-section-number">4.3.2</span> Factorial App</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#code-your-own-categorical-predictors-in-factorial-designs"><span class="header-section-number">4.6</span> Code your own categorical predictors in factorial designs</a></li>
+<li><a class="nav-link" href="#code-your-own-categorical-predictors-in-factorial-designs"><span class="header-section-number">4.4</span> Code your own categorical predictors in factorial designs</a></li>
 <li>
-<a class="nav-link" href="#coding-schemes-for-categorical-variables"><span class="header-section-number">4.7</span> Coding schemes for categorical variables</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#simple-versus-main-effects"><span class="header-section-number">4.7.1</span> Simple versus main effects</a></li>
-<li><a class="nav-link" href="#the-key-coding-schemes"><span class="header-section-number">4.7.2</span> The key coding schemes</a></li>
-<li><a class="nav-link" href="#what-about-factors-with-more-than-two-levels"><span class="header-section-number">4.7.3</span> What about factors with more than two levels?</a></li>
-<li><a class="nav-link" href="#example-three-level-factor"><span class="header-section-number">4.7.4</span> Example: Three-level factor</a></li>
-<li><a class="nav-link" href="#how-to-create-your-own-numeric-predictors"><span class="header-section-number">4.7.5</span> How to create your own numeric predictors</a></li>
-<li><a class="nav-link" href="#conclusion"><span class="header-section-number">4.7.6</span> Conclusion</a></li>
+<a class="nav-link" href="#coding-schemes-for-categorical-variables"><span class="header-section-number">4.5</span> Coding schemes for categorical variables</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#simple-versus-main-effects"><span class="header-section-number">4.5.1</span> Simple versus main effects</a></li>
+<li><a class="nav-link" href="#the-key-coding-schemes"><span class="header-section-number">4.5.2</span> The key coding schemes</a></li>
+<li><a class="nav-link" href="#what-about-factors-with-more-than-two-levels"><span class="header-section-number">4.5.3</span> What about factors with more than two levels?</a></li>
+<li><a class="nav-link" href="#example-three-level-factor"><span class="header-section-number">4.5.4</span> Example: Three-level factor</a></li>
+<li><a class="nav-link" href="#how-to-create-your-own-numeric-predictors"><span class="header-section-number">4.5.5</span> How to create your own numeric predictors</a></li>
+<li><a class="nav-link" href="#conclusion"><span class="header-section-number">4.5.6</span> Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -2271,7 +2229,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-30.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of September 30, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
+<meta name="description" content="This chapter is under construction as of October 04, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
-<meta property="og:description" content="This chapter is under construction as of September 30, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
+<meta property="og:description" content="This chapter is under construction as of October 04, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of September 30, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when...">
+<meta name="twitter:description" content="This chapter is under construction as of October 04, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/twitter_card.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -76,11 +76,11 @@
 <span class="header-section-number">6</span> Linear mixed-effects models with one random factor<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-one-random-factor"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of September 30, 2021; contents may change!</p>
+<p>This chapter is under construction as of October 04, 2021; contents may change!</p>
 </div>
-<div id="learning-objectives-2" class="section level2">
+<div id="learning-objectives-1" class="section level2">
 <h2>
-<span class="header-section-number">6.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-1"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate</li>
@@ -235,7 +235,7 @@
 <p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
 <p>This <a href="https://shiny.psy.gla.ac.uk/Dale/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/independent_samples.csv"</span>, col_types <span class="op">=</span> <span class="st">"cci"</span><span class="op">)</span>
@@ -264,7 +264,7 @@
 ## 13 T13     T        418.
 ## 14 T14     T        489.</code></pre>
 <p>Then, the <span class="math inline">\(t\)</span>-test can be run using the "formula" version of <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>.</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mean_rt</span> <span class="op">~</span> <span class="va">cond</span>, <span class="va">subj_means</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
@@ -307,7 +307,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p><span class="math display">\[ICC = \frac{{\tau_{00}}^2}{{\tau_{00}}^2 + \sigma^2}\]</span></p>
 <p>This quantity, known as the <strong>intra-class correlation coefficient</strong>, and tells you how much clustering there is in your data. It ranges from 0 to 1, with 0 indicating that all the variability is due to residual variance, and 1 indicating that all the variability is due to individual differences among subjects.</p>
 <p>The lmer syntax for fitting a random intercepts model to the data is <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(RT ~ cond + (1 | subject), dat, REML=FALSE)</a></code>. Let's create our own numerical predictor first, to make it explicit that we are using dummy coding.</p>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>cond_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"T"</span>, <span class="fl">1L</span>, <span class="fl">0L</span><span class="op">)</span><span class="op">)</span>
 
@@ -318,7 +318,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## 1 P          0
 ## 2 T          1</code></pre>
 <p>And now, estimate the model.</p>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
 
 <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">RT</span> <span class="op">~</span> <span class="va">cond_d</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, <span class="va">dat2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -422,7 +422,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <span class="header-section-number">6.4.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
 </h3>
 <p>Whenever you are dealing with designs where all categorical factors have no more than two levels, the test of the regression coefficient associated with a given factor will be equivalent to the test for the effect in the ANOVA framework, provided you use <a href="multiple-regression.html#dealing-with-categorical-predictors">sum or deviation coding</a>. But in the above example, we have a 3x2 design, with two predictor variables coding the main effect of <code>meal</code> (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>). Let's simulate some data and run a one-factor ANOVA with <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, and then we'll replicate the analysis using the regression function <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> (note that the same procedure works for mixed-effects models on multilevel data, just using <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> instead of <code>base::lm()</code>).</p>
-<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make up some data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
 <span class="va">meals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>meal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"breakfast"</span>, <span class="st">"lunch"</span>, <span class="st">"dinner"</span><span class="op">)</span>,
@@ -442,7 +442,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## meal:time_of_week  2   4767    2384   0.836  0.457
 ## Residuals         12  34209    2851</code></pre>
 <p>We get three <span class="math inline">\(F\)</span>-tests, one for each main effect (<code>meal</code> and <code>time_of_week</code>) one for the interaction. What happens if we fit a model using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>?</p>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## add our own numeric predictors</span>
 <span class="va">meals2</span> <span class="op">&lt;-</span> <span class="va">meals</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>lunch_v_breakfast <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">meal</span> <span class="op">==</span> <span class="st">"lunch"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
@@ -492,7 +492,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## F-statistic: 0.843 on 5 and 12 DF,  p-value: 0.5447</code></pre>
 <p>OK, this output looks very different! How do you perform ANOVA-like tests in those situations? You have estimates for <code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code> but how would you convert this into a single test for the main effect of <code>meal</code>? Likewise, you have two interaction terms, <code>lunch_v_breakfast:tow</code> and <code>dinner_v_breakfast:tow</code>; how do you convert this into a single test for the interaction?</p>
 <p>The solution is to perform <strong>multiparameter tests</strong> using model comparison, implemented by the <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> function in R. To test for the main effect of <code>meal</code>, you'd compare a model containing the two predictor variables coding that factor (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>) to a model excluding these two predictors but that is otherwise identical. You can either re-fit the model by writing it out and excluding the terms, or by using the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function and removing the terms (which is a shortcut). Let's write it out first.</p>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit the model</span>
 <span class="va">mod_main_eff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">calories</span> <span class="op">~</span> <span class="va">time_week</span> <span class="op">+</span>
                      <span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span> <span class="op">+</span> <span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>,
@@ -508,7 +508,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## 1     12 34209                           
 ## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
 <p>OK, now here is an equivalent version using the shortcut <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function, which takes the model you want to update as the first argument and then a special syntax for the formula including your changes. For the formula, we use <code>. ~ . -lunch_v_breakfast -dinner_v_breakfast~</code> Although this formula seems weird, the dot <code>.</code> says "keep everything on this side of the model formula (left of <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>) as it is in the original model." So the formula <code>. ~ .</code> would use the same formula as the original model; that is, <code><a href="https://rdrr.io/r/stats/update.html">update(mod, . ~ .)</a></code> would fit the exact same model as above. In contrast, <code>. ~ . -x -y</code> means "everything the same on the left side (same DV), but remove variables <code>x</code> and <code>y</code> from the right side.</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_main_eff2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span> <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_main_eff2</span><span class="op">)</span></code></pre></div>
@@ -521,7 +521,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ## 2     14 36373 -2   -2163.9 0.3795 0.6921</code></pre>
 <p>As you can see, this gives us the same result as above.</p>
 <p>If we want to test the main effect of <code>time_of_week</code>, we remove that predictor.</p>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_tow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">time_week</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_tow</span><span class="op">)</span></code></pre></div>
@@ -538,7 +538,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <button>
 Click to see solution
 </button>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod_interact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">lunch_v_breakfast</span><span class="op">:</span><span class="va">time_week</span>
                        <span class="op">-</span><span class="va">dinner_v_breakfast</span><span class="op">:</span><span class="va">time_week</span><span class="op">)</span>
 
@@ -679,7 +679,7 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#linear-mixed-effects-models-with-one-random-factor"><span class="header-section-number">6</span> Linear mixed-effects models with one random factor</a></li>
-<li><a class="nav-link" href="#learning-objectives-2"><span class="header-section-number">6.1</span> Learning objectives</a></li>
+<li><a class="nav-link" href="#learning-objectives-1"><span class="header-section-number">6.1</span> Learning objectives</a></li>
 <li><a class="nav-link" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li>
 <a class="nav-link" href="#example-independent-samples-t-test-on-multi-level-data"><span class="header-section-number">6.3</span> Example: Independent-samples \(t\)-test on multi-level data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#when-is-a-random-intercepts-model-appropriate"><span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?</a></li></ul>
@@ -707,7 +707,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-09-30.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
