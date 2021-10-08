@@ -1,7 +1,7 @@
 --- 
 title: "Learning Statistical Models Through Simulation in R"
 author: "Dale J. Barr"
-date: "2021-10-04"
+date: "2021-10-08"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -11,7 +11,7 @@ link-citations: yes
 description: "Textbook on statistical models for social scientists."
 url: "https://psyteachr.github.io/stat-models-v1"
 github-repo: "psyteachr/stat-models-v1"
-cover-image: "images/logos/twitter_card.png"
+cover-image: "images/logos/logo.png"
 apple-touch-icon: "images/logos/apple-touch-icon.png"
 apple-touch-icon-size: 180
 favicon: "images/logos/favicon.ico"

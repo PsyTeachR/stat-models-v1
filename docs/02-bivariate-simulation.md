@@ -265,7 +265,7 @@ The package **`MASS`** provides a function `mvrnorm()` which is the 'multivariat
 <p lang="en" dir="ltr">
 MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the ass. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>
 </p>
-— Dale Barr (<span class="citation">@dalejbarr</span>) <a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September 30, 2014</a>
+— Dale Barr (@dalejbarr) <a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September 30, 2014</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>

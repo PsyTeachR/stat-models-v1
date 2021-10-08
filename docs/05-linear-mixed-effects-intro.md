@@ -1,7 +1,7 @@
 # Introducing Linear Mixed-Effects Models
 
 :::{.warning}
-This chapter is under construction as of October 04, 2021; contents may change!
+This chapter is under construction as of October 08, 2021; contents may change!
 :::
 
 

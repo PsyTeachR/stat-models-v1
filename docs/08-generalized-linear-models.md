@@ -1,7 +1,7 @@
 # Generalized linear mixed-effects models
 
 :::{.warning}
-This chapter is under construction as of October 04, 2021; contents may change!
+This chapter is under construction as of October 08, 2021; contents may change!
 :::
 
 
@@ -75,8 +75,8 @@ rainy_days %>%
 ## # A tibble: 2 × 2
 ##   city         sd
 ##   <chr>     <dbl>
-## 1 Barcelona  6.78
-## 2 Glasgow    9.69
+## 1 Barcelona  6.51
+## 2 Glasgow    9.23
 ```
 
 
