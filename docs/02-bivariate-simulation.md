@@ -591,4 +591,7 @@ To close, here are a few implications from the relationship between correlation 
 * $\beta_1 < 0$ implies $\rho < 0$, for the same reason.
 * Rejecting the null hypothesis that $\beta_1 = 0$ is the same as rejecting the null hypothesis that $\rho = 0$. The p-values that you get for $\beta_1$ in `lm()` will be the same as the one you get for $\rho$ from `cor.test()`.
 
+## Exercises
+
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
 

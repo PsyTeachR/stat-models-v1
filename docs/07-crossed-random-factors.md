@@ -48,10 +48,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  32|2020-05-04 |
-|          2|  36|2020-05-13 |
-|          3|  37|2020-05-21 |
-|          4|  27|2020-05-28 |
+|          1|  29|2020-05-01 |
+|          2|  57|2020-05-03 |
+|          3|  24|2020-05-04 |
+|          4|  42|2020-05-20 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 

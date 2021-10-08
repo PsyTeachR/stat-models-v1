@@ -38,6 +38,7 @@ understanding-correlation-and-regression-through-bivariate-simulation
 correlation-matrices
 simulating-bivariate-data
 relationship-between-correlation-and-regression
+exercises
 multiple-regression
 an-example-how-to-get-a-good-grade-in-statistics
 data-import-and-visualization
