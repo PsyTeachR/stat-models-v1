@@ -7,7 +7,7 @@
 <title>Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="The general model for single-level data with \(m\) predictors is \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \] with \(e_i \sim \mathcal{N}\left(0,...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/multiple-regression.html">
@@ -95,7 +95,7 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <p>Let's load in the data <a href="data/grades.csv" target="_download">grades.csv</a> and have a look.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tidymodels/corrr">"corrr"</a></span><span class="op">)</span> <span class="co"># correlation matrices</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/grades.csv"</span>, col_types <span class="op">=</span> <span class="st">"ddii"</span><span class="op">)</span>
 
@@ -395,17 +395,44 @@ z = \frac{X - \mu_x}{\sigma_x}
 <h2>
 <span class="header-section-number">3.2</span> Dealing with categorical predictors<a class="anchor" aria-label="anchor" href="#dealing-with-categorical-predictors"><i class="fas fa-link"></i></a>
 </h2>
-<p>You can include categorical predictors in a regression model, but first you have to code them as numerical variables. There are a couple of important considerations here.</p>
-<div class="danger">
-<p>A <strong>nominal</strong> variable is a categorical variable for which there is no inherent ordering among the levels of the variable. Pet ownership (cat, dog, ferret) is a nominal variable; cat is not greater than dog and dog is not greater than ferret.</p>
-<p>It is common to code nominal variables using numbers. However, you have to be <strong>very careful</strong> about using numerically-coded nominal variables in your models. If you have a number that is really just a nominal variable, make sure you define it as type <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> before entering it into the model. Otherwise, it will try to treat it as an actual number, and the results of your modeling will be garbage!</p>
-<p>It is far too easy to make this mistake, and difficult to catch if authors do not share their data and code. In 2016, <a href="https://www.sciencedirect.com/science/article/pii/S0960982216306704">a paper on religious affiliation and altruism in children that was published in Current Biology had to be retracted for just this kind of mistake</a>.</p>
+<p>A regression formula characterizes the response variable as the sum of weighted predictors. What if one of the predictors is categorical (e.g., representing groups such as "rural" or "urban") rather than numeric? Many variables are <strong>nominal</strong>: a categorical variable containing names, for which there is no inherent ordering among the levels of the variable. Pet ownership (cat, dog, ferret) is a nominal variable; preferences aside, owning a cat is not greater than owning a dog, and owning a dog is not greater than owning a ferret.</p>
+<div class="info">
+<p><strong>Representing nominal data using numeric predictors</strong></p>
+<p>Representing a nominal variable with <span class="math inline">\(k\)</span> levels in a regression model requires <span class="math inline">\(k-1\)</span> numeric predictors. Most numerical coding schemes require that you choose one of these three levels as a baseline level. Each of your <span class="math inline">\(k-1\)</span> variables contrasts one of the other levels level with the baseline level.</p>
+<p><strong>Example:</strong> You have a variable, <code>pet_type</code> with three levels (cat, dog, ferret).</p>
+<p>You choose <code>cat</code> as the baseline, and create two numeric predictor variables:</p>
+<ul>
+<li>
+<code>dog_v_cat</code> to encode the contrast between dog and cat, and</li>
+<li>
+<code>ferret_v_cat</code> to encode the contrast between ferret and cat.</li>
+</ul>
 </div>
-<div id="dummy-coding" class="section level3">
+<p>Nominal variables are typically represented in a data frame as type <code>character</code> or <code>factor</code>. When you specify a model using the R formula syntax, R will check the data types of the predictors on the right hand side of the formula. For example, if your model regresses <code>income</code> on <code>pet_type</code> (e.g., <code>income ~ pet_type</code>), R checks the data type of <code>pet_type</code>.</p>
+<p>If <code>pet_type</code> is of type <code>character</code>, it will implicitly create a numeric predictor (or a set of predictors) to represent that variable in the model. There are different schemes available for creating numeric representations of nominal variables. The default in R is to use <strong>dummy (or 'treatment')</strong> coding (see below).</p>
+<p>Unfortunately, these defaults are not suitable for many types of study designs in psychology, so I am going to recommend that you learn how to code your own predictor variables "by hand," and that you make a habit of doing so.</p>
+<div class="dangerous">
+<p><strong>Don't code levels of a categorical variable with numbers!</strong></p>
+<p>In the above example, we had a variable <code>pet_type</code> with levels <code>cat</code>, <code>dog</code>, and <code>ferret</code>. Sometimes people represent the levels of a nominal variable with numbers, like so:</p>
+<ul>
+<li>
+<code>1</code> for cat,</li>
+<li>
+<code>2</code> for dog,</li>
+<li>
+<code>3</code> for ferret.</li>
+</ul>
+<p>This is a bad idea.</p>
+<p>First, the labeling is arbitrary and opaque and anyone attempting to use your data would not know which number goes with which category (and you could also forget!).</p>
+<p>Even worse, if you were to put this variable in as a predictor in a regression model, R would have no way of knowing your intention to use 1, 2, and 3 as arbitrary labels for groups, and would instead assume that <code>pet_type</code> is a measurement for which dogs are 1 unit greater than cats, and ferrets are 2 units greater than cats and 1 unit greater than dogs, which is nonsense!</p>
+<p>It is far too easy to make this mistake, and difficult to catch if authors do not share their data and code. In 2016, <a href="https://www.sciencedirect.com/science/article/pii/S0960982216306704">a paper on religious affiliation and altruism in children that was published in Current Biology had to be retracted for just this kind of mistake</a>.</p>
+<p>So, don't represent the levels of a nominal variable with numbers, except of course when you deliberately create predictor variables encoding the <span class="math inline">\(k-1\)</span> contrasts needed to properly represent a nominal variable in a regression model.</p>
+</div>
+<div id="dummy-a.k.a.-treatment-coding" class="section level3">
 <h3>
-<span class="header-section-number">3.2.1</span> Dummy coding<a class="anchor" aria-label="anchor" href="#dummy-coding"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.1</span> Dummy (a.k.a. "treatment") coding<a class="anchor" aria-label="anchor" href="#dummy-a.k.a.-treatment-coding"><i class="fas fa-link"></i></a>
 </h3>
-<p>For a factor with two levels, choose one level as zero and the other as one. The choice is arbitrary, and will affect the sign of the coefficient, but not its standard error or p-value. Here is some code that will do this. Note that if you have a predictor of type character or factor, R will automatically do that for you. We don't want R to do this for reasons that will become apparent in the next lecture, so let's learn how to make our own numeric predictor.</p>
+<p>For a nominal variable with only two levels, choose one level as baseline, and create a new variable that is <code>0</code> whenever the level is baseline and <code>1</code> when it is the other level. The choice of baseline is arbitrary, and will affect the sign of the coefficient, but not its magnitude, nor its standard error or p-value.</p>
 <p>First, we gin up some fake data to use in our analysis.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
@@ -413,18 +440,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 
 <span class="va">fake_data</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 2
-##          Y group
-##      &lt;dbl&gt; &lt;chr&gt;
-##  1  1.39   A    
-##  2  0.861  A    
-##  3  0.764  A    
-##  4  0.0727 A    
-##  5 -0.832  A    
-##  6  0.754  B    
-##  7  0.924  B    
-##  8 -0.445  B    
-##  9  1.62   B    
-## 10  1.54   B</code></pre>
+##         Y group
+##     &lt;dbl&gt; &lt;chr&gt;
+##  1 -0.212 A    
+##  2 -0.268 A    
+##  3 -0.571 A    
+##  4  0.232 A    
+##  5 -0.942 A    
+##  6 -0.121 B    
+##  7  0.633 B    
+##  8  0.629 B    
+##  9 -1.88  B    
+## 10  0.746 B</code></pre>
 <p>Now let's add a new variable, <code>group_d</code>, which is the dummy coded group variable. We will use the <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else()</a></code> function to define the new column.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data2</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
@@ -432,18 +459,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 
 <span class="va">fake_data2</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
-##          Y group group_d
-##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-##  1  1.39   A           0
-##  2  0.861  A           0
-##  3  0.764  A           0
-##  4  0.0727 A           0
-##  5 -0.832  A           0
-##  6  0.754  B           1
-##  7  0.924  B           1
-##  8 -0.445  B           1
-##  9  1.62   B           1
-## 10  1.54   B           1</code></pre>
+##         Y group group_d
+##     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1 -0.212 A           0
+##  2 -0.268 A           0
+##  3 -0.571 A           0
+##  4  0.232 A           0
+##  5 -0.942 A           0
+##  6 -0.121 B           1
+##  7  0.633 B           1
+##  8  0.629 B           1
+##  9 -1.88  B           1
+## 10  0.746 B           1</code></pre>
 <p>Now we just run it as a regular regression model.</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -453,16 +480,16 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3254 -0.3154  0.1781  0.6001  0.9407 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.4515     0.3778   1.195    0.266
-## group_d       0.4284     0.5343   0.802    0.446
+## (Intercept)  -0.3521     0.3758  -0.937    0.376
+## group_d       0.3546     0.5315   0.667    0.523
 ## 
-## Residual standard error: 0.8448 on 8 degrees of freedom
-## Multiple R-squared:  0.07439,    Adjusted R-squared:  -0.04131 
-## F-statistic: 0.643 on 1 and 8 DF,  p-value: 0.4458</code></pre>
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527, Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235</code></pre>
 <p>Note that if we reverse the coding we get the same result, just the sign is different.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
@@ -475,144 +502,180 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3254 -0.3154  0.1781  0.6001  0.9407 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)   0.8799     0.3778   2.329   0.0482 *
-## group_d      -0.4284     0.5343  -0.802   0.4458  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  0.002461   0.375842   0.007    0.995
+## group_d     -0.354584   0.531520  -0.667    0.523
 ## 
-## Residual standard error: 0.8448 on 8 degrees of freedom
-## Multiple R-squared:  0.07439,    Adjusted R-squared:  -0.04131 
-## F-statistic: 0.643 on 1 and 8 DF,  p-value: 0.4458</code></pre>
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527, Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
+<p>Note that if we just put the character variable <code>group</code> as a predictor in the model, R will automatically create a dummy variable (or variables) for us as needed.</p>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span>, <span class="va">fake_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Y ~ group, data = fake_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  -0.3521     0.3758  -0.937    0.376
+## groupB        0.3546     0.5315   0.667    0.523
+## 
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527, Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235</code></pre>
+<p>It examines <code>group</code> and figures out the unique levels of the variable, which in this case are <code>A</code> and <code>B</code>. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (<code>B</code>) and the baseline level (<code>A</code>). This new variable that it created is called <code>groupB</code> in the output.</p>
 </div>
 <div id="dummy-coding-when-k-2" class="section level3">
 <h3>
 <span class="header-section-number">3.2.2</span> Dummy coding when <span class="math inline">\(k &gt; 2\)</span><a class="anchor" aria-label="anchor" href="#dummy-coding-when-k-2"><i class="fas fa-link"></i></a>
 </h3>
-<p>When the predictor variable is a factor with <span class="math inline">\(k\)</span> levels where <span class="math inline">\(k&gt;2\)</span>, we need <span class="math inline">\(k-1\)</span> predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Here is code to do that. Try it out and see if you can figure out how it works.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span>,
-                              each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-                 bodyweight_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">105</span>, <span class="fl">3</span><span class="op">)</span>,
-                                   <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">103</span>, <span class="fl">3</span><span class="op">)</span>,
-                                   <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">101</span>, <span class="fl">3</span><span class="op">)</span>,
-                                   <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">102.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<p>When the predictor variable is a factor with <span class="math inline">\(k\)</span> levels where <span class="math inline">\(k&gt;2\)</span>, we need <span class="math inline">\(k-1\)</span> predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Let's simulate some data to work with, <code>season_wt</code>, which represents a person's bodyweight (in kg) over the four seasons of the year.</p>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">season_wt</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span>,
+                                 each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
+                    bodyweight_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">105</span>, <span class="fl">3</span><span class="op">)</span>,
+                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">103</span>, <span class="fl">3</span><span class="op">)</span>,
+                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">101</span>, <span class="fl">3</span><span class="op">)</span>,
+                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">102.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">mydata</span></code></pre></div>
+<span class="va">season_wt</span></code></pre></div>
 <pre><code>## # A tibble: 20 × 2
 ##    season bodyweight_kg
 ##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 winter         103. 
-##  2 winter         106. 
-##  3 winter         105. 
-##  4 winter         108. 
-##  5 winter         101. 
-##  6 spring         101. 
-##  7 spring          99.2
-##  8 spring          97.6
-##  9 spring         109. 
-## 10 spring         106. 
-## 11 summer          96.0
-## 12 summer          98.7
-## 13 summer         100. 
-## 14 summer         104. 
-## 15 summer         102. 
-## 16 fall           101. 
+##  1 winter         107. 
+##  2 winter         109. 
+##  3 winter         102. 
+##  4 winter         105. 
+##  5 winter         100. 
+##  6 spring          99.3
+##  7 spring          99.6
+##  8 spring         104. 
+##  9 spring         103. 
+## 10 spring          98.9
+## 11 summer          97.3
+## 12 summer         106. 
+## 13 summer         105. 
+## 14 summer         105. 
+## 15 summer          95.9
+## 16 fall           100. 
 ## 17 fall           102. 
-## 18 fall           104. 
-## 19 fall           106. 
-## 20 fall           101.</code></pre>
-<p>Now let's add three predictors to code the variable <code>season</code>.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## baseline value is 'winter'</span>
-<span class="va">mydata2</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>V1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         V2 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summer"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         V3 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">mydata2</span></code></pre></div>
-<pre><code>## # A tibble: 20 × 5
-##    season bodyweight_kg    V1    V2    V3
-##    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 winter         103.      0     0     0
-##  2 winter         106.      0     0     0
-##  3 winter         105.      0     0     0
-##  4 winter         108.      0     0     0
-##  5 winter         101.      0     0     0
-##  6 spring         101.      1     0     0
-##  7 spring          99.2     1     0     0
-##  8 spring          97.6     1     0     0
-##  9 spring         109.      1     0     0
-## 10 spring         106.      1     0     0
-## 11 summer          96.0     0     1     0
-## 12 summer          98.7     0     1     0
-## 13 summer         100.      0     1     0
-## 14 summer         104.      0     1     0
-## 15 summer         102.      0     1     0
-## 16 fall           101.      0     0     1
-## 17 fall           102.      0     0     1
-## 18 fall           104.      0     0     1
-## 19 fall           106.      0     0     1
-## 20 fall           101.      0     0     1</code></pre>
-<div class="warning">
-<p><strong>Why not just use 'factor' variables as predictors?</strong></p>
-<p>If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type <code>character</code> or <code>factor</code> to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.</p>
+## 18 fall           101. 
+## 19 fall            96.8
+## 20 fall           105.</code></pre>
+<p>Now let's add three predictors to code the variable <code>season</code>. Try it out and see if you can figure out how it works.</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
-                              each <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,
-                  Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co">## baseline value is 'winter'</span>
+<span class="va">season_wt2</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
+         summer_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summer"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
+         fall_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span>, <span class="va">my_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = Y ~ group, data = my_data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.6623 -0.4533  0.1586  0.4709  1.2579 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.1532     0.3297   0.465    0.649
-## groupB       -0.5559     0.4663  -1.192    0.252
-## groupC       -0.4671     0.4663  -1.002    0.332
-## 
-## Residual standard error: 0.8076 on 15 degrees of freedom
-## Multiple R-squared:  0.09861,    Adjusted R-squared:  -0.02158 
-## F-statistic: 0.8205 on 2 and 15 DF,  p-value: 0.459</code></pre>
-<p>Here, R implicitly creates two dummy variables that it calls <code>groupB</code> and <code>groupC</code>. The variable <code>groupB</code> takes on the value of <code>1</code> when <code>group == "B"</code> and is <code>0</code> otherwise; <code>groupC</code> takes on the value of <code>1</code> when <code>group == "C"</code> and is <code>0</code> otherwise. R automatically identifies that the <code>group</code> variable has three levels, <code>A</code>, <code>B</code>, and <code>C</code>, and arbitrarily chooses as baseline the level that comes earliest when the levels are sequenced alphabetically.</p>
-<p>This seems like a handy thing to have R do for us, but dangers lurk in relying on the default. We'll learn more about these dangers in the next chapter, but consider what would happen if, instead of labeling the levels of <code>group</code> using letters "A", "B", and "C", we had used integer values 1, 2, and 3.</p>
+<span class="va">season_wt2</span></code></pre></div>
+<pre><code>## # A tibble: 20 × 5
+##    season bodyweight_kg spring_v_winter summer_v_winter fall_v_winter
+##    &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+##  1 winter         107.                0               0             0
+##  2 winter         109.                0               0             0
+##  3 winter         102.                0               0             0
+##  4 winter         105.                0               0             0
+##  5 winter         100.                0               0             0
+##  6 spring          99.3               1               0             0
+##  7 spring          99.6               1               0             0
+##  8 spring         104.                1               0             0
+##  9 spring         103.                1               0             0
+## 10 spring          98.9               1               0             0
+## 11 summer          97.3               0               1             0
+## 12 summer         106.                0               1             0
+## 13 summer         105.                0               1             0
+## 14 summer         105.                0               1             0
+## 15 summer          95.9               0               1             0
+## 16 fall           100.                0               0             1
+## 17 fall           102.                0               0             1
+## 18 fall           101.                0               0             1
+## 19 fall            96.8               0               0             1
+## 20 fall           105.                0               0             1</code></pre>
+<div class="warning">
+<p><strong>Reminder: Always look at your data</strong></p>
+<p>Whenever you write code that potentially changes your data, you should double check that the code works as intended by looking at your data. This is especially the case when you are hand-coding nominal variables for use in regression, because sometimes the code will be wrong, but won't throw an error.</p>
+<p>Consider the code chunk above, where we defined three contrasts to represent the nominal variable <code>season</code>, with <code>winter</code> as our baseline.</p>
+<p>What would happen if you accidently misspelled one of the levels (<code>summre</code> for <code>summer</code>) and didn't notice?</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_data2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
-                               each <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,
-                   Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span>, <span class="va">my_data2</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
+         summer_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summre"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
+         fall_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>While the above code chunk runs, we get confusing output when we run the regression; namely, the coefficent for <code>summer_v_winter</code> is <code>NA</code> (not available).</p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span> <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,
+   <span class="va">season_wt3</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
+##     fall_v_winter, data = season_wt3)
+## 
+## Coefficients:
+##     (Intercept)  spring_v_winter  summer_v_winter    fall_v_winter  
+##         103.267           -2.313               NA           -2.326</code></pre>
+<p>What happened? Let's look at the data to find out. We will use <code>distinct</code> to find the distinct combinations of our original variable <code>season</code> with the three variables we created (see <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">?dplyr::distinct</a></code> for details).</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">season_wt3</span> <span class="op">%&gt;%</span>
+  <span class="fu">distinct</span><span class="op">(</span><span class="va">season</span>, <span class="va">spring_v_winter</span>, <span class="va">summer_v_winter</span>, <span class="va">fall_v_winter</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 4
+##   season spring_v_winter summer_v_winter fall_v_winter
+##   &lt;chr&gt;            &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+## 1 winter               0               0             0
+## 2 spring               1               0             0
+## 3 summer               0               0             0
+## 4 fall                 0               0             1</code></pre>
+<p>Because of our misspelling, the predictor <code>summer_v_winter</code> is <em>always</em> zero; it should be <code>1</code> for summer. We could have caught this easily by running the above check. Always do so when you create your own predictor variables.</p>
+</div>
+<div class="info">
+<p><strong>A closer look at R's defaults</strong></p>
+<p>If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type <code>character</code> or <code>factor</code> to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = Y ~ group, data = my_data2)
+## lm(formula = bodyweight_kg ~ season, data = season_wt)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.1703 -0.5674 -0.1930  0.4147  1.8756 
+## -5.8257 -2.1606  0.1444  3.0932  4.2908 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  0.16295    0.57802   0.282    0.782
-## group       -0.05393    0.26757  -0.202    0.843
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  100.94035    1.57382  64.137   &lt;2e-16 ***
+## seasonspring   0.01373    2.22571   0.006    0.995    
+## seasonsummer   0.79323    2.22571   0.356    0.726    
+## seasonwinter   3.85940    2.22571   1.734    0.102    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.9269 on 16 degrees of freedom
-## Multiple R-squared:  0.002533,   Adjusted R-squared:  -0.05981 
-## F-statistic: 0.04063 on 1 and 16 DF,  p-value: 0.8428</code></pre>
-<p>R didn't understand that <code>group</code> was meant to be a continuous variable, and so it is treating it as continuous. The estimate for <code>group</code> is a nonsense estimate.</p>
-<p>Moral: rather than letting R guess whether something is meant as a continuous or categorical variable, take control of your destiny and make your choice explicit. This also avoids further snags we'll encounter in the next chapter.</p>
+## Residual standard error: 3.519 on 16 degrees of freedom
+## Multiple R-squared:  0.2028, Adjusted R-squared:  0.05331 
+## F-statistic: 1.357 on 3 and 16 DF,  p-value: 0.2916</code></pre>
+<p>Here, R implicitly creates three dummy variables to code the four levels of <code>season</code>, called <code>seasonspring</code>, <code>seasonsummer</code> and <code>seasonwinter</code>. The unmentioned season, <code>fall</code>, has been chosen as baseline because it comes earliest in the alphabet. These three predictors have the following values:</p>
+<ul>
+<li>
+<code>seasonspring</code>: <code>1</code> if spring, <code>0</code> otherwise;</li>
+<li>
+<code>seasonsummer</code>: <code>1</code> if summer, <code>0</code> otherwise;</li>
+<li>
+<code>seasonwinter</code>: <code>1</code> if winter, <code>0</code> otherwise.</li>
+</ul>
+<p>This seems like a handy thing to have R do for us, but dangers lurk in relying on the default. We'll learn more about these dangers in the next chapter when we talk about interactions.</p>
 </div>
 </div>
 </div>
@@ -620,42 +683,45 @@ z = \frac{X - \mu_x}{\sigma_x}
 <h2>
 <span class="header-section-number">3.3</span> Equivalence between multiple regression and one-way ANOVA<a class="anchor" aria-label="anchor" href="#equivalence-between-multiple-regression-and-one-way-anova"><i class="fas fa-link"></i></a>
 </h2>
-<p>If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on <code>mydata2</code> like so.</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<p>If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on <code>season_wt2</code> like so.</p>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make season into a factor with baseline level 'winter'</span>
-<span class="va">mydata3</span> <span class="op">&lt;-</span> <span class="va">mydata2</span> <span class="op">%&gt;%</span>
+<span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt2</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">season</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>,
                                             <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">mydata3</span><span class="op">)</span>
+<span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
-## season       3  56.64   18.88   1.678  0.212
-## Residuals   16 180.01   11.25</code></pre>
+## season       3   50.4   16.80   1.357  0.292
+## Residuals   16  198.2   12.38</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span>, <span class="va">mydata3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span>
+             <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,
+           <span class="va">season_wt2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = bodyweight_kg ~ V1 + V2 + V3, data = mydata3)
+## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
+##     fall_v_winter, data = season_wt2)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.0391 -1.8877 -0.5153  2.0124  6.0998 
+## -5.8257 -2.1606  0.1444  3.0932  4.2908 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  104.935      1.500  69.955   &lt;2e-16 ***
-## V1            -2.315      2.121  -1.091   0.2914    
-## V2            -4.757      2.121  -2.242   0.0394 *  
-## V3            -2.239      2.121  -1.055   0.3070    
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      104.800      1.574  66.589   &lt;2e-16 ***
+## spring_v_winter   -3.846      2.226  -1.728    0.103    
+## summer_v_winter   -3.066      2.226  -1.378    0.187    
+## fall_v_winter     -3.859      2.226  -1.734    0.102    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.354 on 16 degrees of freedom
-## Multiple R-squared:  0.2393, Adjusted R-squared:  0.09673 
-## F-statistic: 1.678 on 3 and 16 DF,  p-value: 0.2116</code></pre>
+## Residual standard error: 3.519 on 16 degrees of freedom
+## Multiple R-squared:  0.2028, Adjusted R-squared:  0.05331 
+## F-statistic: 1.357 on 3 and 16 DF,  p-value: 0.2916</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solutions-to-exercises" class="section level2">
@@ -667,7 +733,7 @@ z = \frac{X - \mu_x}{\sigma_x}
 Solution to partial effect plot
 </button>
 <p>First create a tibble with new predictors. We might also want to know the range of values that <code>nclicks</code> varies over.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lecture_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">min_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">max_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="op">)</span>
@@ -696,7 +762,7 @@ Solution to partial effect plot
 ## 10    6.99      63  2.42
 ## # … with 66 more rows</code></pre>
 <p>Now plot.</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">grades</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">nclicks</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_nclicks2</span><span class="op">)</span></code></pre></div>
@@ -845,7 +911,7 @@ $( document ).ready(function() {
 </li>
 <li>
 <a class="nav-link" href="#dealing-with-categorical-predictors"><span class="header-section-number">3.2</span> Dealing with categorical predictors</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#dummy-coding"><span class="header-section-number">3.2.1</span> Dummy coding</a></li>
+<li><a class="nav-link" href="#dummy-a.k.a.-treatment-coding"><span class="header-section-number">3.2.1</span> Dummy (a.k.a. "treatment") coding</a></li>
 <li><a class="nav-link" href="#dummy-coding-when-k-2"><span class="header-section-number">3.2.2</span> Dummy coding when \(k &gt; 2\)</a></li>
 </ul>
 </li>
@@ -868,7 +934,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-08.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

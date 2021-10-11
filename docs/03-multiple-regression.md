@@ -440,21 +440,51 @@ $p = 0.275$. So we don't have evidence that lecture attendance and downloading t
 
 ## Dealing with categorical predictors
 
-You can include categorical predictors in a regression model, but first you have to code them as numerical variables. There are a couple of important considerations here. 
+A regression formula characterizes the response variable as the sum of weighted predictors. What if one of the predictors is categorical (e.g., representing groups such as "rural" or "urban") rather than numeric? Many variables are **nominal**: a categorical variable containing names, for which there is no inherent ordering among the levels of the variable. Pet ownership (cat, dog, ferret) is a nominal variable; preferences aside, owning a cat is not greater than owning a dog, and owning a dog is not greater than owning a ferret. 
 
-:::{.danger}
+:::{.info}
+**Representing nominal data using numeric predictors**
 
-A **nominal** variable is a categorical variable for which there is no inherent ordering among the levels of the variable. Pet ownership (cat, dog, ferret) is a nominal variable; cat is not greater than dog and dog is not greater than ferret.
+Representing a nominal variable with $k$ levels in a regression model requires $k-1$ numeric predictors. Most numerical coding schemes require that you choose one of these three levels as a baseline level. Each of your $k-1$ variables contrasts one of the other levels level with the baseline level.
 
-It is common to code nominal variables using numbers. However, you have to be **very careful** about using numerically-coded nominal variables in your models. If you have a number that is really just a nominal variable, make sure you define it as type `factor()` before entering it into the model. Otherwise, it will try to treat it as an actual number, and the results of your modeling will be garbage! 
+**Example:** You have a variable, `pet_type` with three levels (cat, dog, ferret). 
+
+You choose `cat` as the baseline, and create two numeric predictor variables:
+
+* `dog_v_cat` to encode the contrast between dog and cat, and
+* `ferret_v_cat` to encode the contrast between ferret and cat.
+:::
+
+Nominal variables are typically represented in a data frame as type `character` or `factor`. When you specify a model using the R formula syntax, R will check the data types of the predictors on the right hand side of the formula. For example, if your model regresses `income` on `pet_type` (e.g., `income ~ pet_type`), R checks the data type of `pet_type`.
+
+If `pet_type` is of type `character`, it will implicitly create a numeric predictor (or a set of predictors) to represent that variable in the model. There are different schemes available for creating numeric representations of nominal variables. The default in R is to use **dummy (or 'treatment')** coding (see below).
+
+Unfortunately, these defaults are not suitable for many types of study designs in psychology, so I am going to recommend that you learn how to code your own predictor variables "by hand," and that you make a habit of doing so.
+
+:::{.dangerous}
+
+**Don't code levels of a categorical variable with numbers!**
+
+In the above example, we had a variable `pet_type` with levels `cat`, `dog`, and `ferret`. Sometimes people represent the levels of a nominal variable with numbers, like so:
+
+* `1` for cat,
+* `2` for dog,
+* `3` for ferret.
+
+This is a bad idea.
+
+First, the labeling is arbitrary and opaque and anyone attempting to use your data would not know which number goes with which category (and you could also forget!).
+
+Even worse, if you were to put this variable in as a predictor in a regression model, R would have no way of knowing your intention to use 1, 2, and 3 as arbitrary labels for groups, and would instead assume that `pet_type` is a measurement for which dogs are 1 unit greater than cats, and ferrets are 2 units greater than cats and 1 unit greater than dogs, which is nonsense!
 
 It is far too easy to make this mistake, and difficult to catch if authors do not share their data and code. In 2016, [a paper on religious affiliation and altruism in children that was published in Current Biology had to be retracted for just this kind of mistake](https://www.sciencedirect.com/science/article/pii/S0960982216306704).
 
+So, don't represent the levels of a nominal variable with numbers, except of course when you deliberately create predictor variables encoding the $k-1$ contrasts needed to properly represent a nominal variable in a regression model.
 :::
 
-### Dummy coding
+### Dummy (a.k.a. "treatment") coding
 
-For a factor with two levels, choose one level as zero and the other as one. The choice is arbitrary, and will affect the sign of the coefficient, but not its standard error or p-value.  Here is some code that will do this. Note that if you have a predictor of type character or factor, R will automatically do that for you. We don't want R to do this for reasons that will become apparent in the next lecture, so let's learn how to make our own numeric predictor.
+For a nominal variable with only two levels, choose one level as baseline, and create a new variable that is `0` whenever the level is baseline and `1` when it is the other level. The choice of baseline is arbitrary, and will affect the sign of the coefficient, but not its magnitude, nor its standard error or p-value. 
 
 First, we gin up some fake data to use in our analysis.
 
@@ -468,18 +498,18 @@ fake_data
 
 ```
 ## # A tibble: 10 × 2
-##          Y group
-##      <dbl> <chr>
-##  1  1.39   A    
-##  2  0.861  A    
-##  3  0.764  A    
-##  4  0.0727 A    
-##  5 -0.832  A    
-##  6  0.754  B    
-##  7  0.924  B    
-##  8 -0.445  B    
-##  9  1.62   B    
-## 10  1.54   B
+##         Y group
+##     <dbl> <chr>
+##  1 -0.212 A    
+##  2 -0.268 A    
+##  3 -0.571 A    
+##  4  0.232 A    
+##  5 -0.942 A    
+##  6 -0.121 B    
+##  7  0.633 B    
+##  8  0.629 B    
+##  9 -1.88  B    
+## 10  0.746 B
 ```
 
 Now let's add a new variable, `group_d`, which is the dummy coded group variable. We will use the `dplyr::if_else()` function to define the new column.
@@ -494,18 +524,18 @@ fake_data2
 
 ```
 ## # A tibble: 10 × 3
-##          Y group group_d
-##      <dbl> <chr>   <dbl>
-##  1  1.39   A           0
-##  2  0.861  A           0
-##  3  0.764  A           0
-##  4  0.0727 A           0
-##  5 -0.832  A           0
-##  6  0.754  B           1
-##  7  0.924  B           1
-##  8 -0.445  B           1
-##  9  1.62   B           1
-## 10  1.54   B           1
+##         Y group group_d
+##     <dbl> <chr>   <dbl>
+##  1 -0.212 A           0
+##  2 -0.268 A           0
+##  3 -0.571 A           0
+##  4  0.232 A           0
+##  5 -0.942 A           0
+##  6 -0.121 B           1
+##  7  0.633 B           1
+##  8  0.629 B           1
+##  9 -1.88  B           1
+## 10  0.746 B           1
 ```
 
 Now we just run it as a regular regression model.
@@ -522,16 +552,16 @@ summary(lm(Y ~ group_d, fake_data2))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3254 -0.3154  0.1781  0.6001  0.9407 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)   0.4515     0.3778   1.195    0.266
-## group_d       0.4284     0.5343   0.802    0.446
+## (Intercept)  -0.3521     0.3758  -0.937    0.376
+## group_d       0.3546     0.5315   0.667    0.523
 ## 
-## Residual standard error: 0.8448 on 8 degrees of freedom
-## Multiple R-squared:  0.07439,	Adjusted R-squared:  -0.04131 
-## F-statistic: 0.643 on 1 and 8 DF,  p-value: 0.4458
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527,	Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235
 ```
 
 Note that if we reverse the coding we get the same result, just the sign is different.
@@ -551,200 +581,252 @@ summary(lm(Y ~ group_d, fake_data3))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3254 -0.3154  0.1781  0.6001  0.9407 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)  
-## (Intercept)   0.8799     0.3778   2.329   0.0482 *
-## group_d      -0.4284     0.5343  -0.802   0.4458  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  0.002461   0.375842   0.007    0.995
+## group_d     -0.354584   0.531520  -0.667    0.523
 ## 
-## Residual standard error: 0.8448 on 8 degrees of freedom
-## Multiple R-squared:  0.07439,	Adjusted R-squared:  -0.04131 
-## F-statistic: 0.643 on 1 and 8 DF,  p-value: 0.4458
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527,	Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235
 ```
 
 The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, $\beta_1$ can be interpreted as the difference between the mean for the baseline group and the group coded as 1.
 
 $$\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i $$
 
-### Dummy coding when $k > 2$
-
-When the predictor variable is a factor with $k$ levels where $k>2$, we need $k-1$ predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Here is code to do that. Try it out and see if you can figure out how it works.
+Note that if we just put the character variable `group` as a predictor in the model, R will automatically create a dummy variable (or variables) for us as needed.
 
 
 ```r
-mydata <- tibble(season = rep(c("winter", "spring", "summer", "fall"),
-                              each = 5),
-                 bodyweight_kg = c(rnorm(5, 105, 3),
-                                   rnorm(5, 103, 3),
-                                   rnorm(5, 101, 3),
-                                   rnorm(5, 102.5, 3)))
+lm(Y ~ group, fake_data) %>%
+  summary()
+```
 
-mydata
+```
+## 
+## Call:
+## lm(formula = Y ~ group, data = fake_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8782 -0.1947  0.1125  0.6160  0.7437 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -0.3521     0.3758  -0.937    0.376
+## groupB        0.3546     0.5315   0.667    0.523
+## 
+## Residual standard error: 0.8404 on 8 degrees of freedom
+## Multiple R-squared:  0.0527,	Adjusted R-squared:  -0.06571 
+## F-statistic: 0.445 on 1 and 8 DF,  p-value: 0.5235
+```
+
+It examines `group` and figures out the unique levels of the variable, which in this case are `A` and `B`. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (`B`) and the baseline level (`A`). This new variable that it created is called `groupB` in the output.
+
+### Dummy coding when $k > 2$
+
+When the predictor variable is a factor with $k$ levels where $k>2$, we need $k-1$ predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
+
+
+```r
+season_wt <- tibble(season = rep(c("winter", "spring", "summer", "fall"),
+                                 each = 5),
+                    bodyweight_kg = c(rnorm(5, 105, 3),
+                                      rnorm(5, 103, 3),
+                                      rnorm(5, 101, 3),
+                                      rnorm(5, 102.5, 3)))
+
+season_wt
 ```
 
 ```
 ## # A tibble: 20 × 2
 ##    season bodyweight_kg
 ##    <chr>          <dbl>
-##  1 winter         103. 
-##  2 winter         106. 
-##  3 winter         105. 
-##  4 winter         108. 
-##  5 winter         101. 
-##  6 spring         101. 
-##  7 spring          99.2
-##  8 spring          97.6
-##  9 spring         109. 
-## 10 spring         106. 
-## 11 summer          96.0
-## 12 summer          98.7
-## 13 summer         100. 
-## 14 summer         104. 
-## 15 summer         102. 
-## 16 fall           101. 
+##  1 winter         107. 
+##  2 winter         109. 
+##  3 winter         102. 
+##  4 winter         105. 
+##  5 winter         100. 
+##  6 spring          99.3
+##  7 spring          99.6
+##  8 spring         104. 
+##  9 spring         103. 
+## 10 spring          98.9
+## 11 summer          97.3
+## 12 summer         106. 
+## 13 summer         105. 
+## 14 summer         105. 
+## 15 summer          95.9
+## 16 fall           100. 
 ## 17 fall           102. 
-## 18 fall           104. 
-## 19 fall           106. 
-## 20 fall           101.
+## 18 fall           101. 
+## 19 fall            96.8
+## 20 fall           105.
 ```
 
-Now let's add three predictors to code the variable `season`.
+Now let's add three predictors to code the variable `season`. Try it out and see if you can figure out how it works.
 
 
 ```r
 ## baseline value is 'winter'
-mydata2 <- mydata %>%
-  mutate(V1 = if_else(season == "spring", 1, 0),
-         V2 = if_else(season == "summer", 1, 0),
-         V3 = if_else(season == "fall", 1, 0))
+season_wt2 <- season_wt %>%
+  mutate(spring_v_winter = if_else(season == "spring", 1, 0),
+         summer_v_winter = if_else(season == "summer", 1, 0),
+         fall_v_winter = if_else(season == "fall", 1, 0))
 
-mydata2
+season_wt2
 ```
 
 ```
 ## # A tibble: 20 × 5
-##    season bodyweight_kg    V1    V2    V3
-##    <chr>          <dbl> <dbl> <dbl> <dbl>
-##  1 winter         103.      0     0     0
-##  2 winter         106.      0     0     0
-##  3 winter         105.      0     0     0
-##  4 winter         108.      0     0     0
-##  5 winter         101.      0     0     0
-##  6 spring         101.      1     0     0
-##  7 spring          99.2     1     0     0
-##  8 spring          97.6     1     0     0
-##  9 spring         109.      1     0     0
-## 10 spring         106.      1     0     0
-## 11 summer          96.0     0     1     0
-## 12 summer          98.7     0     1     0
-## 13 summer         100.      0     1     0
-## 14 summer         104.      0     1     0
-## 15 summer         102.      0     1     0
-## 16 fall           101.      0     0     1
-## 17 fall           102.      0     0     1
-## 18 fall           104.      0     0     1
-## 19 fall           106.      0     0     1
-## 20 fall           101.      0     0     1
+##    season bodyweight_kg spring_v_winter summer_v_winter fall_v_winter
+##    <chr>          <dbl>           <dbl>           <dbl>         <dbl>
+##  1 winter         107.                0               0             0
+##  2 winter         109.                0               0             0
+##  3 winter         102.                0               0             0
+##  4 winter         105.                0               0             0
+##  5 winter         100.                0               0             0
+##  6 spring          99.3               1               0             0
+##  7 spring          99.6               1               0             0
+##  8 spring         104.                1               0             0
+##  9 spring         103.                1               0             0
+## 10 spring          98.9               1               0             0
+## 11 summer          97.3               0               1             0
+## 12 summer         106.                0               1             0
+## 13 summer         105.                0               1             0
+## 14 summer         105.                0               1             0
+## 15 summer          95.9               0               1             0
+## 16 fall           100.                0               0             1
+## 17 fall           102.                0               0             1
+## 18 fall           101.                0               0             1
+## 19 fall            96.8               0               0             1
+## 20 fall           105.                0               0             1
 ```
 
 :::{.warning}
+**Reminder: Always look at your data**
 
-**Why not just use 'factor' variables as predictors?**
+Whenever you write code that potentially changes your data, you should double check that the code works as intended by looking at your data. This is especially the case when you are hand-coding nominal variables for use in regression, because sometimes the code will be wrong, but won't throw an error.
+
+Consider the code chunk above, where we defined three contrasts to represent the nominal variable `season`, with `winter` as our baseline.
+
+What would happen if you accidently misspelled one of the levels (`summre` for `summer`) and didn't notice?
+
+
+```r
+season_wt3 <- season_wt %>%
+  mutate(spring_v_winter = if_else(season == "spring", 1, 0),
+         summer_v_winter = if_else(season == "summre", 1, 0),
+         fall_v_winter = if_else(season == "fall", 1, 0))
+```
+
+While the above code chunk runs, we get confusing output when we run the regression; namely, the coefficent for `summer_v_winter` is `NA` (not available).
+
+
+```r
+lm(bodyweight_kg ~ spring_v_winter + summer_v_winter + fall_v_winter,
+   season_wt3)
+```
+
+```
+## 
+## Call:
+## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
+##     fall_v_winter, data = season_wt3)
+## 
+## Coefficients:
+##     (Intercept)  spring_v_winter  summer_v_winter    fall_v_winter  
+##         103.267           -2.313               NA           -2.326
+```
+
+What happened? Let's look at the data to find out. We will use `distinct` to find the distinct combinations of our original variable `season` with the three variables we created (see `?dplyr::distinct` for details).
+
+
+```r
+season_wt3 %>%
+  distinct(season, spring_v_winter, summer_v_winter, fall_v_winter)
+```
+
+```
+## # A tibble: 4 × 4
+##   season spring_v_winter summer_v_winter fall_v_winter
+##   <chr>            <dbl>           <dbl>         <dbl>
+## 1 winter               0               0             0
+## 2 spring               1               0             0
+## 3 summer               0               0             0
+## 4 fall                 0               0             1
+```
+
+Because of our misspelling, the predictor `summer_v_winter` is *always* zero; it should be `1` for summer. We could have caught this easily by running the above check. Always do so when you create your own predictor variables.
+:::
+
+:::{.info}
+
+**A closer look at R's defaults**
 
 If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type `character` or `factor` to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.
 
 
 ```r
-my_data <- tibble(group = rep(c("A", "B", "C"),
-                              each = 6),
-                  Y = rnorm(18))
-
-lm(Y ~ group, my_data) %>%
+lm(bodyweight_kg ~ season, season_wt) %>%
   summary()
 ```
 
 ```
 ## 
 ## Call:
-## lm(formula = Y ~ group, data = my_data)
+## lm(formula = bodyweight_kg ~ season, data = season_wt)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.6623 -0.4533  0.1586  0.4709  1.2579 
+## -5.8257 -2.1606  0.1444  3.0932  4.2908 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)   0.1532     0.3297   0.465    0.649
-## groupB       -0.5559     0.4663  -1.192    0.252
-## groupC       -0.4671     0.4663  -1.002    0.332
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  100.94035    1.57382  64.137   <2e-16 ***
+## seasonspring   0.01373    2.22571   0.006    0.995    
+## seasonsummer   0.79323    2.22571   0.356    0.726    
+## seasonwinter   3.85940    2.22571   1.734    0.102    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.8076 on 15 degrees of freedom
-## Multiple R-squared:  0.09861,	Adjusted R-squared:  -0.02158 
-## F-statistic: 0.8205 on 2 and 15 DF,  p-value: 0.459
+## Residual standard error: 3.519 on 16 degrees of freedom
+## Multiple R-squared:  0.2028,	Adjusted R-squared:  0.05331 
+## F-statistic: 1.357 on 3 and 16 DF,  p-value: 0.2916
 ```
 
-Here, R implicitly creates two dummy variables that it calls `groupB` and `groupC`. The variable `groupB` takes on the value of `1` when `group == "B"` and is `0` otherwise; `groupC` takes on the value of `1` when `group == "C"` and is `0` otherwise. R automatically identifies that the `group` variable has three levels, `A`, `B`, and `C`, and arbitrarily chooses as baseline the level that comes earliest when the levels are sequenced alphabetically.
+Here, R implicitly creates three dummy variables to code the four levels of `season`, called `seasonspring`, `seasonsummer` and `seasonwinter`. The unmentioned season, `fall`, has been chosen as baseline because it comes earliest in the alphabet. These three predictors have the following values:
 
-This seems like a handy thing to have R do for us, but dangers lurk in relying on the default. We'll learn more about these dangers in the next chapter, but consider what would happen if, instead of labeling the levels of `group` using letters "A", "B", and "C", we had used integer values 1, 2, and 3.
+* `seasonspring`: `1` if spring, `0` otherwise;
+* `seasonsummer`: `1` if summer, `0` otherwise;
+* `seasonwinter`: `1` if winter, `0` otherwise.
 
-
-```r
-my_data2 <- tibble(group = rep(c(1, 2, 3),
-                               each = 6),
-                   Y = rnorm(18))
-
-lm(Y ~ group, my_data2) %>%
-  summary()
-```
-
-```
-## 
-## Call:
-## lm(formula = Y ~ group, data = my_data2)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.1703 -0.5674 -0.1930  0.4147  1.8756 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  0.16295    0.57802   0.282    0.782
-## group       -0.05393    0.26757  -0.202    0.843
-## 
-## Residual standard error: 0.9269 on 16 degrees of freedom
-## Multiple R-squared:  0.002533,	Adjusted R-squared:  -0.05981 
-## F-statistic: 0.04063 on 1 and 16 DF,  p-value: 0.8428
-```
-
-R didn't understand that `group` was meant to be a continuous variable, and so it is treating it as continuous. The estimate for `group` is a nonsense estimate.
-
-Moral: rather than letting R guess whether something is meant as a continuous or categorical variable, take control of your destiny and make your choice explicit. This also avoids further snags we'll encounter in the next chapter.
-
+This seems like a handy thing to have R do for us, but dangers lurk in relying on the default. We'll learn more about these dangers in the next chapter when we talk about interactions.
 :::
-
 
 ## Equivalence between multiple regression and one-way ANOVA
 
-If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on `mydata2` like so.
+If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on `season_wt2` like so.
 
 
 ```r
 ## make season into a factor with baseline level 'winter'
-mydata3 <- mydata2 %>%
+season_wt3 <- season_wt2 %>%
   mutate(season = factor(season, levels = c("winter", "spring",
                                             "summer", "fall")))
 
-my_anova <- aov(bodyweight_kg ~ season, mydata3)
+my_anova <- aov(bodyweight_kg ~ season, season_wt3)
 summary(my_anova)
 ```
 
 ```
 ##             Df Sum Sq Mean Sq F value Pr(>F)
-## season       3  56.64   18.88   1.678  0.212
-## Residuals   16 180.01   11.25
+## season       3   50.4   16.80   1.357  0.292
+## Residuals   16  198.2   12.38
 ```
 
 OK, now can we replicate that result using the regression model below?
@@ -753,30 +835,33 @@ $$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i$$
 
 
 ```r
-summary(lm(bodyweight_kg ~ V1 + V2 + V3, mydata3))
+summary(lm(bodyweight_kg ~ spring_v_winter +
+             summer_v_winter + fall_v_winter,
+           season_wt2))
 ```
 
 ```
 ## 
 ## Call:
-## lm(formula = bodyweight_kg ~ V1 + V2 + V3, data = mydata3)
+## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
+##     fall_v_winter, data = season_wt2)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.0391 -1.8877 -0.5153  2.0124  6.0998 
+## -5.8257 -2.1606  0.1444  3.0932  4.2908 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  104.935      1.500  69.955   <2e-16 ***
-## V1            -2.315      2.121  -1.091   0.2914    
-## V2            -4.757      2.121  -2.242   0.0394 *  
-## V3            -2.239      2.121  -1.055   0.3070    
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      104.800      1.574  66.589   <2e-16 ***
+## spring_v_winter   -3.846      2.226  -1.728    0.103    
+## summer_v_winter   -3.066      2.226  -1.378    0.187    
+## fall_v_winter     -3.859      2.226  -1.734    0.102    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.354 on 16 degrees of freedom
-## Multiple R-squared:  0.2393,	Adjusted R-squared:  0.09673 
-## F-statistic: 1.678 on 3 and 16 DF,  p-value: 0.2116
+## Residual standard error: 3.519 on 16 degrees of freedom
+## Multiple R-squared:  0.2028,	Adjusted R-squared:  0.05331 
+## F-statistic: 1.357 on 3 and 16 DF,  p-value: 0.2916
 ```
 
 Note that the $F$ values and $p$ values are identical for the two methods!

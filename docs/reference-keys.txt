@@ -48,7 +48,7 @@ visualizing-partial-effects
 standardizing-coefficients
 model-comparison
 dealing-with-categorical-predictors
-dummy-coding
+dummy-a.k.a.-treatment-coding
 dummy-coding-when-k-2
 equivalence-between-multiple-regression-and-one-way-anova
 solutions-to-exercises
