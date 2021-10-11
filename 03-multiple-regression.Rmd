@@ -302,7 +302,7 @@ A regression formula characterizes the response variable as the sum of weighted 
 :::{.info}
 **Representing nominal data using numeric predictors**
 
-Representing a nominal variable with $k$ levels in a regression model requires $k-1$ numeric predictors. Most numerical coding schemes require that you choose one of these three levels as a baseline level. Each of your $k-1$ variables contrasts one of the other levels level with the baseline level.
+Representing a nominal variable with $k$ levels in a regression model requires $k-1$ numeric predictors; for instance, if you have four levels, you need three predictors. Most numerical coding schemes require that you choose one of these $k$ levels as a baseline level. Each of your $k-1$ variables contrasts one of the other levels level with the baseline.
 
 **Example:** You have a variable, `pet_type` with three levels (cat, dog, ferret). 
 
@@ -312,15 +312,17 @@ You choose `cat` as the baseline, and create two numeric predictor variables:
 * `ferret_v_cat` to encode the contrast between ferret and cat.
 :::
 
-Nominal variables are typically represented in a data frame as type `character` or `factor`. When you specify a model using the R formula syntax, R will check the data types of the predictors on the right hand side of the formula. For example, if your model regresses `income` on `pet_type` (e.g., `income ~ pet_type`), R checks the data type of `pet_type`.
+Nominal variables are typically represented in a data frame as type `character` or `factor`. 
 
-If `pet_type` is of type `character`, it will implicitly create a numeric predictor (or a set of predictors) to represent that variable in the model. There are different schemes available for creating numeric representations of nominal variables. The default in R is to use **dummy (or 'treatment')** coding (see below).
+The difference between a character and a factor variable is that factors contain information about the levels and their order, while character vectors lack this information.
 
-Unfortunately, these defaults are not suitable for many types of study designs in psychology, so I am going to recommend that you learn how to code your own predictor variables "by hand," and that you make a habit of doing so.
+When you specify a model using the R formula syntax, R will check the data types of the predictors on the right hand side of the formula. For example, if your model regresses `income` on `pet_type` (e.g., `income ~ pet_type`), R checks the data type of `pet_type`.
+
+For any variable of type character or factor, R will implicitly create a numeric predictor (or a set of predictors) to represent that variable in the model. There are different schemes available for creating numeric representations of nominal variables. The default in R is to use **dummy (or 'treatment')** coding (see below). Unfortunately, this default is unsuitable for many types of study designs in psychology, so I am going to recommend that you learn how to code your own predictor variables "by hand," and that you make a habit of doing so.
 
 :::{.dangerous}
 
-**Don't code levels of a categorical variable with numbers!**
+**Don't represent levels of a categorical variable with numbers!**
 
 In the above example, we had a variable `pet_type` with levels `cat`, `dog`, and `ferret`. Sometimes people represent the levels of a nominal variable with numbers, like so:
 
@@ -341,9 +343,9 @@ So, don't represent the levels of a nominal variable with numbers, except of cou
 
 ### Dummy (a.k.a. "treatment") coding
 
-For a nominal variable with only two levels, choose one level as baseline, and create a new variable that is `0` whenever the level is baseline and `1` when it is the other level. The choice of baseline is arbitrary, and will affect the sign of the coefficient, but not its magnitude, nor its standard error or p-value. 
+For a nominal variable with only two levels, choose one level as baseline, and create a new variable that is `0` whenever the level is baseline and `1` when it is the other level. The choice of baseline is arbitrary, and will affect only whether the coefficient is positive or negative, but not its magnitude, its standard error nor the associated p-value.
 
-First, we gin up some fake data to use in our analysis.
+To illustrate, let's gin up some fake data with a single two level categorical predictor.
 
 ```{r fake-data}
 fake_data <- tibble(Y = rnorm(10),
@@ -367,7 +369,7 @@ Now we just run it as a regular regression model.
 summary(lm(Y ~ group_d, fake_data2))
 ```
 
-Note that if we reverse the coding we get the same result, just the sign is different.
+Let's reverse the coding. We get the same result, just the sign is different.
 
 ```{r fake-regression2}
 fake_data3 <- fake_data %>%
@@ -387,11 +389,13 @@ lm(Y ~ group, fake_data) %>%
   summary()
 ```
 
-It examines `group` and figures out the unique levels of the variable, which in this case are `A` and `B`. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (`B`) and the baseline level (`A`). This new variable that it created is called `groupB` in the output.
+The `lm()` function examines `group` and figures out the unique levels of the variable, which in this case are `A` and `B`. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (`B`) and the baseline level (`A`). (In the case where `group` has been defined as a factor, the baseline level is the first element of `levels(fake_data$group)`).
+
+This new variable that it created shows up with the name `groupB` in the output.
 
 ### Dummy coding when $k > 2$
 
-When the predictor variable is a factor with $k$ levels where $k>2$, we need $k-1$ predictors to code that variable. So if the factor has 4 levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
+When the predictor variable has more than two levels, we need $k-1$ predictors to code that variable. So if the factor has four levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
 
 ```{r three-predictors}
 season_wt <- tibble(season = rep(c("winter", "spring", "summer", "fall"),
@@ -446,7 +450,7 @@ season_wt3 %>%
   distinct(season, spring_v_winter, summer_v_winter, fall_v_winter)
 ```
 
-Because of our misspelling, the predictor `summer_v_winter` is *always* zero; it should be `1` for summer. We could have caught this easily by running the above check. Always do so when you create your own predictor variables.
+Because of our misspelling, the predictor `summer_v_winter` is not `1` when `season == "summer"`; instead, it is **always zero**. The `if_else()` above literally says 'set `summer_v_winter` to 1 if `season == "summre"`, otherwise 0'. Of course, `season` is **never** equal to `summre`, because `summre` is a typo. We could have caught this easily by running the above check with `distinct()`. Get in the habit of doing this when you create your own numeric predictors.
 :::
 
 :::{.info}
