@@ -1,7 +1,7 @@
-# Introducing Linear Mixed-Effects Models
+# Introducing linear mixed-effects models
 
 ```{r chapter-status, echo=FALSE, results='asis'}
-chapter_status("incomplete")
+chapter_status("complete")
 ```
 
 ```{r setup, include=FALSE}
@@ -38,17 +38,15 @@ library("kableExtra")
 .ds <- c("\\displaystyle\\left[", "\\right]")
 ```
 
-## Learning objectives
-
-* express multi-level designs in mathematical format (DGP)
-* analyze and interpret parameter estimates using `lme4::lmer()`
-* simulate data from a multi-level design with a single predictor
-
-In the exercises below, we'll be working with the `sleepstudy` data, a built in dataset from the lme4 package.  To get information about the data, after loading in the lme4 package, type `?sleepstudy` at the prompt.
-
 ## Modeling multi-level data
 
-The `sleepstudy` data is included as a built-in dataset in the `lme4` package for R [@Bates_et_al_2015]. Some of the ideas presented in this section come from @McElreath_2020 [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/) textbook as well as from Tristan Mahr's [blog post on partial pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/).
+:::{.info}
+
+ in this chapter come from the textbook [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/) by @McElreath_2020, This chapter also borrows extensively from Tristan Mahr's [excellent blog post on partial pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/).
+
+:::
+
+In this chapter, we'll be working with some real data from a study looking at the effects of sleep deprivation on psychomotor performance [@Belenky_et_al_2003]. Data from this study is included as the built-in dataset `sleepstudy` in the `lme4` package for R [@Bates_et_al_2015].
 
 Let's start by looking at the documentation for the `sleepstudy` dataset. After loading the **`lme4`** package, you can access the documentation by typing `?sleepstudy` in the console.
 
@@ -92,13 +90,13 @@ References:
      sleep dose-response study. _Journal of Sleep Research_ *12*, 1-12.
 ```
 
-Note that these data meet our definition of multilevel data due to multistage sampling: Participants are sampled from a population, and then their mean reaction times are measured on each of the 10 days in the study. Even though we don't have the trial-by-trial information used to calculate the means, this is still multilevel data, because of the multiple observations on the response variable (reaction time) across days for each subject.
+These data meet our definition of multilevel data due to repeated measurements on the same dependent variable (mean RT) for the same participants over ten days. Multilevel data of this type is extremely common in psychology. Unfortunately, most statistics textbooks commonly used in psychology courses don't sufficiently discuss multilevel data, beyond paired t-tests and repeated-measures ANOVA. The `sleepstudy` dataset is interesting because it is multilevel but has a continuous predictor, and thus does not fit will with t-test or ANOVA, because both of these approaches are for categorical predictors. There are ways you could make the data fit into one of these frameworks, but not without losing information or possibly violating assumptions.
 
-Multi-level data of this type is extremely common in psychology. However, if you open up most introductory statistics textbooks and read through to the end, you'll learn about t-tests, repeated-measures and mixed-model ANOVA, and multiple regression, but none of the techniques that you learn would be applicable to this type of data. It suggests a serious gap in training. Because most data is multi-level, multi-level modeling should be taught as the **default** approach, not as an advanced approach that is far beyond the reach of undergraduates. All of the other techniques---t-test, ANOVA, multiple regression---can be seen as special cases of the more general multi-level approach. 
+It is a shame that psychology students don't really learn much about analyzing multilevel data. Think about studies you have read recently in psychology or neuroscience. How many of them take a single measurement on the DV from each participant? Very few, if any. Nearly all take multiple measurements, for one or more of the following reasons: (1) the researchers are measuring the same participants across levels of a factor in a within-subject design; (2) they are interested in assessing change over time; or (3) they are measuring responses to multiple stimuli. Multilevel data is so common that multilevel analysis should be taught as the **default** approach in psychology. Learning about multilevel analysis can be challenging, but you already know much of what you need by having learned about correlation and regression. You will see that it is just an extension of simple regression.
 
-Let's consider the `sleepstudy` data. The dataset contains eighteen participants from the three-hour sleep condition. Each day, over 10 days, participants performed a ten-minute "psychomotor vigilance test" where they had to monitor a display and press a button as quickly as possible each time a stimulus appeared. The dependent measure in the dataset is the participant's average response time (RT) on the task for that day.
+Let's take a closer look at the `sleepstudy` data. The dataset contains eighteen participants from the three-hour sleep condition. Each day, over 10 days, participants performed a ten-minute "psychomotor vigilance test" where they had to monitor a display and press a button as quickly as possible each time a stimulus appeared. The dependent measure in the dataset is the participant's average response time (RT) on the task for that day.
 
-It is always good to start by looking at the data.  Here is data for a single subject. 
+A good way to start every analysis is to plot the data.  Here is data for a single subject. 
 
 ```{r one-subject, message = FALSE, fig.cap = "*Data from a single subject in Belenky et al. (2003)*", fig.width = 4, fig.height = 3, out.width = "50%"}
 library("lme4")
@@ -114,7 +112,7 @@ ggplot(just_308, aes(x = Days, y = Reaction)) +
 
 <div class="try">
 
-### Exercise {-}
+**Exercise**
 
 Use ggplot to recreate the plot below, which shows data for all 18 subjects.
 
@@ -150,7 +148,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction)) +
 
 ## How to model these data?
 
-This is how @Belenky_et_al_2003 describe their study (p. 2 of the PDF):
+To model the data appropriately, first we need to know more about about the design. This is how @Belenky_et_al_2003 describe their study (p. 2):
 
 > The first 3 days (T1, T2 and B) were adaptation and training (T1 and T2) and baseline (B) and subjects were required to be in bed from 23:00 to 07:00 h [8 h required time in bed (TIB)]. On the third day (B), baseline measures were taken. Beginning on the fourth day and continuing for a total of 7 days (E1–E7) subjects were in one of four sleep conditions [9 h required TIB (22:00–07:00 h), 7 h required TIB (24:00–07:00 h), 5 h required TIB (02:00–07:00 h), or 3 h required TIB (04:00–07:00 h)], effectively one sleep augmentation condition, and three sleep restriction conditions.
 
@@ -158,7 +156,7 @@ There were seven nights of sleep restriction, with the first night of restrictio
 
 <div class="try">
 
-### Exercise {-}
+***Exercise***
 
 Remove from the dataset observations where `Days` is coded `0` or `1`, and then make a new variable `days_deprived` from the `Days` variable so that the sequence starts at day 2, with day 2 being re-coded as day 0, day 3 as day 1, day 4 as day 2, etc. This new variable now tracks the number of days of sleep deprivation. Store the new table as `sleep2`.
 

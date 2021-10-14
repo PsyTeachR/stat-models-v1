@@ -395,7 +395,7 @@ This new variable that it created shows up with the name `groupB` in the output.
 
 ### Dummy coding when $k > 2$
 
-When the predictor variable has more than two levels, we need $k-1$ predictors to code that variable. So if the factor has four levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
+When a nominal predictor variable has more than two levels ($k > 2$), one numeric predictor is no longer sufficient; we need $k-1$ predictors. If the nominal predictor has four levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
 
 ```{r three-predictors}
 season_wt <- tibble(season = rep(c("winter", "spring", "summer", "fall"),

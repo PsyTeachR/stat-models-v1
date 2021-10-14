@@ -1,4 +1,4 @@
-# Understanding correlation and regression through bivariate simulation
+# Correlation and regression
 
 
 

@@ -34,7 +34,7 @@ linear-models
 mixed-models
 a-note-on-reproducibility
 a-simulation-based-approach
-understanding-correlation-and-regression-through-bivariate-simulation
+correlation-and-regression
 correlation-matrices
 simulating-bivariate-data
 relationship-between-correlation-and-regression
@@ -84,7 +84,6 @@ sum-2
 deviation-2
 conclusion
 introducing-linear-mixed-effects-models
-learning-objectives
 modeling-multi-level-data
 how-to-model-these-data
 complete-pooling-one-size-fits-all
@@ -97,7 +96,7 @@ fixed-effects
 random-effects
 multi-level-app
 linear-mixed-effects-models-with-one-random-factor
-learning-objectives-1
+learning-objectives
 when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling
 example-independent-samples-t-test-on-multi-level-data
 when-is-a-random-intercepts-model-appropriate
@@ -105,7 +104,7 @@ expressing-the-study-design-and-performing-tests-in-regression
 factors-with-more-than-two-levels
 multiparameter-tests
 linear-mixed-effects-models-with-crossed-random-factors
-learning-objectives-2
+learning-objectives-1
 web-app
 generalizing-over-encounters-between-subjects-and-stimuli
 lme4-syntax-for-crossed-random-factors
@@ -120,7 +119,7 @@ join-subjects-items-and-trials
 create-the-response-variable
 fitting-the-model
 generalized-linear-mixed-effects-models
-learning-objectives-3
+learning-objectives-2
 discrete-versus-continuous-data
 why-not-model-discrete-data-as-continuous
 bounded-scale

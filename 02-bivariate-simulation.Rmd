@@ -1,4 +1,4 @@
-# Understanding correlation and regression through bivariate simulation
+# Correlation and regression
 
 ```{r chapter-status, echo=FALSE, results='asis'}
 # chapter_status("incomplete")

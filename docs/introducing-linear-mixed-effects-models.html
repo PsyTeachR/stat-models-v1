@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of October 11, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta name="description" content="5.1 Modeling multi-level data  in this chapter come from the textbook Statistical Rethinking by McElreath (2020), This chapter also borrows extensively from Tristan Mahr's excellent blog post on...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introducing-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
-<meta property="og:description" content="This chapter is under construction as of October 11, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta property="og:description" content="5.1 Modeling multi-level data  in this chapter come from the textbook Statistical Rethinking by McElreath (2020), This chapter also borrows extensively from Tristan Mahr's excellent blog post on...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 5 Introducing Linear Mixed-Effects Models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of October 11, 2021; contents may change!  5.1 Learning objectives express multi-level designs in mathematical format (DGP) analyze and interpret parameter...">
+<meta name="twitter:description" content="5.1 Modeling multi-level data  in this chapter come from the textbook Statistical Rethinking by McElreath (2020), This chapter also borrows extensively from Tristan Mahr's excellent blog post on...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Overview</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="understanding-correlation-and-regression-through-bivariate-simulation.html"><span class="header-section-number">2</span> Understanding correlation and regression through bivariate simulation</a></li>
+<li><a class="" href="correlation-and-regression.html"><span class="header-section-number">2</span> Correlation and regression</a></li>
 <li><a class="" href="multiple-regression.html"><span class="header-section-number">3</span> Multiple regression</a></li>
 <li><a class="" href="interactions.html"><span class="header-section-number">4</span> Interactions</a></li>
 <li><a class="active" href="introducing-linear-mixed-effects-models.html"><span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models</a></li>
@@ -75,26 +75,14 @@
 <h1>
 <span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models<a class="anchor" aria-label="anchor" href="#introducing-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
-<div class="warning">
-<p>This chapter is under construction as of October 11, 2021; contents may change!</p>
-</div>
-<div id="learning-objectives" class="section level2">
-<h2>
-<span class="header-section-number">5.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
-</h2>
-<ul>
-<li>express multi-level designs in mathematical format (DGP)</li>
-<li>analyze and interpret parameter estimates using <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code>
-</li>
-<li>simulate data from a multi-level design with a single predictor</li>
-</ul>
-<p>In the exercises below, we'll be working with the <code>sleepstudy</code> data, a built in dataset from the lme4 package. To get information about the data, after loading in the lme4 package, type <code><a href="https://rdrr.io/pkg/lme4/man/sleepstudy.html">?sleepstudy</a></code> at the prompt.</p>
-</div>
 <div id="modeling-multi-level-data" class="section level2">
 <h2>
-<span class="header-section-number">5.2</span> Modeling multi-level data<a class="anchor" aria-label="anchor" href="#modeling-multi-level-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> Modeling multi-level data<a class="anchor" aria-label="anchor" href="#modeling-multi-level-data"><i class="fas fa-link"></i></a>
 </h2>
-<p>The <code>sleepstudy</code> data is included as a built-in dataset in the <code>lme4</code> package for R <span class="citation">(Bates et al., <a href="bibliography.html#ref-Bates_et_al_2015">2015</a>)</span>. Some of the ideas presented in this section come from <span class="citation">McElreath (<a href="bibliography.html#ref-McElreath_2020">2020</a>)</span> <a href="https://xcelab.net/rm/statistical-rethinking/">Statistical Rethinking</a> textbook as well as from Tristan Mahr's <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/">blog post on partial pooling</a>.</p>
+<div class="info">
+<p>in this chapter come from the textbook <a href="https://xcelab.net/rm/statistical-rethinking/">Statistical Rethinking</a> by <span class="citation">McElreath (<a href="bibliography.html#ref-McElreath_2020">2020</a>)</span>, This chapter also borrows extensively from Tristan Mahr's <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/">excellent blog post on partial pooling</a>.</p>
+</div>
+<p>In this chapter, we'll be working with some real data from a study looking at the effects of sleep deprivation on psychomotor performance <span class="citation">(Belenky et al., <a href="bibliography.html#ref-Belenky_et_al_2003">2003</a>)</span>. Data from this study is included as the built-in dataset <code>sleepstudy</code> in the <code>lme4</code> package for R <span class="citation">(Bates et al., <a href="bibliography.html#ref-Bates_et_al_2015">2015</a>)</span>.</p>
 <p>Let's start by looking at the documentation for the <code>sleepstudy</code> dataset. After loading the <strong><code>lme4</code></strong> package, you can access the documentation by typing <code><a href="https://rdrr.io/pkg/lme4/man/sleepstudy.html">?sleepstudy</a></code> in the console.</p>
 <pre><code>sleepstudy                package:lme4                 R Documentation
 
@@ -133,10 +121,10 @@ References:
      Thomas J. Balkin (2003) Patterns of performance degradation and
      restoration during sleep restriction and subsequent recovery: a
      sleep dose-response study. _Journal of Sleep Research_ *12*, 1-12.</code></pre>
-<p>Note that these data meet our definition of multilevel data due to multistage sampling: Participants are sampled from a population, and then their mean reaction times are measured on each of the 10 days in the study. Even though we don't have the trial-by-trial information used to calculate the means, this is still multilevel data, because of the multiple observations on the response variable (reaction time) across days for each subject.</p>
-<p>Multi-level data of this type is extremely common in psychology. However, if you open up most introductory statistics textbooks and read through to the end, you'll learn about t-tests, repeated-measures and mixed-model ANOVA, and multiple regression, but none of the techniques that you learn would be applicable to this type of data. It suggests a serious gap in training. Because most data is multi-level, multi-level modeling should be taught as the <strong>default</strong> approach, not as an advanced approach that is far beyond the reach of undergraduates. All of the other techniques---t-test, ANOVA, multiple regression---can be seen as special cases of the more general multi-level approach.</p>
-<p>Let's consider the <code>sleepstudy</code> data. The dataset contains eighteen participants from the three-hour sleep condition. Each day, over 10 days, participants performed a ten-minute "psychomotor vigilance test" where they had to monitor a display and press a button as quickly as possible each time a stimulus appeared. The dependent measure in the dataset is the participant's average response time (RT) on the task for that day.</p>
-<p>It is always good to start by looking at the data. Here is data for a single subject.</p>
+<p>These data meet our definition of multilevel data due to repeated measurements on the same dependent variable (mean RT) for the same participants over ten days. Multilevel data of this type is extremely common in psychology. Unfortunately, most statistics textbooks commonly used in psychology courses don't sufficiently discuss multilevel data, beyond paired t-tests and repeated-measures ANOVA. The <code>sleepstudy</code> dataset is interesting because it is multilevel but has a continuous predictor, and thus does not fit will with t-test or ANOVA, because both of these approaches are for categorical predictors. There are ways you could make the data fit into one of these frameworks, but not without losing information or possibly violating assumptions.</p>
+<p>It is a shame that psychology students don't really learn much about analyzing multilevel data. Think about studies you have read recently in psychology or neuroscience. How many of them take a single measurement on the DV from each participant? Very few, if any. Nearly all take multiple measurements, for one or more of the following reasons: (1) the researchers are measuring the same participants across levels of a factor in a within-subject design; (2) they are interested in assessing change over time; or (3) they are measuring responses to multiple stimuli. Multilevel data is so common that multilevel analysis should be taught as the <strong>default</strong> approach in psychology. Learning about multilevel analysis can be challenging, but you already know much of what you need by having learned about correlation and regression. You will see that it is just an extension of simple regression.</p>
+<p>Let's take a closer look at the <code>sleepstudy</code> data. The dataset contains eighteen participants from the three-hour sleep condition. Each day, over 10 days, participants performed a ten-minute "psychomotor vigilance test" where they had to monitor a display and press a button as quickly as possible each time a stimulus appeared. The dependent measure in the dataset is the participant's average response time (RT) on the task for that day.</p>
+<p>A good way to start every analysis is to plot the data. Here is data for a single subject.</p>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
@@ -154,7 +142,7 @@ Figure 5.1: <em>Data from a single subject in Belenky et al. (2003)</em>
 </p>
 </div>
 <div class="try">
-<h3 id="exercise" class="unnumbered">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Use ggplot to recreate the plot below, which shows data for all 18 subjects.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:plot-solution0"></span>
@@ -184,15 +172,15 @@ Show me
 </div>
 <div id="how-to-model-these-data" class="section level2">
 <h2>
-<span class="header-section-number">5.3</span> How to model these data?<a class="anchor" aria-label="anchor" href="#how-to-model-these-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2</span> How to model these data?<a class="anchor" aria-label="anchor" href="#how-to-model-these-data"><i class="fas fa-link"></i></a>
 </h2>
-<p>This is how <span class="citation">Belenky et al. (<a href="bibliography.html#ref-Belenky_et_al_2003">2003</a>)</span> describe their study (p. 2 of the PDF):</p>
+<p>To model the data appropriately, first we need to know more about about the design. This is how <span class="citation">Belenky et al. (<a href="bibliography.html#ref-Belenky_et_al_2003">2003</a>)</span> describe their study (p. 2):</p>
 <blockquote>
 <p>The first 3 days (T1, T2 and B) were adaptation and training (T1 and T2) and baseline (B) and subjects were required to be in bed from 23:00 to 07:00 h [8 h required time in bed (TIB)]. On the third day (B), baseline measures were taken. Beginning on the fourth day and continuing for a total of 7 days (E1–E7) subjects were in one of four sleep conditions [9 h required TIB (22:00–07:00 h), 7 h required TIB (24:00–07:00 h), 5 h required TIB (02:00–07:00 h), or 3 h required TIB (04:00–07:00 h)], effectively one sleep augmentation condition, and three sleep restriction conditions.</p>
 </blockquote>
 <p>There were seven nights of sleep restriction, with the first night of restriction occurring after the third day. The first two days, coded as <code>0</code>, <code>1</code>, were adaptation and training. The day coded as <code>2</code>, where the baseline measurement was taken, should be the place where we start our analysis. If we include the days <code>0</code> and <code>1</code> in our analysis, this might bias our results, since any changes in performance during the first two days have to do with training, not sleep restriction.</p>
 <div class="try">
-<h3 id="exercise-1" class="unnumbered">Exercise</h3>
+<p><strong><em>Exercise</em></strong></p>
 <p>Remove from the dataset observations where <code>Days</code> is coded <code>0</code> or <code>1</code>, and then make a new variable <code>days_deprived</code> from the <code>Days</code> variable so that the sequence starts at day 2, with day 2 being re-coded as day 0, day 3 as day 1, day 4 as day 2, etc. This new variable now tracks the number of days of sleep deprivation. Store the new table as <code>sleep2</code>.</p>
 <div class="webex-solution">
 <button>
@@ -249,7 +237,7 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 <p>Let's start by considering three different approaches we might take. Following McElreath, we will distinguish these approaches by calling them <strong>complete pooling</strong>, <strong>no pooling</strong>, and <strong>partial pooling</strong>.</p>
 <div id="complete-pooling-one-size-fits-all" class="section level3">
 <h3>
-<span class="header-section-number">5.3.1</span> Complete pooling: One size fits all<a class="anchor" aria-label="anchor" href="#complete-pooling-one-size-fits-all"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.1</span> Complete pooling: One size fits all<a class="anchor" aria-label="anchor" href="#complete-pooling-one-size-fits-all"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>complete pooling</strong> approach is a "one-size-fits-all" model: it estimates a single intercept and slope for the entire dataset, ignoring the fact that different subjects might vary in their intercepts or slopes. If that sounds like a bad approach, it is; but you know this because you've already visualized the data and noted that the pattern for each participant would seem to require different y-intercept and slope values.</p>
 <p>Fitting one line is called the "complete pooling" approach because we pool together data from all subjects to get single estimates for an overall intercept and slope. The GLM for this approach is simply</p>
@@ -304,7 +292,7 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 </div>
 <div id="no-pooling" class="section level3">
 <h3>
-<span class="header-section-number">5.3.2</span> No pooling<a class="anchor" aria-label="anchor" href="#no-pooling"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.2</span> No pooling<a class="anchor" aria-label="anchor" href="#no-pooling"><i class="fas fa-link"></i></a>
 </h3>
 <p>Pooling all the information to get just one intercept and one slope estimate is inappropriate. Another approach would be to fit separate lines for each participant. This means that the estimates for each participant will be completely uninformed by the estimates for the other participants. In other words, we can separately estimate 18 individual intercept/slope pairs.</p>
 <p>This model could be implemented in two ways: (1) by running separate regressions for each participant or (2) by running fixed-effects regression. We'll do the latter, so that everything is in one big model. We know how to do this already: we add in dummy codes for the <code>Subject</code> factor. We have 18 levels of this factor, so we'd need 17 dummy codes. Fortunately, R saves us from the trouble of creating the 17 variables we would need by hand. All we need to do is include <code>Subject</code> as a predictor in the model, and interact this categorical predictor with <code>days_deprived</code> to allow intercepts and slopes to vary.</p>
@@ -490,7 +478,7 @@ t(17) = 6.197, <span class="math inline">\(p &lt; .001\)</span>.</p>
 </div>
 <div id="partial-pooling-using-mixed-effects-models" class="section level3">
 <h3>
-<span class="header-section-number">5.3.3</span> Partial pooling using mixed-effects models<a class="anchor" aria-label="anchor" href="#partial-pooling-using-mixed-effects-models"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.3</span> Partial pooling using mixed-effects models<a class="anchor" aria-label="anchor" href="#partial-pooling-using-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h3>
 <p>Neither the complete or no-pooling approach is satisfactory. It would be desirable to improve our estimates for individual participants by taking advantage of what we know about the other participants. This will help us better distinguish signal from error for each participant and improve generalization to the population. As the web app below will show, this becomes particularly important when we have unbalanced or missing data.</p>
 <p>In the no-pooling model, we treated <code>Subject</code> as a <a class="glossary" target="_blank" title="A factor whose levels are assumed to represent all the levels of interest in a population; its levels would remain fixed across replications of the study." href="https://psyteachr.github.io/glossary/f#fixed-factor"><strong>fixed factor</strong></a>. Each pair of intercept and slope estimates is determined by that subject's data alone. However, we are not interested in these 18 subjects in and of themselves; rather, we are interested in them as examples drawn from a larger population of potential subjects. This subjects-as-fixed-effects approach is suboptimal if your goal is to generalize to new participants in the population of interest.</p>
@@ -623,7 +611,7 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 </div>
 <div id="the-variance-covariance-matrix" class="section level3">
 <h3>
-<span class="header-section-number">5.3.4</span> The variance-covariance matrix<a class="anchor" aria-label="anchor" href="#the-variance-covariance-matrix"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.4</span> The variance-covariance matrix<a class="anchor" aria-label="anchor" href="#the-variance-covariance-matrix"><i class="fas fa-link"></i></a>
 </h3>
 <p><span class="math display">\[\begin{equation}
  \langle S_{0s}, S_{1s} \rangle \sim N\left(\langle 0, 0 \rangle, \mathbf{\Sigma}\right) 
@@ -640,7 +628,7 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 </div>
 <div id="estimating-the-model-parameters" class="section level2">
 <h2>
-<span class="header-section-number">5.4</span> Estimating the model parameters<a class="anchor" aria-label="anchor" href="#estimating-the-model-parameters"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3</span> Estimating the model parameters<a class="anchor" aria-label="anchor" href="#estimating-the-model-parameters"><i class="fas fa-link"></i></a>
 </h2>
 <p>To estimate parameters, we are going to use the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> function of the lme4 package (Bates, Mächler, Bolker, &amp; Walker, 2015). The basic syntax of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> is</p>
 <pre><code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(formula, data, ...)</a></code></pre>
@@ -803,12 +791,12 @@ Figure 5.6: Data plotted against predictions from a partial pooling approach.
 </div>
 <div id="interpreting-lmer-output-and-extracting-estimates" class="section level2">
 <h2>
-<span class="header-section-number">5.5</span> Interpreting <code>lmer()</code> output and extracting estimates<a class="anchor" aria-label="anchor" href="#interpreting-lmer-output-and-extracting-estimates"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4</span> Interpreting <code>lmer()</code> output and extracting estimates<a class="anchor" aria-label="anchor" href="#interpreting-lmer-output-and-extracting-estimates"><i class="fas fa-link"></i></a>
 </h2>
 <p>The call to <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> returns a fitted model object of class "lmerMod". To find out more about the <code>lmerMod</code> class, which is in turn a specialized version of the <code>merMod</code> class, see <code>?lmerMod-class</code>.</p>
 <div id="fixed-effects" class="section level3">
 <h3>
-<span class="header-section-number">5.5.1</span> Fixed effects<a class="anchor" aria-label="anchor" href="#fixed-effects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4.1</span> Fixed effects<a class="anchor" aria-label="anchor" href="#fixed-effects"><i class="fas fa-link"></i></a>
 </h3>
 <p>The section of the output called <code>Fixed effects:</code> should look familiar; it is similar to what you would see in the output for a simple linear model fit by <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>.</p>
 <pre><code>## Fixed effects:
@@ -860,7 +848,7 @@ to the response time, on average.</p>
 </div>
 <div id="random-effects" class="section level3">
 <h3>
-<span class="header-section-number">5.5.2</span> Random effects<a class="anchor" aria-label="anchor" href="#random-effects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4.2</span> Random effects<a class="anchor" aria-label="anchor" href="#random-effects"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>## Random effects:
 ##  Groups   Name          Variance Std.Dev. Corr
@@ -990,7 +978,7 @@ Figure 5.7: Data against model with extrapolation.
 </div>
 <div id="multi-level-app" class="section level2">
 <h2>
-<span class="header-section-number">5.6</span> Multi-level app<a class="anchor" aria-label="anchor" href="#multi-level-app"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5</span> Multi-level app<a class="anchor" aria-label="anchor" href="#multi-level-app"><i class="fas fa-link"></i></a>
 </h2>
 <p><a href="https://shiny.psy.gla.ac.uk/Dale/multilevel" target="_blank">Try out the multi-level web app</a> to sharpen your understanding of the three different approaches to multi-level modeling.</p>
 
@@ -1119,24 +1107,23 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#introducing-linear-mixed-effects-models"><span class="header-section-number">5</span> Introducing Linear Mixed-Effects Models</a></li>
-<li><a class="nav-link" href="#learning-objectives"><span class="header-section-number">5.1</span> Learning objectives</a></li>
-<li><a class="nav-link" href="#modeling-multi-level-data"><span class="header-section-number">5.2</span> Modeling multi-level data</a></li>
+<li><a class="nav-link" href="#modeling-multi-level-data"><span class="header-section-number">5.1</span> Modeling multi-level data</a></li>
 <li>
-<a class="nav-link" href="#how-to-model-these-data"><span class="header-section-number">5.3</span> How to model these data?</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#complete-pooling-one-size-fits-all"><span class="header-section-number">5.3.1</span> Complete pooling: One size fits all</a></li>
-<li><a class="nav-link" href="#no-pooling"><span class="header-section-number">5.3.2</span> No pooling</a></li>
-<li><a class="nav-link" href="#partial-pooling-using-mixed-effects-models"><span class="header-section-number">5.3.3</span> Partial pooling using mixed-effects models</a></li>
-<li><a class="nav-link" href="#the-variance-covariance-matrix"><span class="header-section-number">5.3.4</span> The variance-covariance matrix</a></li>
+<a class="nav-link" href="#how-to-model-these-data"><span class="header-section-number">5.2</span> How to model these data?</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#complete-pooling-one-size-fits-all"><span class="header-section-number">5.2.1</span> Complete pooling: One size fits all</a></li>
+<li><a class="nav-link" href="#no-pooling"><span class="header-section-number">5.2.2</span> No pooling</a></li>
+<li><a class="nav-link" href="#partial-pooling-using-mixed-effects-models"><span class="header-section-number">5.2.3</span> Partial pooling using mixed-effects models</a></li>
+<li><a class="nav-link" href="#the-variance-covariance-matrix"><span class="header-section-number">5.2.4</span> The variance-covariance matrix</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#estimating-the-model-parameters"><span class="header-section-number">5.4</span> Estimating the model parameters</a></li>
+<li><a class="nav-link" href="#estimating-the-model-parameters"><span class="header-section-number">5.3</span> Estimating the model parameters</a></li>
 <li>
-<a class="nav-link" href="#interpreting-lmer-output-and-extracting-estimates"><span class="header-section-number">5.5</span> Interpreting lmer() output and extracting estimates</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#fixed-effects"><span class="header-section-number">5.5.1</span> Fixed effects</a></li>
-<li><a class="nav-link" href="#random-effects"><span class="header-section-number">5.5.2</span> Random effects</a></li>
+<a class="nav-link" href="#interpreting-lmer-output-and-extracting-estimates"><span class="header-section-number">5.4</span> Interpreting lmer() output and extracting estimates</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fixed-effects"><span class="header-section-number">5.4.1</span> Fixed effects</a></li>
+<li><a class="nav-link" href="#random-effects"><span class="header-section-number">5.4.2</span> Random effects</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#multi-level-app"><span class="header-section-number">5.6</span> Multi-level app</a></li>
+<li><a class="nav-link" href="#multi-level-app"><span class="header-section-number">5.5</span> Multi-level app</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1154,7 +1141,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-11.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
