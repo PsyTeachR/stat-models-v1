@@ -1,4 +1,4 @@
-# Introducing Linear Mixed-Effects Models
+# Introducing linear mixed-effects models
 
 
 
@@ -8,7 +8,7 @@
 
 :::{.info}
 
- in this chapter come from the textbook [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/) by @McElreath_2020, This chapter also borrows extensively from Tristan Mahr's [excellent blog post on partial pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/).
+Some ideas in this chapter come from the textbook [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/) by @McElreath_2020, This chapter also borrows extensively from Tristan Mahr's [excellent blog post on partial pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/).
 
 :::
 
