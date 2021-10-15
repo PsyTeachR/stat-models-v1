@@ -243,7 +243,7 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 <p>Fitting one line is called the "complete pooling" approach because we pool together data from all subjects to get single estimates for an overall intercept and slope. The GLM for this approach is simply</p>
 <p><span class="math display">\[Y_{sd} = \beta_0 + \beta_1 X_{sd} + e_{sd}\]</span></p>
 <p><span class="math display">\[e_{sd} \sim N\left(0, \sigma^2\right)\]</span></p>
-<p>where <span class="math inline">\(Y_{sd}\)</span> is the mean RT for subject <span class="math inline">\(s\)</span> on day <span class="math inline">\(d\)</span>, <span class="math inline">\(X_{sd}\)</span> is the value of <code>Day</code> associated with that case (0-7), and <span class="math inline">\(e_{sd}\)</span> is the error.</p>
+<p>where <span class="math inline">\(Y_{sd}\)</span> is the mean RT for subject <span class="math inline">\(s\)</span> on day <span class="math inline">\(d\)</span>, <span class="math inline">\(X_{sd}\)</span> is the value of <code>days_deprived</code> associated with that case (0-7), and <span class="math inline">\(e_{sd}\)</span> is the error.</p>
 <p>We would fit such a model in R using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function, e.g.:</p>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cp_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">days_deprived</span>, <span class="va">sleep2</span><span class="op">)</span>
@@ -526,7 +526,7 @@ e_{sd} \sim N\left(0, \sigma^2\right)
 <tr class="even">
 <td align="left"><span class="math inline">\(X_{sd}\)</span></td>
 <td align="left">observed</td>
-<td align="left">Value of <code>Day</code> (0-9) for subject <span class="math inline">\(s\)</span> on day <span class="math inline">\(d\)</span>
+<td align="left">Value of <code>days_deprived</code> (0-7) for subject <span class="math inline">\(s\)</span> on day <span class="math inline">\(d\)</span>
 </td>
 </tr>
 <tr class="odd">
@@ -1141,7 +1141,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-14.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

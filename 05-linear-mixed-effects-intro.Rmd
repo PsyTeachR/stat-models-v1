@@ -219,7 +219,7 @@ $$Y_{sd} = \beta_0 + \beta_1 X_{sd} + e_{sd}$$
 
 $$e_{sd} \sim N\left(0, \sigma^2\right)$$
 
-where $Y_{sd}$ is the mean RT for subject $s$ on day $d$, $X_{sd}$ is the value of `Day` associated with that case (0-7), and $e_{sd}$ is the error.
+where $Y_{sd}$ is the mean RT for subject $s$ on day $d$, $X_{sd}$ is the value of `days_deprived` associated with that case (0-7), and $e_{sd}$ is the error.
 
 We would fit such a model in R using the `lm()` function, e.g.:
 
@@ -417,7 +417,7 @@ In case you get lost, here's a table with an explanation for all of the variable
 | Variable                 | Type      | Description                                                           |
 |:-------------------------|:----------|:----------------------------------------------------------------------|
 | $Y_{sd}$               | observed | Value of `Reaction` for subject $s$ on day $d$                    |
-| $X_{sd}$               | observed | Value of `Day` (0-9) for subject $s$ on day $d$                  |
+| $X_{sd}$               | observed | Value of `days_deprived` (0-7) for subject $s$ on day $d$                  |
 | $\beta_{0s}$           | derived  | level 1 intercept parameter                                           |
 | $\beta_{1s}$           | derived  | level 1 slope parameter                                               |
 | $e_{sd}$               | derived  | Residual ($Y_{sd}$ - $\hat{Y}_{sd}$) for subject $s$, day $d$ |
