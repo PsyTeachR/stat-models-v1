@@ -84,7 +84,7 @@
 <p>Recall that a correlation coefficient quantifies the <strong>strength</strong> and <strong>direction</strong> of a relationship between two variables. It is usually represented by the symbol <span class="math inline">\(r\)</span> or <span class="math inline">\(\rho\)</span> (Greek letter "rho"). The correlation coefficient ranges between -1 and 1, with 0 corresponding to no relationship, positive values reflecting a positive relationship (as one variable increases, so does the other), and negative values reflecting a negative relationship (as one variable increases, the other decreases).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:correlation-relationships"></span>
-<img src="02-bivariate-simulation_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="100%"><p class="caption">
 Figure 2.1: Different types of bivariate relationships.
 </p>
 </div>
@@ -152,7 +152,7 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">height</span> <span class="op">+</span> <span class="va">mass</span> <span class="op">+</span> <span class="va">birth_year</span>, <span class="va">starwars</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:pairs"></span>
-<img src="02-bivariate-simulation_files/figure-html/pairs-1.png" alt="Pairwise correlations for the starwars dataset" width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/pairs-1.png" alt="Pairwise correlations for the starwars dataset" width="100%"><p class="caption">
 Figure 2.2: Pairwise correlations for the starwars dataset
 </p>
 </div>
@@ -173,7 +173,7 @@ Figure 2.2: Pairwise correlations for the starwars dataset
 <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="op">~</span><span class="va">height</span> <span class="op">+</span> <span class="va">mass</span> <span class="op">+</span> <span class="va">birth_year</span>, <span class="va">starwars2</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:massive-creature"></span>
-<img src="02-bivariate-simulation_files/figure-html/massive-creature-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass value." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/massive-creature-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass value." width="100%"><p class="caption">
 Figure 2.3: Pairwise correlations for the starwars dataset after removing outlying mass value.
 </p>
 </div>
@@ -194,7 +194,7 @@ Figure 2.3: Pairwise correlations for the starwars dataset after removing outlyi
 <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="op">~</span><span class="va">height</span> <span class="op">+</span> <span class="va">mass</span> <span class="op">+</span> <span class="va">birth_year</span>, <span class="va">starwars3</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:bye-yoda"></span>
-<img src="02-bivariate-simulation_files/figure-html/bye-yoda-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/bye-yoda-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values." width="100%"><p class="caption">
 Figure 2.4: Pairwise correlations for the starwars dataset after removing outlying mass and birth_year values.
 </p>
 </div>
@@ -347,7 +347,7 @@ c &amp; f \\
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"height (inches)"</span>, y <span class="op">=</span> <span class="st">"weight (pounds)"</span><span class="op">)</span> </code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:heights-and-weights"></span>
-<img src="02-bivariate-simulation_files/figure-html/heights-and-weights-1.png" alt="Heights and weights of 475 humans (including infants)" width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/heights-and-weights-1.png" alt="Heights and weights of 475 humans (including infants)" width="100%"><p class="caption">
 Figure 2.5: Heights and weights of 475 humans (including infants)
 </p>
 </div>
@@ -358,7 +358,7 @@ Figure 2.5: Heights and weights of 475 humans (including infants)
          wlog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">weight_lbs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:handw-log"></span>
-<img src="02-bivariate-simulation_files/figure-html/handw-log-1.png" alt="Log transformed heights and weights." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/handw-log-1.png" alt="Log transformed heights and weights." width="100%"><p class="caption">
 Figure 2.6: Log transformed heights and weights.
 </p>
 </div>
@@ -464,7 +464,7 @@ If you want to change this behavior, set the <code>byrow</code> argument to <cod
   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">type</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:plot-together"></span>
-<img src="02-bivariate-simulation_files/figure-html/plot-together-1.png" alt="Real and simulated humans." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/plot-together-1.png" alt="Real and simulated humans." width="100%"><p class="caption">
 Figure 2.7: Real and simulated humans.
 </p>
 </div>
@@ -526,7 +526,7 @@ At <span class="math inline">\(X = \mu_x\)</span>, <span class="math inline">\(Y
   <span class="fu">geom_abline</span><span class="op">(</span>intercept <span class="op">=</span> <span class="op">-</span><span class="fl">5.124</span>, slope <span class="op">=</span> <span class="fl">2.4</span>, colour <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:scatter-with-line"></span>
-<img src="02-bivariate-simulation_files/figure-html/scatter-with-line-1.png" alt="Log transformed values with superimposed regression line." width="100%"><p class="caption">
+<img src="02-correlation-regression_files/figure-html/scatter-with-line-1.png" alt="Log transformed values with superimposed regression line." width="100%"><p class="caption">
 Figure 2.8: Log transformed values with superimposed regression line.
 </p>
 </div>
@@ -682,8 +682,8 @@ $( document ).ready(function() {
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/psyteachr/stat-models-v1/blob/master/02-bivariate-simulation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/psyteachr/stat-models-v1/edit/master/02-bivariate-simulation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/psyteachr/stat-models-v1/blob/master/02-correlation-regression.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/psyteachr/stat-models-v1/edit/master/02-correlation-regression.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

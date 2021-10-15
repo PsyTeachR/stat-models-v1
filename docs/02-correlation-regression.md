@@ -11,7 +11,7 @@ Let's say you've measured psychological well-being using multiple scales. One qu
 Recall that a correlation coefficient quantifies the **strength** and **direction** of a relationship between two variables. It is usually represented by the symbol $r$ or $\rho$ (Greek letter "rho").  The correlation coefficient ranges between -1 and 1, with 0 corresponding to no relationship, positive values reflecting a positive relationship (as one variable increases, so does the other), and negative values reflecting a negative relationship (as one variable increases, the other decreases).
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="100%" />
+<img src="02-correlation-regression_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="100%" />
 <p class="caption">(\#fig:correlation-relationships)Different types of bivariate relationships.</p>
 </div>
 
@@ -115,7 +115,7 @@ pairs(~ height + mass + birth_year, starwars)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/pairs-1.png" alt="Pairwise correlations for the starwars dataset" width="100%" />
+<img src="02-correlation-regression_files/figure-html/pairs-1.png" alt="Pairwise correlations for the starwars dataset" width="100%" />
 <p class="caption">(\#fig:pairs)Pairwise correlations for the starwars dataset</p>
 </div>
 
@@ -146,7 +146,7 @@ pairs(~height + mass + birth_year, starwars2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/massive-creature-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass value." width="100%" />
+<img src="02-correlation-regression_files/figure-html/massive-creature-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass value." width="100%" />
 <p class="caption">(\#fig:massive-creature)Pairwise correlations for the starwars dataset after removing outlying mass value.</p>
 </div>
 
@@ -177,7 +177,7 @@ pairs(~height + mass + birth_year, starwars3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/bye-yoda-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values." width="100%" />
+<img src="02-correlation-regression_files/figure-html/bye-yoda-1.png" alt="Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values." width="100%" />
 <p class="caption">(\#fig:bye-yoda)Pairwise correlations for the starwars dataset after removing outlying mass and birth\_year values.</p>
 </div>
 
@@ -336,7 +336,7 @@ ggplot(handw, aes(height_in, weight_lbs)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/heights-and-weights-1.png" alt="Heights and weights of 475 humans (including infants)" width="100%" />
+<img src="02-correlation-regression_files/figure-html/heights-and-weights-1.png" alt="Heights and weights of 475 humans (including infants)" width="100%" />
 <p class="caption">(\#fig:heights-and-weights)Heights and weights of 475 humans (including infants)</p>
 </div>
 
@@ -351,7 +351,7 @@ handw_log <- handw %>%
 
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/handw-log-1.png" alt="Log transformed heights and weights." width="100%" />
+<img src="02-correlation-regression_files/figure-html/handw-log-1.png" alt="Log transformed heights and weights." width="100%" />
 <p class="caption">(\#fig:handw-log)Log transformed heights and weights.</p>
 </div>
 
@@ -484,7 +484,7 @@ ggplot(alldata, aes(height_in, weight_lbs)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/plot-together-1.png" alt="Real and simulated humans." width="100%" />
+<img src="02-correlation-regression_files/figure-html/plot-together-1.png" alt="Real and simulated humans." width="100%" />
 <p class="caption">(\#fig:plot-together)Real and simulated humans.</p>
 </div>
 
@@ -578,7 +578,7 @@ ggplot(handw_log, aes(hlog, wlog)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-bivariate-simulation_files/figure-html/scatter-with-line-1.png" alt="Log transformed values with superimposed regression line." width="100%" />
+<img src="02-correlation-regression_files/figure-html/scatter-with-line-1.png" alt="Log transformed values with superimposed regression line." width="100%" />
 <p class="caption">(\#fig:scatter-with-line)Log transformed values with superimposed regression line.</p>
 </div>
 
