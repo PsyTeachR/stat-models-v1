@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of October 15, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="description" content="This chapter is under construction as of October 28, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
-<meta property="og:description" content="This chapter is under construction as of October 15, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta property="og:description" content="This chapter is under construction as of October 28, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of October 15, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
+<meta name="twitter:description" content="This chapter is under construction as of October 28, 2021; contents may change!  7.1 Learning objectives analyze data from a design with crossed random factors of subjects and stimuli...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -76,11 +76,11 @@
 <span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of October 15, 2021; contents may change!</p>
+<p>This chapter is under construction as of October 28, 2021; contents may change!</p>
 </div>
-<div id="learning-objectives-1" class="section level2">
+<div id="learning-objectives" class="section level2">
 <h2>
-<span class="header-section-number">7.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>analyze data from a design with crossed random factors of subjects and stimuli</li>
@@ -188,23 +188,23 @@
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">49</td>
-<td align="left">2020-05-05</td>
+<td align="right">18</td>
+<td align="left">2020-05-03</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">67</td>
-<td align="left">2020-05-05</td>
+<td align="right">28</td>
+<td align="left">2020-05-15</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">63</td>
-<td align="left">2020-05-21</td>
+<td align="right">71</td>
+<td align="left">2020-05-22</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">25</td>
-<td align="left">2020-05-26</td>
+<td align="right">22</td>
+<td align="left">2020-05-30</td>
 </tr>
 </tbody>
 </table></div>
@@ -509,7 +509,7 @@
 <p>The first two rules are straightforward, but the third requires some explanation. Let's first ask: how do we know whether some factor is between or within unit?</p>
 <p>A simple way to determine whether a factor is between or within is to use the <code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code> function, which gives frequency counts, and which is loaded when you load tidyverse. Let's say you are interested in whether factor <span class="math inline">\(A\)</span> is within or between subjects, for the imaginary 2x2x2 factorial data <code>abc_data</code> below where <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> name the factors of your design.</p>
 <div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="co">## run this code to create the table "abc_data"</span>
 <span class="va">abc_subj</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>subject_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,
@@ -810,7 +810,7 @@ e_{si} \sim N\left(0, \sigma^2\right)
 <p>If you want to get the same results as everyone else for this exercise, then we all should seed the random number generator with the same value. While we're at it, let's load in the packages we need.</p>
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">11709</span><span class="op">)</span>  </code></pre></div>
 <p>Now let's define the parameters for the DGP (data generating process).</p>
@@ -1460,7 +1460,7 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#linear-mixed-effects-models-with-crossed-random-factors"><span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors</a></li>
-<li><a class="nav-link" href="#learning-objectives-1"><span class="header-section-number">7.1</span> Learning objectives</a></li>
+<li><a class="nav-link" href="#learning-objectives"><span class="header-section-number">7.1</span> Learning objectives</a></li>
 <li><a class="nav-link" href="#web-app"><span class="header-section-number">7.2</span> Web app</a></li>
 <li><a class="nav-link" href="#generalizing-over-encounters-between-subjects-and-stimuli"><span class="header-section-number">7.3</span> Generalizing over encounters between subjects and stimuli</a></li>
 <li><a class="nav-link" href="#lme4-syntax-for-crossed-random-factors"><span class="header-section-number">7.4</span> lme4 syntax for crossed random factors</a></li>
@@ -1495,7 +1495,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-15.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

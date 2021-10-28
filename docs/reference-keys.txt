@@ -96,7 +96,6 @@ fixed-effects
 random-effects
 multi-level-app
 linear-mixed-effects-models-with-one-random-factor
-learning-objectives
 when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling
 example-independent-samples-t-test-on-multi-level-data
 when-is-a-random-intercepts-model-appropriate
@@ -104,7 +103,7 @@ expressing-the-study-design-and-performing-tests-in-regression
 factors-with-more-than-two-levels
 multiparameter-tests
 linear-mixed-effects-models-with-crossed-random-factors
-learning-objectives-1
+learning-objectives
 web-app
 generalizing-over-encounters-between-subjects-and-stimuli
 lme4-syntax-for-crossed-random-factors
@@ -119,7 +118,7 @@ join-subjects-items-and-trials
 create-the-response-variable
 fitting-the-model
 generalized-linear-mixed-effects-models
-learning-objectives-2
+learning-objectives-1
 discrete-versus-continuous-data
 why-not-model-discrete-data-as-continuous
 bounded-scale

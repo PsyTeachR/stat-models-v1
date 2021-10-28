@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of October 15, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="description" content="6.1 When, and why, would you want to replace conventional analyses with linear mixed-effects modeling? We have repeatedly emphasized how many common techniques in psychology can be seen as special...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
-<meta property="og:description" content="This chapter is under construction as of October 15, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
+<meta property="og:description" content="6.1 When, and why, would you want to replace conventional analyses with linear mixed-effects modeling? We have repeatedly emphasized how many common techniques in psychology can be seen as special...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of October 15, 2021; contents may change!  6.1 Learning objectives understand how linear mixed-effects models can replace conventional analyses, and when they...">
+<meta name="twitter:description" content="6.1 When, and why, would you want to replace conventional analyses with linear mixed-effects modeling? We have repeatedly emphasized how many common techniques in psychology can be seen as special...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -75,25 +75,11 @@
 <h1>
 <span class="header-section-number">6</span> Linear mixed-effects models with one random factor<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-one-random-factor"><i class="fas fa-link"></i></a>
 </h1>
-<div class="warning">
-<p>This chapter is under construction as of October 15, 2021; contents may change!</p>
-</div>
-<div id="learning-objectives" class="section level2">
-<h2>
-<span class="header-section-number">6.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
-</h2>
-<ul>
-<li>understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate</li>
-<li>express various types of common designs in a regression framework</li>
-<li>use model comparison (<code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>) for testing effects</li>
-<li>express various study designs using the R regression formula syntax</li>
-</ul>
-</div>
 <div id="when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling" class="section level2">
 <h2>
-<span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?<a class="anchor" aria-label="anchor" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?<a class="anchor" aria-label="anchor" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fas fa-link"></i></a>
 </h2>
-<p>We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below:</p>
+<p>We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="15%">
@@ -134,7 +120,18 @@
 </tr>
 </tbody>
 </table></div>
-<p>To decide which function to use, you need to know the type of data you're working with (continuous and normally distributed, or not) and how the data have been sampled (single-level or <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a>). Arguments to these functions are highly similar across all four versions. We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but many of the principles are identical.</p>
+<p>By the end of this chapter, you should:</p>
+<ul>
+<li>understand how to replace standard ANOVA and t-test analyses with regression for data with a single random factor and continuous DV;</li>
+<li>be able to perform model comparison (<code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>) for testing effects;</li>
+<li>be able to express various study designs using the R regression formula syntax.</li>
+</ul>
+<p>To decide which of the four regression functions to use, you need to be able to answer two questions.</p>
+<ol style="list-style-type: decimal">
+<li>What type of data does the dependent variable represent and how is it distributed?</li>
+<li>Is the data <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a> or single level?</li>
+</ol>
+<p>Arguments to these functions are highly similar across all four versions. We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but the principles will generalize to those other types of data.</p>
 <p>Here is a comparison chart for single-level data (data where you don't have <a class="glossary" target="_blank" title="A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units." href="https://psyteachr.github.io/glossary/r#repeated-measures">repeated-measures</a>):</p>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
@@ -230,13 +227,13 @@
 </div>
 <div id="example-independent-samples-t-test-on-multi-level-data" class="section level2">
 <h2>
-<span class="header-section-number">6.3</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data<a class="anchor" aria-label="anchor" href="#example-independent-samples-t-test-on-multi-level-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data<a class="anchor" aria-label="anchor" href="#example-independent-samples-t-test-on-multi-level-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
 <p>This <a href="https://shiny.psy.gla.ac.uk/Dale/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
 <div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/independent_samples.csv"</span>, col_types <span class="op">=</span> <span class="st">"cci"</span><span class="op">)</span>
 
@@ -352,7 +349,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p>Play around with the sliders in the app above and check the lmer output panel until you understand how the output maps onto the model parameters.</p>
 <div id="when-is-a-random-intercepts-model-appropriate" class="section level3">
 <h3>
-<span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?<a class="anchor" aria-label="anchor" href="#when-is-a-random-intercepts-model-appropriate"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2.1</span> When is a random-intercepts model appropriate?<a class="anchor" aria-label="anchor" href="#when-is-a-random-intercepts-model-appropriate"><i class="fas fa-link"></i></a>
 </h3>
 <p>Of course, a mixed-effects model is only appropriate when you have multilevel data. The random-intercepts model is appropriate for any one-sample or between-subjects data with pseudoreplications (if you don't have pseudoreplications in this situation, you don't have multilevel data, and you can just use vanilla regression, e.g., <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>).</p>
 <p>The "random-intercepts-only" model is also appropriate when you have within-subject factors in your design, but <strong>only if you don't also have pseudoreplications</strong>; that is, it is <strong>only</strong> appropriate when you have a single observation per subject per level of the within-subject factor. If you have more than one observation per subject per level/cell, you need to enrich your random effects structure with random slopes, as described in the next section. If the reason you have multiple observations per subject per level is because you have each subject reacting to the same set of stimuli, then you might want to consider a mixed-effects model with crossed random effects for subjects and stimuli, as described in the <a href="linear-mixed-effects-models-with-crossed-random-factors.html">next chapter</a>.</p>
@@ -361,7 +358,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 </div>
 <div id="expressing-the-study-design-and-performing-tests-in-regression" class="section level2">
 <h2>
-<span class="header-section-number">6.4</span> Expressing the study design and performing tests in regression<a class="anchor" aria-label="anchor" href="#expressing-the-study-design-and-performing-tests-in-regression"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3</span> Expressing the study design and performing tests in regression<a class="anchor" aria-label="anchor" href="#expressing-the-study-design-and-performing-tests-in-regression"><i class="fas fa-link"></i></a>
 </h2>
 <p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke, <a href="bibliography.html#ref-Luke_2017">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
 <p>First, let's take a closer look at the regression formula syntax in R and <strong><code>lme4</code></strong>. For the regression model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span> with by-subject random effects you'd have:</p>
@@ -381,7 +378,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p>which, despite its complexity, is a design that is not that uncommon in psychology (e.g., if you have all factors within and multiple stimuli per condition)!</p>
 <div id="factors-with-more-than-two-levels" class="section level3">
 <h3>
-<span class="header-section-number">6.4.1</span> Factors with more than two levels<a class="anchor" aria-label="anchor" href="#factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.1</span> Factors with more than two levels<a class="anchor" aria-label="anchor" href="#factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
 </h3>
 <p>As noted above, you could conduct a one-factor ANOVA in regression using the formula <code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x)</a></code> for single-level or <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer(y ~ x + (1 | subject))</a></code> for the multilevel version without pseudoreplications. In the formula, the <code>x</code> predictor would be of type <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>, which R would (by default) convert to <span class="math inline">\(k-1\)</span> dummy-coded numerical predictors (one for each level; see the <a href="interactions.html">interaction chapter</a> for information).</p>
 <p>It is often sensible to code your own numerical predictors, particularly if your goal is to do ANOVA-style tests of main effects and interactions, which can be difficult if any of your variables are of type <code>factor</code>. So for a design with one three-level factor called <code>meal</code> (<code>breakfast</code>, <code>lunch</code>, <code>dinner</code>) you could create two variables, <code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code> following the scheme below.</p>
@@ -419,7 +416,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 </div>
 <div id="multiparameter-tests" class="section level3">
 <h3>
-<span class="header-section-number">6.4.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
 </h3>
 <p>Whenever you are dealing with designs where all categorical factors have no more than two levels, the test of the regression coefficient associated with a given factor will be equivalent to the test for the effect in the ANOVA framework, provided you use <a href="multiple-regression.html#dealing-with-categorical-predictors">sum or deviation coding</a>. But in the above example, we have a 3x2 design, with two predictor variables coding the main effect of <code>meal</code> (<code>lunch_v_breakfast</code> and <code>dinner_v_breakfast</code>). Let's simulate some data and run a one-factor ANOVA with <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, and then we'll replicate the analysis using the regression function <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> (note that the same procedure works for mixed-effects models on multilevel data, just using <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> instead of <code>base::lm()</code>).</p>
 <div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
@@ -679,15 +676,14 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#linear-mixed-effects-models-with-one-random-factor"><span class="header-section-number">6</span> Linear mixed-effects models with one random factor</a></li>
-<li><a class="nav-link" href="#learning-objectives"><span class="header-section-number">6.1</span> Learning objectives</a></li>
-<li><a class="nav-link" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><span class="header-section-number">6.2</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
+<li><a class="nav-link" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><span class="header-section-number">6.1</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?</a></li>
 <li>
-<a class="nav-link" href="#example-independent-samples-t-test-on-multi-level-data"><span class="header-section-number">6.3</span> Example: Independent-samples \(t\)-test on multi-level data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#when-is-a-random-intercepts-model-appropriate"><span class="header-section-number">6.3.1</span> When is a random-intercepts model appropriate?</a></li></ul>
+<a class="nav-link" href="#example-independent-samples-t-test-on-multi-level-data"><span class="header-section-number">6.2</span> Example: Independent-samples \(t\)-test on multi-level data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#when-is-a-random-intercepts-model-appropriate"><span class="header-section-number">6.2.1</span> When is a random-intercepts model appropriate?</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#expressing-the-study-design-and-performing-tests-in-regression"><span class="header-section-number">6.4</span> Expressing the study design and performing tests in regression</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#factors-with-more-than-two-levels"><span class="header-section-number">6.4.1</span> Factors with more than two levels</a></li>
-<li><a class="nav-link" href="#multiparameter-tests"><span class="header-section-number">6.4.2</span> Multiparameter tests</a></li>
+<a class="nav-link" href="#expressing-the-study-design-and-performing-tests-in-regression"><span class="header-section-number">6.3</span> Expressing the study design and performing tests in regression</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#factors-with-more-than-two-levels"><span class="header-section-number">6.3.1</span> Factors with more than two levels</a></li>
+<li><a class="nav-link" href="#multiparameter-tests"><span class="header-section-number">6.3.2</span> Multiparameter tests</a></li>
 </ul>
 </li>
 </ul>
@@ -707,7 +703,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-15.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

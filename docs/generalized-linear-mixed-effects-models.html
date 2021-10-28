@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of October 15, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="description" content="This chapter is under construction as of October 28, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
-<meta property="og:description" content="This chapter is under construction as of October 15, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta property="og:description" content="This chapter is under construction as of October 28, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of October 15, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="twitter:description" content="This chapter is under construction as of October 28, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -76,11 +76,11 @@
 <span class="header-section-number">8</span> Generalized linear mixed-effects models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
 <div class="warning">
-<p>This chapter is under construction as of October 15, 2021; contents may change!</p>
+<p>This chapter is under construction as of October 28, 2021; contents may change!</p>
 </div>
-<div id="learning-objectives-2" class="section level2">
+<div id="learning-objectives-1" class="section level2">
 <h2>
-<span class="header-section-number">8.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-1"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>distinguish discrete from continuous data</li>
@@ -146,8 +146,8 @@ Figure 8.1: <strong>Distribution of number of rainy days for 500 years of simula
 <pre><code>## # A tibble: 2 × 2
 ##   city         sd
 ##   &lt;chr&gt;     &lt;dbl&gt;
-## 1 Barcelona  7.05
-## 2 Glasgow    8.94</code></pre>
+## 1 Barcelona  6.87
+## 2 Glasgow    9.63</code></pre>
 </div>
 <div id="spurious-interactions-due-to-scaling-effects" class="section level4">
 <h4>
@@ -386,7 +386,7 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#generalized-linear-mixed-effects-models"><span class="header-section-number">8</span> Generalized linear mixed-effects models</a></li>
-<li><a class="nav-link" href="#learning-objectives-2"><span class="header-section-number">8.1</span> Learning objectives</a></li>
+<li><a class="nav-link" href="#learning-objectives-1"><span class="header-section-number">8.1</span> Learning objectives</a></li>
 <li>
 <a class="nav-link" href="#discrete-versus-continuous-data"><span class="header-section-number">8.2</span> Discrete versus continuous data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#why-not-model-discrete-data-as-continuous"><span class="header-section-number">8.2.1</span> Why not model discrete data as continuous?</a></li></ul>
 </li>
@@ -416,7 +416,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-15.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -269,7 +269,7 @@ $$Y_{i} = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{1i} X_{2i} + e_
 
 - $\hat{\beta}_0$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["460.109764033163"]'/>
 - $\hat{\beta}_1$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["1.91232184349596"]'/>
-- $\hat{\beta}_2$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["4.82504807369752"]'/>
+- $\hat{\beta}_2$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["4.82504807369759"]'/>
 - $\hat{\beta}_3$: <input class='webex-solveme nospaces' data-tol='0.01' size='4' data-answer='["1.58653315274424"]'/>
 
 Based on these parameter estimates, the regression line for the (baseline) urban group is:

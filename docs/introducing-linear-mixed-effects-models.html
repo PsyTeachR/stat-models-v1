@@ -7,7 +7,7 @@
 <title>Chapter 5 Introducing linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="5.1 Modeling multi-level data  Some ideas in this chapter come from the textbook Statistical Rethinking by McElreath (2020), This chapter also borrows extensively from Tristan Mahr's excellent...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Introducing linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introducing-linear-mixed-effects-models.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -127,7 +127,7 @@ References:
 <p>A good way to start every analysis is to plot the data. Here is data for a single subject.</p>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="va">just_308</span> <span class="op">&lt;-</span> <span class="va">sleepstudy</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Subject</span> <span class="op">==</span> <span class="st">"308"</span><span class="op">)</span>
@@ -378,9 +378,9 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 <div class="try">
 <p>Answer these questions (to three decimal places):</p>
 <ul>
-<li>What is the intercept for subject 308? <input class="webex-solveme nospaces" data-tol="0.001" size="8" data-answer='["288.217466666666"]'>
+<li>What is the intercept for subject 308? <input class="webex-solveme nospaces" data-tol="0.001" size="8" data-answer='["288.217466666667"]'>
 </li>
-<li>What is the slope for subject 308? <input class="webex-solveme nospaces" data-tol="0.001" size="8" data-answer='["21.6904952380953"]'>
+<li>What is the slope for subject 308? <input class="webex-solveme nospaces" data-tol="0.001" size="8" data-answer='["21.6904952380952"]'>
 </li>
 <li>What is the intercept for subject 335? <input class="webex-solveme nospaces" data-tol="0.001" size="8" data-answer='["262.874583333333"]'>
 </li>
@@ -839,9 +839,9 @@ to the response time, on average.</p>
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span></code></pre></div>
 <pre><code>## Computing profile confidence intervals ...</code></pre>
 <pre><code>##                     2.5 %      97.5 %
-## .sig01         19.0979934  46.3366599
-## .sig02         -0.4051073   0.8058951
-## .sig03          4.0079284  10.2487351
+## .sig01         19.0979958  46.3368551
+## .sig02         -0.4051073   0.8059222
+## .sig03          4.0079284  10.2487352
 ## .sigma         22.4666029  29.3494509
 ## (Intercept)   251.3443396 284.5904989
 ## days_deprived   7.7245247  15.1463328</code></pre>
@@ -1141,7 +1141,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-15.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-10-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,19 +1,10 @@
 # Linear mixed-effects models with one random factor
 
-:::{.warning}
-This chapter is under construction as of October 15, 2021; contents may change!
-:::
 
-## Learning objectives
-
-* understand how linear mixed-effects models can replace conventional analyses, and when they are appropriate
-* express various types of common designs in a regression framework
-* use model comparison (`anova()`) for testing effects
-* express various study designs using the R regression formula syntax
 
 ## When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?
 
-We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below:
+We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below.
 
 
 |sampling design |type of data                     |function        |description                            |
@@ -23,7 +14,18 @@ We have repeatedly emphasized how many common techniques in psychology can be se
 |multilevel      |continuous, normally distributed |`lme4::lmer()`  |linear mixed-effects model             |
 |multilevel      |count or categorical             |`lme4::glmer()` |generalized linear mixed-effects model |
 
-To decide which function to use, you need to know the type of data you're working with (continuous and normally distributed, or not) and how the data have been sampled (single-level or <a class='glossary' target='_blank' title='(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli).' href='https://psyteachr.github.io/glossary/m#multilevel'>multilevel</a>). Arguments to these functions are highly similar across all four versions.  We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but many of the principles are identical.
+By the end of this chapter, you should:
+
+* understand how to replace standard ANOVA and t-test analyses with regression for data with a single random factor and continuous DV;
+* be able to perform model comparison (`anova()`) for testing effects;
+* be able to express various study designs using the R regression formula syntax.
+
+To decide which of the four regression functions to use, you need to be able to answer two questions.
+
+1. What type of data does the dependent variable represent and how is it distributed?
+2. Is the data <a class='glossary' target='_blank' title='(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli).' href='https://psyteachr.github.io/glossary/m#multilevel'>multilevel</a> or single level?
+
+Arguments to these functions are highly similar across all four versions.  We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but the principles will generalize to those other types of data.
 
 Here is a comparison chart for single-level data (data where you don't have <a class='glossary' target='_blank' title='A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units.' href='https://psyteachr.github.io/glossary/r#repeated-measures'>repeated-measures</a>):
 
