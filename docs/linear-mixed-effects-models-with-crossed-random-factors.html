@@ -167,23 +167,23 @@
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">54</td>
+<td align="right">57</td>
 <td align="left">2020-05-04</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">18</td>
+<td align="right">40</td>
 <td align="left">2020-05-17</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">63</td>
+<td align="right">18</td>
 <td align="left">2020-05-18</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">32</td>
-<td align="left">2020-05-26</td>
+<td align="right">38</td>
+<td align="left">2020-05-25</td>
 </tr>
 </tbody>
 </table></div>
@@ -449,7 +449,7 @@
 <p>How should we analyze such data? Recall from the last chapter that the lme4 formula syntax for a model with by-subject random intercepts and slopes for predictor <code>x</code> would be given by <code>y ~ x + (1 + x | subject_id)</code> where the term in brackets with the vertical bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> provides the random effects specification. The variable to the right of the bar, <code>subject_id</code>, specifies the variable that identifies the levels of the random factor. The formula to the left of the bar within the brackets, <code>1 + x</code>, specifies the random effects associated with this factor, which in this case is a random intercept and random slope for <code>x</code>. The best way to think about this bracketed part of the formula <code>(1 + x | subject_id)</code> is <strong>as an instruction to <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> about how to build a covariance matrix capturing the variance introduced by the random factor of subjects.</strong> By now you should realize that this instruction would result in the estimation of a two-dimensional covariance matrix, with one dimension for intercept variance and one for slope variance.</p>
 <p>But we are not limited to the estimation of random effects for subjects; we can also specify the estimation of random effects for stimuli by simply adding another term to the formula. For example,</p>
 <p><code>y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)</code></p>
-<p>regresses <code>y</code> on <code>x</code> with by-subject random intercepts and slopes and by-stimulus random intercepts. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating <strong>two independent covariance matrices</strong>, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> symbol. For instance, if we have another predictor <code>w</code>, we might have:</p>
+<p>regresses <code>y</code> on <code>x</code> with by-subject random intercepts and slopes and by-stimulus random intercepts and slopes. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating <strong>two independent covariance matrices</strong>, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> symbol. For instance, if we have another predictor <code>w</code>, we might have:</p>
 <p><code>y ~ x + (x | subject_id) + (x + w | stimulus_id)</code></p>
 <p>which would estimate the same 2x2 matrix for subjects, but the covariance matrix for stimuli would now be a 3x3 matrix (intercepts, slope of x, and slope of w). Although this enables great flexibility, as the random effects structure becomes more complex, the estimation process becomes more difficult and less likely to converge upon a result.</p>
 </div>

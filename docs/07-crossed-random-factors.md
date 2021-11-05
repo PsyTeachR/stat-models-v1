@@ -36,10 +36,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  54|2020-05-04 |
-|          2|  18|2020-05-17 |
-|          3|  63|2020-05-18 |
-|          4|  32|2020-05-26 |
+|          1|  57|2020-05-04 |
+|          2|  40|2020-05-17 |
+|          3|  18|2020-05-18 |
+|          4|  38|2020-05-25 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
@@ -111,7 +111,7 @@ But we are not limited to the estimation of random effects for subjects; we can 
 
 `y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)`
 
-regresses `y` on `x` with by-subject random intercepts and slopes and by-stimulus random intercepts. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating **two independent covariance matrices**, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar `|` symbol. For instance, if we have another predictor `w`, we might have:
+regresses `y` on `x` with by-subject random intercepts and slopes and by-stimulus random intercepts and slopes. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating **two independent covariance matrices**, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar `|` symbol. For instance, if we have another predictor `w`, we might have:
 
 `y ~ x + (x | subject_id) + (x + w | stimulus_id)`
 

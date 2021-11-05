@@ -62,7 +62,7 @@ But we are not limited to the estimation of random effects for subjects; we can 
 
 `y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)`
 
-regresses `y` on `x` with by-subject random intercepts and slopes and by-stimulus random intercepts. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating **two independent covariance matrices**, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar `|` symbol. For instance, if we have another predictor `w`, we might have:
+regresses `y` on `x` with by-subject random intercepts and slopes and by-stimulus random intercepts and slopes. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating **two independent covariance matrices**, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar `|` symbol. For instance, if we have another predictor `w`, we might have:
 
 `y ~ x + (x | subject_id) + (x + w | stimulus_id)`
 
