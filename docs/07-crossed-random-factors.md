@@ -1,18 +1,6 @@
 # Linear mixed-effects models with crossed random factors
 
-:::{.warning}
-This chapter is under construction as of October 28, 2021; contents may change!
-:::
 
-## Learning objectives
-
-* analyze data from a design with crossed random factors of subjects and stimuli
-* appropriately specify random effects to enable proper generalization
-* simulate data for a design with crossed random factors
-
-## Web app
-
-- [Demo of crossed random effects](https://shiny.psy.gla.ac.uk/Dale/crossed)
 
 ## Generalizing over encounters between subjects and stimuli
 
@@ -48,10 +36,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  18|2020-05-03 |
-|          2|  28|2020-05-15 |
-|          3|  71|2020-05-22 |
-|          4|  22|2020-05-30 |
+|          1|  54|2020-05-04 |
+|          2|  18|2020-05-17 |
+|          3|  63|2020-05-18 |
+|          4|  32|2020-05-26 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
@@ -415,6 +403,18 @@ Therefore the formula you need for stimuli is `(B | stimulus_id)`, making the fu
 
 </div>
 
+### Troubleshooting non-convergence and 'singular fits'
+
+When you attempt to fit models with maximal random effects, you can run into a couple of different problems. Recall that the estimation algorithm for linear mixed-effects model is *iterative*⸻that is, in a step-by-step manner, the fitting algorithm searches for parameter values that make the data most likely. Sometimes it looks and looks and cannot find them, and will give up, in which case you will get a 'convergence warning.' When this happens, it is probably not a good idea to trust any of the estimates from the non-converged model, and you'll need to simplify the model structure before trying again.
+
+Another thing that can happen is that you'll get a message about a 'singular fit'. This latter message will appear when the estimation procedure yields a variance-covariance matrix for one or more random factors that has either (1) perfect or near-perfect (1.00, -1.00) positive or negative correlations, (2) one or more variances close to zero, or (3) both. It is possibly ok to ignore this message, but it is also reasonable to simplify the model structure until the message goes away.
+
+How do you simplify a model to deal with convergence problems or singular fit messages? This should be done with care. I suggest the following strategy:
+
+1. Constrain all covariance parameters to zero. This is accomplished using the double-bar `||` syntax, e.g., changing `(a * b | subject)` to `(a * b || subject)`. If you still run into estimation problems, then:
+2. Inspect the parameter estimates from the non-converging or singular model. Are any of the slope variables zero or near to zero? Remove these and re-fit the model, repeating this step until the convergence warnings / singular fit messages go away.
+
+For more technical details about convergence problems and what to do, see `?lme4::convergence` and `?lme4::isSingular`.
 
 ## Simulating data with crossed random factors
 
