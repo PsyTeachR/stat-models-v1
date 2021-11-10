@@ -1,30 +1,25 @@
 # Generalized linear mixed-effects models
 
-:::{.warning}
-This chapter is under construction as of November 05, 2021; contents may change!
-:::
 
 
 
-## Learning objectives
-
-* distinguish discrete from continuous data
-* estimate logit models
 
 ## Discrete versus continuous data
 
-All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is **continuous** and numeric. However, there are many cases in psychology where our measurements are of a **discrete** nature. By discrete, we mean that there are gaps between values, such as we would get with Likert scale data. It may also be the case that the values of the response variable reflect categories with no intrinsic ordering.  Here are some examples:
+All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is **continuous** and numeric. However, there are many cases in psychology where our measurements are of a **discrete** nature. One type of discrete data involves a finite set of possible values with gaps between values, such as we would get with Likert scale data. Another type of discrete data is where the response variable reflects categories with no intrinsic ordering (often called "nominal" data), such as whether a customer at a restaurant orders a meal with chicken, beef, or tofu.
 
-* type of linguistic structure a speaker produces (double object or prepositional object phrase)
-* which of a set of images a participant is viewing at a given moment
-* whether the participant has made an accurate or inaccurate selection
-* whether a job candidate gets hired or not
-* agreement rating on a Likert scale.
+Discrete data are common in psychology. Here are some examples of discrete data:
+
+* type of linguistic structure a speaker produces (double object or prepositional object phrase);
+* which of a set of images a participant is viewing at a given moment;
+* whether the participant has made an accurate or inaccurate selection;
+* whether a job candidate gets hired or not;
+* agreement on a Likert scale.
 
 Another common type of data is **count** data, where values are also discrete. Often with count data, the number of opportunities for something to occur is not well-defined. Some examples:
 
-* number of speech errors in a corpus
-* number of turn shifts between speakers in a conversation
+* number of speech errors in a corpus of natural language;
+* number of car accidents occuring each year at a given intersection;
 * number of visits to the doctor in a given month.
 
 ### Why not model discrete data as continuous?
@@ -33,56 +28,46 @@ Discrete data has some properties that generally make it a bad idea to try to an
 
 #### Bounded scale
 
-Discrete data generally has a bounded scale. It may be bounded below (as with count data, where the lower bound is zero) or it may have both an upper and lower bound, such as Likert scale data. or binary data.
+Discrete data generally has a bounded scale. It may be bounded below (as with count data, where the lower bound is zero) or it may have both an upper and lower bound, such as Likert scale data or binary data. If you attempt to model bounded data with an approach intended for continuous data, then the model may end up assigning non-zero probabilities to impossible values outside of the scale. 
 
-#### The variance is proportional to the mean
+Analyzing bounded data with models for continuous data can lead to the detection of spurious interaction effects. For instance, consider the effect of some experimental intervention that increases accuracy. If participants are already highly accurate (e.g., more than 90%) in condition A than in condition B (say, 50%) then the size of the possible effect in A is smaller than the size of the possible effect in B, since accuracy cannot exceed 100%. Thus, it is difficult to know whether any interaction effect reflects something theoretically meaningful, or just an artifact of the bounded nature of the scale.
+
+#### The variance depends on the the mean
 
 In most settings with continuous data, the variance is assumed to be independent of the mean; this is essentially the assumption of homogeneity of variance in a model with a continuous predictor. For discrete data, this assumption of the independence of the mean from the variance is often not met. 
 
-We can see this through data simulation. The `rbinom()` function makes it possible to simulate data from a **binomial** distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K.  According to [this website](https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php), Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assumimg the climate remains constant).
+We can see this through data simulation. The `rbinom()` function makes it possible to simulate data from a **binomial** distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K.  According to [this website](https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php), Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assuming a constant climate).
 
 
 ```r
 rainy_days <- tibble(city = rep(c("Barcelona", "Glasgow"), each = 500),
        days_of_rain = c(rbinom(500, 365, 55/365),
                         rbinom(500, 365, 170/365))) 
-
-rainy_days %>%
-  ggplot(aes(days_of_rain)) +
-  geom_histogram() +
-  facet_wrap(~ city)
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
-<div class="figure" style="text-align: center">
-<img src="08-generalized-linear-models_files/figure-html/rbinom-1.png" alt="**Distribution of number of rainy days for 500 years of simulated rainfall in Barcelona and Glasgow**" width="100%" />
-<p class="caption">(\#fig:rbinom)**Distribution of number of rainy days for 500 years of simulated rainfall in Barcelona and Glasgow**</p>
-</div>
-
-The distribution for Glasgow is slightly fatter than the distribution for Barcelona. We can also see the greater variability in Glasgow if we look at the standard deviations of these variables.
+We can see the greater variability in Glasgow if we look at the standard deviations of the simulated data for each city.
 
 
 ```r
 rainy_days %>%
   group_by(city) %>%
-  summarise(sd = sd(days_of_rain))
+  summarise(variance = var(days_of_rain))
 ```
 
 ```
 ## # A tibble: 2 × 2
-##   city         sd
-##   <chr>     <dbl>
-## 1 Barcelona  6.77
-## 2 Glasgow    9.05
+##   city      variance
+##   <chr>        <dbl>
+## 1 Barcelona     44.5
+## 2 Glasgow       98.0
 ```
 
+With binomially distributed data, the variance is given by $np(1-p)$ where $n$ is the number of observations and $p$ is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for $n=1000$; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.
 
-#### Spurious interactions due to scaling effects
-
-Another reason why treating discrete data as continuous can be problematic is the bounded nature of many discrete scales, which can lead to the detection of spurious interaction effects. For instance, consider the effect of some experimental intervention that increases accuracy. If participants are already highly accurate (e.g., more than 90%) in condition A than in condition B (say, 50%) then the size of the possible effect in A is smaller than the size of the possible effect in B, since accuracy cannot exceed 100%. Thus, it is difficult to know whether any interaction effect reflects something theoretically meaningful, or just an artifact of the bounded nature of the scale.
+<div class="figure" style="text-align: center">
+<img src="08-generalized-linear-models_files/figure-html/binomial-var-plot-1.png" alt="Plot of variance versus probability, with sample size $n = 1000$." width="100%" />
+<p class="caption">(\#fig:binomial-var-plot)Plot of variance versus probability, with sample size $n = 1000$.</p>
+</div>
 
 ## Generalized Linear Models
 
@@ -123,9 +108,9 @@ There are a large variety of different kinds of generalized linear models you ca
 
 In logistic regression, we are modeling the relationship between the response and a set of predictors in log odds space.
 
-Logistic regression is used when the individual outcomes are Bernoulli trials---events with binary outcomes. Typically one of the two outcomes is referred to as 'success' and is coded as a 1; the other is referred to as 'failure' and is coded as 0. Note that the terms 'success' and 'failure' are completely arbitrary, and should not be taken to imply that the more desireable category should always be coded as 1.  For instance, when flipping a coin we could equivalently choose 'heads' as success and 'tails' as failure or vice-versa.
+Logistic regression is used when the individual outcomes are Bernoulli trials⸻events with binary outcomes. Typically one of the two outcomes is referred to as 'success' and is coded as a 1; the other is referred to as 'failure' and is coded as 0. Note that the terms 'success' and 'failure' are completely arbitrary, and should not be taken to imply that the more desireable category should always be coded as 1.  For instance, when flipping a coin we could equivalently choose 'heads' as success and 'tails' as failure or vice-versa.
 
-Often the outcome of a sequence of Bernoulli trials is communicated as a **proportion**---the ratio of successes to the total number of trials. For instance, if we flip a coin 100 times and get 47 heads, we would have a proportion of 47/100 or .47, which would also be our estimate of the probability of the event. For events coded as 1s and 0s, a shortcut way of getting the proportion is to use the `mean()` function.
+Often the outcome of a sequence of Bernoulli trials is communicated as a **proportion**⸻the ratio of successes to the total number of trials. For instance, if we flip a coin 100 times and get 47 heads, we would have a proportion of 47/100 or .47, which would also be our estimate of the probability of the event. For events coded as 1s and 0s, a shortcut way of getting the proportion is to use the `mean()` function.
 
 We can also talk about the odds of success, i.e., that the odds of heads versus tails are one to one, or 1:1. The odds of it raining on a given day in Glasgow would be 170:195; the denominator is the number of days it did not rain (365 - 170 = 195).  Expressed as a decimal number, the ratio 170/195 is about 0.87, and is known as the **natural odds**. Natural odds ranges from 0 to $+\inf$.  Given $Y$ successes on $N$ trials, we can represent the natural odds as $\frac{Y}{N - Y}$.  Or, given a probability $p$, we can represent the odds as $\frac{p}{1-p}$.
 
@@ -153,12 +138,12 @@ where $e$ is Euler's number. In R, you could type this latter function as `1/(1 
 
 The variance function is the variance for the binomial distribution, namely:
 
-$$np(1 - p)$$.
+$$np(1 - p).$$
 
 The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.
 
 <div class="figure" style="text-align: center">
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px" data-external="1"></iframe>
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="800px" data-external="1"></iframe>
 <p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://shiny.psy.gla.ac.uk/Dale/logit></p>
 </div>
 

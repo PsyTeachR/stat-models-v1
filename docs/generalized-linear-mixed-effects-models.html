@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="This chapter is under construction as of November 05, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="description" content="8.1 Discrete versus continuous data All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is continuous and numeric....">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
 <meta property="og:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
-<meta property="og:description" content="This chapter is under construction as of November 05, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta property="og:description" content="8.1 Discrete versus continuous data All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is continuous and numeric....">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
-<meta name="twitter:description" content="This chapter is under construction as of November 05, 2021; contents may change!  8.1 Learning objectives distinguish discrete from continuous data estimate logit models  8.2 Discrete versus...">
+<meta name="twitter:description" content="8.1 Discrete versus continuous data All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is continuous and numeric....">
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -75,102 +75,81 @@
 <h1>
 <span class="header-section-number">8</span> Generalized linear mixed-effects models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
-<div class="warning">
-<p>This chapter is under construction as of November 05, 2021; contents may change!</p>
-</div>
-<div id="learning-objectives" class="section level2">
-<h2>
-<span class="header-section-number">8.1</span> Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"><i class="fas fa-link"></i></a>
-</h2>
-<ul>
-<li>distinguish discrete from continuous data</li>
-<li>estimate logit models</li>
-</ul>
-</div>
 <div id="discrete-versus-continuous-data" class="section level2">
 <h2>
-<span class="header-section-number">8.2</span> Discrete versus continuous data<a class="anchor" aria-label="anchor" href="#discrete-versus-continuous-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> Discrete versus continuous data<a class="anchor" aria-label="anchor" href="#discrete-versus-continuous-data"><i class="fas fa-link"></i></a>
 </h2>
-<p>All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is <strong>continuous</strong> and numeric. However, there are many cases in psychology where our measurements are of a <strong>discrete</strong> nature. By discrete, we mean that there are gaps between values, such as we would get with Likert scale data. It may also be the case that the values of the response variable reflect categories with no intrinsic ordering. Here are some examples:</p>
+<p>All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is <strong>continuous</strong> and numeric. However, there are many cases in psychology where our measurements are of a <strong>discrete</strong> nature. One type of discrete data involves a finite set of possible values with gaps between values, such as we would get with Likert scale data. Another type of discrete data is where the response variable reflects categories with no intrinsic ordering (often called "nominal" data), such as whether a customer at a restaurant orders a meal with chicken, beef, or tofu.</p>
+<p>Discrete data are common in psychology. Here are some examples of discrete data:</p>
 <ul>
-<li>type of linguistic structure a speaker produces (double object or prepositional object phrase)</li>
-<li>which of a set of images a participant is viewing at a given moment</li>
-<li>whether the participant has made an accurate or inaccurate selection</li>
-<li>whether a job candidate gets hired or not</li>
-<li>agreement rating on a Likert scale.</li>
+<li>type of linguistic structure a speaker produces (double object or prepositional object phrase);</li>
+<li>which of a set of images a participant is viewing at a given moment;</li>
+<li>whether the participant has made an accurate or inaccurate selection;</li>
+<li>whether a job candidate gets hired or not;</li>
+<li>agreement on a Likert scale.</li>
 </ul>
 <p>Another common type of data is <strong>count</strong> data, where values are also discrete. Often with count data, the number of opportunities for something to occur is not well-defined. Some examples:</p>
 <ul>
-<li>number of speech errors in a corpus</li>
-<li>number of turn shifts between speakers in a conversation</li>
+<li>number of speech errors in a corpus of natural language;</li>
+<li>number of car accidents occuring each year at a given intersection;</li>
 <li>number of visits to the doctor in a given month.</li>
 </ul>
 <div id="why-not-model-discrete-data-as-continuous" class="section level3">
 <h3>
-<span class="header-section-number">8.2.1</span> Why not model discrete data as continuous?<a class="anchor" aria-label="anchor" href="#why-not-model-discrete-data-as-continuous"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1</span> Why not model discrete data as continuous?<a class="anchor" aria-label="anchor" href="#why-not-model-discrete-data-as-continuous"><i class="fas fa-link"></i></a>
 </h3>
 <p>Discrete data has some properties that generally make it a bad idea to try to analyze it using models intended for continuous data. For instance, if you are interested in the probability of some binary event (a participant's accuracy in a forced-choice task), each measurement will be represented as a 0 or a 1, indicating an inaccurate or an accurate response, respectively. You could calculate the proportion of accurate responses for each participant and analyze that (and many people do) but that is a bad idea for a number of reasons.</p>
 <div id="bounded-scale" class="section level4">
 <h4>
-<span class="header-section-number">8.2.1.1</span> Bounded scale<a class="anchor" aria-label="anchor" href="#bounded-scale"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.1</span> Bounded scale<a class="anchor" aria-label="anchor" href="#bounded-scale"><i class="fas fa-link"></i></a>
 </h4>
-<p>Discrete data generally has a bounded scale. It may be bounded below (as with count data, where the lower bound is zero) or it may have both an upper and lower bound, such as Likert scale data. or binary data.</p>
+<p>Discrete data generally has a bounded scale. It may be bounded below (as with count data, where the lower bound is zero) or it may have both an upper and lower bound, such as Likert scale data or binary data. If you attempt to model bounded data with an approach intended for continuous data, then the model may end up assigning non-zero probabilities to impossible values outside of the scale.</p>
+<p>Analyzing bounded data with models for continuous data can lead to the detection of spurious interaction effects. For instance, consider the effect of some experimental intervention that increases accuracy. If participants are already highly accurate (e.g., more than 90%) in condition A than in condition B (say, 50%) then the size of the possible effect in A is smaller than the size of the possible effect in B, since accuracy cannot exceed 100%. Thus, it is difficult to know whether any interaction effect reflects something theoretically meaningful, or just an artifact of the bounded nature of the scale.</p>
 </div>
-<div id="the-variance-is-proportional-to-the-mean" class="section level4">
+<div id="the-variance-depends-on-the-the-mean" class="section level4">
 <h4>
-<span class="header-section-number">8.2.1.2</span> The variance is proportional to the mean<a class="anchor" aria-label="anchor" href="#the-variance-is-proportional-to-the-mean"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.2</span> The variance depends on the the mean<a class="anchor" aria-label="anchor" href="#the-variance-depends-on-the-the-mean"><i class="fas fa-link"></i></a>
 </h4>
 <p>In most settings with continuous data, the variance is assumed to be independent of the mean; this is essentially the assumption of homogeneity of variance in a model with a continuous predictor. For discrete data, this assumption of the independence of the mean from the variance is often not met.</p>
-<p>We can see this through data simulation. The <code><a href="https://rdrr.io/r/stats/Binomial.html">rbinom()</a></code> function makes it possible to simulate data from a <strong>binomial</strong> distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K. According to <a href="https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php">this website</a>, Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assumimg the climate remains constant).</p>
+<p>We can see this through data simulation. The <code><a href="https://rdrr.io/r/stats/Binomial.html">rbinom()</a></code> function makes it possible to simulate data from a <strong>binomial</strong> distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K. According to <a href="https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php">this website</a>, Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assuming a constant climate).</p>
 <div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>city <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Barcelona"</span>, <span class="st">"Glasgow"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>,
        days_of_rain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">55</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>,
-                        <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">170</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
-
-<span class="va">rainy_days</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">days_of_rain</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_histogram</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">city</span><span class="op">)</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:rbinom"></span>
-<img src="08-generalized-linear-models_files/figure-html/rbinom-1.png" alt="**Distribution of number of rainy days for 500 years of simulated rainfall in Barcelona and Glasgow**" width="100%"><p class="caption">
-Figure 8.1: <strong>Distribution of number of rainy days for 500 years of simulated rainfall in Barcelona and Glasgow</strong>
-</p>
-</div>
-<p>The distribution for Glasgow is slightly fatter than the distribution for Barcelona. We can also see the greater variability in Glasgow if we look at the standard deviations of these variables.</p>
-<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+                        <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">365</span>, <span class="fl">170</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<p>We can see the greater variability in Glasgow if we look at the standard deviations of the simulated data for each city.</p>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rainy_days</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarise</span><span class="op">(</span>sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">days_of_rain</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">summarise</span><span class="op">(</span>variance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">days_of_rain</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
-##   city         sd
-##   &lt;chr&gt;     &lt;dbl&gt;
-## 1 Barcelona  6.77
-## 2 Glasgow    9.05</code></pre>
+##   city      variance
+##   &lt;chr&gt;        &lt;dbl&gt;
+## 1 Barcelona     44.5
+## 2 Glasgow       98.0</code></pre>
+<p>With binomially distributed data, the variance is given by <span class="math inline">\(np(1-p)\)</span> where <span class="math inline">\(n\)</span> is the number of observations and <span class="math inline">\(p\)</span> is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for <span class="math inline">\(n=1000\)</span>; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:binomial-var-plot"></span>
+<img src="08-generalized-linear-models_files/figure-html/binomial-var-plot-1.png" alt="Plot of variance versus probability, with sample size $n = 1000$." width="100%"><p class="caption">
+Figure 8.1: Plot of variance versus probability, with sample size <span class="math inline">\(n = 1000\)</span>.
+</p>
 </div>
-<div id="spurious-interactions-due-to-scaling-effects" class="section level4">
-<h4>
-<span class="header-section-number">8.2.1.3</span> Spurious interactions due to scaling effects<a class="anchor" aria-label="anchor" href="#spurious-interactions-due-to-scaling-effects"><i class="fas fa-link"></i></a>
-</h4>
-<p>Another reason why treating discrete data as continuous can be problematic is the bounded nature of many discrete scales, which can lead to the detection of spurious interaction effects. For instance, consider the effect of some experimental intervention that increases accuracy. If participants are already highly accurate (e.g., more than 90%) in condition A than in condition B (say, 50%) then the size of the possible effect in A is smaller than the size of the possible effect in B, since accuracy cannot exceed 100%. Thus, it is difficult to know whether any interaction effect reflects something theoretically meaningful, or just an artifact of the bounded nature of the scale.</p>
 </div>
 </div>
 </div>
 <div id="generalized-linear-models" class="section level2">
 <h2>
-<span class="header-section-number">8.3</span> Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2</span> Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"><i class="fas fa-link"></i></a>
 </h2>
 <p>The basic idea behind Generalized Linear Models (not to be confused with General Linear Models) is to specify a <strong>link function</strong> that transforms the response space into a modeling space where we can perform our usual linear regression, and to capture the dependence of the variance on the mean through a <strong>variance function</strong>. The parameters of the model will be expressed on the scale of the modeling space, but we can always transform it back into our original response space using the <strong>inverse link function</strong>.</p>
 <p>There are a large variety of different kinds of generalized linear models you can fit to different types of data. The ones most commonly used in psychology are <strong>logistic regression</strong> and <strong>Poisson regression</strong>, the former being used for binary data (Bernoulli trials) and the latter being used for count data, where the number of trials is not well-defined. We will be focusing on logistic regression.</p>
 </div>
 <div id="logistic-regression" class="section level2">
 <h2>
-<span class="header-section-number">8.4</span> Logistic regression<a class="anchor" aria-label="anchor" href="#logistic-regression"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3</span> Logistic regression<a class="anchor" aria-label="anchor" href="#logistic-regression"><i class="fas fa-link"></i></a>
 </h2>
 <div id="terminology" class="section level3">
 <h3>
-<span class="header-section-number">8.4.1</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.1</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr>
@@ -217,14 +196,14 @@ The (natural) log of the odds
 </tbody>
 </table></div>
 <p>In logistic regression, we are modeling the relationship between the response and a set of predictors in log odds space.</p>
-<p>Logistic regression is used when the individual outcomes are Bernoulli trials---events with binary outcomes. Typically one of the two outcomes is referred to as 'success' and is coded as a 1; the other is referred to as 'failure' and is coded as 0. Note that the terms 'success' and 'failure' are completely arbitrary, and should not be taken to imply that the more desireable category should always be coded as 1. For instance, when flipping a coin we could equivalently choose 'heads' as success and 'tails' as failure or vice-versa.</p>
-<p>Often the outcome of a sequence of Bernoulli trials is communicated as a <strong>proportion</strong>---the ratio of successes to the total number of trials. For instance, if we flip a coin 100 times and get 47 heads, we would have a proportion of 47/100 or .47, which would also be our estimate of the probability of the event. For events coded as 1s and 0s, a shortcut way of getting the proportion is to use the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function.</p>
+<p>Logistic regression is used when the individual outcomes are Bernoulli trials⸻events with binary outcomes. Typically one of the two outcomes is referred to as 'success' and is coded as a 1; the other is referred to as 'failure' and is coded as 0. Note that the terms 'success' and 'failure' are completely arbitrary, and should not be taken to imply that the more desireable category should always be coded as 1. For instance, when flipping a coin we could equivalently choose 'heads' as success and 'tails' as failure or vice-versa.</p>
+<p>Often the outcome of a sequence of Bernoulli trials is communicated as a <strong>proportion</strong>⸻the ratio of successes to the total number of trials. For instance, if we flip a coin 100 times and get 47 heads, we would have a proportion of 47/100 or .47, which would also be our estimate of the probability of the event. For events coded as 1s and 0s, a shortcut way of getting the proportion is to use the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function.</p>
 <p>We can also talk about the odds of success, i.e., that the odds of heads versus tails are one to one, or 1:1. The odds of it raining on a given day in Glasgow would be 170:195; the denominator is the number of days it did not rain (365 - 170 = 195). Expressed as a decimal number, the ratio 170/195 is about 0.87, and is known as the <strong>natural odds</strong>. Natural odds ranges from 0 to <span class="math inline">\(+\inf\)</span>. Given <span class="math inline">\(Y\)</span> successes on <span class="math inline">\(N\)</span> trials, we can represent the natural odds as <span class="math inline">\(\frac{Y}{N - Y}\)</span>. Or, given a probability <span class="math inline">\(p\)</span>, we can represent the odds as <span class="math inline">\(\frac{p}{1-p}\)</span>.</p>
 <p>The natural log of the odds, or <strong>logit</strong> is scale on which logistic regression is performed. Recall that the logarithm of some value <span class="math inline">\(Y\)</span> gives the exponent that would yield <span class="math inline">\(Y\)</span> for a given base. For instance, the <span class="math inline">\(log_2\)</span> (log to the base 2) of 16 is 4, because <span class="math inline">\(2^4 = 16\)</span>. In logistic regression, the base that is typically used is <span class="math inline">\(e\)</span> (also known as Euler's number). To get the log odds from odds of, say, Glasgow rainfall, we would use <code><a href="https://rdrr.io/r/base/Log.html">log(170/195)</a></code>, which yields -0.1372011; to get natural odds back from log odds, we would use the inverse, <code><a href="https://rdrr.io/r/base/Log.html">exp(-.137)</a></code>, which returns about 0.872.</p>
 </div>
 <div id="properties-of-log-odds" class="section level3">
 <h3>
-<span class="header-section-number">8.4.2</span> Properties of log odds<a class="anchor" aria-label="anchor" href="#properties-of-log-odds"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.2</span> Properties of log odds<a class="anchor" aria-label="anchor" href="#properties-of-log-odds"><i class="fas fa-link"></i></a>
 </h3>
 <p>log odds = <span class="math inline">\(\log \left(\frac{p}{1-p}\right)\)</span></p>
 <p>Log odds has some nice properties for linear modeling.</p>
@@ -232,7 +211,7 @@ The (natural) log of the odds
 </div>
 <div id="link-and-variance-functions" class="section level3">
 <h3>
-<span class="header-section-number">8.4.3</span> Link and variance functions<a class="anchor" aria-label="anchor" href="#link-and-variance-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.3</span> Link and variance functions<a class="anchor" aria-label="anchor" href="#link-and-variance-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>The link function for logistic regression is:</p>
 <p><span class="math display">\[\eta = \log \left(\frac{p}{1-p}\right)\]</span></p>
@@ -240,11 +219,11 @@ The (natural) log of the odds
 <p><span class="math display">\[p = \frac{1}{1 + e^{-\eta}}\]</span></p>
 <p>where <span class="math inline">\(e\)</span> is Euler's number. In R, you could type this latter function as <code>1/(1 + exp(-eta))</code>.</p>
 <p>The variance function is the variance for the binomial distribution, namely:</p>
-<p><span class="math display">\[np(1 - p)\]</span>.</p>
+<p><span class="math display">\[np(1 - p).\]</span></p>
 <p>The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:logit-app"></span>
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="500px" data-external="1">
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="800px" data-external="1">
 </iframe>
 <p class="caption">
 Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://shiny.psy.gla.ac.uk/Dale/logit" class="uri">https://shiny.psy.gla.ac.uk/Dale/logit</a>
@@ -253,7 +232,7 @@ Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://shiny.
 </div>
 <div id="estimating-logistic-regression-models-in-r" class="section level3">
 <h3>
-<span class="header-section-number">8.4.4</span> Estimating logistic regression models in R<a class="anchor" aria-label="anchor" href="#estimating-logistic-regression-models-in-r"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.4</span> Estimating logistic regression models in R<a class="anchor" aria-label="anchor" href="#estimating-logistic-regression-models-in-r"><i class="fas fa-link"></i></a>
 </h3>
 <p>For single-level data, you use the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> function. Note that it is much like the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function you are already familiar with. The main difference is that you specify a <code>family</code> argument for the link/variance functions. For logistic regression, you use <code>family = binomial(link = "logit")</code>. The logit link is default for the binomial family with a logit link, so typing <code>family = binomial</code> is sufficient.</p>
 <p><code><a href="https://rdrr.io/r/stats/glm.html">glm(DV ~ IV1 + IV2 + ..., data, family = binomial)</a></code></p>
@@ -386,17 +365,16 @@ $( document ).ready(function() {
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#generalized-linear-mixed-effects-models"><span class="header-section-number">8</span> Generalized linear mixed-effects models</a></li>
-<li><a class="nav-link" href="#learning-objectives"><span class="header-section-number">8.1</span> Learning objectives</a></li>
 <li>
-<a class="nav-link" href="#discrete-versus-continuous-data"><span class="header-section-number">8.2</span> Discrete versus continuous data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#why-not-model-discrete-data-as-continuous"><span class="header-section-number">8.2.1</span> Why not model discrete data as continuous?</a></li></ul>
+<a class="nav-link" href="#discrete-versus-continuous-data"><span class="header-section-number">8.1</span> Discrete versus continuous data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#why-not-model-discrete-data-as-continuous"><span class="header-section-number">8.1.1</span> Why not model discrete data as continuous?</a></li></ul>
 </li>
-<li><a class="nav-link" href="#generalized-linear-models"><span class="header-section-number">8.3</span> Generalized Linear Models</a></li>
+<li><a class="nav-link" href="#generalized-linear-models"><span class="header-section-number">8.2</span> Generalized Linear Models</a></li>
 <li>
-<a class="nav-link" href="#logistic-regression"><span class="header-section-number">8.4</span> Logistic regression</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#terminology"><span class="header-section-number">8.4.1</span> Terminology</a></li>
-<li><a class="nav-link" href="#properties-of-log-odds"><span class="header-section-number">8.4.2</span> Properties of log odds</a></li>
-<li><a class="nav-link" href="#link-and-variance-functions"><span class="header-section-number">8.4.3</span> Link and variance functions</a></li>
-<li><a class="nav-link" href="#estimating-logistic-regression-models-in-r"><span class="header-section-number">8.4.4</span> Estimating logistic regression models in R</a></li>
+<a class="nav-link" href="#logistic-regression"><span class="header-section-number">8.3</span> Logistic regression</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#terminology"><span class="header-section-number">8.3.1</span> Terminology</a></li>
+<li><a class="nav-link" href="#properties-of-log-odds"><span class="header-section-number">8.3.2</span> Properties of log odds</a></li>
+<li><a class="nav-link" href="#link-and-variance-functions"><span class="header-section-number">8.3.3</span> Link and variance functions</a></li>
+<li><a class="nav-link" href="#estimating-logistic-regression-models-in-r"><span class="header-section-number">8.3.4</span> Estimating logistic regression models in R</a></li>
 </ul>
 </li>
 </ul>
@@ -416,7 +394,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-05.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

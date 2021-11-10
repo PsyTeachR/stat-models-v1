@@ -7,7 +7,7 @@
 <title>Chapter 1 Introduction | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="1.1 Goal of this course The goal of this course is to teach you how to analyze (and simulate!) various types of datasets you are likely to encounter as a psychologist. The focus is on behavioral...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="Chapter 1 Introduction | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introduction.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -117,7 +117,7 @@ Figure 1.1: Simulated data illustrating the linear model Y = 3 + 2X
 See the R code to make the plot
 </button>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span> <span class="co"># if needed</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span> <span class="co"># if needed</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
 
@@ -180,7 +180,7 @@ Figure 1.2: Nonlinear relationships that can be modeled using a linear model.
 <p>Data simulation inverts this process. You to define the parameters of a model representing the ground truth about a (hypothetical) population and then generate data from it. You can then analyze the resulting data in the way that you normally would, and see how well your parameter estimates correspond to the true values.</p>
 <p>Let's look at an example. Let's assume you are interested in the question of whether being a parent of a toddler 'sharpens' your reflexes. If you've ever taken care of a toddler, you know that physical danger always seems imminent—they could fall of the chair they just climbed on, slam their finger in a door, bang their head on the corner of a table, etc.—so you need to be attentive and ready to act fast. You hypothesize that this vigilance will translate into faster response times in other situations where a toddler is not around, such as in a psychological laboratory. So you recruit a set of parents of toddlers to come into the lab. You give each parent the task of pressing a button as quickly as possible in response to a flashing light, and measure their response time (in milliseconds). For each parent, you calculate their mean response time over all trials. We can simulate the mean response time for each of say, 50 parents using the <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> function in R. But before we do that, we will load in the packages that we need (tidyverse) and set the <a class="glossary" target="_blank" title="A value used to set the initial state of a random number generator." href="https://psyteachr.github.io/glossary/r#random-seed">random seed</a> to make sure that you (the reader) get the same random values as me (the author).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>  <span class="co"># can be any arbitrary integer</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -375,7 +375,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-05.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

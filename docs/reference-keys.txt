@@ -25,7 +25,7 @@ fig:cp-model-plot
 fig:np-model-fits
 fig:pp-plot
 fig:extrap-plot
-fig:rbinom
+fig:binomial-var-plot
 fig:logit-app
 introduction
 goal-of-this-course
@@ -117,12 +117,10 @@ join-subjects-items-and-trials
 create-the-response-variable
 fitting-the-model
 generalized-linear-mixed-effects-models
-learning-objectives
 discrete-versus-continuous-data
 why-not-model-discrete-data-as-continuous
 bounded-scale
-the-variance-is-proportional-to-the-mean
-spurious-interactions-due-to-scaling-effects
+the-variance-depends-on-the-the-mean
 generalized-linear-models
 logistic-regression
 terminology
