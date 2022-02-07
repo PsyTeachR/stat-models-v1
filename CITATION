@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this book, please cite it as below."
+authors:
+- family-names: "Barr"
+  given-names: "Dale"
+  orcid: "https://orcid.org/0000-0002-1121-4608"
+title: "Learning Statistical Models Through Simulation in R"
+version: 1.0
+date-released: 2021-09-18
+url: "https://psyteachr.github.io/stat-models-v1/"
