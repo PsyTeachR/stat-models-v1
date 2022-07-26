@@ -24,7 +24,7 @@ Let's look at some (made up, but realistic) data to see how we can use multiple 
 
 ### Data import and visualization
 
-Let's load in the data [grades.csv](data/grades.csv){target="_download"} and have a look.
+Let's load in the data [grades.csv](https://raw.githubusercontent.com/PsyTeachR/stat-models-v1/master/data/grades.csv){target="_download"} and have a look.
 
 ```{r load-data, message=FALSE}
 library("corrr") # correlation matrices
