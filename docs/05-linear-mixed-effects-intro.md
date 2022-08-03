@@ -860,7 +860,8 @@ sqrt(diag(vcov(pp_mod)))
 ```
 
 ```
-## [1] 8.265896 1.845293
+##   (Intercept) days_deprived 
+##      8.265896      1.845293
 ```
 
 Note that these \(t\) values do not appear with \(p\) values, as is customary in simpler modeling frameworks. There are multiple approaches for getting \(p\) values from mixed-effects models, with advantages and disadvantages to each; see @Luke_2017 for a survey of options. The \(t\) values do not appear with degrees of freedom, because the degrees of freedom in a mixed-effects model are not well-defined. Often people will treat them as Wald \(z\) values, i.e., as observations from the standard normal distribution. Because the \(t\) distribution asymptotes the standard normal distribution as the number of observations goes to infinity, this "t-as-z" practice is legitimate if you have a large enough set of observations.

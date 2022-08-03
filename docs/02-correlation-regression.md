@@ -243,13 +243,36 @@ starwars %>%
   knitr::kable()
 ```
 
-
-
-|term       |height |mass |birth_year |
-|:----------|:------|:----|:----------|
-|height     |       |     |           |
-|mass       |.75    |     |           |
-|birth_year |.16    |.15  |           |
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:left;"> height </th>
+   <th style="text-align:left;"> mass </th>
+   <th style="text-align:left;"> birth_year </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> height </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mass </td>
+   <td style="text-align:left;"> .75 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> birth_year </td>
+   <td style="text-align:left;"> .16 </td>
+   <td style="text-align:left;"> .15 </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+</tbody>
+</table>
 
 ## Simulating bivariate data
 
@@ -318,7 +341,7 @@ You can create the above matrix in R using the `matrix()` function (see below) o
 
 </div>
 
-Now what is all this about the matrix being "positive-definite" and "symmetric"? These are mathematical requirements about the kinds of matrices that can represent possible multivariate normal distributions. In other words, the covariance matrix you supply must be represent a legal multivariate normal distribution. At this point, you don't really need to know much more about this than that.
+Now what is all this about the matrix being "positive-definite" and "symmetric"? These are mathematical requirements about the kinds of matrices that can represent possible multivariate normal distributions. In other words, the covariance matrix you supply must represent a legal multivariate normal distribution. At this point, you don't really need to know much more about this than that.
 
 <iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="620" style="border: none;"></iframe>
 

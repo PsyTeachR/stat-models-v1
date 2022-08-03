@@ -7,7 +7,7 @@
 <title>Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="The general model for single-level data with \(m\) predictors is \[ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \] with \(e_i \sim \mathcal{N}\left(0,...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Multiple regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/multiple-regression.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -27,7 +27,11 @@
     gtag('js', new Date());
   
     gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
 <link rel="stylesheet" href="include/style.css">
 </head>
@@ -92,14 +96,14 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <h3>
 <span class="header-section-number">3.1.1</span> Data import and visualization<a class="anchor" aria-label="anchor" href="#data-import-and-visualization"><i class="fas fa-link"></i></a>
 </h3>
-<p>Let's load in the data <a href="data/grades.csv" target="_download">grades.csv</a> and have a look.</p>
+<p>Let's load in the data <a href="https://raw.githubusercontent.com/PsyTeachR/stat-models-v1/master/data/grades.csv" target="_download">grades.csv</a> and have a look.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tidymodels/corrr">"corrr"</a></span><span class="op">)</span> <span class="co"># correlation matrices</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/grades.csv"</span>, col_types <span class="op">=</span> <span class="st">"ddii"</span><span class="op">)</span>
-
-<span class="va">grades</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tidymodels/corrr">"corrr"</a></span><span class="op">)</span> <span class="co"># correlation matrices</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/grades.csv"</span>, col_types <span class="op">=</span> <span class="st">"ddii"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">grades</span></span></code></pre></div>
 <pre><code>## # A tibble: 100 × 4
 ##    grade   GPA lecture nclicks
 ##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
@@ -116,10 +120,10 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 ## # … with 90 more rows</code></pre>
 <p>First let's look at all the pairwise correlations.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">grades</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Correlation method: 'pearson'
 ## Missing treated using: 'pairwise.complete.obs'</code></pre>
@@ -129,7 +133,7 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 ## 3 lecture   .24  .44                
 ## 4 nclicks   .16  .30     .36</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">grades</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">grades</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:pairs"></span>
 <img src="03-multiple-regression_files/figure-html/pairs-1.png" alt="All pairwise relationships in the `grades` dataset." width="100%"><p class="caption">
@@ -146,13 +150,13 @@ Figure 2.2: All pairwise relationships in the <code>grades</code> dataset.
 Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 \]</span></p>
 <p>The call to base R's <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> is</p>
-<p><code><a href="https://rdrr.io/r/stats/lm.html">lm(Y ~ X1 + X2 + ... + Xm, data)</a></code></p>
+<p><code>lm(Y ~ X1 + X2 + ... + Xm, data)</code></p>
 <p>The <code>Y</code> variable is your response variable, and the <code>X</code> variables are the predictor variables. Note that you don't need to explicitly specify the intercept or residual terms; those are included by default.</p>
 <p>For the current data, let's predict <code>grade</code> from <code>lecture</code> and <code>nclicks</code>.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = grade ~ lecture + nclicks, data = grades)
@@ -204,30 +208,30 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 </div>
 <p>Let's create a tibble with new values and try it out.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## a 'tribble' is a way to make a tibble by rows,</span>
-<span class="co">## rather than by columns. This is sometimes useful</span>
-<span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span><span class="op">~</span><span class="va">lecture</span>, <span class="op">~</span><span class="va">nclicks</span>,
-                    <span class="fl">3</span>, <span class="fl">70</span>,
-                    <span class="fl">10</span>, <span class="fl">130</span>,
-                    <span class="fl">0</span>, <span class="fl">20</span>,
-                    <span class="fl">5</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## a 'tribble' is a way to make a tibble by rows,</span></span>
+<span><span class="co">## rather than by columns. This is sometimes useful</span></span>
+<span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span><span class="op">~</span><span class="va">lecture</span>, <span class="op">~</span><span class="va">nclicks</span>,</span>
+<span>                    <span class="fl">3</span>, <span class="fl">70</span>,</span>
+<span>                    <span class="fl">10</span>, <span class="fl">130</span>,</span>
+<span>                    <span class="fl">0</span>, <span class="fl">20</span>,</span>
+<span>                    <span class="fl">5</span>, <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 <div class="info">
-<p>The <code>tribble()</code> function provides a way to build a tibble row by row, whereas with <code>tibble()</code> the table is built column by column.</p>
-<p>The first row of the <code>tribble()</code> contains the column names, each preceded by a tilde (<code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>).</p>
+<p>The <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble()</a></code> function provides a way to build a tibble row by row, whereas with <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> the table is built column by column.</p>
+<p>The first row of the <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble()</a></code> contains the column names, each preceded by a tilde (<code>~</code>).</p>
 <p>This is sometimes easier to read than doing it row by row, although the result is the same. Consider that we could have made the above table using</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>lecture <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,
-                   nclicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">70</span>, <span class="fl">130</span>, <span class="fl">20</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>lecture <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                   nclicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">70</span>, <span class="fl">130</span>, <span class="fl">20</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>Now that we've created our table <code>new_data</code>, we just pass it to <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> and it will return a vector with the predictions for <span class="math inline">\(Y\)</span> (<code>grade</code>).</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        1        2        3        4 
 ## 2.090214 3.033869 1.563087 2.424790</code></pre>
 <p>That's great, but maybe we want to line it up with the predictor values. We can do this by just adding it as a new column to <code>new_data</code>.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>predicted_grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>predicted_grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   lecture nclicks predicted_grade
 ##     &lt;dbl&gt;   &lt;dbl&gt;           &lt;dbl&gt;
@@ -244,17 +248,17 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 <p>As noted above the parameter estimates for each regression coefficient tell us about the <strong>partial</strong> effect of that variable; it's effect holding all of the others constant. Is there a way to visualize this partial effect? Yes, you can do this using the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function, by making a table with varying values for the focal predictor, while filling in all of the other predictors with their mean values.</p>
 <p>For example, let's visualize the partial effect of <code>lecture</code> on <code>grade</code> holding <code>nclicks</code> constant at its mean value.</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nclicks_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">## new data for prediction</span>
-<span class="va">new_lecture</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>lecture <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10</span>,
-                      nclicks <span class="op">=</span> <span class="va">nclicks_mean</span><span class="op">)</span>
-
-<span class="co">## add the predicted value to new_lecture</span>
-<span class="va">new_lecture2</span> <span class="op">&lt;-</span> <span class="va">new_lecture</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_lecture</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">new_lecture2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nclicks_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## new data for prediction</span></span>
+<span><span class="va">new_lecture</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>lecture <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>                      nclicks <span class="op">=</span> <span class="va">nclicks_mean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## add the predicted value to new_lecture</span></span>
+<span><span class="va">new_lecture2</span> <span class="op">&lt;-</span> <span class="va">new_lecture</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_lecture</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">new_lecture2</span></span></code></pre></div>
 <pre><code>## # A tibble: 11 × 3
 ##    lecture nclicks grade
 ##      &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -271,9 +275,9 @@ You need to include <strong>all</strong> of the predictor variables in the new t
 ## 11      10    98.3  2.87</code></pre>
 <p>Now let's plot.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">grades</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">lecture</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_lecture2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grades</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lecture</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_lecture2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:partial-lecture-plot"></span>
 <img src="03-multiple-regression_files/figure-html/partial-lecture-plot-1.png" alt="Partial effect of 'lecture' on grade, with nclicks at its mean value." width="100%"><p class="caption">
@@ -300,11 +304,11 @@ z = \frac{X - \mu_x}{\sigma_x}
 <p>A <span class="math inline">\(z\)</span> score represents the distance of a score <span class="math inline">\(X\)</span> from the sample mean (<span class="math inline">\(\mu_x\)</span>) in standard deviation units (<span class="math inline">\(\sigma_x\)</span>). So a <span class="math inline">\(z\)</span> score of 1 means that the score is one standard deviation about the mean; a <span class="math inline">\(z\)</span>-score of -2.5 means 2.5 standard deviations below the mean. <span class="math inline">\(Z\)</span>-scores give us a way of comparing things that come from different populations by calibrating them to the standard normal distribution (a distribution with a mean of 0 and a standard deviation of 1).</p>
 <p>So we re-scale our predictors by converting them to <span class="math inline">\(z\)</span>-scores. This is easy enough to do.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">grades2</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>lecture_c <span class="op">=</span> <span class="op">(</span><span class="va">lecture</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span>,
-         nclicks_c <span class="op">=</span> <span class="op">(</span><span class="va">nclicks</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">grades2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grades2</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>lecture_c <span class="op">=</span> <span class="op">(</span><span class="va">lecture</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span>,</span>
+<span>         nclicks_c <span class="op">=</span> <span class="op">(</span><span class="va">nclicks</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">grades2</span></span></code></pre></div>
 <pre><code>## # A tibble: 100 × 6
 ##    grade   GPA lecture nclicks lecture_c nclicks_c
 ##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -321,9 +325,9 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## # … with 90 more rows</code></pre>
 <p>Now let's re-fit the model using the centered and scaled predictors.</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_model_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture_c</span> <span class="op">+</span> <span class="va">nclicks_c</span>, <span class="va">grades2</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model_scaled</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_model_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">lecture_c</span> <span class="op">+</span> <span class="va">nclicks_c</span>, <span class="va">grades2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_model_scaled</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = grade ~ lecture_c + nclicks_c, data = grades2)
@@ -374,10 +378,10 @@ z = \frac{X - \mu_x}{\sigma_x}
 <p>The way we can test this hypothesis is by using <strong>model comparison</strong>. The logic is as follows. First, estimate a model containing any control predictors but excluding the focal predictors of interest. Second, estimate a model containing the control predictors as well as the focal predictors. Finally, compare the two models, to see if there is any statistically significant gain by including the predictors.</p>
 <p>Here is how you do this:</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># control model</span>
-<span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span> <span class="op">+</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># bigger model</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># control model</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">GPA</span> <span class="op">+</span> <span class="va">lecture</span> <span class="op">+</span> <span class="va">nclicks</span>, <span class="va">grades</span><span class="op">)</span> <span class="co"># bigger model</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: grade ~ GPA
@@ -436,106 +440,108 @@ z = \frac{X - \mu_x}{\sigma_x}
 <p>For a nominal variable with only two levels, choose one level as baseline, and create a new variable that is <code>0</code> whenever the level is baseline and <code>1</code> when it is the other level. The choice of baseline is arbitrary, and will affect only whether the coefficient is positive or negative, but not its magnitude, its standard error nor the associated p-value.</p>
 <p>To illustrate, let's gin up some fake data with a single two level categorical predictor.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fake_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
-                    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">fake_data</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fake_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>                    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fake_data</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 2
 ##         Y group
 ##     &lt;dbl&gt; &lt;chr&gt;
-##  1 -0.163 A    
-##  2  1.72  A    
-##  3  0.240 A    
-##  4 -0.997 A    
-##  5 -1.49  A    
-##  6  0.261 B    
-##  7 -1.38  B    
-##  8  1.72  B    
-##  9 -0.258 B    
-## 10 -0.532 B</code></pre>
+##  1  0.287 A    
+##  2  0.499 A    
+##  3 -1.17  A    
+##  4 -0.160 A    
+##  5 -0.204 A    
+##  6  0.217 B    
+##  7 -0.919 B    
+##  8 -1.78  B    
+##  9 -1.03  B    
+## 10 -0.241 B</code></pre>
 <p>Now let's add a new variable, <code>group_d</code>, which is the dummy coded group variable. We will use the <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else()</a></code> function to define the new column.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fake_data2</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">fake_data2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fake_data2</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fake_data2</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##         Y group group_d
 ##     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-##  1 -0.163 A           0
-##  2  1.72  A           0
-##  3  0.240 A           0
-##  4 -0.997 A           0
-##  5 -1.49  A           0
-##  6  0.261 B           1
-##  7 -1.38  B           1
-##  8  1.72  B           1
-##  9 -0.258 B           1
-## 10 -0.532 B           1</code></pre>
+##  1  0.287 A           0
+##  2  0.499 A           0
+##  3 -1.17  A           0
+##  4 -0.160 A           0
+##  5 -0.204 A           0
+##  6  0.217 B           1
+##  7 -0.919 B           1
+##  8 -1.78  B           1
+##  9 -1.03  B           1
+## 10 -0.241 B           1</code></pre>
 <p>Now we just run it as a regular regression model.</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ group_d, data = fake_data2)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3492 -0.7680 -0.1226  0.3585  1.8560 
+## -1.0328 -0.2516 -0.0319  0.4923  0.9691 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -0.13801    0.53471  -0.258    0.803
-## group_d      0.09952    0.75620   0.132    0.899
+## (Intercept)  -0.1502     0.3175  -0.473    0.649
+## group_d      -0.6015     0.4491  -1.339    0.217
 ## 
-## Residual standard error: 1.196 on 8 degrees of freedom
-## Multiple R-squared:  0.00216,    Adjusted R-squared:  -0.1226 
-## F-statistic: 0.01732 on 1 and 8 DF,  p-value: 0.8985</code></pre>
+## Residual standard error: 0.7101 on 8 degrees of freedom
+## Multiple R-squared:  0.1832, Adjusted R-squared:  0.08108 
+## F-statistic: 1.794 on 1 and 8 DF,  p-value: 0.2172</code></pre>
 <p>Let's reverse the coding. We get the same result, just the sign is different.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"A"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>group_d <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">group</span> <span class="op">==</span> <span class="st">"A"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ group_d, data = fake_data3)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3492 -0.7680 -0.1226  0.3585  1.8560 
+## -1.0328 -0.2516 -0.0319  0.4923  0.9691 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -0.03849    0.53471  -0.072    0.944
-## group_d     -0.09952    0.75620  -0.132    0.899
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  -0.7517     0.3175  -2.367   0.0454 *
+## group_d       0.6015     0.4491   1.339   0.2172  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.196 on 8 degrees of freedom
-## Multiple R-squared:  0.00216,    Adjusted R-squared:  -0.1226 
-## F-statistic: 0.01732 on 1 and 8 DF,  p-value: 0.8985</code></pre>
+## Residual standard error: 0.7101 on 8 degrees of freedom
+## Multiple R-squared:  0.1832, Adjusted R-squared:  0.08108 
+## F-statistic: 1.794 on 1 and 8 DF,  p-value: 0.2172</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
 <p>Note that if we just put the character variable <code>group</code> as a predictor in the model, R will automatically create a dummy variable (or variables) for us as needed.</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span>, <span class="va">fake_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span>, <span class="va">fake_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ group, data = fake_data)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.3492 -0.7680 -0.1226  0.3585  1.8560 
+## -1.0328 -0.2516 -0.0319  0.4923  0.9691 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -0.13801    0.53471  -0.258    0.803
-## groupB       0.09952    0.75620   0.132    0.899
+## (Intercept)  -0.1502     0.3175  -0.473    0.649
+## groupB       -0.6015     0.4491  -1.339    0.217
 ## 
-## Residual standard error: 1.196 on 8 degrees of freedom
-## Multiple R-squared:  0.00216,    Adjusted R-squared:  -0.1226 
-## F-statistic: 0.01732 on 1 and 8 DF,  p-value: 0.8985</code></pre>
-<p>The <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function examines <code>group</code> and figures out the unique levels of the variable, which in this case are <code>A</code> and <code>B</code>. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (<code>B</code>) and the baseline level (<code>A</code>). (In the case where <code>group</code> has been defined as a factor, the baseline level is the first element of <code><a href="https://rdrr.io/r/base/levels.html">levels(fake_data$group)</a></code>).</p>
+## Residual standard error: 0.7101 on 8 degrees of freedom
+## Multiple R-squared:  0.1832, Adjusted R-squared:  0.08108 
+## F-statistic: 1.794 on 1 and 8 DF,  p-value: 0.2172</code></pre>
+<p>The <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function examines <code>group</code> and figures out the unique levels of the variable, which in this case are <code>A</code> and <code>B</code>. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (<code>B</code>) and the baseline level (<code>A</code>). (In the case where <code>group</code> has been defined as a factor, the baseline level is the first element of <code>levels(fake_data$group)</code>).</p>
 <p>This new variable that it created shows up with the name <code>groupB</code> in the output.</p>
 </div>
 <div id="dummy-coding-when-k-2" class="section level3">
@@ -544,68 +550,68 @@ z = \frac{X - \mu_x}{\sigma_x}
 </h3>
 <p>When a nominal predictor variable has more than two levels (<span class="math inline">\(k &gt; 2\)</span>), one numeric predictor is no longer sufficient; we need <span class="math inline">\(k-1\)</span> predictors. If the nominal predictor has four levels, we'll need to define three predictors. Let's simulate some data to work with, <code>season_wt</code>, which represents a person's bodyweight (in kg) over the four seasons of the year.</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">season_wt</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span>,
-                                 each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-                    bodyweight_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">105</span>, <span class="fl">3</span><span class="op">)</span>,
-                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">103</span>, <span class="fl">3</span><span class="op">)</span>,
-                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">101</span>, <span class="fl">3</span><span class="op">)</span>,
-                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">102.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">season_wt</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">season_wt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>, <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span>,</span>
+<span>                                 each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                    bodyweight_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">105</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">103</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">101</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                                      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">102.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">season_wt</span></span></code></pre></div>
 <pre><code>## # A tibble: 20 × 2
 ##    season bodyweight_kg
 ##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 winter         103. 
-##  2 winter         107. 
-##  3 winter         112. 
-##  4 winter         104. 
-##  5 winter          99.7
-##  6 spring         104. 
-##  7 spring         102. 
-##  8 spring         105. 
-##  9 spring         104. 
-## 10 spring         103. 
-## 11 summer         104. 
-## 12 summer         105. 
-## 13 summer          96.6
-## 14 summer          98.6
-## 15 summer         101. 
-## 16 fall           104. 
-## 17 fall            99.2
-## 18 fall           103. 
-## 19 fall           103. 
+##  1 winter         106. 
+##  2 winter          99.8
+##  3 winter         108. 
+##  4 winter         105. 
+##  5 winter         110. 
+##  6 spring         102. 
+##  7 spring         104. 
+##  8 spring          98.4
+##  9 spring         101. 
+## 10 spring         102. 
+## 11 summer         103. 
+## 12 summer         102. 
+## 13 summer         103. 
+## 14 summer         103. 
+## 15 summer         100. 
+## 16 fall           108. 
+## 17 fall           102. 
+## 18 fall           102. 
+## 19 fall            97.3
 ## 20 fall           104.</code></pre>
 <p>Now let's add three predictors to code the variable <code>season</code>. Try it out and see if you can figure out how it works.</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## baseline value is 'winter'</span>
-<span class="va">season_wt2</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         summer_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summer"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         fall_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">season_wt2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## baseline value is 'winter'</span></span>
+<span><span class="va">season_wt2</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>         summer_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summer"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>         fall_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">season_wt2</span></span></code></pre></div>
 <pre><code>## # A tibble: 20 × 5
 ##    season bodyweight_kg spring_v_winter summer_v_winter fall_v_winter
 ##    &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
-##  1 winter         103.                0               0             0
-##  2 winter         107.                0               0             0
-##  3 winter         112.                0               0             0
-##  4 winter         104.                0               0             0
-##  5 winter          99.7               0               0             0
-##  6 spring         104.                1               0             0
-##  7 spring         102.                1               0             0
-##  8 spring         105.                1               0             0
-##  9 spring         104.                1               0             0
-## 10 spring         103.                1               0             0
-## 11 summer         104.                0               1             0
-## 12 summer         105.                0               1             0
-## 13 summer          96.6               0               1             0
-## 14 summer          98.6               0               1             0
-## 15 summer         101.                0               1             0
-## 16 fall           104.                0               0             1
-## 17 fall            99.2               0               0             1
-## 18 fall           103.                0               0             1
-## 19 fall           103.                0               0             1
+##  1 winter         106.                0               0             0
+##  2 winter          99.8               0               0             0
+##  3 winter         108.                0               0             0
+##  4 winter         105.                0               0             0
+##  5 winter         110.                0               0             0
+##  6 spring         102.                1               0             0
+##  7 spring         104.                1               0             0
+##  8 spring          98.4               1               0             0
+##  9 spring         101.                1               0             0
+## 10 spring         102.                1               0             0
+## 11 summer         103.                0               1             0
+## 12 summer         102.                0               1             0
+## 13 summer         103.                0               1             0
+## 14 summer         103.                0               1             0
+## 15 summer         100.                0               1             0
+## 16 fall           108.                0               0             1
+## 17 fall           102.                0               0             1
+## 18 fall           102.                0               0             1
+## 19 fall            97.3               0               0             1
 ## 20 fall           104.                0               0             1</code></pre>
 <div class="warning">
 <p><strong>Reminder: Always look at your data</strong></p>
@@ -613,14 +619,14 @@ z = \frac{X - \mu_x}{\sigma_x}
 <p>Consider the code chunk above, where we defined three contrasts to represent the nominal variable <code>season</code>, with <code>winter</code> as our baseline.</p>
 <p>What would happen if you accidently misspelled one of the levels (<code>summre</code> for <code>summer</code>) and didn't notice?</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         summer_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summre"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-         fall_v_winter <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>spring_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"spring"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>         summer_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"summre"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>         fall_v_winter <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="st">"fall"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>While the above code chunk runs, we get confusing output when we run the regression; namely, the coefficent for <code>summer_v_winter</code> is <code>NA</code> (not available).</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span> <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,
-   <span class="va">season_wt3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span> <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,</span>
+<span>   <span class="va">season_wt3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
@@ -628,11 +634,11 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Coefficients:
 ##     (Intercept)  spring_v_winter  summer_v_winter    fall_v_winter  
-##        103.0650           0.6820               NA          -0.5441</code></pre>
+##         104.067           -2.372               NA           -1.341</code></pre>
 <p>What happened? Let's look at the data to find out. We will use <code>distinct</code> to find the distinct combinations of our original variable <code>season</code> with the three variables we created (see <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">?dplyr::distinct</a></code> for details).</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">season_wt3</span> <span class="op">%&gt;%</span>
-  <span class="fu">distinct</span><span class="op">(</span><span class="va">season</span>, <span class="va">spring_v_winter</span>, <span class="va">summer_v_winter</span>, <span class="va">fall_v_winter</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">season_wt3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">season</span>, <span class="va">spring_v_winter</span>, <span class="va">summer_v_winter</span>, <span class="va">fall_v_winter</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##   season spring_v_winter summer_v_winter fall_v_winter
 ##   &lt;chr&gt;            &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
@@ -640,34 +646,34 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 2 spring               1               0             0
 ## 3 summer               0               0             0
 ## 4 fall                 0               0             1</code></pre>
-<p>Because of our misspelling, the predictor <code>summer_v_winter</code> is not <code>1</code> when <code>season == "summer"</code>; instead, it is <strong>always zero</strong>. The <code>if_else()</code> above literally says 'set <code>summer_v_winter</code> to 1 if <code>season == "summre"</code>, otherwise 0'. Of course, <code>season</code> is <strong>never</strong> equal to <code>summre</code>, because <code>summre</code> is a typo. We could have caught this easily by running the above check with <code>distinct()</code>. Get in the habit of doing this when you create your own numeric predictors.</p>
+<p>Because of our misspelling, the predictor <code>summer_v_winter</code> is not <code>1</code> when <code>season == "summer"</code>; instead, it is <strong>always zero</strong>. The <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> above literally says 'set <code>summer_v_winter</code> to 1 if <code>season == "summre"</code>, otherwise 0'. Of course, <code>season</code> is <strong>never</strong> equal to <code>summre</code>, because <code>summre</code> is a typo. We could have caught this easily by running the above check with <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>. Get in the habit of doing this when you create your own numeric predictors.</p>
 </div>
 <div class="info">
 <p><strong>A closer look at R's defaults</strong></p>
 <p>If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type <code>character</code> or <code>factor</code> to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyweight_kg ~ season, data = season_wt)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.3864 -2.1469  0.2147  1.3813  6.9014 
+## -6.0371 -0.7358  0.1070  1.2361  5.1797 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   102.521      1.406  72.918   &lt;2e-16 ***
-## seasonspring    1.226      1.988   0.617    0.546    
-## seasonsummer   -1.440      1.988  -0.724    0.480    
-## seasonwinter    2.528      1.988   1.271    0.222    
+## (Intercept)  102.7252     1.3481  76.200   &lt;2e-16 ***
+## seasonspring  -1.0307     1.9065  -0.541    0.596    
+## seasonsummer  -0.3965     1.9065  -0.208    0.838    
+## seasonwinter   3.0793     1.9065   1.615    0.126    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.144 on 16 degrees of freedom
-## Multiple R-squared:  0.2143, Adjusted R-squared:  0.06695 
-## F-statistic: 1.454 on 3 and 16 DF,  p-value: 0.2643</code></pre>
+## Residual standard error: 3.014 on 16 degrees of freedom
+## Multiple R-squared:  0.2563, Adjusted R-squared:  0.1168 
+## F-statistic: 1.838 on 3 and 16 DF,  p-value: 0.181</code></pre>
 <p>Here, R implicitly creates three dummy variables to code the four levels of <code>season</code>, called <code>seasonspring</code>, <code>seasonsummer</code> and <code>seasonwinter</code>. The unmentioned season, <code>fall</code>, has been chosen as baseline because it comes earliest in the alphabet. These three predictors have the following values:</p>
 <ul>
 <li>
@@ -687,22 +693,22 @@ z = \frac{X - \mu_x}{\sigma_x}
 </h2>
 <p>If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on <code>season_wt2</code> like so.</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## make season into a factor with baseline level 'winter'</span>
-<span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt2</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">season</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>,
-                                            <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## make season into a factor with baseline level 'winter'</span></span>
+<span><span class="va">season_wt3</span> <span class="op">&lt;-</span> <span class="va">season_wt2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">season</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"winter"</span>, <span class="st">"spring"</span>,</span>
+<span>                                            <span class="st">"summer"</span>, <span class="st">"fall"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
-## season       3  43.13  14.376   1.454  0.264
-## Residuals   16 158.14   9.884</code></pre>
+## season       3   50.1  16.699   1.838  0.181
+## Residuals   16  145.4   9.087</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span>
-             <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,
-           <span class="va">season_wt2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">spring_v_winter</span> <span class="op">+</span></span>
+<span>             <span class="va">summer_v_winter</span> <span class="op">+</span> <span class="va">fall_v_winter</span>,</span>
+<span>           <span class="va">season_wt2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyweight_kg ~ spring_v_winter + summer_v_winter + 
@@ -710,20 +716,20 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.3864 -2.1469  0.2147  1.3813  6.9014 
+## -6.0371 -0.7358  0.1070  1.2361  5.1797 
 ## 
 ## Coefficients:
 ##                 Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      105.049      1.406  74.716   &lt;2e-16 ***
-## spring_v_winter   -1.302      1.988  -0.655   0.5220    
-## summer_v_winter   -3.967      1.988  -1.995   0.0633 .  
-## fall_v_winter     -2.528      1.988  -1.271   0.2218    
+## (Intercept)      105.805      1.348  78.484   &lt;2e-16 ***
+## spring_v_winter   -4.110      1.907  -2.156   0.0467 *  
+## summer_v_winter   -3.476      1.907  -1.823   0.0870 .  
+## fall_v_winter     -3.079      1.907  -1.615   0.1258    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.144 on 16 degrees of freedom
-## Multiple R-squared:  0.2143, Adjusted R-squared:  0.06695 
-## F-statistic: 1.454 on 3 and 16 DF,  p-value: 0.2643</code></pre>
+## Residual standard error: 3.014 on 16 degrees of freedom
+## Multiple R-squared:  0.2563, Adjusted R-squared:  0.1168 
+## F-statistic: 1.838 on 3 and 16 DF,  p-value: 0.181</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solutions-to-exercises" class="section level2">
@@ -736,19 +742,19 @@ Solution to partial effect plot
 </button>
 <p>First create a tibble with new predictors. We might also want to know the range of values that <code>nclicks</code> varies over.</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lecture_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">min_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">max_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">## new data for prediction</span>
-<span class="va">new_nclicks</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>lecture <span class="op">=</span> <span class="va">lecture_mean</span>,
-                      nclicks <span class="op">=</span> <span class="va">min_nclicks</span><span class="op">:</span><span class="va">max_nclicks</span><span class="op">)</span>
-
-<span class="co">## add the predicted value to new_lecture</span>
-<span class="va">new_nclicks2</span> <span class="op">&lt;-</span> <span class="va">new_nclicks</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_nclicks</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">new_nclicks2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lecture_mean</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">lecture</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">min_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">max_nclicks</span> <span class="op">&lt;-</span> <span class="va">grades</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">nclicks</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## new data for prediction</span></span>
+<span><span class="va">new_nclicks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>lecture <span class="op">=</span> <span class="va">lecture_mean</span>,</span>
+<span>                      nclicks <span class="op">=</span> <span class="va">min_nclicks</span><span class="op">:</span><span class="va">max_nclicks</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## add the predicted value to new_lecture</span></span>
+<span><span class="va">new_nclicks2</span> <span class="op">&lt;-</span> <span class="va">new_nclicks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model</span>, <span class="va">new_nclicks</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">new_nclicks2</span></span></code></pre></div>
 <pre><code>## # A tibble: 76 × 3
 ##    lecture nclicks grade
 ##      &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt;
@@ -765,9 +771,9 @@ Solution to partial effect plot
 ## # … with 66 more rows</code></pre>
 <p>Now plot.</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">grades</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">nclicks</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_nclicks2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grades</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">nclicks</span>, <span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">new_nclicks2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:partial-nclicks"></span>
 <img src="03-multiple-regression_files/figure-html/partial-nclicks-1.png" alt="Partial effect plot of nclicks on grade." width="100%"><p class="caption">
@@ -936,7 +942,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-10.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2022-08-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -7,7 +7,7 @@
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Generalizing over encounters between subjects and stimuli A common goal of experiments in psychology is to test claims about behavior that arises in response to certain types of stimuli (or...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -27,7 +27,11 @@
     gtag('js', new Date());
   
     gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
 <link rel="stylesheet" href="include/style.css">
 </head>
@@ -89,354 +93,756 @@
 <p>One thing to note about all these claims is that the are of the type, "what happens to our measurements when an individual of type X encounters a stimulus of type Y", where X is drawn from a target population of subjects and Y is drawn from a target population of stimuli. In other words, we are attempt to make generalizable claims about a particular class of <strong>events</strong> involving <strong>encounters</strong> between sampling units of subjects and stimuli <span class="citation">(Barr, <a href="bibliography.html#ref-Barr_2017">2017</a>)</span>. But just like we can't sample all possible subjects from the target population of subjects, we also cannot sample all possible stimuli from the target population of stimuli. Thus, when drawing inferences, we need to account for the uncertainty introduced in our estimates by <em>both</em> sampling processes <span class="citation">(Clark, <a href="bibliography.html#ref-Clark_1973">1973</a>; Coleman, <a href="bibliography.html#ref-Coleman_1964">1964</a>; Judd et al., <a href="bibliography.html#ref-Judd_Westfall_Kenny_2012">2012</a>; Yarkoni, <a href="bibliography.html#ref-yarkoni_2019">2019</a>)</span>. Linear mixed-effects models make it particularly easy to do this by allowing more than one random factor in our model formula <span class="citation">(Baayen et al., <a href="bibliography.html#ref-Baayen_Davidson_Bates_2008">2008</a>)</span>.</p>
 <p>Here is a simple example of a study where you are interested in testing whether people rate pictures of cats, dogs, or sunsets as more soothing images to look at. You want to say something general about the category of cats, dogs, and sunsets and not something about the specific pictures that you happened to sample. Let's say you randomly select four images from each of the three categories from Google Images (you would absolutely need to have more to be able to say something generalizable, but we chose a small number to keep the example simple). So your table of stimuli might look like the following:</p>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">stimulus_id</th>
-<th align="left">category</th>
-<th align="left">file</th>
+<thead><tr>
+<th style="text-align:right;">
+stimulus_id
+</th>
+<th style="text-align:left;">
+category
+</th>
+<th style="text-align:left;">
+file
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="left">cat</td>
-<td align="left">cat1.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+cat
+</td>
+<td style="text-align:left;">
+cat1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="left">cat</td>
-<td align="left">cat2.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+cat
+</td>
+<td style="text-align:left;">
+cat2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="left">cat</td>
-<td align="left">cat3.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+cat
+</td>
+<td style="text-align:left;">
+cat3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="left">cat</td>
-<td align="left">cat4.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+cat
+</td>
+<td style="text-align:left;">
+cat4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="left">dog</td>
-<td align="left">dog1.jpg</td>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+dog
+</td>
+<td style="text-align:left;">
+dog1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="left">dog</td>
-<td align="left">dog2.jpg</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+dog
+</td>
+<td style="text-align:left;">
+dog2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="left">dog</td>
-<td align="left">dog3.jpg</td>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+dog
+</td>
+<td style="text-align:left;">
+dog3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="left">dog</td>
-<td align="left">dog4.jpg</td>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+dog
+</td>
+<td style="text-align:left;">
+dog4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="left">sunset</td>
-<td align="left">sunset1.jpg</td>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+sunset
+</td>
+<td style="text-align:left;">
+sunset1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="left">sunset</td>
-<td align="left">sunset2.jpg</td>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+sunset
+</td>
+<td style="text-align:left;">
+sunset2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="left">sunset</td>
-<td align="left">sunset3.jpg</td>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+sunset
+</td>
+<td style="text-align:left;">
+sunset3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">12</td>
-<td align="left">sunset</td>
-<td align="left">sunset4.jpg</td>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+sunset
+</td>
+<td style="text-align:left;">
+sunset4.jpg
+</td>
 </tr>
 </tbody>
 </table></div>
 <p>Then you sample a set of four participants to perform the soothing ratings. Again, four would be too few for a real study, but we're keeping it small just for expository purposes.</p>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">subject_id</th>
-<th align="right">age</th>
-<th align="left">date</th>
+<thead><tr>
+<th style="text-align:right;">
+subject_id
+</th>
+<th style="text-align:right;">
+age
+</th>
+<th style="text-align:left;">
+date
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">28</td>
-<td align="left">2020-05-01</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+2020-05-02
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">41</td>
-<td align="left">2020-05-12</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+2020-05-02
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">65</td>
-<td align="left">2020-05-16</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:left;">
+2020-05-13
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">42</td>
-<td align="left">2020-05-27</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+2020-05-27
+</td>
 </tr>
 </tbody>
 </table></div>
-<p>Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of <code>subject_id</code> crossed with all of the levels of <code>stimulus_id</code>. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the <code>crossing()</code> function from <code>tidyr</code> (which is loaded when you load in <code>tidyverse</code>).</p>
+<p>Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of <code>subject_id</code> crossed with all of the levels of <code>stimulus_id</code>. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the <code><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing()</a></code> function from <code>tidyr</code> (which is loaded when you load in <code>tidyverse</code>).</p>
 <div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">crossing</span><span class="op">(</span><span class="va">subjects</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">subject_id</span><span class="op">)</span>,
-         <span class="va">stimuli</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">category</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span><span class="va">subjects</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subject_id</span><span class="op">)</span>,</span>
+<span>         <span class="va">stimuli</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">category</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="right">subject_id</th>
-<th align="right">stimulus_id</th>
-<th align="left">file</th>
+<thead><tr>
+<th style="text-align:right;">
+subject_id
+</th>
+<th style="text-align:right;">
+stimulus_id
+</th>
+<th style="text-align:left;">
+file
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="left">cat1.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+cat1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="left">cat2.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+cat2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">3</td>
-<td align="left">cat3.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+cat3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="left">cat4.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+cat4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">5</td>
-<td align="left">dog1.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+dog1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">6</td>
-<td align="left">dog2.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+dog2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">7</td>
-<td align="left">dog3.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+dog3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">8</td>
-<td align="left">dog4.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+dog4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">9</td>
-<td align="left">sunset1.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+sunset1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">10</td>
-<td align="left">sunset2.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+sunset2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">11</td>
-<td align="left">sunset3.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+sunset3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">12</td>
-<td align="left">sunset4.jpg</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+sunset4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="left">cat1.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+cat1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="left">cat2.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+cat2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="left">cat3.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+cat3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="left">cat4.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+cat4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">5</td>
-<td align="left">dog1.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+dog1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">6</td>
-<td align="left">dog2.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+dog2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">7</td>
-<td align="left">dog3.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+dog3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">8</td>
-<td align="left">dog4.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+dog4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">9</td>
-<td align="left">sunset1.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+sunset1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">10</td>
-<td align="left">sunset2.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+sunset2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">11</td>
-<td align="left">sunset3.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+sunset3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">12</td>
-<td align="left">sunset4.jpg</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+sunset4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">1</td>
-<td align="left">cat1.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+cat1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">2</td>
-<td align="left">cat2.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+cat2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">3</td>
-<td align="left">cat3.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+cat3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="left">cat4.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+cat4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="left">dog1.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+dog1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">6</td>
-<td align="left">dog2.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+dog2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">7</td>
-<td align="left">dog3.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+dog3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">8</td>
-<td align="left">dog4.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+dog4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">9</td>
-<td align="left">sunset1.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+sunset1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">10</td>
-<td align="left">sunset2.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+sunset2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">11</td>
-<td align="left">sunset3.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+sunset3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">12</td>
-<td align="left">sunset4.jpg</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+sunset4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">1</td>
-<td align="left">cat1.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+cat1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">2</td>
-<td align="left">cat2.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+cat2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">3</td>
-<td align="left">cat3.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+cat3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="left">cat4.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+cat4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="left">dog1.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+dog1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">6</td>
-<td align="left">dog2.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+dog2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">7</td>
-<td align="left">dog3.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+dog3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">8</td>
-<td align="left">dog4.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+dog4.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">9</td>
-<td align="left">sunset1.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+sunset1.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">10</td>
-<td align="left">sunset2.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+sunset2.jpg
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">11</td>
-<td align="left">sunset3.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+sunset3.jpg
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">12</td>
-<td align="left">sunset4.jpg</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+sunset4.jpg
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -446,10 +852,10 @@
 <h2>
 <span class="header-section-number">7.2</span> lme4 syntax for crossed random factors<a class="anchor" aria-label="anchor" href="#lme4-syntax-for-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h2>
-<p>How should we analyze such data? Recall from the last chapter that the lme4 formula syntax for a model with by-subject random intercepts and slopes for predictor <code>x</code> would be given by <code>y ~ x + (1 + x | subject_id)</code> where the term in brackets with the vertical bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> provides the random effects specification. The variable to the right of the bar, <code>subject_id</code>, specifies the variable that identifies the levels of the random factor. The formula to the left of the bar within the brackets, <code>1 + x</code>, specifies the random effects associated with this factor, which in this case is a random intercept and random slope for <code>x</code>. The best way to think about this bracketed part of the formula <code>(1 + x | subject_id)</code> is <strong>as an instruction to <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> about how to build a covariance matrix capturing the variance introduced by the random factor of subjects.</strong> By now you should realize that this instruction would result in the estimation of a two-dimensional covariance matrix, with one dimension for intercept variance and one for slope variance.</p>
+<p>How should we analyze such data? Recall from the last chapter that the lme4 formula syntax for a model with by-subject random intercepts and slopes for predictor <code>x</code> would be given by <code>y ~ x + (1 + x | subject_id)</code> where the term in brackets with the vertical bar <code>|</code> provides the random effects specification. The variable to the right of the bar, <code>subject_id</code>, specifies the variable that identifies the levels of the random factor. The formula to the left of the bar within the brackets, <code>1 + x</code>, specifies the random effects associated with this factor, which in this case is a random intercept and random slope for <code>x</code>. The best way to think about this bracketed part of the formula <code>(1 + x | subject_id)</code> is <strong>as an instruction to <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> about how to build a covariance matrix capturing the variance introduced by the random factor of subjects.</strong> By now you should realize that this instruction would result in the estimation of a two-dimensional covariance matrix, with one dimension for intercept variance and one for slope variance.</p>
 <p>But we are not limited to the estimation of random effects for subjects; we can also specify the estimation of random effects for stimuli by simply adding another term to the formula. For example,</p>
 <p><code>y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)</code></p>
-<p>regresses <code>y</code> on <code>x</code> with by-subject random intercepts and slopes and by-stimulus random intercepts and slopes. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating <strong>two independent covariance matrices</strong>, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> symbol. For instance, if we have another predictor <code>w</code>, we might have:</p>
+<p>regresses <code>y</code> on <code>x</code> with by-subject random intercepts and slopes and by-stimulus random intercepts and slopes. In this way, the fitted model will capture two sources of uncertainty about our estimates---the uncertainty introduced by sampling subjects as well as the uncertainty introduced by sampling items. Now we are estimating <strong>two independent covariance matrices</strong>, one for subjects and one for items. In the above example, both of these matrices will have the same 2x2 structure, but this need not be the case. We can flexibly change the random effects structure by changing the formula specification on the left side of each bar <code>|</code> symbol. For instance, if we have another predictor <code>w</code>, we might have:</p>
 <p><code>y ~ x + (x | subject_id) + (x + w | stimulus_id)</code></p>
 <p>which would estimate the same 2x2 matrix for subjects, but the covariance matrix for stimuli would now be a 3x3 matrix (intercepts, slope of x, and slope of w). Although this enables great flexibility, as the random effects structure becomes more complex, the estimation process becomes more difficult and less likely to converge upon a result.</p>
 </div>
@@ -457,7 +863,7 @@
 <h2>
 <span class="header-section-number">7.3</span> Specifying random effects<a class="anchor" aria-label="anchor" href="#specifying-random-effects"><i class="fas fa-link"></i></a>
 </h2>
-<p>The choice of random effects structure is not a new problem that appeared with linear mixed-effects models. In traditional approaches using t-test and ANOVA, you choose the random effects structure implicitly when you choose what procedure to use. As discussed in the last chapter, if you choose a paired samples t-test over an independent samples t-test, that is analogous to choosing to fit <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer(y ~ x + (1 | subject))</a></code> over <code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x)</a></code>. Likewise, you can run a mixed model ANOVA as either <code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(subject_id))</a></code>, which is equivalent to a random intercepts model, or <code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(x / subject_id))</a></code>, which is equivalent to a random slopes model. The tradition in psychology when performing confirmatory analyses is to use the <em>maximal random effects structure justified by the design of your study</em>. So, if you have one-factor data with pseudoreplications, you would use <code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(x / subject_id))</a></code> rather than <code><a href="https://rdrr.io/r/stats/aov.html">aov(y ~ x + Error(subject_id))</a></code>. Analogously, if you were to analyze the same data with pseudoreplications using a linear mixed effects model, you should use <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer(y ~ x + (1 + x | subject_id))</a></code> rather than <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer(y ~ x + (1 | subject_id))</a></code>. In other words, you should account for all sources of non-independence introduced by repeated sampling from the same subjects or stimuli. This approach is known as the <strong>maximal random effects</strong> approach or the <strong>design-driven approach</strong> to specifying random effects structure <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013">2013</a>)</span>. Failing to account for dependencies introduced by the design is likely to lead to standard errors that are too small, which in turn, lead to p-values that are smaller than they should be, and thus, higher false positive (Type I error) rates. In some cases, it can lead to lower power, and thus a higher false negative (Type II error) rate. It is thus of critical importance to pay close attention to the random effects structure when performing analyses.</p>
+<p>The choice of random effects structure is not a new problem that appeared with linear mixed-effects models. In traditional approaches using t-test and ANOVA, you choose the random effects structure implicitly when you choose what procedure to use. As discussed in the last chapter, if you choose a paired samples t-test over an independent samples t-test, that is analogous to choosing to fit <code>lme4::lmer(y ~ x + (1 | subject))</code> over <code>lm(y ~ x)</code>. Likewise, you can run a mixed model ANOVA as either <code>aov(y ~ x + Error(subject_id))</code>, which is equivalent to a random intercepts model, or <code>aov(y ~ x + Error(x / subject_id))</code>, which is equivalent to a random slopes model. The tradition in psychology when performing confirmatory analyses is to use the <em>maximal random effects structure justified by the design of your study</em>. So, if you have one-factor data with pseudoreplications, you would use <code>aov(y ~ x + Error(x / subject_id))</code> rather than <code>aov(y ~ x + Error(subject_id))</code>. Analogously, if you were to analyze the same data with pseudoreplications using a linear mixed effects model, you should use <code>lme4::lmer(y ~ x + (1 + x | subject_id))</code> rather than <code>lme4::lmer(y ~ x + (1 | subject_id))</code>. In other words, you should account for all sources of non-independence introduced by repeated sampling from the same subjects or stimuli. This approach is known as the <strong>maximal random effects</strong> approach or the <strong>design-driven approach</strong> to specifying random effects structure <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013">2013</a>)</span>. Failing to account for dependencies introduced by the design is likely to lead to standard errors that are too small, which in turn, lead to p-values that are smaller than they should be, and thus, higher false positive (Type I error) rates. In some cases, it can lead to lower power, and thus a higher false negative (Type II error) rate. It is thus of critical importance to pay close attention to the random effects structure when performing analyses.</p>
 <p>Linear mixed-effects models almost inevitably include random intercepts for any random factor included in the design. So if your random factors are subjects and stimuli identified by <code>subject_id</code> and <code>stimulus_id</code> respectively, then at the very least, your model syntax will include <code>(1 | subject_id) + (1 | stimulus_id)</code>. But you will have various predictors in the model, so key question becomes: what predictors should I allow to vary over what sampling units? For instance, if the fixed-effects part of your model is a 2x2 factorial design with factors A and B, <code>y ~ a * b + ...</code>, you could have a large variety of random effects structures, including (but not limited to):</p>
 <ol style="list-style-type: decimal">
 <li>random intercepts only: <code>y ~ a * b + (1 | subject_id) + (1 | stimulus_id)</code>
@@ -488,22 +894,22 @@
 <p>The first two rules are straightforward, but the third requires some explanation. Let's first ask: how do we know whether some factor is between or within unit?</p>
 <p>A simple way to determine whether a factor is between or within is to use the <code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code> function, which gives frequency counts, and which is loaded when you load tidyverse. Let's say you are interested in whether factor <span class="math inline">\(A\)</span> is within or between subjects, for the imaginary 2x2x2 factorial data <code>abc_data</code> below where <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> name the factors of your design.</p>
 <div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="co">## run this code to create the table "abc_data"</span>
-<span class="va">abc_subj</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>subject_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,
-                   B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">abc_item</span>  <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>stimulus_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,
-                    A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                    C <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"C1"</span>, <span class="st">"C2"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">abc_data</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span><span class="va">abc_subj</span>, <span class="va">abc_item</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">stimulus_id</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## run this code to create the table "abc_data"</span></span>
+<span><span class="va">abc_subj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>subject_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
+<span>                   B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">abc_item</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>stimulus_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
+<span>                    A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                    C <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"C1"</span>, <span class="st">"C2"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">abc_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span><span class="va">abc_subj</span>, <span class="va">abc_item</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">stimulus_id</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To see whether <span class="math inline">\(A\)</span> is within or between subjects, use:</p>
 <div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
 ##   subject_id A         n
 ##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -517,8 +923,8 @@
 ## 8          4 A2        2</code></pre>
 <p>In the resulting table, you can see that each subject gets both levels of <span class="math inline">\(A\)</span>, making it a within-subject factor. What about <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>?</p>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   subject_id B         n
 ##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -527,8 +933,8 @@
 ## 3          3 B1        4
 ## 4          4 B2        4</code></pre>
 <div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
 ##   subject_id C         n
 ##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -555,8 +961,8 @@
 Solution
 </button>
 <div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">A</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   stimulus_id A         n
 ##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -576,8 +982,8 @@ Solution
 Solution
 </button>
 <div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
 ##   stimulus_id B         n
 ##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -605,8 +1011,8 @@ Solution
 Solution
 </button>
 <div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   stimulus_id C         n
 ##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -622,8 +1028,8 @@ Solution
 <p>How do we now apply the third rule above to determine what random slopes are needed for our within-unit factors?</p>
 <p>Consider that <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> were within-subjects, and <span class="math inline">\(B\)</span> was between. So the highest-order interaction of within-subject factors is <span class="math inline">\(AC\)</span>. We will need random slopes for the <span class="math inline">\(AC\)</span> interaction as well as for the main effects <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> if we have pseudoreplications for each subject in each combination of <span class="math inline">\(AC\)</span>. How can we find out?</p>
 <div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span>, <span class="va">C</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">A</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 16 × 4
 ##    subject_id A     C         n
 ##         &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -652,8 +1058,8 @@ Solution
 </button>
 <p>You have one within-stimulus factor, <span class="math inline">\(B\)</span>, which has pseudoreplications.</p>
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">abc_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">abc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">stimulus_id</span>, <span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
 ##   stimulus_id B         n
 ##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -678,7 +1084,7 @@ Solution
 <p>Another thing that can happen is that you'll get a message about a 'singular fit'. This latter message will appear when the estimation procedure yields a variance-covariance matrix for one or more random factors that has either (1) perfect or near-perfect (1.00, -1.00) positive or negative correlations, (2) one or more variances close to zero, or (3) both. It is possibly ok to ignore this message, but it is also reasonable to simplify the model structure until the message goes away.</p>
 <p>How do you simplify a model to deal with convergence problems or singular fit messages? This should be done with care. I suggest the following strategy:</p>
 <ol style="list-style-type: decimal">
-<li>Constrain all covariance parameters to zero. This is accomplished using the double-bar <code><a href="https://rdrr.io/pkg/lme4/man/expandDoubleVerts.html">||</a></code> syntax, e.g., changing <code>(a * b | subject)</code> to <code>(a * b || subject)</code>. If you still run into estimation problems, then:</li>
+<li>Constrain all covariance parameters to zero. This is accomplished using the double-bar <code>||</code> syntax, e.g., changing <code>(a * b | subject)</code> to <code>(a * b || subject)</code>. If you still run into estimation problems, then:</li>
 <li>Inspect the parameter estimates from the non-converging or singular model. Are any of the slope variables zero or near to zero? Remove these and re-fit the model, repeating this step until the convergence warnings / singular fit messages go away.</li>
 </ol>
 <p>For more technical details about convergence problems and what to do, see <code><a href="https://rdrr.io/pkg/lme4/man/convergence.html">?lme4::convergence</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/isSingular.html">?lme4::isSingular</a></code>.</p>
@@ -801,27 +1207,27 @@ e_{si} \sim N\left(0, \sigma^2\right)
 </h3>
 <p>If you want to get the same results as everyone else for this exercise, then we all should seed the random number generator with the same value. While we're at it, let's load in the packages we need.</p>
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">11709</span><span class="op">)</span>  </code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">11709</span><span class="op">)</span>  </span></code></pre></div>
 <p>Now let's define the parameters for the DGP (data generating process).</p>
 <div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nsubj</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># number of subjects</span>
-<span class="va">nitem</span> <span class="op">&lt;-</span> <span class="fl">50</span>  <span class="co"># must be an even number</span>
-
-<span class="va">b0</span> <span class="op">&lt;-</span> <span class="fl">800</span> <span class="co"># grand mean</span>
-<span class="va">b1</span> <span class="op">&lt;-</span> <span class="fl">80</span> <span class="co"># 80 ms difference</span>
-<span class="va">effc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> <span class="co"># deviation codes</span>
-
-<span class="va">omega_00</span> <span class="op">&lt;-</span> <span class="fl">80</span> <span class="co"># by-item random intercept sd (omega_00)</span>
-
-<span class="co">## for the by-subjects variance-covariance matrix</span>
-<span class="va">tau_00</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># by-subject random intercept sd</span>
-<span class="va">tau_11</span> <span class="op">&lt;-</span> <span class="fl">40</span> <span class="co"># by-subject random slope sd</span>
-<span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">.2</span> <span class="co"># correlation between intercept and slope</span>
-
-<span class="va">sig</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># residual (standard deviation)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nsubj</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># number of subjects</span></span>
+<span><span class="va">nitem</span> <span class="op">&lt;-</span> <span class="fl">50</span>  <span class="co"># must be an even number</span></span>
+<span></span>
+<span><span class="va">b0</span> <span class="op">&lt;-</span> <span class="fl">800</span> <span class="co"># grand mean</span></span>
+<span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fl">80</span> <span class="co"># 80 ms difference</span></span>
+<span><span class="va">effc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> <span class="co"># deviation codes</span></span>
+<span></span>
+<span><span class="va">omega_00</span> <span class="op">&lt;-</span> <span class="fl">80</span> <span class="co"># by-item random intercept sd (omega_00)</span></span>
+<span></span>
+<span><span class="co">## for the by-subjects variance-covariance matrix</span></span>
+<span><span class="va">tau_00</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># by-subject random intercept sd</span></span>
+<span><span class="va">tau_11</span> <span class="op">&lt;-</span> <span class="fl">40</span> <span class="co"># by-subject random slope sd</span></span>
+<span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">.2</span> <span class="co"># correlation between intercept and slope</span></span>
+<span></span>
+<span><span class="va">sig</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># residual (standard deviation)</span></span></code></pre></div>
 <p>You'll create three tables:</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
@@ -929,9 +1335,9 @@ Hint for making item random effects
 Solution
 </button>
 <div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>item_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nitem</span>,
-                cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">nitem</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,
-                I_0i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nitem</span>, <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">omega_00</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>item_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nitem</span>,</span>
+<span>                cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">nitem</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                I_0i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nitem</span>, <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">omega_00</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="generate-a-sample-of-subjects" class="section level3">
@@ -940,7 +1346,7 @@ Solution
 </h3>
 <p>To generate the by-subject random effects, you will need to generate data from a <em>bivariate normal distribution</em>. To do this, we will use the function <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm</a></code>.</p>
 <div class="warning">
-<p>REMEMBER: do not run <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code> just to get this one function, because <code>MASS</code> has a function <code>select()</code> that will overwrite the tidyverse version. Since all we want from MASS is the <code>mvrnorm()</code> function, we can just access it directly by the <code>pkgname::function</code> syntax, i.e., <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>.</p>
+<p>REMEMBER: do not run <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code> just to get this one function, because <code>MASS</code> has a function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> that will overwrite the tidyverse version. Since all we want from MASS is the <code>mvrnorm()</code> function, we can just access it directly by the <code>pkgname::function</code> syntax, i.e., <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>.</p>
 </div>
 <p>Your subjects table should look like this:</p>
 <div class="webex-solution">
@@ -1076,40 +1482,40 @@ Hint 2
 Hint 3
 </button>
 <div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>    <span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>,            <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,
-        <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,      <span class="va">tau_11</span><span class="op">^</span><span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>    <span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>,            <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,</span>
+<span>        <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>,      <span class="va">tau_11</span><span class="op">^</span><span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="webex-solution">
 <button>
 Hint 4
 </button>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">mx</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">...</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">mx</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">...</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="webex-solution">
 <button>
 Solution
 </button>
 <div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cov</span> <span class="op">&lt;-</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span>
-
-<span class="va">mx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cov</span>,
-               <span class="va">cov</span>,      <span class="va">tau_11</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,
-             nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="va">by_subj_rfx</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="va">nsubj</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>S_0s <span class="op">=</span> <span class="fl">0</span>, S_1s <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, Sigma <span class="op">=</span> <span class="va">mx</span><span class="op">)</span>
-
-<span class="va">subjects</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">by_subj_rfx</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>subj_id <span class="op">=</span> <span class="fu">row_number</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">subj_id</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cov</span> <span class="op">&lt;-</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">tau_00</span> <span class="op">*</span> <span class="va">tau_11</span></span>
+<span></span>
+<span><span class="va">mx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tau_00</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cov</span>,</span>
+<span>               <span class="va">cov</span>,      <span class="va">tau_11</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>             nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">by_subj_rfx</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="va">nsubj</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>S_0s <span class="op">=</span> <span class="fl">0</span>, S_1s <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, Sigma <span class="op">=</span> <span class="va">mx</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">subjects</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">by_subj_rfx</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>subj_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="generate-a-sample-of-encounters-trials" class="section level3">
 <h3>
 <span class="header-section-number">7.4.4</span> Generate a sample of encounters (trials)<a class="anchor" aria-label="anchor" href="#generate-a-sample-of-encounters-trials"><i class="fas fa-link"></i></a>
 </h3>
-<p>Each trial is an <em>encounter</em> between a particular subject and stimulus. In this experiment, each subject will see each stimulus. Generate a table <code>trials</code> that lists the encounters in the experiments. Note: each participant encounters each stimulus item once. Use the <code>crossing()</code> function to create all possible encounters.</p>
+<p>Each trial is an <em>encounter</em> between a particular subject and stimulus. In this experiment, each subject will see each stimulus. Generate a table <code>trials</code> that lists the encounters in the experiments. Note: each participant encounters each stimulus item once. Use the <code><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing()</a></code> function to create all possible encounters.</p>
 <p>Now apply this example to generate the table below, where <code>err</code> is the residual term, drawn from <span class="math inline">\(N \sim \left(0, \sigma^2\right)\)</span>, where <span class="math inline">\(\sigma\)</span> is <code>err_sd</code>.</p>
 <pre><code>## # A tibble: 5,000 × 3
 ##    subj_id item_id    err
@@ -1130,9 +1536,9 @@ Solution
 Solution
 </button>
 <div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu">crossing</span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">subjects</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">subj_id</span><span class="op">)</span>,
-                   item_id <span class="op">=</span> <span class="va">items</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">item_id</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sig</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span>subj_id <span class="op">=</span> <span class="va">subjects</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">subj_id</span><span class="op">)</span>,</span>
+<span>                   item_id <span class="op">=</span> <span class="va">items</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">item_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sig</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="join-subjects-items-and-trials" class="section level3">
@@ -1158,18 +1564,18 @@ Solution
 <button>
 Hint
 </button>
-<p><code>inner_join()</code></p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code></p>
 </div>
 <div class="webex-solution">
 <button>
 Solution
 </button>
 <div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat_sim</span> <span class="op">&lt;-</span> <span class="va">subjects</span> <span class="op">%&gt;%</span>
-  <span class="fu">inner_join</span><span class="op">(</span><span class="va">trials</span>, <span class="st">"subj_id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">inner_join</span><span class="op">(</span><span class="va">items</span>, <span class="st">"item_id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">S_0s</span>, <span class="va">I_0i</span>, <span class="va">S_1s</span>, <span class="va">cond</span>, <span class="va">err</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dat_sim</span> <span class="op">&lt;-</span> <span class="va">subjects</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">trials</span>, <span class="st">"subj_id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">items</span>, <span class="st">"item_id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">S_0s</span>, <span class="va">I_0i</span>, <span class="va">S_1s</span>, <span class="va">cond</span>, <span class="va">err</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="create-the-response-variable" class="section level3">
@@ -1207,9 +1613,9 @@ Hint
 Solution
 </button>
 <div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat_sim2</span> <span class="op">&lt;-</span> <span class="va">dat_sim</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>Y <span class="op">=</span> <span class="va">b0</span> <span class="op">+</span> <span class="va">S_0s</span> <span class="op">+</span> <span class="va">I_0i</span> <span class="op">+</span> <span class="op">(</span><span class="va">S_1s</span> <span class="op">+</span> <span class="va">b1</span><span class="op">)</span> <span class="op">*</span> <span class="va">cond</span> <span class="op">+</span> <span class="va">err</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">Y</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dat_sim2</span> <span class="op">&lt;-</span> <span class="va">dat_sim</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">b0</span> <span class="op">+</span> <span class="va">S_0s</span> <span class="op">+</span> <span class="va">I_0i</span> <span class="op">+</span> <span class="op">(</span><span class="va">S_1s</span> <span class="op">+</span> <span class="va">b1</span><span class="op">)</span> <span class="op">*</span> <span class="va">cond</span> <span class="op">+</span> <span class="va">err</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">Y</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="fitting-the-model" class="section level3">
@@ -1222,10 +1628,10 @@ Solution
 Solution
 </button>
 <div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">cond</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">cond</span> <span class="op">|</span> <span class="va">subj_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">item_id</span><span class="op">)</span>,
-                <span class="va">dat_sim2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_sim</span>, corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">cond</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">cond</span> <span class="op">|</span> <span class="va">subj_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">item_id</span><span class="op">)</span>,</span>
+<span>                <span class="va">dat_sim2</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_sim</span>, corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
 ## Formula: Y ~ cond + (1 + cond | subj_id) + (1 | item_id)
 ##    Data: dat_sim2
@@ -1257,24 +1663,48 @@ Solution
 Solution: Fixed effects
 </button>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">parameter</th>
-<th align="left">variable</th>
-<th align="right">input</th>
-<th align="right">estimate</th>
+<thead><tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+input
+</th>
+<th style="text-align:right;">
+estimate
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\hat{\beta}_0\)</span></td>
-<td align="left"><code>b0</code></td>
-<td align="right">800</td>
-<td align="right">793.293</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\beta}_0\)</span>
+</td>
+<td style="text-align:left;">
+<code>b0</code>
+</td>
+<td style="text-align:right;">
+800
+</td>
+<td style="text-align:right;">
+793.293
+</td>
 </tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\hat{\beta}_1\)</span></td>
-<td align="left"><code>b1</code></td>
-<td align="right">80</td>
-<td align="right">77.652</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\beta}_1\)</span>
+</td>
+<td style="text-align:left;">
+<code>b1</code>
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+77.652
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -1285,42 +1715,90 @@ Solution: Fixed effects
 Solution: Random effects parameters
 </button>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">parameter</th>
-<th align="left">variable</th>
-<th align="right">input</th>
-<th align="right">estimate</th>
+<thead><tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+input
+</th>
+<th style="text-align:right;">
+estimate
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\hat{\tau}_{00}\)</span></td>
-<td align="left"><code>tau_00</code></td>
-<td align="right">100.0</td>
-<td align="right">97.287</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\tau}_{00}\)</span>
+</td>
+<td style="text-align:left;">
+<code>tau_00</code>
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+97.287
+</td>
 </tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\hat{\tau}_{11}\)</span></td>
-<td align="left"><code>tau_11</code></td>
-<td align="right">40.0</td>
-<td align="right">24.448</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\tau}_{11}\)</span>
+</td>
+<td style="text-align:left;">
+<code>tau_11</code>
+</td>
+<td style="text-align:right;">
+40.0
+</td>
+<td style="text-align:right;">
+24.448
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\hat{\rho}\)</span></td>
-<td align="left"><code>rho</code></td>
-<td align="right">0.2</td>
-<td align="right">0.675</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\rho}\)</span>
+</td>
+<td style="text-align:left;">
+<code>rho</code>
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.675
+</td>
 </tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\hat{\omega}_{00}\)</span></td>
-<td align="left"><code>omega_00</code></td>
-<td align="right">80.0</td>
-<td align="right">89.928</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\omega}_{00}\)</span>
+</td>
+<td style="text-align:left;">
+<code>omega_00</code>
+</td>
+<td style="text-align:right;">
+80.0
+</td>
+<td style="text-align:right;">
+89.928
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\hat{\sigma}\)</span></td>
-<td align="left"><code>sig</code></td>
-<td align="right">200.0</td>
-<td align="right">200.761</td>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\sigma}\)</span>
+</td>
+<td style="text-align:left;">
+<code>sig</code>
+</td>
+<td style="text-align:right;">
+200.0
+</td>
+<td style="text-align:right;">
+200.761
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -1488,7 +1966,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2021-11-10.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2022-08-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
