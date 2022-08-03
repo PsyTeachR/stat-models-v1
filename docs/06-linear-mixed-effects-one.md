@@ -6,13 +6,42 @@
 
 We have repeatedly emphasized how many common techniques in psychology can be seen as special cases of the general linear model. This implies that it would be possible to replace these techniques with regression. In fact, you could analyze almost any conceivable dataset in psychology using one of the four functions below.
 
-
-|sampling design |type of data                     |function        |description                            |
-|:---------------|:--------------------------------|:---------------|:--------------------------------------|
-|single level    |continuous, normally distributed |`base::lm()`    |simple linear model                    |
-|single level    |count or categorical             |`base::glm()`   |generalized linear model               |
-|multilevel      |continuous, normally distributed |`lme4::lmer()`  |linear mixed-effects model             |
-|multilevel      |count or categorical             |`lme4::glmer()` |generalized linear mixed-effects model |
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> sampling design </th>
+   <th style="text-align:left;"> type of data </th>
+   <th style="text-align:left;"> function </th>
+   <th style="text-align:left;"> description </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> single level </td>
+   <td style="text-align:left;"> continuous, normally distributed </td>
+   <td style="text-align:left;"> `base::lm()` </td>
+   <td style="text-align:left;"> simple linear model </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> single level </td>
+   <td style="text-align:left;"> count or categorical </td>
+   <td style="text-align:left;"> `base::glm()` </td>
+   <td style="text-align:left;"> generalized linear model </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> multilevel </td>
+   <td style="text-align:left;"> continuous, normally distributed </td>
+   <td style="text-align:left;"> `lme4::lmer()` </td>
+   <td style="text-align:left;"> linear mixed-effects model </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> multilevel </td>
+   <td style="text-align:left;"> count or categorical </td>
+   <td style="text-align:left;"> `lme4::glmer()` </td>
+   <td style="text-align:left;"> generalized linear mixed-effects model </td>
+  </tr>
+</tbody>
+</table>
 
 By the end of this chapter, you should:
 
@@ -29,13 +58,37 @@ Arguments to these functions are highly similar across all four versions.  We wi
 
 Here is a comparison chart for single-level data (data where you don't have <a class='glossary' target='_blank' title='A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units.' href='https://psyteachr.github.io/glossary/r#repeated-measures'>repeated-measures</a>):
 
-
-|test                       |conventional approach |regression approach     |
-|:--------------------------|:---------------------|:-----------------------|
-|one-sample t-test          |`t.test(y, mu = c)`   |`lm(y ~ 1, offset = c)` |
-|independent samples t-test |`t.test(x, y)`        |`lm(y ~ x)`             |
-|one factor ANOVA           |`aov(y ~ x)`          |`lm(y ~ x)`             |
-|factorial ANOVA            |`aov(y ~ a * b)`      |`lm(y ~ a * b)`         |
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> test </th>
+   <th style="text-align:left;"> conventional approach </th>
+   <th style="text-align:left;"> regression approach </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> one-sample t-test </td>
+   <td style="text-align:left;"> `t.test(y, mu = c)` </td>
+   <td style="text-align:left;"> `lm(y ~ 1, offset = c)` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> independent samples t-test </td>
+   <td style="text-align:left;"> `t.test(x, y)` </td>
+   <td style="text-align:left;"> `lm(y ~ x)` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one factor ANOVA </td>
+   <td style="text-align:left;"> `aov(y ~ x)` </td>
+   <td style="text-align:left;"> `lm(y ~ x)` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> factorial ANOVA </td>
+   <td style="text-align:left;"> `aov(y ~ a * b)` </td>
+   <td style="text-align:left;"> `lm(y ~ a * b)` </td>
+  </tr>
+</tbody>
+</table>
 
 All of above designs are *between-subjects* designs without repeated measures. (Note that in the factorial case, we would probably replace `a` and `b` with our own deviation-coded numerical predictors, for reasons already discussed in [the chapter on interactions](interactions.html)).
 
@@ -51,16 +104,52 @@ Where mixed-effects models come into play is with multilevel data. Data is usual
 
 Here is a comparison chart for multi-level data:
 
-
-|test                                                 |conventional approach                            |regression approach                                      |
-|:----------------------------------------------------|:------------------------------------------------|:--------------------------------------------------------|
-|one-sample t-test with pseudoreplications            |calculate means and use `t.test(x_mean)`         |<code>lmer(y ~ (1 &#124; subject), offset = c)</code>    |
-|paired samples t-test, no pseudoreplications         |`t.test(x, y, paired = TRUE)`                    |<code>lmer(y ~ x + (1 &#124; subject))</code>            |
-|paired samples t-test with pseudoreplications        |calculate means and use `t.test(x_mean, y_mean)` |<code>lmer(y ~ x + (1 + x &#124; subject))</code>        |
-|repeated-measures ANOVA no pseudoreplications        |`aov(y ~ x + Error(subject))`                    |<code>lmer(y ~ x + (1 &#124; subject))</code>            |
-|repeated-measures ANOVA with pseudoreplications      |`aov(y ~ x + Error(subject/x))`                  |<code>lmer(y ~ x + (1 + x &#124; subject))</code>        |
-|factorial ANOVA, a & b within, no pseudoreplications |`aov(y ~ a * b + Error(subject))`                |<code>lmer(y ~ a * b + (1 &#124; subject))</code>        |
-|factorial ANOVA with pseudoreplications              |`aov(y ~ a * b + Error(subject/(a * b))`         |<code>lmer(y ~ a * b + (1 + a * b &#124; subject)</code> |
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> test </th>
+   <th style="text-align:left;"> conventional approach </th>
+   <th style="text-align:left;"> regression approach </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> one-sample t-test with pseudoreplications </td>
+   <td style="text-align:left;"> calculate means and use `t.test(x_mean)` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ (1 | subject), offset = c)</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> paired samples t-test, no pseudoreplications </td>
+   <td style="text-align:left;"> `t.test(x, y, paired = TRUE)` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ x + (1 | subject))</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> paired samples t-test with pseudoreplications </td>
+   <td style="text-align:left;"> calculate means and use `t.test(x_mean, y_mean)` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ x + (1 + x | subject))</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> repeated-measures ANOVA no pseudoreplications </td>
+   <td style="text-align:left;"> `aov(y ~ x + Error(subject))` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ x + (1 | subject))</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> repeated-measures ANOVA with pseudoreplications </td>
+   <td style="text-align:left;"> `aov(y ~ x + Error(subject/x))` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ x + (1 + x | subject))</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> factorial ANOVA, a & b within, no pseudoreplications </td>
+   <td style="text-align:left;"> `aov(y ~ a * b + Error(subject))` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ a * b + (1 | subject))</code> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> factorial ANOVA with pseudoreplications </td>
+   <td style="text-align:left;"> `aov(y ~ a * b + Error(subject/(a * b))` </td>
+   <td style="text-align:left;"> <code>lmer(y ~ a * b + (1 + a * b | subject)</code> </td>
+  </tr>
+</tbody>
+</table>
 
 One of the main selling points of the general linear models / regression framework over t-test and ANOVA is its flexibility. We saw this in the last chapter with the `sleepstudy` data, which could only be properly handled within a linear mixed-effects modelling framework. Despite the many advantages of regression, if you are in a situation where you have balanced data and can reasonably apply t-test or ANOVA without violating any of the assumptions behind the test, it makes sense to do so; these approaches have a long history in psychology and are more widely understood.
 
@@ -280,12 +369,32 @@ As noted above, you could conduct a one-factor ANOVA in regression using the for
 
 It is often sensible to code your own numerical predictors, particularly if your goal is to do ANOVA-style tests of main effects and interactions, which can be difficult if any of your variables are of type `factor`. So for a design with one three-level factor called `meal` (`breakfast`, `lunch`, `dinner`) you could create two variables, `lunch_v_breakfast` and `dinner_v_breakfast` following the scheme below.
 
-
-|factor level | lunch_v_breakfast| dinner_v_breakfast|
-|:------------|-----------------:|------------------:|
-|breakfast    |              -1/3|               -1/3|
-|lunch        |              +2/3|               -1/3|
-|dinner       |              -1/3|               +2/3|
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> factor level </th>
+   <th style="text-align:right;"> lunch_v_breakfast </th>
+   <th style="text-align:right;"> dinner_v_breakfast </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> breakfast </td>
+   <td style="text-align:right;"> -1/3 </td>
+   <td style="text-align:right;"> -1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lunch </td>
+   <td style="text-align:right;"> +2/3 </td>
+   <td style="text-align:right;"> -1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> dinner </td>
+   <td style="text-align:right;"> -1/3 </td>
+   <td style="text-align:right;"> +2/3 </td>
+  </tr>
+</tbody>
+</table>
 
 If your dependent variable is `calories`, your model would be:
 
