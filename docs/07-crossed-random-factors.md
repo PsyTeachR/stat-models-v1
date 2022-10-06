@@ -100,23 +100,23 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 <tbody>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 59 </td>
-   <td style="text-align:left;"> 2020-05-02 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:left;"> 2020-05-06 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:left;"> 2020-05-02 </td>
+   <td style="text-align:right;"> 58 </td>
+   <td style="text-align:left;"> 2020-05-21 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 37 </td>
-   <td style="text-align:left;"> 2020-05-13 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:left;"> 2020-05-27 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 43 </td>
-   <td style="text-align:left;"> 2020-05-27 </td>
+   <td style="text-align:right;"> 62 </td>
+   <td style="text-align:left;"> 2020-05-29 </td>
   </tr>
 </tbody>
 </table>

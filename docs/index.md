@@ -1,7 +1,7 @@
 --- 
 title: "Learning Statistical Models Through Simulation in R"
 author: "Dale J. Barr"
-date: "2022-08-03"
+date: "2022-10-06"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -23,7 +23,7 @@ favicon: "images/logos/favicon.ico"
 
 This textbook approaches statistical analysis through the General Linear Model, taking a simulation-based approach in the R software environment. The overarching goal is to teach students how to translate a description of the design of a study into a linear model to analyze data from that study. The focus is on the skills needed to analyze data from psychology experiments.
 
-<div class="small_right"><img src="images/logos/models.png" 
+<div class="small_right"><img src="images/logos/logo.png" 
      alt="Stat Models Hex Logo" /></div>
 
 The following topics are covered:

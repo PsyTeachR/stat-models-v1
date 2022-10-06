@@ -44,9 +44,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -69,9 +69,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -95,9 +95,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -193,9 +193,9 @@ starwars3 %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -219,9 +219,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'spearman'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'spearman'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -616,5 +616,5 @@ To close, here are a few implications from the relationship between correlation 
 
 ## Exercises
 
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
+<iframe src="https://rstudio-connect.psy.gla.ac.uk/covariance/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
 
