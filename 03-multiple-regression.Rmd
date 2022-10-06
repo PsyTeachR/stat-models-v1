@@ -234,7 +234,7 @@ if (coef(my_model_scaled)[[2]] > coef(my_model_scaled)[[1]]) "nclicks_c" else "l
 
 This tells us that `r .bigger` has a relatively larger influence; for each standard deviation increase in this variable, `grade` increases by about `r coef(my_model_scaled)[[.bigger]] %>% round(2)`.
 
-Another common approach to standardization involves standardizing the response variable as well as the predictors, i.e., $z$-scoring the $Y$ values as well as the $X$ values. The relative rank order of the predictors will be the same under this approach. The main difference would be that the predictors will not be expressed in standard deviation ($SD$) units of the response variable, rather than in raw units.
+Another common approach to standardization involves standardizing the response variable as well as the predictors, i.e., $z$-scoring the $Y$ values as well as the $X$ values. The relative rank order of the regression coefficients will be the same under this approach. The main difference would be that the coefficients will be expressed in standard deviation ($SD$) units of the response variable, rather than in raw units.
 
 :::{.info}
 
