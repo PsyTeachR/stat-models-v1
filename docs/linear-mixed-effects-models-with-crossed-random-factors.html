@@ -7,7 +7,7 @@
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Generalizing over encounters between subjects and stimuli A common goal of experiments in psychology is to test claims about behavior that arises in response to certain types of stimuli (or...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -258,10 +258,10 @@ date
 1
 </td>
 <td style="text-align:right;">
-31
+19
 </td>
 <td style="text-align:left;">
-2020-05-06
+2020-04-30
 </td>
 </tr>
 <tr>
@@ -269,10 +269,10 @@ date
 2
 </td>
 <td style="text-align:right;">
-58
+47
 </td>
 <td style="text-align:left;">
-2020-05-21
+2020-05-06
 </td>
 </tr>
 <tr>
@@ -280,10 +280,10 @@ date
 3
 </td>
 <td style="text-align:right;">
-71
+34
 </td>
 <td style="text-align:left;">
-2020-05-27
+2020-05-09
 </td>
 </tr>
 <tr>
@@ -291,10 +291,10 @@ date
 4
 </td>
 <td style="text-align:right;">
-62
+20
 </td>
 <td style="text-align:left;">
-2020-05-29
+2020-05-23
 </td>
 </tr>
 </tbody>
@@ -1507,7 +1507,7 @@ Solution
 <span><span class="va">by_subj_rfx</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="va">nsubj</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>S_0s <span class="op">=</span> <span class="fl">0</span>, S_1s <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, Sigma <span class="op">=</span> <span class="va">mx</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">subjects</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">by_subj_rfx</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>subj_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>subj_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -1530,7 +1530,7 @@ Solution
 ##  8       1       8 -189. 
 ##  9       1       9 -410. 
 ## 10       1      10  102. 
-## # … with 4,990 more rows</code></pre>
+## # ℹ 4,990 more rows</code></pre>
 <div class="webex-solution">
 <button>
 Solution
@@ -1559,7 +1559,7 @@ Solution
 ##  8       1       8 -80.0 -87.6 -0.763   0.5 -189. 
 ##  9       1       9 -80.0 -97.4 -0.763  -0.5 -410. 
 ## 10       1      10 -80.0 -85.2 -0.763   0.5  102. 
-## # … with 4,990 more rows</code></pre>
+## # ℹ 4,990 more rows</code></pre>
 <div class="webex-solution">
 <button>
 Hint
@@ -1598,7 +1598,7 @@ Solution
 ##  8       1       8  483. -80.0 -87.6 -0.763   0.5 -189. 
 ##  9       1       9  173. -80.0 -97.4 -0.763  -0.5 -410. 
 ## 10       1      10  776. -80.0 -85.2 -0.763   0.5  102. 
-## # … with 4,990 more rows</code></pre>
+## # ℹ 4,990 more rows</code></pre>
 <p>Note: this is the full <strong>decomposition table</strong> for this model.</p>
 <div class="webex-solution">
 <button>
@@ -1966,7 +1966,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2022-10-06.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1979,7 +1979,7 @@ $( document ).ready(function() {
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

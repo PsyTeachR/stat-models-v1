@@ -555,7 +555,7 @@ Note that the $Y$ variable with the dots in the subscripts are means of $Y$, tak
 
 ![](images/04-interactions_factorial_app.png)
 
-[Launch this web application](https://shiny.psy.gla.ac.uk/Dale/factorial2){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
+[Launch this web application](https://rstudio-connect.psy.gla.ac.uk/factorial){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
 
 ## Code your own categorical predictors in factorial designs
 

@@ -64,7 +64,7 @@ urban
 ##  8       8 urban   450     2          8  -91.6       374.
 ##  9       9 urban   450     2         15 -109.        371.
 ## 10      10 urban   450     2         70   20.7       611.
-## # … with 90 more rows
+## # ℹ 90 more rows
 ```
 
 Let's plot the data we created, along with the line of best fit.
@@ -77,7 +77,7 @@ ggplot(urban, aes(dist_level, simple_rt)) +
 ```
 
 ```
-## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula = 'y ~ x'
 ```
 
 <div class="figure" style="text-align: center">
@@ -119,7 +119,7 @@ ggplot(all_data %>% mutate(group = fct_relevel(group, "urban")),
 ```
 
 ```
-## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula = 'y ~ x'
 ```
 
 <div class="figure" style="text-align: center">
@@ -209,7 +209,7 @@ Generally, you will be interested in whether the slopes are the same or differen
 
 When the interaction term is statistically significant at some $\alpha$ level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., $H_0: \beta_3 = 0$), which implies the lines are not parallel in the population.
 
-However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
+However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
 
 The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see @Lakens_Scheel_Isager_2018 for a tutorial.
 
@@ -692,7 +692,7 @@ Note that the $Y$ variable with the dots in the subscripts are means of $Y$, tak
 
 ![](images/04-interactions_factorial_app.png)
 
-[Launch this web application](https://shiny.psy.gla.ac.uk/Dale/factorial2){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
+[Launch this web application](https://rstudio-connect.psy.gla.ac.uk/factorial){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
 
 ## Code your own categorical predictors in factorial designs
 

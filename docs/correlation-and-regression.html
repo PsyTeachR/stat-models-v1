@@ -7,7 +7,7 @@
 <title>Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="2.1 Correlation matrices You may be familiar with the concept of a correlation matrix from reading papers in psychology. Correlation matrices are a common way of summarizing relationships between...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/correlation-and-regression.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
@@ -113,9 +113,9 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">height</span>, <span class="va">mass</span>, <span class="va">birth_year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>## # A tibble: 3 × 4
 ##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
@@ -128,9 +128,9 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">height</span>, <span class="va">mass</span>, <span class="va">birth_year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>## # A tibble: 3 × 4
 ##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
@@ -144,9 +144,9 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .13                
@@ -209,9 +209,9 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .74                
@@ -224,9 +224,9 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Correlation computed with
-## • Method: 'spearman'
-## • Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## 
+## Correlation method: 'spearman'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .75                
@@ -303,7 +303,7 @@ birth_year
 <p>The package <strong><code>MASS</code></strong> provides a function <code>mvrnorm()</code> which is the 'multivariate' version of rnorm (hence the function name, <code>mv</code> + <code>rnorm</code>, which makes it easy to remember.</p>
 <div class="watchout">
 <p>
-The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you'll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>, it is preferable to use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don't play well together, due to both packages having the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you'll end up getting the <strong><code>MASS</code></strong> version of <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code> without loading <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>.
+The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you’ll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>, it is preferable to use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don’t play well together, due to both packages having the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you’ll end up getting the <strong><code>MASS</code></strong> version of <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code> without loading <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>.
 </p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
@@ -487,7 +487,7 @@ If you want to change this behavior, set the <code>byrow</code> argument to <cod
 <span></span>
 <span><span class="co">## combine real and simulated datasets</span></span>
 <span><span class="co">## handw is variable containing data from heights_and_weights.csv</span></span>
-<span><span class="va">alldata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">handw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"real"</span><span class="op">)</span>, </span>
+<span><span class="va">alldata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">handw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"real"</span><span class="op">)</span>, </span>
 <span>                     <span class="va">new_humans</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">alldata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">height_in</span>, <span class="va">weight_lbs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -725,7 +725,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2022-10-06.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -738,7 +738,7 @@ $( document ).ready(function() {
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

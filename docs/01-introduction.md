@@ -178,7 +178,7 @@ dat
 ##  8 parent  517.
 ##  9 parent  481.
 ## 10 parent  549.
-## # … with 90 more rows
+## # ℹ 90 more rows
 ```
 
 Here are some things to try with this simulated data.

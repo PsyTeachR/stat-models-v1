@@ -44,9 +44,9 @@ starwars %>%
 ```
 
 ```
-## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -69,9 +69,9 @@ starwars %>%
 ```
 
 ```
-## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -95,9 +95,9 @@ starwars %>%
 ```
 
 ```
-## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -193,9 +193,9 @@ starwars3 %>%
 ```
 
 ```
-## Correlation computed with
-## • Method: 'pearson'
-## • Missing treated using: 'pairwise.complete.obs'
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -219,9 +219,9 @@ starwars %>%
 ```
 
 ```
-## Correlation computed with
-## • Method: 'spearman'
-## • Missing treated using: 'pairwise.complete.obs'
+## 
+## Correlation method: 'spearman'
+## Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -283,7 +283,7 @@ It should be clear that you can't just run `rnorm()` twice and combine the varia
 The package **`MASS`** provides a function `mvrnorm()` which is the 'multivariate' version of rnorm (hence the function name, `mv` + `rnorm`, which makes it easy to remember.
 
 <div class="watchout">
-<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you'll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code>library("MASS")</code>, it is preferable to use <code>MASS::mvrnorm()</code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don't play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you'll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code>MASS::mvrnorm()</code> without loading <code>library("MASS")</code>.</p>
+<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you’ll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code>library("MASS")</code>, it is preferable to use <code>MASS::mvrnorm()</code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don’t play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you’ll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code>MASS::mvrnorm()</code> without loading <code>library("MASS")</code>.</p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
 MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the ass. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>

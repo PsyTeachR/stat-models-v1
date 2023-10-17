@@ -100,23 +100,23 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 <tbody>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 31 </td>
-   <td style="text-align:left;"> 2020-05-06 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:left;"> 2020-04-30 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> 2020-05-21 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:left;"> 2020-05-06 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 71 </td>
-   <td style="text-align:left;"> 2020-05-27 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:left;"> 2020-05-09 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:left;"> 2020-05-29 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:left;"> 2020-05-23 </td>
   </tr>
 </tbody>
 </table>
@@ -1140,7 +1140,7 @@ Now apply this example to generate the table below, where `err` is the residual 
 ##  8       1       8 -189. 
 ##  9       1       9 -410. 
 ## 10       1      10  102. 
-## # … with 4,990 more rows
+## # ℹ 4,990 more rows
 ```
 
 
@@ -1179,7 +1179,7 @@ Merge the information in `subjects`, `items`, and `trials` to create the full da
 ##  8       1       8 -80.0 -87.6 -0.763   0.5 -189. 
 ##  9       1       9 -80.0 -97.4 -0.763  -0.5 -410. 
 ## 10       1      10 -80.0 -85.2 -0.763   0.5  102. 
-## # … with 4,990 more rows
+## # ℹ 4,990 more rows
 ```
 
 
@@ -1234,7 +1234,7 @@ so that the resulting table (`dat_sim2`) looks like this:
 ##  8       1       8  483. -80.0 -87.6 -0.763   0.5 -189. 
 ##  9       1       9  173. -80.0 -97.4 -0.763  -0.5 -410. 
 ## 10       1      10  776. -80.0 -85.2 -0.763   0.5  102. 
-## # … with 4,990 more rows
+## # ℹ 4,990 more rows
 ```
 
 Note: this is the full **decomposition table** for this model.
