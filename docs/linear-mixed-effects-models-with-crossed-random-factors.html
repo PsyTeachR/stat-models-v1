@@ -7,7 +7,7 @@
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Generalizing over encounters between subjects and stimuli A common goal of experiments in psychology is to test claims about behavior that arises in response to certain types of stimuli (or...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
@@ -19,15 +19,15 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6NP3MF25W3');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -75,11 +75,11 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models-with-crossed-random-factors" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models-with-crossed-random-factors" class="section level1" number="7">
 <h1>
 <span class="header-section-number">7</span> Linear mixed-effects models with crossed random factors<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h1>
-<div id="generalizing-over-encounters-between-subjects-and-stimuli" class="section level2">
+<div id="generalizing-over-encounters-between-subjects-and-stimuli" class="section level2" number="7.1">
 <h2>
 <span class="header-section-number">7.1</span> Generalizing over encounters between subjects and stimuli<a class="anchor" aria-label="anchor" href="#generalizing-over-encounters-between-subjects-and-stimuli"><i class="fas fa-link"></i></a>
 </h2>
@@ -90,7 +90,7 @@
 <li>does viewing soothing images help reduce stress relative to more neutral images?</li>
 <li>when reading a scenario ambiguously describing a target individual, are people more likely to make assumptions about what social group the target belongs to after being subliminally primed?</li>
 </ul>
-<p>One thing to note about all these claims is that the are of the type, "what happens to our measurements when an individual of type X encounters a stimulus of type Y", where X is drawn from a target population of subjects and Y is drawn from a target population of stimuli. In other words, we are attempt to make generalizable claims about a particular class of <strong>events</strong> involving <strong>encounters</strong> between sampling units of subjects and stimuli <span class="citation">(Barr, <a href="bibliography.html#ref-Barr_2017">2017</a>)</span>. But just like we can't sample all possible subjects from the target population of subjects, we also cannot sample all possible stimuli from the target population of stimuli. Thus, when drawing inferences, we need to account for the uncertainty introduced in our estimates by <em>both</em> sampling processes <span class="citation">(Clark, <a href="bibliography.html#ref-Clark_1973">1973</a>; Coleman, <a href="bibliography.html#ref-Coleman_1964">1964</a>; Judd et al., <a href="bibliography.html#ref-Judd_Westfall_Kenny_2012">2012</a>; Yarkoni, <a href="bibliography.html#ref-yarkoni_2019">2019</a>)</span>. Linear mixed-effects models make it particularly easy to do this by allowing more than one random factor in our model formula <span class="citation">(Baayen et al., <a href="bibliography.html#ref-Baayen_Davidson_Bates_2008">2008</a>)</span>.</p>
+<p>One thing to note about all these claims is that the are of the type, "what happens to our measurements when an individual of type X encounters a stimulus of type Y", where X is drawn from a target population of subjects and Y is drawn from a target population of stimuli. In other words, we are attempt to make generalizable claims about a particular class of <strong>events</strong> involving <strong>encounters</strong> between sampling units of subjects and stimuli <span class="citation">(Barr, <a href="bibliography.html#ref-Barr_2017" role="doc-biblioref">2017</a>)</span>. But just like we can't sample all possible subjects from the target population of subjects, we also cannot sample all possible stimuli from the target population of stimuli. Thus, when drawing inferences, we need to account for the uncertainty introduced in our estimates by <em>both</em> sampling processes <span class="citation">(Clark, <a href="bibliography.html#ref-Clark_1973" role="doc-biblioref">1973</a>; Coleman, <a href="bibliography.html#ref-Coleman_1964" role="doc-biblioref">1964</a>; Judd et al., <a href="bibliography.html#ref-Judd_Westfall_Kenny_2012" role="doc-biblioref">2012</a>; Yarkoni, <a href="bibliography.html#ref-yarkoni_2019" role="doc-biblioref">2019</a>)</span>. Linear mixed-effects models make it particularly easy to do this by allowing more than one random factor in our model formula <span class="citation">(Baayen et al., <a href="bibliography.html#ref-Baayen_Davidson_Bates_2008" role="doc-biblioref">2008</a>)</span>.</p>
 <p>Here is a simple example of a study where you are interested in testing whether people rate pictures of cats, dogs, or sunsets as more soothing images to look at. You want to say something general about the category of cats, dogs, and sunsets and not something about the specific pictures that you happened to sample. Let's say you randomly select four images from each of the three categories from Google Images (you would absolutely need to have more to be able to say something generalizable, but we chose a small number to keep the example simple). So your table of stimuli might look like the following:</p>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr>
@@ -258,10 +258,10 @@ date
 1
 </td>
 <td style="text-align:right;">
-19
+70
 </td>
 <td style="text-align:left;">
-2020-04-30
+2020-05-25
 </td>
 </tr>
 <tr>
@@ -269,10 +269,10 @@ date
 2
 </td>
 <td style="text-align:right;">
-47
+21
 </td>
 <td style="text-align:left;">
-2020-05-06
+2020-05-26
 </td>
 </tr>
 <tr>
@@ -280,10 +280,10 @@ date
 3
 </td>
 <td style="text-align:right;">
-34
+31
 </td>
 <td style="text-align:left;">
-2020-05-09
+2020-05-27
 </td>
 </tr>
 <tr>
@@ -291,10 +291,10 @@ date
 4
 </td>
 <td style="text-align:right;">
-20
+37
 </td>
 <td style="text-align:left;">
-2020-05-23
+2020-05-29
 </td>
 </tr>
 </tbody>
@@ -848,7 +848,7 @@ sunset4.jpg
 </table></div>
 <p>Because you have 4 subjects responding to 12 stimuli, the resulting table will have 48 rows.</p>
 </div>
-<div id="lme4-syntax-for-crossed-random-factors" class="section level2">
+<div id="lme4-syntax-for-crossed-random-factors" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> lme4 syntax for crossed random factors<a class="anchor" aria-label="anchor" href="#lme4-syntax-for-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h2>
@@ -859,11 +859,11 @@ sunset4.jpg
 <p><code>y ~ x + (x | subject_id) + (x + w | stimulus_id)</code></p>
 <p>which would estimate the same 2x2 matrix for subjects, but the covariance matrix for stimuli would now be a 3x3 matrix (intercepts, slope of x, and slope of w). Although this enables great flexibility, as the random effects structure becomes more complex, the estimation process becomes more difficult and less likely to converge upon a result.</p>
 </div>
-<div id="specifying-random-effects" class="section level2">
+<div id="specifying-random-effects" class="section level2" number="7.3">
 <h2>
 <span class="header-section-number">7.3</span> Specifying random effects<a class="anchor" aria-label="anchor" href="#specifying-random-effects"><i class="fas fa-link"></i></a>
 </h2>
-<p>The choice of random effects structure is not a new problem that appeared with linear mixed-effects models. In traditional approaches using t-test and ANOVA, you choose the random effects structure implicitly when you choose what procedure to use. As discussed in the last chapter, if you choose a paired samples t-test over an independent samples t-test, that is analogous to choosing to fit <code>lme4::lmer(y ~ x + (1 | subject))</code> over <code>lm(y ~ x)</code>. Likewise, you can run a mixed model ANOVA as either <code>aov(y ~ x + Error(subject_id))</code>, which is equivalent to a random intercepts model, or <code>aov(y ~ x + Error(x / subject_id))</code>, which is equivalent to a random slopes model. The tradition in psychology when performing confirmatory analyses is to use the <em>maximal random effects structure justified by the design of your study</em>. So, if you have one-factor data with pseudoreplications, you would use <code>aov(y ~ x + Error(x / subject_id))</code> rather than <code>aov(y ~ x + Error(subject_id))</code>. Analogously, if you were to analyze the same data with pseudoreplications using a linear mixed effects model, you should use <code>lme4::lmer(y ~ x + (1 + x | subject_id))</code> rather than <code>lme4::lmer(y ~ x + (1 | subject_id))</code>. In other words, you should account for all sources of non-independence introduced by repeated sampling from the same subjects or stimuli. This approach is known as the <strong>maximal random effects</strong> approach or the <strong>design-driven approach</strong> to specifying random effects structure <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013">2013</a>)</span>. Failing to account for dependencies introduced by the design is likely to lead to standard errors that are too small, which in turn, lead to p-values that are smaller than they should be, and thus, higher false positive (Type I error) rates. In some cases, it can lead to lower power, and thus a higher false negative (Type II error) rate. It is thus of critical importance to pay close attention to the random effects structure when performing analyses.</p>
+<p>The choice of random effects structure is not a new problem that appeared with linear mixed-effects models. In traditional approaches using t-test and ANOVA, you choose the random effects structure implicitly when you choose what procedure to use. As discussed in the last chapter, if you choose a paired samples t-test over an independent samples t-test, that is analogous to choosing to fit <code>lme4::lmer(y ~ x + (1 | subject))</code> over <code>lm(y ~ x)</code>. Likewise, you can run a mixed model ANOVA as either <code>aov(y ~ x + Error(subject_id))</code>, which is equivalent to a random intercepts model, or <code>aov(y ~ x + Error(x / subject_id))</code>, which is equivalent to a random slopes model. The tradition in psychology when performing confirmatory analyses is to use the <em>maximal random effects structure justified by the design of your study</em>. So, if you have one-factor data with pseudoreplications, you would use <code>aov(y ~ x + Error(x / subject_id))</code> rather than <code>aov(y ~ x + Error(subject_id))</code>. Analogously, if you were to analyze the same data with pseudoreplications using a linear mixed effects model, you should use <code>lme4::lmer(y ~ x + (1 + x | subject_id))</code> rather than <code>lme4::lmer(y ~ x + (1 | subject_id))</code>. In other words, you should account for all sources of non-independence introduced by repeated sampling from the same subjects or stimuli. This approach is known as the <strong>maximal random effects</strong> approach or the <strong>design-driven approach</strong> to specifying random effects structure <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013" role="doc-biblioref">2013</a>)</span>. Failing to account for dependencies introduced by the design is likely to lead to standard errors that are too small, which in turn, lead to p-values that are smaller than they should be, and thus, higher false positive (Type I error) rates. In some cases, it can lead to lower power, and thus a higher false negative (Type II error) rate. It is thus of critical importance to pay close attention to the random effects structure when performing analyses.</p>
 <p>Linear mixed-effects models almost inevitably include random intercepts for any random factor included in the design. So if your random factors are subjects and stimuli identified by <code>subject_id</code> and <code>stimulus_id</code> respectively, then at the very least, your model syntax will include <code>(1 | subject_id) + (1 | stimulus_id)</code>. But you will have various predictors in the model, so key question becomes: what predictors should I allow to vary over what sampling units? For instance, if the fixed-effects part of your model is a 2x2 factorial design with factors A and B, <code>y ~ a * b + ...</code>, you could have a large variety of random effects structures, including (but not limited to):</p>
 <ol style="list-style-type: decimal">
 <li>random intercepts only: <code>y ~ a * b + (1 | subject_id) + (1 | stimulus_id)</code>
@@ -878,13 +878,13 @@ sunset4.jpg
 <div class="info">
 <p>The "maximal random effects structure justified by the design" is not the same as the "maximum possible random effects structure"; that is, it does not entail automatically putting in all random slopes for all random factors for all predictors in your model. You have to follow the guidelines for random effects in the next section to decide whether inclusion of a particular random slope is, in fact, "justified by the design."</p>
 </div>
-<p>Some authors suggest a "data-driven" alternative to design-driven random effects, suggesting that researchers should only include random slopes justified by the design if they are further justified by the data <span class="citation">(Matuschek et al., <a href="bibliography.html#ref-Matuschek_et_al_2017">2017</a>)</span>. For example, you might use a null-hypothesis test to determine whether including a by-subject random slope for <code>x</code> significantly improves the model fit, and only include that effect if it does. Although this could potentially improve power for the test of theoretical interest when random slopes are very small, it also exposes you to additional unknown risk of false positives, so it is questionable whether this the right approach in a confirmatory context. Thus, we do not recommend a data-driven approach.</p>
-<div id="rules-for-choosing-random-effects-for-categorical-factors" class="section level3">
+<p>Some authors suggest a "data-driven" alternative to design-driven random effects, suggesting that researchers should only include random slopes justified by the design if they are further justified by the data <span class="citation">(Matuschek et al., <a href="bibliography.html#ref-Matuschek_et_al_2017" role="doc-biblioref">2017</a>)</span>. For example, you might use a null-hypothesis test to determine whether including a by-subject random slope for <code>x</code> significantly improves the model fit, and only include that effect if it does. Although this could potentially improve power for the test of theoretical interest when random slopes are very small, it also exposes you to additional unknown risk of false positives, so it is questionable whether this the right approach in a confirmatory context. Thus, we do not recommend a data-driven approach.</p>
+<div id="rules-for-choosing-random-effects-for-categorical-factors" class="section level3" number="7.3.1">
 <h3>
 <span class="header-section-number">7.3.1</span> Rules for choosing random effects for categorical factors<a class="anchor" aria-label="anchor" href="#rules-for-choosing-random-effects-for-categorical-factors"><i class="fas fa-link"></i></a>
 </h3>
-<p>The random effects structure for a linear mixed-effects model---in other words, your assumptions about what effects vary over what sampling units---is absolutely critical for ensuring that your parameters reflect the uncertainty introduced by sampling <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013">2013</a>)</span>. First off, note that we are focused on predictors representing <strong>design variables</strong> that are of theoretical interest and on which you will perform inferential tests. If you have predictors that represent <strong>control variables</strong>, over which you do not intend to perform statistical tests, it is unlikely that random slopes are needed.</p>
-<p>The following rules are derived from <span class="citation">Barr et al. (<a href="bibliography.html#ref-Barr_et_al_2013">2013</a>)</span> and <span class="citation">Barr (<a href="bibliography.html#ref-Barr_2013">2013</a>)</span>. Consult these papers if you wish to find out more about these guidelines. Keep in mind that you can only use a mixed effects model if you have repeated measures data, either because of pseudoreplications and/or the presence of within-subject (or within-stimulus) factors. With crossed random factors, you inevitably have pseudoreplications---multiple observations per subject due to multiple stimuli, multiple observations per stimulus due to multiple subjects. The key to determining random effects structure is figuring out which factors are within-subjects or within-stimuli, and where any pseudoreplications are located in the design. You apply the rules once for subjects to determine the form of the <code>(1 + ... | subject_id)</code> part of the formula, and once for stimuli to determine the form of the <code>(1 + ... | stimulus_id)</code> part of the formula. Where you see the word "unit" or "sampling unit" below, substitute "subject" or "stimuli" as needed.</p>
+<p>The random effects structure for a linear mixed-effects model---in other words, your assumptions about what effects vary over what sampling units---is absolutely critical for ensuring that your parameters reflect the uncertainty introduced by sampling <span class="citation">(Barr et al., <a href="bibliography.html#ref-Barr_et_al_2013" role="doc-biblioref">2013</a>)</span>. First off, note that we are focused on predictors representing <strong>design variables</strong> that are of theoretical interest and on which you will perform inferential tests. If you have predictors that represent <strong>control variables</strong>, over which you do not intend to perform statistical tests, it is unlikely that random slopes are needed.</p>
+<p>The following rules are derived from <span class="citation">Barr et al. (<a href="bibliography.html#ref-Barr_et_al_2013" role="doc-biblioref">2013</a>)</span> and <span class="citation">Barr (<a href="bibliography.html#ref-Barr_2013" role="doc-biblioref">2013</a>)</span>. Consult these papers if you wish to find out more about these guidelines. Keep in mind that you can only use a mixed effects model if you have repeated measures data, either because of pseudoreplications and/or the presence of within-subject (or within-stimulus) factors. With crossed random factors, you inevitably have pseudoreplications---multiple observations per subject due to multiple stimuli, multiple observations per stimulus due to multiple subjects. The key to determining random effects structure is figuring out which factors are within-subjects or within-stimuli, and where any pseudoreplications are located in the design. You apply the rules once for subjects to determine the form of the <code>(1 + ... | subject_id)</code> part of the formula, and once for stimuli to determine the form of the <code>(1 + ... | stimulus_id)</code> part of the formula. Where you see the word "unit" or "sampling unit" below, substitute "subject" or "stimuli" as needed.</p>
 <p>Here are the rules:</p>
 <ol style="list-style-type: decimal">
 <li>If there are repeated measures on sampling units, you need a random intercept for that random factor: <code>(1 | unit_id)</code>;</li>
@@ -1076,7 +1076,7 @@ Solution
 </div>
 </div>
 </div>
-<div id="troubleshooting-non-convergence-and-singular-fits" class="section level3">
+<div id="troubleshooting-non-convergence-and-singular-fits" class="section level3" number="7.3.2">
 <h3>
 <span class="header-section-number">7.3.2</span> Troubleshooting non-convergence and 'singular fits'<a class="anchor" aria-label="anchor" href="#troubleshooting-non-convergence-and-singular-fits"><i class="fas fa-link"></i></a>
 </h3>
@@ -1090,12 +1090,12 @@ Solution
 <p>For more technical details about convergence problems and what to do, see <code><a href="https://rdrr.io/pkg/lme4/man/convergence.html">?lme4::convergence</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/isSingular.html">?lme4::isSingular</a></code>.</p>
 </div>
 </div>
-<div id="simulating-data-with-crossed-random-factors" class="section level2">
+<div id="simulating-data-with-crossed-random-factors" class="section level2" number="7.4">
 <h2>
 <span class="header-section-number">7.4</span> Simulating data with crossed random factors<a class="anchor" aria-label="anchor" href="#simulating-data-with-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h2>
-<p>For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items. Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb). We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words). You can play around with the web app (or <a href="https://shiny.psy.gla.ac.uk/Dale/crossed" target="_blank">click here to open it in a new window</a>), which allows you to manipulate the data-generating parameters and see their effect on the data.</p>
-<p>By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. <span class="citation">DeBruine &amp; Barr (<a href="bibliography.html#ref-Debruine_Barr_2020">2020</a>)</span> provides a more detailed, step-by-step walkthrough of the exercise below.</p>
+<p>For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items. Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb). We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words). You can play around with the web app (or <a href="https://rstudio-connect.psy.gla.ac.uk/crossed" target="_blank">click here to open it in a new window</a>), which allows you to manipulate the data-generating parameters and see their effect on the data.</p>
+<p>By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. <span class="citation">DeBruine &amp; Barr (<a href="bibliography.html#ref-Debruine_Barr_2020" role="doc-biblioref">2020</a>)</span> provides a more detailed, step-by-step walkthrough of the exercise below.</p>
 <p>Here is the DGP for response time <span class="math inline">\(Y_{si}\)</span> for subject <span class="math inline">\(s\)</span> and item <span class="math inline">\(i\)</span>:</p>
 <p><em>Level 1:</em></p>
 <p><span class="math display">\[\begin{equation}
@@ -1201,7 +1201,7 @@ e_{si} \sim N\left(0, \sigma^2\right)
 </tr>
 </tbody>
 </table></div>
-<div id="set-up-the-environment-and-define-the-parameters-for-the-dgp" class="section level3">
+<div id="set-up-the-environment-and-define-the-parameters-for-the-dgp" class="section level3" number="7.4.1">
 <h3>
 <span class="header-section-number">7.4.1</span> Set up the environment and define the parameters for the DGP<a class="anchor" aria-label="anchor" href="#set-up-the-environment-and-define-the-parameters-for-the-dgp"><i class="fas fa-link"></i></a>
 </h3>
@@ -1255,7 +1255,7 @@ e_{si} \sim N\left(0, \sigma^2\right)
 </table></div>
 <p>Then you will merge together the information in the three tables, and calculate the response variable according to the model formula above.</p>
 </div>
-<div id="generate-a-sample-of-stimuli" class="section level3">
+<div id="generate-a-sample-of-stimuli" class="section level3" number="7.4.2">
 <h3>
 <span class="header-section-number">7.4.2</span> Generate a sample of stimuli<a class="anchor" aria-label="anchor" href="#generate-a-sample-of-stimuli"><i class="fas fa-link"></i></a>
 </h3>
@@ -1340,7 +1340,7 @@ Solution
 <span>                I_0i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nitem</span>, <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">omega_00</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="generate-a-sample-of-subjects" class="section level3">
+<div id="generate-a-sample-of-subjects" class="section level3" number="7.4.3">
 <h3>
 <span class="header-section-number">7.4.3</span> Generate a sample of subjects<a class="anchor" aria-label="anchor" href="#generate-a-sample-of-subjects"><i class="fas fa-link"></i></a>
 </h3>
@@ -1511,7 +1511,7 @@ Solution
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="generate-a-sample-of-encounters-trials" class="section level3">
+<div id="generate-a-sample-of-encounters-trials" class="section level3" number="7.4.4">
 <h3>
 <span class="header-section-number">7.4.4</span> Generate a sample of encounters (trials)<a class="anchor" aria-label="anchor" href="#generate-a-sample-of-encounters-trials"><i class="fas fa-link"></i></a>
 </h3>
@@ -1541,7 +1541,7 @@ Solution
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sig</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="join-subjects-items-and-trials" class="section level3">
+<div id="join-subjects-items-and-trials" class="section level3" number="7.4.5">
 <h3>
 <span class="header-section-number">7.4.5</span> Join <code>subjects</code>, <code>items</code>, and <code>trials</code><a class="anchor" aria-label="anchor" href="#join-subjects-items-and-trials"><i class="fas fa-link"></i></a>
 </h3>
@@ -1578,7 +1578,7 @@ Solution
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">S_0s</span>, <span class="va">I_0i</span>, <span class="va">S_1s</span>, <span class="va">cond</span>, <span class="va">err</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="create-the-response-variable" class="section level3">
+<div id="create-the-response-variable" class="section level3" number="7.4.6">
 <h3>
 <span class="header-section-number">7.4.6</span> Create the response variable<a class="anchor" aria-label="anchor" href="#create-the-response-variable"><i class="fas fa-link"></i></a>
 </h3>
@@ -1618,7 +1618,7 @@ Solution
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subj_id</span>, <span class="va">item_id</span>, <span class="va">Y</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="fitting-the-model" class="section level3">
+<div id="fitting-the-model" class="section level3" number="7.4.7">
 <h3>
 <span class="header-section-number">7.4.7</span> Fitting the model<a class="anchor" aria-label="anchor" href="#fitting-the-model"><i class="fas fa-link"></i></a>
 </h3>
@@ -1966,7 +1966,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

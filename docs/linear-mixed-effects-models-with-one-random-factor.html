@@ -7,7 +7,7 @@
 <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="6.1 When, and why, would you want to replace conventional analyses with linear mixed-effects modeling? We have repeatedly emphasized how many common techniques in psychology can be seen as special...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
@@ -19,15 +19,15 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6NP3MF25W3');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -75,11 +75,11 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models-with-one-random-factor" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models-with-one-random-factor" class="section level1" number="6">
 <h1>
 <span class="header-section-number">6</span> Linear mixed-effects models with one random factor<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models-with-one-random-factor"><i class="fas fa-link"></i></a>
 </h1>
-<div id="when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling" class="section level2">
+<div id="when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling" class="section level2" number="6.1">
 <h2>
 <span class="header-section-number">6.1</span> When, and why, would you want to replace conventional analyses with linear mixed-effects modeling?<a class="anchor" aria-label="anchor" href="#when-and-why-would-you-want-to-replace-conventional-analyses-with-linear-mixed-effects-modeling"><i class="fas fa-link"></i></a>
 </h2>
@@ -334,12 +334,12 @@ factorial ANOVA with pseudoreplications
 </table></div>
 <p>One of the main selling points of the general linear models / regression framework over t-test and ANOVA is its flexibility. We saw this in the last chapter with the <code>sleepstudy</code> data, which could only be properly handled within a linear mixed-effects modelling framework. Despite the many advantages of regression, if you are in a situation where you have balanced data and can reasonably apply t-test or ANOVA without violating any of the assumptions behind the test, it makes sense to do so; these approaches have a long history in psychology and are more widely understood.</p>
 </div>
-<div id="example-independent-samples-t-test-on-multi-level-data" class="section level2">
+<div id="example-independent-samples-t-test-on-multi-level-data" class="section level2" number="6.2">
 <h2>
 <span class="header-section-number">6.2</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data<a class="anchor" aria-label="anchor" href="#example-independent-samples-t-test-on-multi-level-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
-<p>This <a href="https://shiny.psy.gla.ac.uk/Dale/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
+<p>This <a href="https://rstudio-connect.psy.gla.ac.uk/icc" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
 <div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
@@ -456,7 +456,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 ##        (Intr)
 ## cond_d -0.707</code></pre>
 <p>Play around with the sliders in the app above and check the lmer output panel until you understand how the output maps onto the model parameters.</p>
-<div id="when-is-a-random-intercepts-model-appropriate" class="section level3">
+<div id="when-is-a-random-intercepts-model-appropriate" class="section level3" number="6.2.1">
 <h3>
 <span class="header-section-number">6.2.1</span> When is a random-intercepts model appropriate?<a class="anchor" aria-label="anchor" href="#when-is-a-random-intercepts-model-appropriate"><i class="fas fa-link"></i></a>
 </h3>
@@ -465,11 +465,11 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p>The same logic goes for factorial designs in which there is more than one within-subjects factor. In factorial designs, the random-intercepts model is appropriate if you have one observation per subject per <strong>cell</strong> formed by each combination of the within-subjects factors. For instance, if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two two-level within-subject factors, you need to check that you have only one observation for each subject in <span class="math inline">\(A_1B_1\)</span>, <span class="math inline">\(A_1B_2\)</span>, <span class="math inline">\(A_2B_1\)</span>, and <span class="math inline">\(A_2B_2\)</span>. If you have more than one observation, you will need to consider including a random slope in your model.</p>
 </div>
 </div>
-<div id="expressing-the-study-design-and-performing-tests-in-regression" class="section level2">
+<div id="expressing-the-study-design-and-performing-tests-in-regression" class="section level2" number="6.3">
 <h2>
 <span class="header-section-number">6.3</span> Expressing the study design and performing tests in regression<a class="anchor" aria-label="anchor" href="#expressing-the-study-design-and-performing-tests-in-regression"><i class="fas fa-link"></i></a>
 </h2>
-<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke, <a href="bibliography.html#ref-Luke_2017">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
+<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke, <a href="bibliography.html#ref-Luke_2017" role="doc-biblioref">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
 <p>First, let's take a closer look at the regression formula syntax in R and <strong><code>lme4</code></strong>. For the regression model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span> with by-subject random effects you'd have:</p>
 <p><code>y ~ 1 + x1 + x2 + ... + xm + (1 + x1 + ... | subject)</code></p>
 <p>The residual term is implied and so not mentioned; only the predictors. The left side (before the tilde <code>~</code>) specifies the response variable, the right side has the predictor variables. The term in brackets, <code>(... | ...)</code>, is specific to <strong><code>lme4</code></strong>. The right side of the vertical bar <code>|</code> specifies the name of a variable (in this case, <code>subject</code>) that codes the levels of the random factor. The left side specifies what regression coefficients you want to allow to vary over those levels. The <code>1</code> at the start of the formula specifies that you want an intercept, which is included by default anyway, and so can be omitted. The <code>1</code> within the bracket specifies a <strong>random intercept</strong>, which is also included by default; the predictor variables mentioned inside the brackets specify <strong>random slopes</strong>. So you could write the above formula equivalently as:</p>
@@ -485,7 +485,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <p>is equivalent to</p>
 <p><code>y ~ a + b + c + a:b + a:c + b:c + a:b:c + (a + b + c + a:b + a:c + b:c + a:b:c | subject)</code></p>
 <p>which, despite its complexity, is a design that is not that uncommon in psychology (e.g., if you have all factors within and multiple stimuli per condition)!</p>
-<div id="factors-with-more-than-two-levels" class="section level3">
+<div id="factors-with-more-than-two-levels" class="section level3" number="6.3.1">
 <h3>
 <span class="header-section-number">6.3.1</span> Factors with more than two levels<a class="anchor" aria-label="anchor" href="#factors-with-more-than-two-levels"><i class="fas fa-link"></i></a>
 </h3>
@@ -547,7 +547,7 @@ dinner
 <p><code>calories ~ lunch_v_breakfast + dinner_v_breakfast + time_of_week + lunch_v_breakfast:time_of_week + dinner_v_breakfast:time_of_week</code>.</p>
 <p>This is the "regression way" of estimating parameters for a 3x2 factorial design.</p>
 </div>
-<div id="multiparameter-tests" class="section level3">
+<div id="multiparameter-tests" class="section level3" number="6.3.2">
 <h3>
 <span class="header-section-number">6.3.2</span> Multiparameter tests<a class="anchor" aria-label="anchor" href="#multiparameter-tests"><i class="fas fa-link"></i></a>
 </h3>
@@ -836,7 +836,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

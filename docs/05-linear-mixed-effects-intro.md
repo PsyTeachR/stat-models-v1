@@ -1111,5 +1111,5 @@ ggplot(sleep2, aes(x = days_deprived, y = Reaction)) +
 
 ## Multi-level app
 
-[Try out the multi-level web app](https://shiny.psy.gla.ac.uk/Dale/multilevel){target="_blank"} to sharpen your understanding of the three different approaches to multi-level modeling.
+[Try out the multi-level web app](https://rstudio-connect.psy.gla.ac.uk/multilevel){target="_blank"} to sharpen your understanding of the three different approaches to multi-level modeling.
 

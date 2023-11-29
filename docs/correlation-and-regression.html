@@ -7,7 +7,7 @@
 <title>Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="2.1 Correlation matrices You may be familiar with the concept of a correlation matrix from reading papers in psychology. Correlation matrices are a common way of summarizing relationships between...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/correlation-and-regression.html">
@@ -19,15 +19,15 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6NP3MF25W3');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -75,11 +75,11 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="correlation-and-regression" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="correlation-and-regression" class="section level1" number="2">
 <h1>
 <span class="header-section-number">2</span> Correlation and regression<a class="anchor" aria-label="anchor" href="#correlation-and-regression"><i class="fas fa-link"></i></a>
 </h1>
-<div id="correlation-matrices" class="section level2">
+<div id="correlation-matrices" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> Correlation matrices<a class="anchor" aria-label="anchor" href="#correlation-matrices"><i class="fas fa-link"></i></a>
 </h2>
@@ -113,30 +113,30 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">height</span>, <span class="va">mass</span>, <span class="va">birth_year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>## # A tibble: 3 × 4
 ##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
-## 1 height     NA      0.134     -0.400
-## 2 mass        0.134 NA          0.478
-## 3 birth_year -0.400  0.478     NA</code></pre>
+## 1 height     NA      0.131     -0.404
+## 2 mass        0.131 NA          0.478
+## 3 birth_year -0.404  0.478     NA</code></pre>
 <p>You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between <code>height</code> and <code>mass</code> is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only <code>choose(3, 2)</code> = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending <code><a href="https://corrr.tidymodels.org/reference/shave.html">corrr::shave()</a></code> to our pipeline.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">height</span>, <span class="va">mass</span>, <span class="va">birth_year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>## # A tibble: 3 × 4
 ##   term       height   mass birth_year
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 height     NA     NA             NA
-## 2 mass        0.134 NA             NA
-## 3 birth_year -0.400  0.478         NA</code></pre>
+## 2 mass        0.131 NA             NA
+## 3 birth_year -0.404  0.478         NA</code></pre>
 <p>Now we've only got the lower triangle of the correlation matrix, but the <code>NA</code> values are ugly and so are the leading zeroes. The <strong><code>corrr</code></strong> package also provides the <code><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion()</a></code> function that cleans things up (see <code><a href="https://corrr.tidymodels.org/reference/fashion.html">?corrr::fashion</a></code> for more options).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -144,9 +144,9 @@ For any <span class="math inline"><span class="math inline">\(n\)</span></span> 
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
 ## 2       mass    .13                
@@ -209,13 +209,13 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
-## 2       mass    .74                
-## 3 birth_year    .45  .24</code></pre>
+## 2       mass    .73                
+## 3 birth_year    .44  .24</code></pre>
 <p>Note that these values are quite different from the ones we started with.</p>
 <p>Sometimes it's not a great idea to remove outliers. Another approach to dealing with outliers is to use a robust method. The default correlation coefficient that is computed by <code><a href="https://corrr.tidymodels.org/reference/correlate.html">corrr::correlate()</a></code> is the Pearson product-moment correlation coefficient. You can also compute the Spearman correlation coefficient by changing the <code>method()</code> argument to <code><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate()</a></code>. This replaces the values with ranks before computing the correlation, so that outliers will still be included, but will have dramatically less influence.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
@@ -224,13 +224,13 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Correlation method: 'spearman'
-## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<pre><code>## Correlation computed with
+## • Method: 'spearman'
+## • Missing treated using: 'pairwise.complete.obs'</code></pre>
 <pre><code>##         term height mass birth_year
 ## 1     height                       
-## 2       mass    .75                
-## 3 birth_year    .16  .15</code></pre>
+## 2       mass    .72                
+## 3 birth_year    .15  .15</code></pre>
 <p>Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -271,7 +271,7 @@ height
 mass
 </td>
 <td style="text-align:left;">
-.75
+.72
 </td>
 <td style="text-align:left;">
 </td>
@@ -283,7 +283,7 @@ mass
 birth_year
 </td>
 <td style="text-align:left;">
-.16
+.15
 </td>
 <td style="text-align:left;">
 .15
@@ -294,7 +294,7 @@ birth_year
 </tbody>
 </table></div>
 </div>
-<div id="simulating-bivariate-data" class="section level2">
+<div id="simulating-bivariate-data" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Simulating bivariate data<a class="anchor" aria-label="anchor" href="#simulating-bivariate-data"><i class="fas fa-link"></i></a>
 </h2>
@@ -500,7 +500,7 @@ Figure 2.7: Real and simulated humans.
 </div>
 <p>You can see that our simulated humans are much like the normal ones, except that we are creating humans outside the normal range of heights and weights.</p>
 </div>
-<div id="relationship-between-correlation-and-regression" class="section level2">
+<div id="relationship-between-correlation-and-regression" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> Relationship between correlation and regression<a class="anchor" aria-label="anchor" href="#relationship-between-correlation-and-regression"><i class="fas fa-link"></i></a>
 </h2>
@@ -572,7 +572,7 @@ Figure 2.8: Log transformed values with superimposed regression line.
 <li>Rejecting the null hypothesis that <span class="math inline">\(\beta_1 = 0\)</span> is the same as rejecting the null hypothesis that <span class="math inline">\(\rho = 0\)</span>. The p-values that you get for <span class="math inline">\(\beta_1\)</span> in <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> will be the same as the one you get for <span class="math inline">\(\rho\)</span> from <code><a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a></code>.</li>
 </ul>
 </div>
-<div id="exercises" class="section level2">
+<div id="exercises" class="section level2" number="2.4">
 <h2>
 <span class="header-section-number">2.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
 </h2>
@@ -725,7 +725,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -100,23 +100,23 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 <tbody>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:left;"> 2020-04-30 </td>
+   <td style="text-align:right;"> 70 </td>
+   <td style="text-align:left;"> 2020-05-25 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 47 </td>
-   <td style="text-align:left;"> 2020-05-06 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:left;"> 2020-05-26 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 34 </td>
-   <td style="text-align:left;"> 2020-05-09 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:left;"> 2020-05-27 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 20 </td>
-   <td style="text-align:left;"> 2020-05-23 </td>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:left;"> 2020-05-29 </td>
   </tr>
 </tbody>
 </table>
@@ -698,7 +698,7 @@ For more technical details about convergence problems and what to do, see `?lme4
 
 ## Simulating data with crossed random factors
 
-For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://shiny.psy.gla.ac.uk/Dale/crossed){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
+For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://rstudio-connect.psy.gla.ac.uk/crossed){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
 
 By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. @Debruine_Barr_2020 provides a more detailed, step-by-step walkthrough of the exercise below.
 

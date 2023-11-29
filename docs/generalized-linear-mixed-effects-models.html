@@ -7,7 +7,7 @@
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="8.1 Discrete versus continuous data All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is continuous and numeric....">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
@@ -19,15 +19,15 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6NP3MF25W3');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -75,11 +75,11 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="generalized-linear-mixed-effects-models" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="generalized-linear-mixed-effects-models" class="section level1" number="8">
 <h1>
 <span class="header-section-number">8</span> Generalized linear mixed-effects models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
-<div id="discrete-versus-continuous-data" class="section level2">
+<div id="discrete-versus-continuous-data" class="section level2" number="8.1">
 <h2>
 <span class="header-section-number">8.1</span> Discrete versus continuous data<a class="anchor" aria-label="anchor" href="#discrete-versus-continuous-data"><i class="fas fa-link"></i></a>
 </h2>
@@ -98,19 +98,19 @@
 <li>number of car accidents occuring each year at a given intersection;</li>
 <li>number of visits to the doctor in a given month.</li>
 </ul>
-<div id="why-not-model-discrete-data-as-continuous" class="section level3">
+<div id="why-not-model-discrete-data-as-continuous" class="section level3" number="8.1.1">
 <h3>
 <span class="header-section-number">8.1.1</span> Why not model discrete data as continuous?<a class="anchor" aria-label="anchor" href="#why-not-model-discrete-data-as-continuous"><i class="fas fa-link"></i></a>
 </h3>
 <p>Discrete data has some properties that generally make it a bad idea to try to analyze it using models intended for continuous data. For instance, if you are interested in the probability of some binary event (a participant's accuracy in a forced-choice task), each measurement will be represented as a 0 or a 1, indicating an inaccurate or an accurate response, respectively. You could calculate the proportion of accurate responses for each participant and analyze that (and many people do) but that is a bad idea for a number of reasons.</p>
-<div id="bounded-scale" class="section level4">
+<div id="bounded-scale" class="section level4" number="8.1.1.1">
 <h4>
 <span class="header-section-number">8.1.1.1</span> Bounded scale<a class="anchor" aria-label="anchor" href="#bounded-scale"><i class="fas fa-link"></i></a>
 </h4>
 <p>Discrete data generally has a bounded scale. It may be bounded below (as with count data, where the lower bound is zero) or it may have both an upper and lower bound, such as Likert scale data or binary data. If you attempt to model bounded data with an approach intended for continuous data, then the model may end up assigning non-zero probabilities to impossible values outside of the scale.</p>
 <p>Analyzing bounded data with models for continuous data can lead to the detection of spurious interaction effects. For instance, consider the effect of some experimental intervention that increases accuracy. If participants are already highly accurate (e.g., more than 90%) in condition A than in condition B (say, 50%) then the size of the possible effect in A is smaller than the size of the possible effect in B, since accuracy cannot exceed 100%. Thus, it is difficult to know whether any interaction effect reflects something theoretically meaningful, or just an artifact of the bounded nature of the scale.</p>
 </div>
-<div id="the-variance-depends-on-the-the-mean" class="section level4">
+<div id="the-variance-depends-on-the-the-mean" class="section level4" number="8.1.1.2">
 <h4>
 <span class="header-section-number">8.1.1.2</span> The variance depends on the the mean<a class="anchor" aria-label="anchor" href="#the-variance-depends-on-the-the-mean"><i class="fas fa-link"></i></a>
 </h4>
@@ -128,8 +128,8 @@
 <pre><code>## # A tibble: 2 × 2
 ##   city      variance
 ##   &lt;chr&gt;        &lt;dbl&gt;
-## 1 Barcelona     45.1
-## 2 Glasgow       92.4</code></pre>
+## 1 Barcelona     46.4
+## 2 Glasgow       93.9</code></pre>
 <p>With binomially distributed data, the variance is given by <span class="math inline">\(np(1-p)\)</span> where <span class="math inline">\(n\)</span> is the number of observations and <span class="math inline">\(p\)</span> is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for <span class="math inline">\(n=1000\)</span>; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:binomial-var-plot"></span>
@@ -140,18 +140,18 @@ Figure 8.1: Plot of variance versus probability, with sample size <span class="m
 </div>
 </div>
 </div>
-<div id="generalized-linear-models" class="section level2">
+<div id="generalized-linear-models" class="section level2" number="8.2">
 <h2>
 <span class="header-section-number">8.2</span> Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"><i class="fas fa-link"></i></a>
 </h2>
 <p>The basic idea behind Generalized Linear Models (not to be confused with General Linear Models) is to specify a <strong>link function</strong> that transforms the response space into a modeling space where we can perform our usual linear regression, and to capture the dependence of the variance on the mean through a <strong>variance function</strong>. The parameters of the model will be expressed on the scale of the modeling space, but we can always transform it back into our original response space using the <strong>inverse link function</strong>.</p>
 <p>There are a large variety of different kinds of generalized linear models you can fit to different types of data. The ones most commonly used in psychology are <strong>logistic regression</strong> and <strong>Poisson regression</strong>, the former being used for binary data (Bernoulli trials) and the latter being used for count data, where the number of trials is not well-defined. We will be focusing on logistic regression.</p>
 </div>
-<div id="logistic-regression" class="section level2">
+<div id="logistic-regression" class="section level2" number="8.3">
 <h2>
 <span class="header-section-number">8.3</span> Logistic regression<a class="anchor" aria-label="anchor" href="#logistic-regression"><i class="fas fa-link"></i></a>
 </h2>
-<div id="terminology" class="section level3">
+<div id="terminology" class="section level3" number="8.3.1">
 <h3>
 <span class="header-section-number">8.3.1</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
 </h3>
@@ -205,7 +205,7 @@ The (natural) log of the odds
 <p>We can also talk about the odds of success, i.e., that the odds of heads versus tails are one to one, or 1:1. The odds of it raining on a given day in Glasgow would be 170:195; the denominator is the number of days it did not rain (365 - 170 = 195). Expressed as a decimal number, the ratio 170/195 is about 0.87, and is known as the <strong>natural odds</strong>. Natural odds ranges from 0 to <span class="math inline">\(+\inf\)</span>. Given <span class="math inline">\(Y\)</span> successes on <span class="math inline">\(N\)</span> trials, we can represent the natural odds as <span class="math inline">\(\frac{Y}{N - Y}\)</span>. Or, given a probability <span class="math inline">\(p\)</span>, we can represent the odds as <span class="math inline">\(\frac{p}{1-p}\)</span>.</p>
 <p>The natural log of the odds, or <strong>logit</strong> is scale on which logistic regression is performed. Recall that the logarithm of some value <span class="math inline">\(Y\)</span> gives the exponent that would yield <span class="math inline">\(Y\)</span> for a given base. For instance, the <span class="math inline">\(log_2\)</span> (log to the base 2) of 16 is 4, because <span class="math inline">\(2^4 = 16\)</span>. In logistic regression, the base that is typically used is <span class="math inline">\(e\)</span> (also known as Euler's number). To get the log odds from odds of, say, Glasgow rainfall, we would use <code>log(170/195)</code>, which yields -0.1372011; to get natural odds back from log odds, we would use the inverse, <code>exp(-.137)</code>, which returns about 0.872.</p>
 </div>
-<div id="properties-of-log-odds" class="section level3">
+<div id="properties-of-log-odds" class="section level3" number="8.3.2">
 <h3>
 <span class="header-section-number">8.3.2</span> Properties of log odds<a class="anchor" aria-label="anchor" href="#properties-of-log-odds"><i class="fas fa-link"></i></a>
 </h3>
@@ -213,7 +213,7 @@ The (natural) log of the odds
 <p>Log odds has some nice properties for linear modeling.</p>
 <p>First, it is symmetric around zero, and zero log odds corresponds to maximum uncertainty, i.e., a probability of .5. Positive log odds means that success is more likely than failure (Pr(success) &gt; .5), and negative log odds means that failure is more likely than success (Pr(success) &lt; .5). A log odds of 2 means that success is more likely than failure by the same amount that -2 means that failure is more likely than success. The scale is unbounded; it goes from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>.</p>
 </div>
-<div id="link-and-variance-functions" class="section level3">
+<div id="link-and-variance-functions" class="section level3" number="8.3.3">
 <h3>
 <span class="header-section-number">8.3.3</span> Link and variance functions<a class="anchor" aria-label="anchor" href="#link-and-variance-functions"><i class="fas fa-link"></i></a>
 </h3>
@@ -227,14 +227,14 @@ The (natural) log of the odds
 <p>The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:logit-app"></span>
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/logit?showcase=0" width="100%" height="800px" data-external="1">
+<iframe src="https://rstudio-connect.psy.gla.ac.uk/logit?showcase=0" width="100%" height="800px" data-external="1">
 </iframe>
 <p class="caption">
-Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://shiny.psy.gla.ac.uk/Dale/logit" class="uri">https://shiny.psy.gla.ac.uk/Dale/logit</a>
+Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://rstudio-connect.psy.gla.ac.uk/logit" class="uri">https://rstudio-connect.psy.gla.ac.uk/logit</a>
 </p>
 </div>
 </div>
-<div id="estimating-logistic-regression-models-in-r" class="section level3">
+<div id="estimating-logistic-regression-models-in-r" class="section level3" number="8.3.4">
 <h3>
 <span class="header-section-number">8.3.4</span> Estimating logistic regression models in R<a class="anchor" aria-label="anchor" href="#estimating-logistic-regression-models-in-r"><i class="fas fa-link"></i></a>
 </h3>
@@ -398,7 +398,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

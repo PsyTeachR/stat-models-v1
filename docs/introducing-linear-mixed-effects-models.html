@@ -7,7 +7,7 @@
 <title>Chapter 5 Introducing linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="5.1 Modeling multi-level data  Some ideas in this chapter come from the textbook Statistical Rethinking by McElreath (2020), This chapter also borrows extensively from Tristan Mahr's excellent...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Introducing linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/introducing-linear-mixed-effects-models.html">
@@ -19,15 +19,15 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6NP3MF25W3');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -75,18 +75,18 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="introducing-linear-mixed-effects-models" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="introducing-linear-mixed-effects-models" class="section level1" number="5">
 <h1>
 <span class="header-section-number">5</span> Introducing linear mixed-effects models<a class="anchor" aria-label="anchor" href="#introducing-linear-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h1>
-<div id="modeling-multi-level-data" class="section level2">
+<div id="modeling-multi-level-data" class="section level2" number="5.1">
 <h2>
 <span class="header-section-number">5.1</span> Modeling multi-level data<a class="anchor" aria-label="anchor" href="#modeling-multi-level-data"><i class="fas fa-link"></i></a>
 </h2>
 <div class="info">
-<p>Some ideas in this chapter come from the textbook <a href="https://xcelab.net/rm/statistical-rethinking/">Statistical Rethinking</a> by <span class="citation">McElreath (<a href="bibliography.html#ref-McElreath_2020">2020</a>)</span>, This chapter also borrows extensively from Tristan Mahr's <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/">excellent blog post on partial pooling</a>.</p>
+<p>Some ideas in this chapter come from the textbook <a href="https://xcelab.net/rm/statistical-rethinking/">Statistical Rethinking</a> by <span class="citation">McElreath (<a href="bibliography.html#ref-McElreath_2020" role="doc-biblioref">2020</a>)</span>, This chapter also borrows extensively from Tristan Mahr's <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/">excellent blog post on partial pooling</a>.</p>
 </div>
-<p>In this chapter, we'll be working with some real data from a study looking at the effects of sleep deprivation on psychomotor performance <span class="citation">(Belenky et al., <a href="bibliography.html#ref-Belenky_et_al_2003">2003</a>)</span>. Data from this study is included as the built-in dataset <code>sleepstudy</code> in the <code>lme4</code> package for R <span class="citation">(Bates et al., <a href="bibliography.html#ref-Bates_et_al_2015">2015</a>)</span>.</p>
+<p>In this chapter, we'll be working with some real data from a study looking at the effects of sleep deprivation on psychomotor performance <span class="citation">(Belenky et al., <a href="bibliography.html#ref-Belenky_et_al_2003" role="doc-biblioref">2003</a>)</span>. Data from this study is included as the built-in dataset <code>sleepstudy</code> in the <code>lme4</code> package for R <span class="citation">(Bates et al., <a href="bibliography.html#ref-Bates_et_al_2015" role="doc-biblioref">2015</a>)</span>.</p>
 <p>Let's start by looking at the documentation for the <code>sleepstudy</code> dataset. After loading the <strong><code>lme4</code></strong> package, you can access the documentation by typing <code><a href="https://rdrr.io/pkg/lme4/man/sleepstudy.html">?sleepstudy</a></code> in the console.</p>
 <pre><code>sleepstudy                package:lme4                 R Documentation
 
@@ -174,11 +174,11 @@ Show me
 </div>
 </div>
 </div>
-<div id="how-to-model-these-data" class="section level2">
+<div id="how-to-model-these-data" class="section level2" number="5.2">
 <h2>
 <span class="header-section-number">5.2</span> How to model these data?<a class="anchor" aria-label="anchor" href="#how-to-model-these-data"><i class="fas fa-link"></i></a>
 </h2>
-<p>To model the data appropriately, first we need to know more about about the design. This is how <span class="citation">Belenky et al. (<a href="bibliography.html#ref-Belenky_et_al_2003">2003</a>)</span> describe their study (p. 2):</p>
+<p>To model the data appropriately, first we need to know more about about the design. This is how <span class="citation">Belenky et al. (<a href="bibliography.html#ref-Belenky_et_al_2003" role="doc-biblioref">2003</a>)</span> describe their study (p. 2):</p>
 <blockquote>
 <p>The first 3 days (T1, T2 and B) were adaptation and training (T1 and T2) and baseline (B) and subjects were required to be in bed from 23:00 to 07:00 h [8 h required time in bed (TIB)]. On the third day (B), baseline measures were taken. Beginning on the fourth day and continuing for a total of 7 days (E1–E7) subjects were in one of four sleep conditions [9 h required TIB (22:00–07:00 h), 7 h required TIB (24:00–07:00 h), 5 h required TIB (02:00–07:00 h), or 3 h required TIB (04:00–07:00 h)], effectively one sleep augmentation condition, and three sleep restriction conditions.</p>
 </blockquote>
@@ -239,7 +239,7 @@ Figure 5.3: <em>Data from Belenky et al. (2003), showing reaction time at baseli
 <p>where <span class="math inline">\(\beta_0\)</span> is the y-intercept and <span class="math inline">\(\beta_1\)</span> is the slope, parameters whose values we estimate from the data.</p>
 <p>The lines will all differ in intercept (mean RT at day zero, before the sleep deprivation began) and slope (the change in RT with each additional day of sleep deprivation). But should we fit the same line to everyone? Or a totally different line for each subject? Or something somewhere in between?</p>
 <p>Let's start by considering three different approaches we might take. Following McElreath, we will distinguish these approaches by calling them <strong>complete pooling</strong>, <strong>no pooling</strong>, and <strong>partial pooling</strong>.</p>
-<div id="complete-pooling-one-size-fits-all" class="section level3">
+<div id="complete-pooling-one-size-fits-all" class="section level3" number="5.2.1">
 <h3>
 <span class="header-section-number">5.2.1</span> Complete pooling: One size fits all<a class="anchor" aria-label="anchor" href="#complete-pooling-one-size-fits-all"><i class="fas fa-link"></i></a>
 </h3>
@@ -294,7 +294,7 @@ Figure 5.4: Data plotted against predictions from the complete pooling model.
 </div>
 <p>The model fits the data badly. We need a different approach.</p>
 </div>
-<div id="no-pooling" class="section level3">
+<div id="no-pooling" class="section level3" number="5.2.2">
 <h3>
 <span class="header-section-number">5.2.2</span> No pooling<a class="anchor" aria-label="anchor" href="#no-pooling"><i class="fas fa-link"></i></a>
 </h3>
@@ -398,11 +398,9 @@ Answers and Explanation
 <p>The baseline subject is 308; the default in R is to sort the levels of the factor alphabetically and chooses the first one as the baseline. This means that the intercept and slope for 308 are given by <code>(Intercept)</code> and <code>days_deprived</code> respectively, because all of the other 17 dummy variables will be zero for subject 308.</p>
 <p>All of the regression coefficients for the other subjects are represented as <em>offsets</em> from this baseline subject. If we want to calculate the intercept and slope for a given subject, we just add in the corresponding offsets. So, the answers are</p>
 <ul>
-<li>intercept for 308: <u>288.217</u>
-</li>
+<li><p>intercept for 308: <u>288.217</u></p></li>
 <li><p>slope for 308: 21.69</p></li>
-<li>intercept for 335: <code>(Intercept)</code> + <code>Subject335</code> = 288.217 + -25.343 = <u>262.874</u>
-</li>
+<li><p>intercept for 335: <code>(Intercept)</code> + <code>Subject335</code> = 288.217 + -25.343 = <u>262.874</u></p></li>
 <li><p>slope for 335: <code>days_deprived</code> + <code>days_deprived:Subject335</code> = 21.69 + -25.899 = <u>-4.209</u></p></li>
 </ul>
 </div>
@@ -480,7 +478,7 @@ Figure 5.5: Data plotted against fits from the no-pooling approach.
 is significantly different from zero,
 t(17) = 6.197, <span class="math inline">\(p &lt; .001\)</span>.</p>
 </div>
-<div id="partial-pooling-using-mixed-effects-models" class="section level3">
+<div id="partial-pooling-using-mixed-effects-models" class="section level3" number="5.2.3">
 <h3>
 <span class="header-section-number">5.2.3</span> Partial pooling using mixed-effects models<a class="anchor" aria-label="anchor" href="#partial-pooling-using-mixed-effects-models"><i class="fas fa-link"></i></a>
 </h3>
@@ -613,7 +611,7 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 <p>Random effects like <span class="math inline">\(S_{0i}\)</span> and <span class="math inline">\(S_{1i}\)</span> allow intercepts and slopes (respectively) to vary over subjects. These random effects are <em>offsets</em>: deviations from the population 'grand mean' values. Some subjects will just be slower responders than others, such that they will have a higher intercept (mean RT) on day 0 than the population's estimated value of <span class="math inline">\(\hat{\gamma_0}\)</span>. These slower-than-average subjects will have positive <span class="math inline">\(S_{0i}\)</span> values; faster-than-average subjects will have negative <span class="math inline">\(S_{0i}\)</span> values. Likewise, some subjects will show stronger effects of sleep deprivation (steeper slope) than the estimated population effect, <span class="math inline">\(\hat{\gamma_1}\)</span>, which implies a positive offset <span class="math inline">\(S_{1s}\)</span>, while others may show weaker effects or close to none at all (negative offset).</p>
 <p>Each participant can be represented as a vector pair <span class="math inline">\(\langle S_{0i}, S_{1i} \rangle\)</span>. If the subjects in our sample comprised the entire population, we would be justified in treating them as fixed and estimating their values, as in the "no-pooling" approach above. This is not the case here. In recognition of the fact they are sampled, we are going to treat subjects as a random factor rather than a fixed factor. Instead of estimating the values for the subjects we happened to pick, we will estimate <strong>the covariance matrix that represents the bivariate distribution from which these pairs of values are drawn</strong>. By doing this, we allow the subjects in the sample to inform us about characteristics of the population.</p>
 </div>
-<div id="the-variance-covariance-matrix" class="section level3">
+<div id="the-variance-covariance-matrix" class="section level3" number="5.2.4">
 <h3>
 <span class="header-section-number">5.2.4</span> The variance-covariance matrix<a class="anchor" aria-label="anchor" href="#the-variance-covariance-matrix"><i class="fas fa-link"></i></a>
 </h3>
@@ -630,7 +628,7 @@ Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
 <p>The cells in the off-diagonal contain covariances, but this information is represented redundantly in the matrix; the lower left element is identical to the upper right element; both capture the covariance between random intercepts and slopes, as expressed by <span class="math inline">\(\rho\tau_{00}\tau_{11}\)</span>. In this equation <span class="math inline">\(\rho\)</span> is the correlation between the intercept and slope. So, all the information in the matrix can be captured by just three parameters: <span class="math inline">\(\tau_{00}\)</span>, <span class="math inline">\(\tau_{11}\)</span>, and <span class="math inline">\(\rho\)</span>.</p>
 </div>
 </div>
-<div id="estimating-the-model-parameters" class="section level2">
+<div id="estimating-the-model-parameters" class="section level2" number="5.3">
 <h2>
 <span class="header-section-number">5.3</span> Estimating the model parameters<a class="anchor" aria-label="anchor" href="#estimating-the-model-parameters"><i class="fas fa-link"></i></a>
 </h2>
@@ -793,12 +791,12 @@ Figure 5.6: Data plotted against predictions from a partial pooling approach.
 </p>
 </div>
 </div>
-<div id="interpreting-lmer-output-and-extracting-estimates" class="section level2">
+<div id="interpreting-lmer-output-and-extracting-estimates" class="section level2" number="5.4">
 <h2>
 <span class="header-section-number">5.4</span> Interpreting <code>lmer()</code> output and extracting estimates<a class="anchor" aria-label="anchor" href="#interpreting-lmer-output-and-extracting-estimates"><i class="fas fa-link"></i></a>
 </h2>
 <p>The call to <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> returns a fitted model object of class "lmerMod". To find out more about the <code>lmerMod</code> class, which is in turn a specialized version of the <code>merMod</code> class, see <code>?lmerMod-class</code>.</p>
-<div id="fixed-effects" class="section level3">
+<div id="fixed-effects" class="section level3" number="5.4.1">
 <h3>
 <span class="header-section-number">5.4.1</span> Fixed effects<a class="anchor" aria-label="anchor" href="#fixed-effects"><i class="fas fa-link"></i></a>
 </h3>
@@ -825,7 +823,7 @@ to the response time, on average.</p>
 <span><span class="co"># vcov(pp_mod) %&gt;% diag() %&gt;% sqrt()</span></span></code></pre></div>
 <pre><code>##   (Intercept) days_deprived 
 ##      8.265896      1.845293</code></pre>
-<p>Note that these <span class="math inline">\(t\)</span> values do not appear with <span class="math inline">\(p\)</span> values, as is customary in simpler modeling frameworks. There are multiple approaches for getting <span class="math inline">\(p\)</span> values from mixed-effects models, with advantages and disadvantages to each; see <span class="citation">Luke (<a href="bibliography.html#ref-Luke_2017">2017</a>)</span> for a survey of options. The <span class="math inline">\(t\)</span> values do not appear with degrees of freedom, because the degrees of freedom in a mixed-effects model are not well-defined. Often people will treat them as Wald <span class="math inline">\(z\)</span> values, i.e., as observations from the standard normal distribution. Because the <span class="math inline">\(t\)</span> distribution asymptotes the standard normal distribution as the number of observations goes to infinity, this "t-as-z" practice is legitimate if you have a large enough set of observations.</p>
+<p>Note that these <span class="math inline">\(t\)</span> values do not appear with <span class="math inline">\(p\)</span> values, as is customary in simpler modeling frameworks. There are multiple approaches for getting <span class="math inline">\(p\)</span> values from mixed-effects models, with advantages and disadvantages to each; see <span class="citation">Luke (<a href="bibliography.html#ref-Luke_2017" role="doc-biblioref">2017</a>)</span> for a survey of options. The <span class="math inline">\(t\)</span> values do not appear with degrees of freedom, because the degrees of freedom in a mixed-effects model are not well-defined. Often people will treat them as Wald <span class="math inline">\(z\)</span> values, i.e., as observations from the standard normal distribution. Because the <span class="math inline">\(t\)</span> distribution asymptotes the standard normal distribution as the number of observations goes to infinity, this "t-as-z" practice is legitimate if you have a large enough set of observations.</p>
 <p>To calculate the Wald <span class="math inline">\(z\)</span> values, just divide the fixed effect estimate by its standard error:</p>
 <div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/fixed.effects.html">fixef</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">pp_mod</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -851,7 +849,7 @@ to the response time, on average.</p>
 ## (Intercept)   251.3443396 284.5904989
 ## days_deprived   7.7245247  15.1463328</code></pre>
 </div>
-<div id="random-effects" class="section level3">
+<div id="random-effects" class="section level3" number="5.4.2">
 <h3>
 <span class="header-section-number">5.4.2</span> Random effects<a class="anchor" aria-label="anchor" href="#random-effects"><i class="fas fa-link"></i></a>
 </h3>
@@ -981,11 +979,11 @@ Figure 5.7: Data against model with extrapolation.
 </div>
 </div>
 </div>
-<div id="multi-level-app" class="section level2">
+<div id="multi-level-app" class="section level2" number="5.5">
 <h2>
 <span class="header-section-number">5.5</span> Multi-level app<a class="anchor" aria-label="anchor" href="#multi-level-app"><i class="fas fa-link"></i></a>
 </h2>
-<p><a href="https://shiny.psy.gla.ac.uk/Dale/multilevel" target="_blank">Try out the multi-level web app</a> to sharpen your understanding of the three different approaches to multi-level modeling.</p>
+<p><a href="https://rstudio-connect.psy.gla.ac.uk/multilevel" target="_blank">Try out the multi-level web app</a> to sharpen your understanding of the three different approaches to multi-level modeling.</p>
 
 </div>
 </div>
@@ -1146,7 +1144,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-10-17.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
