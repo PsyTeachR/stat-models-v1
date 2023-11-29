@@ -44,18 +44,18 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
 ## # A tibble: 3 × 4
 ##   term       height   mass birth_year
 ##   <chr>       <dbl>  <dbl>      <dbl>
-## 1 height     NA      0.134     -0.400
-## 2 mass        0.134 NA          0.478
-## 3 birth_year -0.400  0.478     NA
+## 1 height     NA      0.131     -0.404
+## 2 mass        0.131 NA          0.478
+## 3 birth_year -0.404  0.478     NA
 ```
 
 You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between `height` and `mass` is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only `choose(3, 2)` = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending `corrr::shave()` to our pipeline.
@@ -69,9 +69,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -79,8 +79,8 @@ starwars %>%
 ##   term       height   mass birth_year
 ##   <chr>       <dbl>  <dbl>      <dbl>
 ## 1 height     NA     NA             NA
-## 2 mass        0.134 NA             NA
-## 3 birth_year -0.400  0.478         NA
+## 2 mass        0.131 NA             NA
+## 3 birth_year -0.404  0.478         NA
 ```
 
 Now we've only got the lower triangle of the correlation matrix, but the `NA` values are ugly and so are the leading zeroes. The **`corrr`** package also provides the `fashion()` function that cleans things up (see `?corrr::fashion` for more options).
@@ -95,9 +95,9 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
@@ -193,16 +193,16 @@ starwars3 %>%
 ```
 
 ```
-## 
-## Correlation method: 'pearson'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
 ##         term height mass birth_year
 ## 1     height                       
-## 2       mass    .74                
-## 3 birth_year    .45  .24
+## 2       mass    .73                
+## 3 birth_year    .44  .24
 ```
 
 Note that these values are quite different from the ones we started with.
@@ -219,16 +219,16 @@ starwars %>%
 ```
 
 ```
-## 
-## Correlation method: 'spearman'
-## Missing treated using: 'pairwise.complete.obs'
+## Correlation computed with
+## • Method: 'spearman'
+## • Missing treated using: 'pairwise.complete.obs'
 ```
 
 ```
 ##         term height mass birth_year
 ## 1     height                       
-## 2       mass    .75                
-## 3 birth_year    .16  .15
+## 2       mass    .72                
+## 3 birth_year    .15  .15
 ```
 
 Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use `knitr::kable()`.
@@ -261,13 +261,13 @@ starwars %>%
   </tr>
   <tr>
    <td style="text-align:left;"> mass </td>
-   <td style="text-align:left;"> .75 </td>
+   <td style="text-align:left;"> .72 </td>
    <td style="text-align:left;">  </td>
    <td style="text-align:left;">  </td>
   </tr>
   <tr>
    <td style="text-align:left;"> birth_year </td>
-   <td style="text-align:left;"> .16 </td>
+   <td style="text-align:left;"> .15 </td>
    <td style="text-align:left;"> .15 </td>
    <td style="text-align:left;">  </td>
   </tr>
