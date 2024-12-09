@@ -950,7 +950,7 @@ With treatment coding, you are looking at **simple** effects and **simple** inte
 
 Because it is not subject to the scaling effects seen under sum coding, deviation should be used by default for ANOVA-style designs.
 
-**The default coding scheme for factors is R is "treatment" coding.**
+**The default coding scheme for factors in R is "treatment" coding.**
 
 So, anytime you declare a variable as type `factor` and use this variable as a predictor in your regression model, R will automatically create treatment-coded variables.
 

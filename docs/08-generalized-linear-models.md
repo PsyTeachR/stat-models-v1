@@ -58,8 +58,8 @@ rainy_days %>%
 ## # A tibble: 2 × 2
 ##   city      variance
 ##   <chr>        <dbl>
-## 1 Barcelona     50.4
-## 2 Glasgow       89.9
+## 1 Barcelona     49.1
+## 2 Glasgow       91.5
 ```
 
 With binomially distributed data, the variance is given by $np(1-p)$ where $n$ is the number of observations and $p$ is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for $n=1000$; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.
