@@ -445,18 +445,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 <span></span>
 <span><span class="va">fake_data</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 2
-##           Y group
-##       &lt;dbl&gt; &lt;chr&gt;
-##  1 -0.797   A    
-##  2  1.04    A    
-##  3 -1.03    A    
-##  4  2.21    A    
-##  5 -0.314   A    
-##  6  0.00865 B    
-##  7  1.39    B    
-##  8  0.0544  B    
-##  9  2.81    B    
-## 10 -0.727   B</code></pre>
+##         Y group
+##     &lt;dbl&gt; &lt;chr&gt;
+##  1  0.419 A    
+##  2 -2.08  A    
+##  3 -0.539 A    
+##  4  0.889 A    
+##  5 -1.23  A    
+##  6  0.553 B    
+##  7  0.322 B    
+##  8  1.91  B    
+##  9  1.48  B    
+## 10 -0.333 B</code></pre>
 <p>Now let's add a new variable, <code>group_d</code>, which is the dummy coded group variable. We will use the <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else()</a></code> function to define the new column.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fake_data2</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -464,18 +464,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 <span></span>
 <span><span class="va">fake_data2</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
-##           Y group group_d
-##       &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-##  1 -0.797   A           0
-##  2  1.04    A           0
-##  3 -1.03    A           0
-##  4  2.21    A           0
-##  5 -0.314   A           0
-##  6  0.00865 B           1
-##  7  1.39    B           1
-##  8  0.0544  B           1
-##  9  2.81    B           1
-## 10 -0.727   B           1</code></pre>
+##         Y group group_d
+##     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1  0.419 A           0
+##  2 -2.08  A           0
+##  3 -0.539 A           0
+##  4  0.889 A           0
+##  5 -1.23  A           0
+##  6  0.553 B           1
+##  7  0.322 B           1
+##  8  1.91  B           1
+##  9  1.48  B           1
+## 10 -0.333 B           1</code></pre>
 <p>Now we just run it as a regular regression model.</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group_d</span>, <span class="va">fake_data2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -485,16 +485,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
+## -1.5739 -0.6561 -0.1321  0.8681  1.3971 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.2241     0.6208   0.361    0.727
-## group_d       0.4840     0.8779   0.551    0.596
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  -0.5081     0.4765  -1.066   0.3175  
+## group_d       1.2949     0.6739   1.921   0.0909 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.388 on 8 degrees of freedom
-## Multiple R-squared:  0.03661,    Adjusted R-squared:  -0.08382 
-## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965</code></pre>
+## Residual standard error: 1.066 on 8 degrees of freedom
+## Multiple R-squared:  0.3158, Adjusted R-squared:  0.2302 
+## F-statistic: 3.692 on 1 and 8 DF,  p-value: 0.09091</code></pre>
 <p>Let's reverse the coding. We get the same result, just the sign is different.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fake_data3</span> <span class="op">&lt;-</span> <span class="va">fake_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -507,16 +509,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
+## -1.5739 -0.6561 -0.1321  0.8681  1.3971 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.7081     0.6208   1.141    0.287
-## group_d      -0.4840     0.8779  -0.551    0.596
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)   0.7868     0.4765   1.651   0.1373  
+## group_d      -1.2949     0.6739  -1.921   0.0909 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.388 on 8 degrees of freedom
-## Multiple R-squared:  0.03661,    Adjusted R-squared:  -0.08382 
-## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965</code></pre>
+## Residual standard error: 1.066 on 8 degrees of freedom
+## Multiple R-squared:  0.3158, Adjusted R-squared:  0.2302 
+## F-statistic: 3.692 on 1 and 8 DF,  p-value: 0.09091</code></pre>
 <p>The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, <span class="math inline">\(\beta_1\)</span> can be interpreted as the difference between the mean for the baseline group and the group coded as 1.</p>
 <p><span class="math display">\[\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i \]</span></p>
 <p>Note that if we just put the character variable <code>group</code> as a predictor in the model, R will automatically create a dummy variable (or variables) for us as needed.</p>
@@ -529,16 +533,18 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
+## -1.5739 -0.6561 -0.1321  0.8681  1.3971 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.2241     0.6208   0.361    0.727
-## groupB        0.4840     0.8779   0.551    0.596
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  -0.5081     0.4765  -1.066   0.3175  
+## groupB        1.2949     0.6739   1.921   0.0909 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.388 on 8 degrees of freedom
-## Multiple R-squared:  0.03661,    Adjusted R-squared:  -0.08382 
-## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965</code></pre>
+## Residual standard error: 1.066 on 8 degrees of freedom
+## Multiple R-squared:  0.3158, Adjusted R-squared:  0.2302 
+## F-statistic: 3.692 on 1 and 8 DF,  p-value: 0.09091</code></pre>
 <p>The <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function examines <code>group</code> and figures out the unique levels of the variable, which in this case are <code>A</code> and <code>B</code>. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (<code>B</code>) and the baseline level (<code>A</code>). (In the case where <code>group</code> has been defined as a factor, the baseline level is the first element of <code>levels(fake_data$group)</code>).</p>
 <p>This new variable that it created shows up with the name <code>groupB</code> in the output.</p>
 </div>
@@ -559,26 +565,26 @@ z = \frac{X - \mu_x}{\sigma_x}
 <pre><code>## # A tibble: 20 × 2
 ##    season bodyweight_kg
 ##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 winter         106. 
+##  1 winter         107. 
 ##  2 winter         105. 
-##  3 winter         103. 
-##  4 winter         110. 
-##  5 winter         104. 
-##  6 spring         100. 
-##  7 spring          98.7
-##  8 spring          99.9
-##  9 spring         106. 
-## 10 spring         108. 
-## 11 summer         102. 
-## 12 summer          94.1
-## 13 summer         104. 
+##  3 winter         106. 
+##  4 winter         102. 
+##  5 winter         102. 
+##  6 spring         103. 
+##  7 spring          98.1
+##  8 spring         101. 
+##  9 spring          95.9
+## 10 spring         102. 
+## 11 summer         104. 
+## 12 summer         103. 
+## 13 summer          99.7
 ## 14 summer         100. 
-## 15 summer         101. 
-## 16 fall            96.8
-## 17 fall            98.2
-## 18 fall            99.0
-## 19 fall           102. 
-## 20 fall           106.</code></pre>
+## 15 summer         104. 
+## 16 fall           102. 
+## 17 fall           102. 
+## 18 fall           104. 
+## 19 fall           103. 
+## 20 fall           105.</code></pre>
 <p>Now let's add three predictors to code the variable <code>season</code>. Try it out and see if you can figure out how it works.</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## baseline value is 'winter'</span></span>
@@ -591,26 +597,26 @@ z = \frac{X - \mu_x}{\sigma_x}
 <pre><code>## # A tibble: 20 × 5
 ##    season bodyweight_kg spring_v_winter summer_v_winter fall_v_winter
 ##    &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
-##  1 winter         106.                0               0             0
+##  1 winter         107.                0               0             0
 ##  2 winter         105.                0               0             0
-##  3 winter         103.                0               0             0
-##  4 winter         110.                0               0             0
-##  5 winter         104.                0               0             0
-##  6 spring         100.                1               0             0
-##  7 spring          98.7               1               0             0
-##  8 spring          99.9               1               0             0
-##  9 spring         106.                1               0             0
-## 10 spring         108.                1               0             0
-## 11 summer         102.                0               1             0
-## 12 summer          94.1               0               1             0
-## 13 summer         104.                0               1             0
+##  3 winter         106.                0               0             0
+##  4 winter         102.                0               0             0
+##  5 winter         102.                0               0             0
+##  6 spring         103.                1               0             0
+##  7 spring          98.1               1               0             0
+##  8 spring         101.                1               0             0
+##  9 spring          95.9               1               0             0
+## 10 spring         102.                1               0             0
+## 11 summer         104.                0               1             0
+## 12 summer         103.                0               1             0
+## 13 summer          99.7               0               1             0
 ## 14 summer         100.                0               1             0
-## 15 summer         101.                0               1             0
-## 16 fall            96.8               0               0             1
-## 17 fall            98.2               0               0             1
-## 18 fall            99.0               0               0             1
-## 19 fall           102.                0               0             1
-## 20 fall           106.                0               0             1</code></pre>
+## 15 summer         104.                0               1             0
+## 16 fall           102.                0               0             1
+## 17 fall           102.                0               0             1
+## 18 fall           104.                0               0             1
+## 19 fall           103.                0               0             1
+## 20 fall           105.                0               0             1</code></pre>
 <div class="warning">
 <p><strong>Reminder: Always look at your data</strong></p>
 <p>Whenever you write code that potentially changes your data, you should double check that the code works as intended by looking at your data. This is especially the case when you are hand-coding nominal variables for use in regression, because sometimes the code will be wrong, but won't throw an error.</p>
@@ -632,7 +638,7 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Coefficients:
 ##     (Intercept)  spring_v_winter  summer_v_winter    fall_v_winter  
-##        102.9002          -0.3195               NA          -2.5609</code></pre>
+##        103.2776          -3.1864               NA          -0.2052</code></pre>
 <p>What happened? Let's look at the data to find out. We will use <code>distinct</code> to find the distinct combinations of our original variable <code>season</code> with the three variables we created (see <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">?dplyr::distinct</a></code> for details).</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">season_wt3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -658,20 +664,20 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.1395 -2.3874 -0.3115  2.2229  5.6238 
+## -4.1979 -2.0326  0.6705  1.8878  2.9878 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  100.33932    1.59114  63.061   &lt;2e-16 ***
-## seasonspring   2.24135    2.25021   0.996   0.3340    
-## seasonsummer  -0.05219    2.25021  -0.023   0.9818    
-## seasonwinter   5.17389    2.25021   2.299   0.0353 *  
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  103.0723     1.0284 100.225   &lt;2e-16 ***
+## seasonspring  -2.9812     1.4544  -2.050   0.0571 .  
+## seasonsummer  -0.8095     1.4544  -0.557   0.5855    
+## seasonwinter   1.2199     1.4544   0.839   0.4140    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.558 on 16 degrees of freedom
-## Multiple R-squared:  0.3105, Adjusted R-squared:  0.1812 
-## F-statistic: 2.402 on 3 and 16 DF,  p-value: 0.1057</code></pre>
+## Residual standard error: 2.3 on 16 degrees of freedom
+## Multiple R-squared:  0.3566, Adjusted R-squared:  0.236 
+## F-statistic: 2.956 on 3 and 16 DF,  p-value: 0.06398</code></pre>
 <p>Here, R implicitly creates three dummy variables to code the four levels of <code>season</code>, called <code>seasonspring</code>, <code>seasonsummer</code> and <code>seasonwinter</code>. The unmentioned season, <code>fall</code>, has been chosen as baseline because it comes earliest in the alphabet. These three predictors have the following values:</p>
 <ul>
 <li>
@@ -698,9 +704,11 @@ z = \frac{X - \mu_x}{\sigma_x}
 <span></span>
 <span><span class="va">my_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">bodyweight_kg</span> <span class="op">~</span> <span class="va">season</span>, <span class="va">season_wt3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_anova</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
-## season       3  91.21   30.40   2.402  0.106
-## Residuals   16 202.54   12.66</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## season       3  46.89  15.631   2.956  0.064 .
+## Residuals   16  84.61   5.288                 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>OK, now can we replicate that result using the regression model below?</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i\]</span></p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
@@ -714,20 +722,20 @@ z = \frac{X - \mu_x}{\sigma_x}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.1395 -2.3874 -0.3115  2.2229  5.6238 
+## -4.1979 -2.0326  0.6705  1.8878  2.9878 
 ## 
 ## Coefficients:
 ##                 Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      105.513      1.591  66.313   &lt;2e-16 ***
-## spring_v_winter   -2.933      2.250  -1.303   0.2109    
-## summer_v_winter   -5.226      2.250  -2.322   0.0337 *  
-## fall_v_winter     -5.174      2.250  -2.299   0.0353 *  
+## (Intercept)      104.292      1.028 101.412   &lt;2e-16 ***
+## spring_v_winter   -4.201      1.454  -2.889   0.0107 *  
+## summer_v_winter   -2.029      1.454  -1.395   0.1820    
+## fall_v_winter     -1.220      1.454  -0.839   0.4140    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.558 on 16 degrees of freedom
-## Multiple R-squared:  0.3105, Adjusted R-squared:  0.1812 
-## F-statistic: 2.402 on 3 and 16 DF,  p-value: 0.1057</code></pre>
+## Residual standard error: 2.3 on 16 degrees of freedom
+## Multiple R-squared:  0.3566, Adjusted R-squared:  0.236 
+## F-statistic: 2.956 on 3 and 16 DF,  p-value: 0.06398</code></pre>
 <p>Note that the <span class="math inline">\(F\)</span> values and <span class="math inline">\(p\)</span> values are identical for the two methods!</p>
 </div>
 <div id="solutions-to-exercises" class="section level2" number="3.4">
