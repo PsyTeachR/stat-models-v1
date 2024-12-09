@@ -7,7 +7,7 @@
 <title>Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="8.1 Discrete versus continuous data All of the models we have been considering up to this point have assumed that the response (i.e. dependent) variable we are measuring is continuous and numeric....">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Generalized linear mixed-effects models | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
@@ -128,8 +128,8 @@
 <pre><code>## # A tibble: 2 × 2
 ##   city      variance
 ##   &lt;chr&gt;        &lt;dbl&gt;
-## 1 Barcelona     46.4
-## 2 Glasgow       93.9</code></pre>
+## 1 Barcelona     50.4
+## 2 Glasgow       89.9</code></pre>
 <p>With binomially distributed data, the variance is given by <span class="math inline">\(np(1-p)\)</span> where <span class="math inline">\(n\)</span> is the number of observations and <span class="math inline">\(p\)</span> is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for <span class="math inline">\(n=1000\)</span>; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:binomial-var-plot"></span>
@@ -156,46 +156,30 @@ Figure 8.1: Plot of variance versus probability, with sample size <span class="m
 <span class="header-section-number">8.3.1</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-Term
-</th>
-<th style="text-align:left;">
-Definition
-</th>
+<colgroup>
+<col width="22%">
+<col width="77%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Term</th>
+<th align="left">Definition</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-<strong>Bernoulli trial</strong>
-</td>
-<td style="text-align:left;">
-An event with a binary outcome, with one outcome considered 'success'
-</td>
+<tr class="odd">
+<td align="left"><strong>Bernoulli trial</strong></td>
+<td align="left">An event with a binary outcome, with one outcome considered 'success'</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<strong>proportion</strong>
-</td>
-<td style="text-align:left;">
-The ratio of successes to the total number of Bernoulli trials
-</td>
+<tr class="even">
+<td align="left"><strong>proportion</strong></td>
+<td align="left">The ratio of successes to the total number of Bernoulli trials</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<strong>odds</strong>
-</td>
-<td style="text-align:left;">
-The ratio of successes to failures
-</td>
+<tr class="odd">
+<td align="left"><strong>odds</strong></td>
+<td align="left">The ratio of successes to failures</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<strong>log odds</strong>
-</td>
-<td style="text-align:left;">
-The (natural) log of the odds
-</td>
+<tr class="even">
+<td align="left"><strong>log odds</strong></td>
+<td align="left">The (natural) log of the odds</td>
 </tr>
 </tbody>
 </table></div>
@@ -227,10 +211,10 @@ The (natural) log of the odds
 <p>The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:logit-app"></span>
-<iframe src="https://rstudio-connect.psy.gla.ac.uk/logit?showcase=0" width="100%" height="800px" data-external="1">
+<iframe src="https://talklab.psy.gla.ac.uk/app/logit-site/?showcase=0" width="100%" height="800px" data-external="1">
 </iframe>
 <p class="caption">
-Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://rstudio-connect.psy.gla.ac.uk/logit" class="uri">https://rstudio-connect.psy.gla.ac.uk/logit</a>
+Figure 8.2: <strong>Logistic regression web app</strong> <a href="https://talklab.psy.gla.ac.uk/app/logit-site/" class="uri">https://talklab.psy.gla.ac.uk/app/logit-site/</a>
 </p>
 </div>
 </div>
@@ -398,7 +382,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

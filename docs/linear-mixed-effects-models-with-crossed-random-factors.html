@@ -7,7 +7,7 @@
 <title>Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Generalizing over encounters between subjects and stimuli A common goal of experiments in psychology is to test claims about behavior that arises in response to certain types of stimuli (or...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Linear mixed-effects models with crossed random factors | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-crossed-random-factors.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
@@ -93,209 +93,101 @@
 <p>One thing to note about all these claims is that the are of the type, "what happens to our measurements when an individual of type X encounters a stimulus of type Y", where X is drawn from a target population of subjects and Y is drawn from a target population of stimuli. In other words, we are attempt to make generalizable claims about a particular class of <strong>events</strong> involving <strong>encounters</strong> between sampling units of subjects and stimuli <span class="citation">(Barr, <a href="bibliography.html#ref-Barr_2017" role="doc-biblioref">2017</a>)</span>. But just like we can't sample all possible subjects from the target population of subjects, we also cannot sample all possible stimuli from the target population of stimuli. Thus, when drawing inferences, we need to account for the uncertainty introduced in our estimates by <em>both</em> sampling processes <span class="citation">(Clark, <a href="bibliography.html#ref-Clark_1973" role="doc-biblioref">1973</a>; Coleman, <a href="bibliography.html#ref-Coleman_1964" role="doc-biblioref">1964</a>; Judd et al., <a href="bibliography.html#ref-Judd_Westfall_Kenny_2012" role="doc-biblioref">2012</a>; Yarkoni, <a href="bibliography.html#ref-yarkoni_2019" role="doc-biblioref">2019</a>)</span>. Linear mixed-effects models make it particularly easy to do this by allowing more than one random factor in our model formula <span class="citation">(Baayen et al., <a href="bibliography.html#ref-Baayen_Davidson_Bates_2008" role="doc-biblioref">2008</a>)</span>.</p>
 <p>Here is a simple example of a study where you are interested in testing whether people rate pictures of cats, dogs, or sunsets as more soothing images to look at. You want to say something general about the category of cats, dogs, and sunsets and not something about the specific pictures that you happened to sample. Let's say you randomly select four images from each of the three categories from Google Images (you would absolutely need to have more to be able to say something generalizable, but we chose a small number to keep the example simple). So your table of stimuli might look like the following:</p>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-stimulus_id
-</th>
-<th style="text-align:left;">
-category
-</th>
-<th style="text-align:left;">
-file
-</th>
+<thead><tr class="header">
+<th align="right">stimulus_id</th>
+<th align="left">category</th>
+<th align="left">file</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-cat
-</td>
-<td style="text-align:left;">
-cat1.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">cat</td>
+<td align="left">cat1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-cat
-</td>
-<td style="text-align:left;">
-cat2.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">cat</td>
+<td align="left">cat2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-cat
-</td>
-<td style="text-align:left;">
-cat3.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">cat</td>
+<td align="left">cat3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-cat
-</td>
-<td style="text-align:left;">
-cat4.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">cat</td>
+<td align="left">cat4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-dog
-</td>
-<td style="text-align:left;">
-dog1.jpg
-</td>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">dog</td>
+<td align="left">dog1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-dog
-</td>
-<td style="text-align:left;">
-dog2.jpg
-</td>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">dog</td>
+<td align="left">dog2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-dog
-</td>
-<td style="text-align:left;">
-dog3.jpg
-</td>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">dog</td>
+<td align="left">dog3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-dog
-</td>
-<td style="text-align:left;">
-dog4.jpg
-</td>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">dog</td>
+<td align="left">dog4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-sunset
-</td>
-<td style="text-align:left;">
-sunset1.jpg
-</td>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">sunset</td>
+<td align="left">sunset1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-sunset
-</td>
-<td style="text-align:left;">
-sunset2.jpg
-</td>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">sunset</td>
+<td align="left">sunset2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-sunset
-</td>
-<td style="text-align:left;">
-sunset3.jpg
-</td>
+<tr class="odd">
+<td align="right">11</td>
+<td align="left">sunset</td>
+<td align="left">sunset3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-sunset
-</td>
-<td style="text-align:left;">
-sunset4.jpg
-</td>
+<tr class="even">
+<td align="right">12</td>
+<td align="left">sunset</td>
+<td align="left">sunset4.jpg</td>
 </tr>
 </tbody>
 </table></div>
 <p>Then you sample a set of four participants to perform the soothing ratings. Again, four would be too few for a real study, but we're keeping it small just for expository purposes.</p>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-subject_id
-</th>
-<th style="text-align:right;">
-age
-</th>
-<th style="text-align:left;">
-date
-</th>
+<thead><tr class="header">
+<th align="right">subject_id</th>
+<th align="right">age</th>
+<th align="left">date</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-2020-05-25
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">69</td>
+<td align="left">2020-05-10</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:left;">
-2020-05-26
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">41</td>
+<td align="left">2020-05-18</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-31
-</td>
-<td style="text-align:left;">
-2020-05-27
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="left">2020-05-20</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-37
-</td>
-<td style="text-align:left;">
-2020-05-29
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">27</td>
+<td align="left">2020-05-21</td>
 </tr>
 </tbody>
 </table></div>
@@ -304,545 +196,251 @@ date
 <code class="sourceCode R"><span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span><span class="va">subjects</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">subject_id</span><span class="op">)</span>,</span>
 <span>         <span class="va">stimuli</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">category</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-subject_id
-</th>
-<th style="text-align:right;">
-stimulus_id
-</th>
-<th style="text-align:left;">
-file
-</th>
+<thead><tr class="header">
+<th align="right">subject_id</th>
+<th align="right">stimulus_id</th>
+<th align="left">file</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-cat1.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-cat2.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-cat3.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-cat4.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-dog1.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-dog2.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-dog3.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-dog4.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-sunset1.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-sunset2.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-sunset3.jpg
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-sunset4.jpg
-</td>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-cat1.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-cat2.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-cat3.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-cat4.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-dog1.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-dog2.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-dog3.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-dog4.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-sunset1.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-sunset2.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-sunset3.jpg
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-sunset4.jpg
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-cat1.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-cat2.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-cat3.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-cat4.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-dog1.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-dog2.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-dog3.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-dog4.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-sunset1.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-sunset2.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-sunset3.jpg
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-sunset4.jpg
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-cat1.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-cat2.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-cat3.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-cat4.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-dog1.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-dog2.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-dog3.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-dog4.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-sunset1.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-sunset2.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-sunset3.jpg
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-sunset4.jpg
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
 </tr>
 </tbody>
 </table></div>
@@ -1094,7 +692,7 @@ Solution
 <h2>
 <span class="header-section-number">7.4</span> Simulating data with crossed random factors<a class="anchor" aria-label="anchor" href="#simulating-data-with-crossed-random-factors"><i class="fas fa-link"></i></a>
 </h2>
-<p>For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items. Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb). We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words). You can play around with the web app (or <a href="https://rstudio-connect.psy.gla.ac.uk/crossed" target="_blank">click here to open it in a new window</a>), which allows you to manipulate the data-generating parameters and see their effect on the data.</p>
+<p>For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items. Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb). We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words). You can play around with the web app (or <a href="https://talklab.psy.gla.ac.uk/app/crossed-site/" target="_blank">click here to open it in a new window</a>), which allows you to manipulate the data-generating parameters and see their effect on the data.</p>
 <p>By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. <span class="citation">DeBruine &amp; Barr (<a href="bibliography.html#ref-Debruine_Barr_2020" role="doc-biblioref">2020</a>)</span> provides a more detailed, step-by-step walkthrough of the exercise below.</p>
 <p>Here is the DGP for response time <span class="math inline">\(Y_{si}\)</span> for subject <span class="math inline">\(s\)</span> and item <span class="math inline">\(i\)</span>:</p>
 <p><em>Level 1:</em></p>
@@ -1663,48 +1261,24 @@ Solution
 Solution: Fixed effects
 </button>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-parameter
-</th>
-<th style="text-align:left;">
-variable
-</th>
-<th style="text-align:right;">
-input
-</th>
-<th style="text-align:right;">
-estimate
-</th>
+<thead><tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\beta}_0\)</span>
-</td>
-<td style="text-align:left;">
-<code>b0</code>
-</td>
-<td style="text-align:right;">
-800
-</td>
-<td style="text-align:right;">
-793.293
-</td>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\beta}_0\)</span></td>
+<td align="left"><code>b0</code></td>
+<td align="right">800</td>
+<td align="right">793.293</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\beta}_1\)</span>
-</td>
-<td style="text-align:left;">
-<code>b1</code>
-</td>
-<td style="text-align:right;">
-80
-</td>
-<td style="text-align:right;">
-77.652
-</td>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\beta}_1\)</span></td>
+<td align="left"><code>b1</code></td>
+<td align="right">80</td>
+<td align="right">77.652</td>
 </tr>
 </tbody>
 </table></div>
@@ -1715,90 +1289,42 @@ estimate
 Solution: Random effects parameters
 </button>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-parameter
-</th>
-<th style="text-align:left;">
-variable
-</th>
-<th style="text-align:right;">
-input
-</th>
-<th style="text-align:right;">
-estimate
-</th>
+<thead><tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\tau}_{00}\)</span>
-</td>
-<td style="text-align:left;">
-<code>tau_00</code>
-</td>
-<td style="text-align:right;">
-100.0
-</td>
-<td style="text-align:right;">
-97.287
-</td>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\tau}_{00}\)</span></td>
+<td align="left"><code>tau_00</code></td>
+<td align="right">100.0</td>
+<td align="right">97.287</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\tau}_{11}\)</span>
-</td>
-<td style="text-align:left;">
-<code>tau_11</code>
-</td>
-<td style="text-align:right;">
-40.0
-</td>
-<td style="text-align:right;">
-24.448
-</td>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\tau}_{11}\)</span></td>
+<td align="left"><code>tau_11</code></td>
+<td align="right">40.0</td>
+<td align="right">24.448</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\rho}\)</span>
-</td>
-<td style="text-align:left;">
-<code>rho</code>
-</td>
-<td style="text-align:right;">
-0.2
-</td>
-<td style="text-align:right;">
-0.675
-</td>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\rho}\)</span></td>
+<td align="left"><code>rho</code></td>
+<td align="right">0.2</td>
+<td align="right">0.675</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\omega}_{00}\)</span>
-</td>
-<td style="text-align:left;">
-<code>omega_00</code>
-</td>
-<td style="text-align:right;">
-80.0
-</td>
-<td style="text-align:right;">
-89.928
-</td>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\omega}_{00}\)</span></td>
+<td align="left"><code>omega_00</code></td>
+<td align="right">80.0</td>
+<td align="right">89.928</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{\sigma}\)</span>
-</td>
-<td style="text-align:left;">
-<code>sig</code>
-</td>
-<td style="text-align:right;">
-200.0
-</td>
-<td style="text-align:right;">
-200.761
-</td>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\sigma}\)</span></td>
+<td align="left"><code>sig</code></td>
+<td align="right">200.0</td>
+<td align="right">200.761</td>
 </tr>
 </tbody>
 </table></div>
@@ -1966,7 +1492,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

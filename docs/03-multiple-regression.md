@@ -25,7 +25,7 @@ Let's look at some (made up, but realistic) data to see how we can use multiple 
 Let's load in the data [grades.csv](https://raw.githubusercontent.com/PsyTeachR/stat-models-v1/master/data/grades.csv){target="_download"} and have a look.
 
 
-```r
+``` r
 library("corrr") # correlation matrices
 library("tidyverse")
 
@@ -54,7 +54,7 @@ grades
 First let's look at all the pairwise correlations.
 
 
-```r
+``` r
 grades %>%
   correlate() %>%
   shave() %>%
@@ -76,7 +76,7 @@ grades %>%
 ```
 
 
-```r
+``` r
 pairs(grades)
 ```
 
@@ -102,7 +102,7 @@ The `Y` variable is your response variable, and the `X` variables are the predic
 For the current data, let's predict `grade` from `lecture` and `nclicks`.
 
 
-```r
+``` r
 my_model <- lm(grade ~ lecture + nclicks, grades)
 
 summary(my_model)
@@ -169,7 +169,7 @@ If we want to predict response values for new predictor values, we can use the `
 Let's create a tibble with new values and try it out.
 
 
-```r
+``` r
 ## a 'tribble' is a way to make a tibble by rows,
 ## rather than by columns. This is sometimes useful
 new_data <- tribble(~lecture, ~nclicks,
@@ -188,7 +188,7 @@ The first row of the `tribble()` contains the column names, each preceded by a t
 This is sometimes easier to read than doing it row by row, although the result is the same. Consider that we could have made the above table using
 
 
-```r
+``` r
 new_data <- tibble(lecture = c(3, 10, 0, 5),
                    nclicks = c(70, 130, 20, 100))
 ```
@@ -198,7 +198,7 @@ new_data <- tibble(lecture = c(3, 10, 0, 5),
 Now that we've created our table `new_data`, we just pass it to `predict()` and it will return a vector with the predictions for $Y$ (`grade`).
 
 
-```r
+``` r
 predict(my_model, new_data)
 ```
 
@@ -210,7 +210,7 @@ predict(my_model, new_data)
 That's great, but maybe we want to line it up with the predictor values. We can do this by just adding it as a new column to `new_data`.
 
 
-```r
+``` r
 new_data %>%
   mutate(predicted_grade = predict(my_model, new_data))
 ```
@@ -234,7 +234,7 @@ As noted above the parameter estimates for each regression coefficient tell us a
 For example, let's visualize the partial effect of `lecture` on `grade` holding `nclicks` constant at its mean value.
 
 
-```r
+``` r
 nclicks_mean <- grades %>% pull(nclicks) %>% mean()
 
 ## new data for prediction
@@ -268,7 +268,7 @@ new_lecture2
 Now let's plot.
 
 
-```r
+``` r
 ggplot(grades, aes(lecture, grade)) + 
   geom_point() +
   geom_line(data = new_lecture2)
@@ -308,7 +308,7 @@ A $z$ score represents the distance of a score $X$ from the sample mean ($\mu_x$
 So we re-scale our predictors by converting them to $z$-scores. This is easy enough to do.
 
 
-```r
+``` r
 grades2 <- grades %>%
   mutate(lecture_c = (lecture - mean(lecture)) / sd(lecture),
          nclicks_c = (nclicks - mean(nclicks)) / sd(nclicks))
@@ -336,7 +336,7 @@ grades2
 Now let's re-fit the model using the centered and scaled predictors.
 
 
-```r
+``` r
 my_model_scaled <- lm(grade ~ lecture_c + nclicks_c, grades2)
 
 summary(my_model_scaled)
@@ -412,7 +412,7 @@ The way we can test this hypothesis is by using **model comparison**. The logic 
 Here is how you do this:
 
 
-```r
+``` r
 m1 <- lm(grade ~ GPA, grades) # control model
 m2 <- lm(grade ~ GPA + lecture + nclicks, grades) # bigger model
 
@@ -491,7 +491,7 @@ For a nominal variable with only two levels, choose one level as baseline, and c
 To illustrate, let's gin up some fake data with a single two level categorical predictor.
 
 
-```r
+``` r
 fake_data <- tibble(Y = rnorm(10),
                     group = rep(c("A", "B"), each = 5))
 
@@ -500,24 +500,24 @@ fake_data
 
 ```
 ## # A tibble: 10 × 2
-##         Y group
-##     <dbl> <chr>
-##  1  0.776 A    
-##  2  0.175 A    
-##  3 -0.466 A    
-##  4 -1.40  A    
-##  5 -0.498 A    
-##  6  0.536 B    
-##  7  0.527 B    
-##  8 -2.06  B    
-##  9 -0.894 B    
-## 10 -1.22  B
+##           Y group
+##       <dbl> <chr>
+##  1 -0.797   A    
+##  2  1.04    A    
+##  3 -1.03    A    
+##  4  2.21    A    
+##  5 -0.314   A    
+##  6  0.00865 B    
+##  7  1.39    B    
+##  8  0.0544  B    
+##  9  2.81    B    
+## 10 -0.727   B
 ```
 
 Now let's add a new variable, `group_d`, which is the dummy coded group variable. We will use the `dplyr::if_else()` function to define the new column.
 
 
-```r
+``` r
 fake_data2 <- fake_data %>%
   mutate(group_d = if_else(group == "B", 1, 0))
 
@@ -526,24 +526,24 @@ fake_data2
 
 ```
 ## # A tibble: 10 × 3
-##         Y group group_d
-##     <dbl> <chr>   <dbl>
-##  1  0.776 A           0
-##  2  0.175 A           0
-##  3 -0.466 A           0
-##  4 -1.40  A           0
-##  5 -0.498 A           0
-##  6  0.536 B           1
-##  7  0.527 B           1
-##  8 -2.06  B           1
-##  9 -0.894 B           1
-## 10 -1.22  B           1
+##           Y group group_d
+##       <dbl> <chr>   <dbl>
+##  1 -0.797   A           0
+##  2  1.04    A           0
+##  3 -1.03    A           0
+##  4  2.21    A           0
+##  5 -0.314   A           0
+##  6  0.00865 B           1
+##  7  1.39    B           1
+##  8  0.0544  B           1
+##  9  2.81    B           1
+## 10 -0.727   B           1
 ```
 
 Now we just run it as a regular regression model.
 
 
-```r
+``` r
 summary(lm(Y ~ group_d, fake_data2))
 ```
 
@@ -554,22 +554,22 @@ summary(lm(Y ~ group_d, fake_data2))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4380 -0.5167 -0.2001  0.9078  1.1582 
+## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.2816     0.4420  -0.637    0.542
-## group_d      -0.3408     0.6251  -0.545    0.601
+## (Intercept)   0.2241     0.6208   0.361    0.727
+## group_d       0.4840     0.8779   0.551    0.596
 ## 
-## Residual standard error: 0.9883 on 8 degrees of freedom
-## Multiple R-squared:  0.03582,	Adjusted R-squared:  -0.0847 
-## F-statistic: 0.2972 on 1 and 8 DF,  p-value: 0.6005
+## Residual standard error: 1.388 on 8 degrees of freedom
+## Multiple R-squared:  0.03661,	Adjusted R-squared:  -0.08382 
+## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965
 ```
 
 Let's reverse the coding. We get the same result, just the sign is different.
 
 
-```r
+``` r
 fake_data3 <- fake_data %>%
   mutate(group_d = if_else(group == "A", 1, 0))
 
@@ -583,16 +583,16 @@ summary(lm(Y ~ group_d, fake_data3))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4380 -0.5167 -0.2001  0.9078  1.1582 
+## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.6224     0.4420  -1.408    0.197
-## group_d       0.3408     0.6251   0.545    0.601
+## (Intercept)   0.7081     0.6208   1.141    0.287
+## group_d      -0.4840     0.8779  -0.551    0.596
 ## 
-## Residual standard error: 0.9883 on 8 degrees of freedom
-## Multiple R-squared:  0.03582,	Adjusted R-squared:  -0.0847 
-## F-statistic: 0.2972 on 1 and 8 DF,  p-value: 0.6005
+## Residual standard error: 1.388 on 8 degrees of freedom
+## Multiple R-squared:  0.03661,	Adjusted R-squared:  -0.08382 
+## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965
 ```
 
 The interpretation of the intercept is the estimated mean for the group coded as zero. You can see by plugging in zero for X in the prediction formula below. Thus, $\beta_1$ can be interpreted as the difference between the mean for the baseline group and the group coded as 1.
@@ -602,7 +602,7 @@ $$\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1 X_i $$
 Note that if we just put the character variable `group` as a predictor in the model, R will automatically create a dummy variable (or variables) for us as needed.
 
 
-```r
+``` r
 lm(Y ~ group, fake_data) %>%
   summary()
 ```
@@ -614,16 +614,16 @@ lm(Y ~ group, fake_data) %>%
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4380 -0.5167 -0.2001  0.9078  1.1582 
+## -1.4352 -0.9411 -0.5960  0.7859  2.1069 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)  -0.2816     0.4420  -0.637    0.542
-## groupB       -0.3408     0.6251  -0.545    0.601
+## (Intercept)   0.2241     0.6208   0.361    0.727
+## groupB        0.4840     0.8779   0.551    0.596
 ## 
-## Residual standard error: 0.9883 on 8 degrees of freedom
-## Multiple R-squared:  0.03582,	Adjusted R-squared:  -0.0847 
-## F-statistic: 0.2972 on 1 and 8 DF,  p-value: 0.6005
+## Residual standard error: 1.388 on 8 degrees of freedom
+## Multiple R-squared:  0.03661,	Adjusted R-squared:  -0.08382 
+## F-statistic: 0.304 on 1 and 8 DF,  p-value: 0.5965
 ```
 
 The `lm()` function examines `group` and figures out the unique levels of the variable, which in this case are `A` and `B`. It then chooses as baseline the level that comes first alphabetically, and encodes the contrast between the other level (`B`) and the baseline level (`A`). (In the case where `group` has been defined as a factor, the baseline level is the first element of `levels(fake_data$group)`).
@@ -635,7 +635,7 @@ This new variable that it created shows up with the name `groupB` in the output.
 When a nominal predictor variable has more than two levels ($k > 2$), one numeric predictor is no longer sufficient; we need $k-1$ predictors. If the nominal predictor has four levels, we'll need to define three predictors. Let's simulate some data to work with, `season_wt`, which represents a person's bodyweight (in kg) over the four seasons of the year.
 
 
-```r
+``` r
 season_wt <- tibble(season = rep(c("winter", "spring", "summer", "fall"),
                                  each = 5),
                     bodyweight_kg = c(rnorm(5, 105, 3),
@@ -650,32 +650,32 @@ season_wt
 ## # A tibble: 20 × 2
 ##    season bodyweight_kg
 ##    <chr>          <dbl>
-##  1 winter          107.
-##  2 winter          105.
-##  3 winter          106.
-##  4 winter          107.
-##  5 winter          105.
-##  6 spring          101.
-##  7 spring          102.
-##  8 spring          103.
-##  9 spring          108.
-## 10 spring          105.
-## 11 summer          106.
-## 12 summer          102.
-## 13 summer          100.
-## 14 summer          103.
-## 15 summer          102.
-## 16 fall            107.
-## 17 fall            105.
-## 18 fall            103.
-## 19 fall            101.
-## 20 fall            101.
+##  1 winter         106. 
+##  2 winter         105. 
+##  3 winter         103. 
+##  4 winter         110. 
+##  5 winter         104. 
+##  6 spring         100. 
+##  7 spring          98.7
+##  8 spring          99.9
+##  9 spring         106. 
+## 10 spring         108. 
+## 11 summer         102. 
+## 12 summer          94.1
+## 13 summer         104. 
+## 14 summer         100. 
+## 15 summer         101. 
+## 16 fall            96.8
+## 17 fall            98.2
+## 18 fall            99.0
+## 19 fall           102. 
+## 20 fall           106.
 ```
 
 Now let's add three predictors to code the variable `season`. Try it out and see if you can figure out how it works.
 
 
-```r
+``` r
 ## baseline value is 'winter'
 season_wt2 <- season_wt %>%
   mutate(spring_v_winter = if_else(season == "spring", 1, 0),
@@ -689,26 +689,26 @@ season_wt2
 ## # A tibble: 20 × 5
 ##    season bodyweight_kg spring_v_winter summer_v_winter fall_v_winter
 ##    <chr>          <dbl>           <dbl>           <dbl>         <dbl>
-##  1 winter          107.               0               0             0
-##  2 winter          105.               0               0             0
-##  3 winter          106.               0               0             0
-##  4 winter          107.               0               0             0
-##  5 winter          105.               0               0             0
-##  6 spring          101.               1               0             0
-##  7 spring          102.               1               0             0
-##  8 spring          103.               1               0             0
-##  9 spring          108.               1               0             0
-## 10 spring          105.               1               0             0
-## 11 summer          106.               0               1             0
-## 12 summer          102.               0               1             0
-## 13 summer          100.               0               1             0
-## 14 summer          103.               0               1             0
-## 15 summer          102.               0               1             0
-## 16 fall            107.               0               0             1
-## 17 fall            105.               0               0             1
-## 18 fall            103.               0               0             1
-## 19 fall            101.               0               0             1
-## 20 fall            101.               0               0             1
+##  1 winter         106.                0               0             0
+##  2 winter         105.                0               0             0
+##  3 winter         103.                0               0             0
+##  4 winter         110.                0               0             0
+##  5 winter         104.                0               0             0
+##  6 spring         100.                1               0             0
+##  7 spring          98.7               1               0             0
+##  8 spring          99.9               1               0             0
+##  9 spring         106.                1               0             0
+## 10 spring         108.                1               0             0
+## 11 summer         102.                0               1             0
+## 12 summer          94.1               0               1             0
+## 13 summer         104.                0               1             0
+## 14 summer         100.                0               1             0
+## 15 summer         101.                0               1             0
+## 16 fall            96.8               0               0             1
+## 17 fall            98.2               0               0             1
+## 18 fall            99.0               0               0             1
+## 19 fall           102.                0               0             1
+## 20 fall           106.                0               0             1
 ```
 
 :::{.warning}
@@ -721,7 +721,7 @@ Consider the code chunk above, where we defined three contrasts to represent the
 What would happen if you accidently misspelled one of the levels (`summre` for `summer`) and didn't notice?
 
 
-```r
+``` r
 season_wt3 <- season_wt %>%
   mutate(spring_v_winter = if_else(season == "spring", 1, 0),
          summer_v_winter = if_else(season == "summre", 1, 0),
@@ -731,7 +731,7 @@ season_wt3 <- season_wt %>%
 While the above code chunk runs, we get confusing output when we run the regression; namely, the coefficent for `summer_v_winter` is `NA` (not available).
 
 
-```r
+``` r
 lm(bodyweight_kg ~ spring_v_winter + summer_v_winter + fall_v_winter,
    season_wt3)
 ```
@@ -744,13 +744,13 @@ lm(bodyweight_kg ~ spring_v_winter + summer_v_winter + fall_v_winter,
 ## 
 ## Coefficients:
 ##     (Intercept)  spring_v_winter  summer_v_winter    fall_v_winter  
-##        104.2673          -0.3439               NA          -0.9552
+##        102.9002          -0.3195               NA          -2.5609
 ```
 
 What happened? Let's look at the data to find out. We will use `distinct` to find the distinct combinations of our original variable `season` with the three variables we created (see `?dplyr::distinct` for details).
 
 
-```r
+``` r
 season_wt3 %>%
   distinct(season, spring_v_winter, summer_v_winter, fall_v_winter)
 ```
@@ -775,7 +775,7 @@ Because of our misspelling, the predictor `summer_v_winter` is not `1` when `sea
 If you've ever used point-and-click statistical software like SPSS, you probably never had to learn about coding categorical predictors. Normally, the software recognizes when a predictor is categorical and, behind the scenes, it takes care of recoding it into a numerical predictor. R is no different: if you supply a predictor of type `character` or `factor` to a linear modeling function, it will create numerical dummy-coded predictors for you, as shown in the code below.
 
 
-```r
+``` r
 lm(bodyweight_kg ~ season, season_wt) %>%
   summary()
 ```
@@ -787,20 +787,20 @@ lm(bodyweight_kg ~ season, season_wt) %>%
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.7820 -1.1927 -0.6222  0.9015  3.8698 
+## -6.1395 -2.3874 -0.3115  2.2229  5.6238 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  103.3121     0.9597 107.648   <2e-16 ***
-## seasonspring   0.6114     1.3572   0.450   0.6584    
-## seasonsummer  -0.7879     1.3572  -0.581   0.5696    
-## seasonwinter   2.6984     1.3572   1.988   0.0642 .  
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  100.33932    1.59114  63.061   <2e-16 ***
+## seasonspring   2.24135    2.25021   0.996   0.3340    
+## seasonsummer  -0.05219    2.25021  -0.023   0.9818    
+## seasonwinter   5.17389    2.25021   2.299   0.0353 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.146 on 16 degrees of freedom
-## Multiple R-squared:  0.3121,	Adjusted R-squared:  0.1831 
-## F-statistic:  2.42 on 3 and 16 DF,  p-value: 0.104
+## Residual standard error: 3.558 on 16 degrees of freedom
+## Multiple R-squared:  0.3105,	Adjusted R-squared:  0.1812 
+## F-statistic: 2.402 on 3 and 16 DF,  p-value: 0.1057
 ```
 
 Here, R implicitly creates three dummy variables to code the four levels of `season`, called `seasonspring`, `seasonsummer` and `seasonwinter`. The unmentioned season, `fall`, has been chosen as baseline because it comes earliest in the alphabet. These three predictors have the following values:
@@ -817,7 +817,7 @@ This seems like a handy thing to have R do for us, but dangers lurk in relying o
 If we wanted to see whether our bodyweight varies over season, we could do a one way ANOVA on `season_wt2` like so.
 
 
-```r
+``` r
 ## make season into a factor with baseline level 'winter'
 season_wt3 <- season_wt2 %>%
   mutate(season = factor(season, levels = c("winter", "spring",
@@ -829,8 +829,8 @@ summary(my_anova)
 
 ```
 ##             Df Sum Sq Mean Sq F value Pr(>F)
-## season       3  33.43  11.143    2.42  0.104
-## Residuals   16  73.68   4.605
+## season       3  91.21   30.40   2.402  0.106
+## Residuals   16 202.54   12.66
 ```
 
 OK, now can we replicate that result using the regression model below?
@@ -838,7 +838,7 @@ OK, now can we replicate that result using the regression model below?
 $$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + e_i$$
 
 
-```r
+``` r
 summary(lm(bodyweight_kg ~ spring_v_winter +
              summer_v_winter + fall_v_winter,
            season_wt2))
@@ -852,20 +852,20 @@ summary(lm(bodyweight_kg ~ spring_v_winter +
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.7820 -1.1927 -0.6222  0.9015  3.8698 
+## -6.1395 -2.3874 -0.3115  2.2229  5.6238 
 ## 
 ## Coefficients:
 ##                 Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)     106.0105     0.9597 110.460   <2e-16 ***
-## spring_v_winter  -2.0870     1.3572  -1.538   0.1437    
-## summer_v_winter  -3.4863     1.3572  -2.569   0.0206 *  
-## fall_v_winter    -2.6984     1.3572  -1.988   0.0642 .  
+## (Intercept)      105.513      1.591  66.313   <2e-16 ***
+## spring_v_winter   -2.933      2.250  -1.303   0.2109    
+## summer_v_winter   -5.226      2.250  -2.322   0.0337 *  
+## fall_v_winter     -5.174      2.250  -2.299   0.0353 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.146 on 16 degrees of freedom
-## Multiple R-squared:  0.3121,	Adjusted R-squared:  0.1831 
-## F-statistic:  2.42 on 3 and 16 DF,  p-value: 0.104
+## Residual standard error: 3.558 on 16 degrees of freedom
+## Multiple R-squared:  0.3105,	Adjusted R-squared:  0.1812 
+## F-statistic: 2.402 on 3 and 16 DF,  p-value: 0.1057
 ```
 
 Note that the $F$ values and $p$ values are identical for the two methods!
@@ -879,7 +879,7 @@ Note that the $F$ values and $p$ values are identical for the two methods!
 First create a tibble with new predictors. We might also want to know the range of values that `nclicks` varies over.
 
 
-```r
+``` r
 lecture_mean <- grades %>% pull(lecture) %>% mean()
 min_nclicks <- grades %>% pull(nclicks) %>% min()
 max_nclicks <- grades %>% pull(nclicks) %>% max()
@@ -915,7 +915,7 @@ new_nclicks2
 Now plot.
 
 
-```r
+``` r
 ggplot(grades, aes(nclicks, grade)) +
   geom_point() +
   geom_line(data = new_nclicks2)

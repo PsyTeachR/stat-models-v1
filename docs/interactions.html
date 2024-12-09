@@ -7,7 +7,7 @@
 <title>Chapter 4 Interactions | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/interactions.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
@@ -235,7 +235,7 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <p>I just said that two non-parallel lines mean there is an <em>interaction</em> between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class="glossary" target="_blank" title="All members of a group that we wish to generalise our findings to. E.g. all students taking Psychology at the University of Glasgow. We draw our testing sample from the population." href="https://psyteachr.github.io/glossary/p#population">population</a>. Whether or not they are parallel in the <a class="glossary" target="_blank" title="A subset of the population that you wish to make an inference about through your test." href="https://psyteachr.github.io/glossary/s#sample">sample</a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small.</p>
 <p>Generally, you will be interested in whether the slopes are the same or different in the population, not in the sample. For this reason, you can't just look at a graph of sample data and reason, "the lines are not parallel and so there must be an interaction", or vice versa, "the lines look parallel, so there is no interaction." You must run an inferential statistical test.</p>
 <p>When the interaction term is statistically significant at some <span class="math inline">\(\alpha\)</span> level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., <span class="math inline">\(H_0: \beta_3 = 0\)</span>), which implies the lines are not parallel in the population.</p>
-<p>However, a non-significant interaction does <em>not</em> necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class="glossary" target="_blank" title="The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance." href="https://psyteachr.github.io/glossary/p#power">power</a> to detect the difference.</p>
+<p>However, a non-significant interaction does <em>not</em> necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class="glossary" target="_blank" title="The probability of rejecting the null hypothesis when it is false." href="https://psyteachr.github.io/glossary/p#power">power</a> to detect the difference.</p>
 <p>The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see <span class="citation">Lakens et al. (<a href="bibliography.html#ref-Lakens_Scheel_Isager_2018" role="doc-biblioref">2018</a>)</span> for a tutorial.</p>
 </div>
 <p>We have already created the dataset <code>all_data</code> combining the simulated data for our two groups. The way we express our model using R formula syntax is <code>Y ~ X1 + X2 + X1:X2</code> where <code>X1:X2</code> tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut <code>Y ~ X1 * X2</code> which tells R to calculate all possible main effects and interactions. First we'll add a dummy predictor to our model, storing the result in <code>all_data2</code>.</p>
@@ -508,7 +508,7 @@ Figure 4.3: <em>Scenario A, plot of cell means.</em>
 <p>Below is a table of <strong>cell means</strong> and <strong>marginal means</strong>. The cell means are the mean values of the dependent variable (mood) at each cell of the design. The marginal means (in the margins of the table) provide the means for each row and column.</p>
 <div class="inline-table"><table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:scenario-a-means">Table 4.1: </span><em>Scenario A, Table of Means.</em>
+<span id="tab:scenario-a-means">Table 4.1: </span><span id="tab:scenario-a-means">Table 4.2: </span><em>Scenario A, Table of Means.</em>
 </caption>
 <thead><tr>
 <th style="text-align:left;">
@@ -580,7 +580,7 @@ Figure 4.4: <em>Scenario B, plot of cell means.</em>
 </div>
 <div class="inline-table"><table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:scenario-b-means">Table 4.2: </span><em>Scenario B, Table of Means.</em>
+<span id="tab:scenario-b-means">Table 4.3: </span><span id="tab:scenario-b-means">Table 4.4: </span><em>Scenario B, Table of Means.</em>
 </caption>
 <thead><tr>
 <th style="text-align:left;">
@@ -650,7 +650,7 @@ Figure 4.5: <em>Scenario C, plot of cell means.</em>
 </div>
 <div class="inline-table"><table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:scenario-c-means">Table 4.3: </span><em>Scenario C, Table of Means.</em>
+<span id="tab:scenario-c-means">Table 4.5: </span><span id="tab:scenario-c-means">Table 4.6: </span><em>Scenario C, Table of Means.</em>
 </caption>
 <thead><tr>
 <th style="text-align:left;">
@@ -835,7 +835,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 <span class="header-section-number">4.3.2</span> Factorial App<a class="anchor" aria-label="anchor" href="#factorial-app"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-figure"><img src="images/04-interactions_factorial_app.png"></div>
-<p><a href="https://rstudio-connect.psy.gla.ac.uk/factorial" target="_blank">Launch this web application</a> and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.</p>
+<p><a href="https://talklab.psy.gla.ac.uk/app/factorial-site/" target="_blank">Launch this web application</a> and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.</p>
 </div>
 </div>
 <div id="code-your-own-categorical-predictors-in-factorial-designs" class="section level2" number="4.4">
@@ -2233,7 +2233,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

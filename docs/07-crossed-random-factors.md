@@ -15,371 +15,91 @@ One thing to note about all these claims is that the are of the type, "what happ
 
 Here is a simple example of a study where you are interested in testing whether people rate pictures of cats, dogs, or sunsets as more soothing images to look at. You want to say something general about the category of cats, dogs, and sunsets and not something about the specific pictures that you happened to sample. Let's say you randomly select four images from each of the three categories from Google Images (you would absolutely need to have more to be able to say something generalizable, but we chose a small number to keep the example simple). So your table of stimuli might look like the following:
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> stimulus_id </th>
-   <th style="text-align:left;"> category </th>
-   <th style="text-align:left;"> file </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> cat </td>
-   <td style="text-align:left;"> cat1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> cat </td>
-   <td style="text-align:left;"> cat2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> cat </td>
-   <td style="text-align:left;"> cat3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> cat </td>
-   <td style="text-align:left;"> cat4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> dog </td>
-   <td style="text-align:left;"> dog1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> dog </td>
-   <td style="text-align:left;"> dog2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> dog </td>
-   <td style="text-align:left;"> dog3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:left;"> dog </td>
-   <td style="text-align:left;"> dog4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:left;"> sunset </td>
-   <td style="text-align:left;"> sunset1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:left;"> sunset </td>
-   <td style="text-align:left;"> sunset2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:left;"> sunset </td>
-   <td style="text-align:left;"> sunset3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> sunset </td>
-   <td style="text-align:left;"> sunset4.jpg </td>
-  </tr>
-</tbody>
-</table>
+
+| stimulus_id|category |file        |
+|-----------:|:--------|:-----------|
+|           1|cat      |cat1.jpg    |
+|           2|cat      |cat2.jpg    |
+|           3|cat      |cat3.jpg    |
+|           4|cat      |cat4.jpg    |
+|           5|dog      |dog1.jpg    |
+|           6|dog      |dog2.jpg    |
+|           7|dog      |dog3.jpg    |
+|           8|dog      |dog4.jpg    |
+|           9|sunset   |sunset1.jpg |
+|          10|sunset   |sunset2.jpg |
+|          11|sunset   |sunset3.jpg |
+|          12|sunset   |sunset4.jpg |
 
 Then you sample a set of four participants to perform the soothing ratings. Again, four would be too few for a real study, but we're keeping it small just for expository purposes.
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> subject_id </th>
-   <th style="text-align:right;"> age </th>
-   <th style="text-align:left;"> date </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 70 </td>
-   <td style="text-align:left;"> 2020-05-25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 21 </td>
-   <td style="text-align:left;"> 2020-05-26 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 31 </td>
-   <td style="text-align:left;"> 2020-05-27 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 37 </td>
-   <td style="text-align:left;"> 2020-05-29 </td>
-  </tr>
-</tbody>
-</table>
+
+| subject_id| age|date       |
+|----------:|---:|:----------|
+|          1|  69|2020-05-10 |
+|          2|  41|2020-05-18 |
+|          3|  43|2020-05-20 |
+|          4|  27|2020-05-21 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
 
-```r
+``` r
 crossing(subjects %>% select(subject_id),
          stimuli %>% select(-category)) 
 ```
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> subject_id </th>
-   <th style="text-align:right;"> stimulus_id </th>
-   <th style="text-align:left;"> file </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> cat1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> cat2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> cat3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> cat4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> dog1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> dog2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> dog3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:left;"> dog4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:left;"> sunset1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:left;"> sunset2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:left;"> sunset3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> sunset4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> cat1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> cat2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> cat3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> cat4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> dog1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> dog2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> dog3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:left;"> dog4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:left;"> sunset1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:left;"> sunset2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:left;"> sunset3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> sunset4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> cat1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> cat2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> cat3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> cat4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> dog1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> dog2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> dog3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:left;"> dog4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:left;"> sunset1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:left;"> sunset2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:left;"> sunset3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> sunset4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> cat1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> cat2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> cat3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> cat4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> dog1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> dog2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> dog3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:left;"> dog4.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:left;"> sunset1.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:left;"> sunset2.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:left;"> sunset3.jpg </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> sunset4.jpg </td>
-  </tr>
-</tbody>
-</table>
+
+| subject_id| stimulus_id|file        |
+|----------:|-----------:|:-----------|
+|          1|           1|cat1.jpg    |
+|          1|           2|cat2.jpg    |
+|          1|           3|cat3.jpg    |
+|          1|           4|cat4.jpg    |
+|          1|           5|dog1.jpg    |
+|          1|           6|dog2.jpg    |
+|          1|           7|dog3.jpg    |
+|          1|           8|dog4.jpg    |
+|          1|           9|sunset1.jpg |
+|          1|          10|sunset2.jpg |
+|          1|          11|sunset3.jpg |
+|          1|          12|sunset4.jpg |
+|          2|           1|cat1.jpg    |
+|          2|           2|cat2.jpg    |
+|          2|           3|cat3.jpg    |
+|          2|           4|cat4.jpg    |
+|          2|           5|dog1.jpg    |
+|          2|           6|dog2.jpg    |
+|          2|           7|dog3.jpg    |
+|          2|           8|dog4.jpg    |
+|          2|           9|sunset1.jpg |
+|          2|          10|sunset2.jpg |
+|          2|          11|sunset3.jpg |
+|          2|          12|sunset4.jpg |
+|          3|           1|cat1.jpg    |
+|          3|           2|cat2.jpg    |
+|          3|           3|cat3.jpg    |
+|          3|           4|cat4.jpg    |
+|          3|           5|dog1.jpg    |
+|          3|           6|dog2.jpg    |
+|          3|           7|dog3.jpg    |
+|          3|           8|dog4.jpg    |
+|          3|           9|sunset1.jpg |
+|          3|          10|sunset2.jpg |
+|          3|          11|sunset3.jpg |
+|          3|          12|sunset4.jpg |
+|          4|           1|cat1.jpg    |
+|          4|           2|cat2.jpg    |
+|          4|           3|cat3.jpg    |
+|          4|           4|cat4.jpg    |
+|          4|           5|dog1.jpg    |
+|          4|           6|dog2.jpg    |
+|          4|           7|dog3.jpg    |
+|          4|           8|dog4.jpg    |
+|          4|           9|sunset1.jpg |
+|          4|          10|sunset2.jpg |
+|          4|          11|sunset3.jpg |
+|          4|          12|sunset4.jpg |
 
 Because you have 4 subjects responding to 12 stimuli, the resulting table will have 48 rows.
 
@@ -433,7 +153,7 @@ The first two rules are straightforward, but the third requires some explanation
 A simple way to determine whether a factor is between or within is to use the `dplyr::count()` function, which gives frequency counts, and which is loaded when you load tidyverse. Let's say you are interested in whether factor $A$ is within or between subjects, for the imaginary 2x2x2 factorial data `abc_data` below where $A$, $B$, and $C$ name the factors of your design.
 
 
-```r
+``` r
 library("tidyverse")
 
 ## run this code to create the table "abc_data"
@@ -451,7 +171,7 @@ abc_data <- crossing(abc_subj, abc_item) %>%
 To see whether $A$ is within or between subjects, use:
 
 
-```r
+``` r
 abc_data %>%
   count(subject_id, A)
 ```
@@ -473,7 +193,7 @@ abc_data %>%
 In the resulting table, you can see that each subject gets both levels of $A$, making it a within-subject factor. What about $B$ and $C$?
 
 
-```r
+``` r
 abc_data %>%
   count(subject_id, B)
 ```
@@ -489,7 +209,7 @@ abc_data %>%
 ```
 
 
-```r
+``` r
 abc_data %>%
   count(subject_id, C)
 ```
@@ -523,7 +243,7 @@ Answer these question about `abc_data`.
 
 
 
-```r
+``` r
 abc_data %>%
   count(stimulus_id, A)
 ```
@@ -549,7 +269,7 @@ abc_data %>%
 
 
 
-```r
+``` r
 abc_data %>%
   count(stimulus_id, B)
 ```
@@ -581,7 +301,7 @@ abc_data %>%
 
 <div class='webex-solution'><button>Solution</button>
 
-```r
+``` r
 abc_data %>%
   count(stimulus_id, C)
 ```
@@ -614,7 +334,7 @@ How do we now apply the third rule above to determine what random slopes are nee
 Consider that $A$ and $C$ were within-subjects, and $B$ was between. So the highest-order interaction of within-subject factors is $AC$. We will need random slopes for the $AC$ interaction as well as for the main effects $A$ and $C$ if we have pseudoreplications for each subject in each combination of $AC$. How can we find out? 
 
 
-```r
+``` r
 abc_data %>%
   count(subject_id, A, C)
 ```
@@ -654,7 +374,7 @@ What random slopes do you need for the random factor of stimulus?
 You have one within-stimulus factor, $B$, which has pseudoreplications.
 
 
-```r
+``` r
 abc_data %>%
   count(stimulus_id, B)
 ```
@@ -698,7 +418,7 @@ For more technical details about convergence problems and what to do, see `?lme4
 
 ## Simulating data with crossed random factors
 
-For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://rstudio-connect.psy.gla.ac.uk/crossed){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
+For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://talklab.psy.gla.ac.uk/app/crossed-site/){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
 
 By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. @Debruine_Barr_2020 provides a more detailed, step-by-step walkthrough of the exercise below.
 
@@ -769,7 +489,7 @@ where:
 If you want to get the same results as everyone else for this exercise, then we all should seed the random number generator with the same value.  While we're at it, let's load in the packages we need.
 
 
-```r
+``` r
 library("lme4")
 library("tidyverse")
 
@@ -779,7 +499,7 @@ set.seed(11709)
 Now let's define the parameters for the DGP (data generating process).
 
 
-```r
+``` r
 nsubj <- 100 # number of subjects
 nitem <- 50  # must be an even number
 
@@ -903,7 +623,7 @@ Let's randomly generate our 50 items. Create a tibble called `item` like the one
 
 
 
-```r
+``` r
 items <- tibble(item_id = 1:nitem,
                 cond = rep(c(-.5, .5), times = nitem / 2),
                 I_0i = rnorm(nitem, 0, sd = omega_00))
@@ -1071,7 +791,7 @@ recall that:
 
 
 
-```r
+``` r
 matrix(    tau_00^2,            rho * tau_00 * tau_11,
         rho * tau_00 * tau_11,      tau_11^2, ...)
 ```
@@ -1085,7 +805,7 @@ matrix(    tau_00^2,            rho * tau_00 * tau_11,
 
 
 
-```r
+``` r
 as_tibble(mx) %>%
   mutate(subj_id = ...)
 ```
@@ -1099,7 +819,7 @@ as_tibble(mx) %>%
 
 
 
-```r
+``` r
 cov <- rho * tau_00 * tau_11
 
 mx <- matrix(c(tau_00^2, cov,
@@ -1148,7 +868,7 @@ Now apply this example to generate the table below, where `err` is the residual 
 
 
 
-```r
+``` r
 trials <- crossing(subj_id = subjects %>% pull(subj_id),
                    item_id = items %>% pull(item_id)) %>%
   mutate(err = rnorm(nrow(.), mean = 0, sd = sig))
@@ -1197,7 +917,7 @@ Merge the information in `subjects`, `items`, and `trials` to create the full da
 
 
 
-```r
+``` r
 dat_sim <- subjects %>%
   inner_join(trials, "subj_id") %>%
   inner_join(items, "item_id") %>%
@@ -1258,7 +978,7 @@ Note: this is the full **decomposition table** for this model.
 
 
 
-```r
+``` r
 dat_sim2 <- dat_sim %>%
   mutate(Y = b0 + S_0s + I_0i + (S_1s + b1) * cond + err) %>%
   select(subj_id, item_id, Y, everything())
@@ -1277,7 +997,7 @@ Now that you have created simulated data, estimate the model using `lme4::lmer()
 
 
 
-```r
+``` r
 mod_sim <- lmer(Y ~ cond + (1 + cond | subj_id) + (1 | item_id),
                 dat_sim2, REML = FALSE)
 
@@ -1324,30 +1044,11 @@ First, try to find \(\beta_0\) and \(\beta_1\).
 <div class='webex-solution'><button>Solution: Fixed effects</button>
 
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> parameter </th>
-   <th style="text-align:left;"> variable </th>
-   <th style="text-align:right;"> input </th>
-   <th style="text-align:right;"> estimate </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\beta}_0\) </td>
-   <td style="text-align:left;"> `b0` </td>
-   <td style="text-align:right;"> 800 </td>
-   <td style="text-align:right;"> 793.293 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\beta}_1\) </td>
-   <td style="text-align:left;"> `b1` </td>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:right;"> 77.652 </td>
-  </tr>
-</tbody>
-</table>
+
+|parameter         |variable | input| estimate|
+|:-----------------|:--------|-----:|--------:|
+|\(\hat{\beta}_0\) |`b0`     |   800|  793.293|
+|\(\hat{\beta}_1\) |`b1`     |    80|   77.652|
 
 
 </div>
@@ -1359,48 +1060,14 @@ Now try to find estimates of random effects parameters \(\tau_{00}\), \(\tau_{11
 <div class='webex-solution'><button>Solution: Random effects parameters</button>
 
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> parameter </th>
-   <th style="text-align:left;"> variable </th>
-   <th style="text-align:right;"> input </th>
-   <th style="text-align:right;"> estimate </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\tau}_{00}\) </td>
-   <td style="text-align:left;"> `tau_00` </td>
-   <td style="text-align:right;"> 100.0 </td>
-   <td style="text-align:right;"> 97.287 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\tau}_{11}\) </td>
-   <td style="text-align:left;"> `tau_11` </td>
-   <td style="text-align:right;"> 40.0 </td>
-   <td style="text-align:right;"> 24.448 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\rho}\) </td>
-   <td style="text-align:left;"> `rho` </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:right;"> 0.675 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\omega}_{00}\) </td>
-   <td style="text-align:left;"> `omega_00` </td>
-   <td style="text-align:right;"> 80.0 </td>
-   <td style="text-align:right;"> 89.928 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> \(\hat{\sigma}\) </td>
-   <td style="text-align:left;"> `sig` </td>
-   <td style="text-align:right;"> 200.0 </td>
-   <td style="text-align:right;"> 200.761 </td>
-  </tr>
-</tbody>
-</table>
+
+|parameter             |variable   | input| estimate|
+|:---------------------|:----------|-----:|--------:|
+|\(\hat{\tau}_{00}\)   |`tau_00`   | 100.0|   97.287|
+|\(\hat{\tau}_{11}\)   |`tau_11`   |  40.0|   24.448|
+|\(\hat{\rho}\)        |`rho`      |   0.2|    0.675|
+|\(\hat{\omega}_{00}\) |`omega_00` |  80.0|   89.928|
+|\(\hat{\sigma}\)      |`sig`      | 200.0|  200.761|
 
 
 </div>
