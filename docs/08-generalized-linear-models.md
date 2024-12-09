@@ -39,7 +39,7 @@ In most settings with continuous data, the variance is assumed to be independent
 We can see this through data simulation. The `rbinom()` function makes it possible to simulate data from a **binomial** distribution, which describes how a collection of discrete observations behaves. Let's consider, for instance, the probability of rain on a given day in Barcelona, Spain, versus Glasgow, U.K.  According to [this website](https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php), Barcelona gets an average of 55 days of rain per year, while Glasgow gets 170. So the probability of rain on a given day in Glasgow can be estimated as 170/365 or about 0.47, where as the probability for Barcelona is 55/365 or about 0.15. Let's simulate 500 years of rainfall for the two cities (assuming a constant climate).
 
 
-```r
+``` r
 rainy_days <- tibble(city = rep(c("Barcelona", "Glasgow"), each = 500),
        days_of_rain = c(rbinom(500, 365, 55/365),
                         rbinom(500, 365, 170/365))) 
@@ -48,7 +48,7 @@ rainy_days <- tibble(city = rep(c("Barcelona", "Glasgow"), each = 500),
 We can see the greater variability in Glasgow if we look at the standard deviations of the simulated data for each city.
 
 
-```r
+``` r
 rainy_days %>%
   group_by(city) %>%
   summarise(variance = var(days_of_rain))
@@ -58,8 +58,8 @@ rainy_days %>%
 ## # A tibble: 2 × 2
 ##   city      variance
 ##   <chr>        <dbl>
-## 1 Barcelona     46.4
-## 2 Glasgow       93.9
+## 1 Barcelona     50.4
+## 2 Glasgow       89.9
 ```
 
 With binomially distributed data, the variance is given by $np(1-p)$ where $n$ is the number of observations and $p$ is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for $n=1000$; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.
@@ -79,32 +79,13 @@ There are a large variety of different kinds of generalized linear models you ca
 
 ### Terminology
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Term </th>
-   <th style="text-align:left;"> Definition </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> **Bernoulli trial** </td>
-   <td style="text-align:left;"> An event with a binary outcome, with one outcome considered 'success' </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> **proportion** </td>
-   <td style="text-align:left;"> The ratio of successes to the total number of Bernoulli trials </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> **odds** </td>
-   <td style="text-align:left;"> The ratio of successes to failures </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> **log odds** </td>
-   <td style="text-align:left;"> The (natural) log of the odds </td>
-  </tr>
-</tbody>
-</table>
+
+|Term                |Definition                                                            |
+|:-------------------|:---------------------------------------------------------------------|
+|**Bernoulli trial** |An event with a binary outcome, with one outcome considered 'success' |
+|**proportion**      |The ratio of successes to the total number of Bernoulli trials        |
+|**odds**            |The ratio of successes to failures                                    |
+|**log odds**        |The (natural) log of the odds                                         |
 
 In logistic regression, we are modeling the relationship between the response and a set of predictors in log odds space.
 
@@ -143,8 +124,8 @@ $$np(1 - p).$$
 The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.
 
 <div class="figure" style="text-align: center">
-<iframe src="https://rstudio-connect.psy.gla.ac.uk/logit?showcase=0" width="100%" height="800px" data-external="1"></iframe>
-<p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://rstudio-connect.psy.gla.ac.uk/logit></p>
+<iframe src="https://talklab.psy.gla.ac.uk/app/logit-site/?showcase=0" width="100%" height="800px" data-external="1"></iframe>
+<p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://talklab.psy.gla.ac.uk/app/logit-site/></p>
 </div>
 
 ### Estimating logistic regression models in R

@@ -7,7 +7,7 @@
 <title>A Symbols | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content='A.1 General notes Greek letters represent population parameter values; roman letters represent sample values. A Greek letter with a "hat" represents and estimate of the population value from the...'>
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="A Symbols | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/symbols.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
@@ -93,170 +93,91 @@
 <span class="header-section-number">A.2</span> Table of symbols<a class="anchor" aria-label="anchor" href="#table-of-symbols"><i class="fas fa-link"></i></a>
 </h2>
 <div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:left;">
-symbol
-</th>
-<th style="text-align:left;">
-pronunciation
-</th>
-<th style="text-align:left;">
-definition
-</th>
+<colgroup>
+<col width="10%">
+<col width="10%">
+<col width="79%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">symbol</th>
+<th align="left">pronunciation</th>
+<th align="left">definition</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu\)</span>
-</td>
-<td style="text-align:left;">
-meeYU
-</td>
-<td style="text-align:left;">
-generally, a population mean; sometimes, a model intercept. <span class="math inline">\(\mu_x\)</span> represents the mean of x
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mu\)</span></td>
+<td align="left">meeYU</td>
+<td align="left">generally, a population mean; sometimes, a model intercept. <span class="math inline">\(\mu_x\)</span> represents the mean of x</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\sigma\)</span></td>
+<td align="left">sigma</td>
+<td align="left">lower case sigma is the standard deviation; <span class="math inline">\(\sigma_x\)</span> is the standard deviation of <span class="math inline">\(X\)</span>
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma\)</span>
-</td>
-<td style="text-align:left;">
-sigma
-</td>
-<td style="text-align:left;">
-lower case sigma is the standard deviation; <span class="math inline">\(\sigma_x\)</span> is the standard deviation of <span class="math inline">\(X\)</span>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sigma^2\)</span></td>
+<td align="left">sigma squared</td>
+<td align="left">variance</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\rho\)</span></td>
+<td align="left">row</td>
+<td align="left">population correlation; <span class="math inline">\(\rho_{xy}\)</span> is the correlation in the population between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma^2\)</span>
-</td>
-<td style="text-align:left;">
-sigma squared
-</td>
-<td style="text-align:left;">
-variance
+<tr class="odd">
+<td align="left"><span class="math inline">\(r\)</span></td>
+<td align="left">row</td>
+<td align="left">sample correlation; r_{xy} is the correlation in the sample between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\rho\)</span>
-</td>
-<td style="text-align:left;">
-row
-</td>
-<td style="text-align:left;">
-population correlation; <span class="math inline">\(\rho_{xy}\)</span> is the correlation in the population between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{\Sigma}\)</span></td>
+<td align="left">sigma</td>
+<td align="left">the capital letter sigma in boldface represents a variance-covariance matrix</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sum\)</span></td>
+<td align="left">sigma</td>
+<td align="left">upper case sigma is an instruction to add; e.g., <span class="math inline">\(\sum X_i\)</span> is the instruction to sum together all values of X.</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\beta\)</span></td>
+<td align="left">beta</td>
+<td align="left">regression coefficient</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sim\)</span></td>
+<td align="left">is distributed as</td>
+<td align="left">e.g., <span class="math inline">\(e \sim N\left(\mu, \sigma^2\right)\)</span> means that <span class="math inline">\(e\)</span> is distributed as a Normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math display">\[\sigma^2\]</span>
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(r\)</span>
-</td>
-<td style="text-align:left;">
-row
-</td>
-<td style="text-align:left;">
-sample correlation; r_{xy} is the correlation in the sample between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>
+<tr class="even">
+<td align="left"><span class="math inline">\(\gamma\)</span></td>
+<td align="left">gamma</td>
+<td align="left">fixed effects, correlation coefficients in a mixed-effects regression</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\tau\)</span></td>
+<td align="left">tau</td>
+<td align="left">by-subject variance component (random effects parameter) in a mixed-effects regression</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\omega\)</span></td>
+<td align="left">omega</td>
+<td align="left">by-stimulus variance component (random effects parameter) in a mixed-effects regression</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(S_{0s}\)</span></td>
+<td align="left">S sub zero S</td>
+<td align="left">by-subject random intercept effect for subject <span class="math inline">\(s\)</span>
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mathbf{\Sigma}\)</span>
-</td>
-<td style="text-align:left;">
-sigma
-</td>
-<td style="text-align:left;">
-the capital letter sigma in boldface represents a variance-covariance matrix
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\sum\)</span>
-</td>
-<td style="text-align:left;">
-sigma
-</td>
-<td style="text-align:left;">
-upper case sigma is an instruction to add; e.g., <span class="math inline">\(\sum X_i\)</span> is the instruction to sum together all values of X.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\beta\)</span>
-</td>
-<td style="text-align:left;">
-beta
-</td>
-<td style="text-align:left;">
-regression coefficient
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\sim\)</span>
-</td>
-<td style="text-align:left;">
-is distributed as
-</td>
-<td style="text-align:left;">
-e.g., <span class="math inline">\(e \sim N\left(\mu, \sigma^2\right)\)</span> means that <span class="math inline">\(e\)</span> is distributed as a Normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math display">\[\sigma^2\]</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\gamma\)</span>
-</td>
-<td style="text-align:left;">
-gamma
-</td>
-<td style="text-align:left;">
-fixed effects, correlation coefficients in a mixed-effects regression
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\tau\)</span>
-</td>
-<td style="text-align:left;">
-tau
-</td>
-<td style="text-align:left;">
-by-subject variance component (random effects parameter) in a mixed-effects regression
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\omega\)</span>
-</td>
-<td style="text-align:left;">
-omega
-</td>
-<td style="text-align:left;">
-by-stimulus variance component (random effects parameter) in a mixed-effects regression
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(S_{0s}\)</span>
-</td>
-<td style="text-align:left;">
-S sub zero S
-</td>
-<td style="text-align:left;">
-by-subject random intercept effect for subject <span class="math inline">\(s\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(S_{1s}\)</span>
-</td>
-<td style="text-align:left;">
-S sub one S
-</td>
-<td style="text-align:left;">
-by-subject random slope effect for subject <span class="math inline">\(s\)</span>
+<tr class="even">
+<td align="left"><span class="math inline">\(S_{1s}\)</span></td>
+<td align="left">S sub one S</td>
+<td align="left">by-subject random slope effect for subject <span class="math inline">\(s\)</span>
 </td>
 </tr>
 </tbody>
@@ -405,7 +326,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2023-11-29.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

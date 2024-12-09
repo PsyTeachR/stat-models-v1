@@ -29,7 +29,7 @@ where $X_i$ is the amount of sonic distraction.
 Let's simulate data for 100 participants as below with $\sigma = 80$, setting the seed before we begin.
 
 
-```r
+``` r
 library("tidyverse")
 set.seed(1031)
 
@@ -70,7 +70,7 @@ urban
 Let's plot the data we created, along with the line of best fit.
 
 
-```r
+``` r
 ggplot(urban, aes(dist_level, simple_rt)) + 
   geom_point(alpha = .2) +
   geom_smooth(method = "lm", se = FALSE)
@@ -90,7 +90,7 @@ Now let's simulate data for the rural group. We assume that these participants s
 $$Y_i = 500 + 3 X_i + e_i$$
 
 
-```r
+``` r
 b0_rural <- 500
 b1_rural <- 3
 
@@ -107,7 +107,7 @@ rural <- tibble(
 Now let's plot the data from the two groups side by side.
 
 
-```r
+``` r
 all_data <- bind_rows(urban, rural)
 
 ggplot(all_data %>% mutate(group = fct_relevel(group, "urban")), 
@@ -209,7 +209,7 @@ Generally, you will be interested in whether the slopes are the same or differen
 
 When the interaction term is statistically significant at some $\alpha$ level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., $H_0: \beta_3 = 0$), which implies the lines are not parallel in the population.
 
-However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
+However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
 
 The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see @Lakens_Scheel_Isager_2018 for a tutorial.
 
@@ -218,14 +218,14 @@ The best you can do to get evidence for the null hypothesis is to run what is ca
 We have already created the dataset `all_data` combining the simulated data for our two groups. The way we express our model using R formula syntax is `Y ~ X1 + X2 + X1:X2` where `X1:X2` tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut `Y ~ X1 * X2` which tells R to calculate all possible main effects and interactions.  First we'll add a dummy predictor to our model, storing the result in `all_data2`.
 
 
-```r
+``` r
 all_data2 <- all_data %>%
   mutate(grp = if_else(group == "rural", 1, 0))
 ```
 
 
 
-```r
+``` r
 sonic_mod <- lm(simple_rt ~ dist_level + grp + dist_level:grp,
                 all_data2)
 
@@ -318,7 +318,7 @@ Typically, factorial designs are given a tabular representation, showing all the
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:left;"> $B_1$ </th>
    <th style="text-align:left;"> $B_2$ </th>
   </tr>
@@ -342,7 +342,7 @@ A 3x2 design might be shown as follows.
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:left;"> $B_1$ </th>
    <th style="text-align:left;"> $B_2$ </th>
   </tr>
@@ -373,7 +373,7 @@ $$C_1$$
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:left;"> $B_1$ </th>
    <th style="text-align:left;"> $B_2$ </th>
   </tr>
@@ -397,7 +397,7 @@ $$C_2$$
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:left;"> $B_1$ </th>
    <th style="text-align:left;"> $B_2$ </th>
   </tr>
@@ -452,13 +452,13 @@ The reminder about populations and samples for categorical-by-continuous interac
 Below is a table of **cell means** and **marginal means**.  The cell means are the mean values of the dependent variable (mood) at each cell of the design. The marginal means (in the margins of the table) provide the means for each row and column.
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>(\#tab:scenario-a-means)*Scenario A, Table of Means.*</caption>
+<caption>(\#tab:scenario-a-means)(\#tab:scenario-a-means)*Scenario A, Table of Means.*</caption>
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:right;"> No CBT </th>
    <th style="text-align:right;"> CBT </th>
-   <th style="text-align:left;">    </th>
+   <th style="text-align:left;">  </th>
   </tr>
  </thead>
 <tbody>
@@ -497,13 +497,13 @@ Now we can also ask the following question: **did the effect of cognitive therap
 </div>
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>(\#tab:scenario-b-means)*Scenario B, Table of Means.*</caption>
+<caption>(\#tab:scenario-b-means)(\#tab:scenario-b-means)*Scenario B, Table of Means.*</caption>
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:right;"> No CBT </th>
    <th style="text-align:right;"> CBT </th>
-   <th style="text-align:left;">    </th>
+   <th style="text-align:left;">  </th>
   </tr>
  </thead>
 <tbody>
@@ -538,13 +538,13 @@ In this scenario, we also see that CBT improved mood (again, by 20 points), but 
 </div>
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>(\#tab:scenario-c-means)*Scenario C, Table of Means.*</caption>
+<caption>(\#tab:scenario-c-means)(\#tab:scenario-c-means)*Scenario C, Table of Means.*</caption>
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:right;"> No CBT </th>
    <th style="text-align:right;"> CBT </th>
-   <th style="text-align:left;">    </th>
+   <th style="text-align:left;">  </th>
   </tr>
  </thead>
 <tbody>
@@ -692,7 +692,7 @@ Note that the $Y$ variable with the dots in the subscripts are means of $Y$, tak
 
 ![](images/04-interactions_factorial_app.png)
 
-[Launch this web application](https://rstudio-connect.psy.gla.ac.uk/factorial){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
+[Launch this web application](https://talklab.psy.gla.ac.uk/app/factorial-site/){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
 
 ## Code your own categorical predictors in factorial designs
 
@@ -1245,7 +1245,7 @@ For deviation coding, the values must also sum to 0. Deviation coding is recomme
 Let's assume that your data is contained in a table `dat` like the one below.
 
 
-```r
+``` r
  ## create your own numeric predictors
  ## make an example table
  dat <- tibble(Y = rnorm(12),
@@ -1324,7 +1324,7 @@ Let's assume that your data is contained in a table `dat` like the one below.
 #### Treatment
 
 
-```r
+``` r
   ## examples of three level factors
   ## treatment coding
   dat_treat <- dat %>%
@@ -1362,7 +1362,7 @@ Let's assume that your data is contained in a table `dat` like the one below.
 #### Sum
 
 
-```r
+``` r
 ## sum coding
 dat_sum <- dat %>%
   mutate(A2v1 = case_when(A == "A1" ~ -1L, # baseline
@@ -1403,7 +1403,7 @@ dat_sum <- dat %>%
 #### Deviation
 
 
-```r
+``` r
 ## deviation coding
 ## baseline A1
 dat_dev <- dat %>%
@@ -1416,7 +1416,7 @@ dat_dev <- dat %>%
 
 
 
-```r
+``` r
 dat_dev
 ```
 

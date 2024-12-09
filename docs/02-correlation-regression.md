@@ -29,7 +29,7 @@ You can create a correlation matrix in R using `base::cor()` or `corrr::correlat
 Let's create a correlation matrix to see how it works. Start by loading in the packages we will need.
 
 
-```r
+``` r
 library("tidyverse")
 library("corrr")  # install.packages("corrr") in console if missing
 ```
@@ -37,7 +37,7 @@ library("corrr")  # install.packages("corrr") in console if missing
 We will use the `starwars` dataset, which is a built-in dataset that becomes available after you load the tidyverse package. This dataset has information about various characters that have appeared in the Star Wars film series. Let's look at the correlation between 
 
 
-```r
+``` r
 starwars %>%
   select(height, mass, birth_year) %>%
   correlate()
@@ -61,7 +61,7 @@ starwars %>%
 You can look up any bivariate correlation at the intersection of any given row or column. So the correlation between `height` and `mass` is .134, which you can find in row 1, column 2 or row 2, column 1; the values are the same. Note that there are only `choose(3, 2)` = 3 unique bivariate relationships, but each appears twice in the table. We might want to show only the unique pairs. We can do this by appending `corrr::shave()` to our pipeline.
 
 
-```r
+``` r
 starwars %>%
   select(height, mass, birth_year) %>%
   correlate() %>%
@@ -86,7 +86,7 @@ starwars %>%
 Now we've only got the lower triangle of the correlation matrix, but the `NA` values are ugly and so are the leading zeroes. The **`corrr`** package also provides the `fashion()` function that cleans things up (see `?corrr::fashion` for more options).
 
 
-```r
+``` r
 starwars %>%
   select(height, mass, birth_year) %>%
   correlate() %>%
@@ -110,7 +110,7 @@ starwars %>%
 Correlations only provide a good description of the relationship if the relationship is (roughly) linear and there aren't severe outliers that are wielding too strong of an influence on the results. So it is always a good idea to visualize the correlations as well as to quantify them.  The `base::pairs()` function does this. The first argument to `pairs()` is simply of the form `~ v1 + v2 + v3 + ... + vn` where `v1`, `v2`, etc. are the names of the variables you want to correlate.
 
 
-```r
+``` r
 pairs(~ height + mass + birth_year, starwars)
 ```
 
@@ -122,7 +122,7 @@ pairs(~ height + mass + birth_year, starwars)
 We can see that there is a big outlier influencing our data; in particular, there is a creature with a mass greater than 1200kg! Let's find out who this is and eliminate them from the dataset.
 
 
-```r
+``` r
 starwars %>%
   filter(mass > 1200) %>%
   select(name, mass, height, birth_year)
@@ -138,7 +138,7 @@ starwars %>%
 OK, let's see how the data look without this massive creature.
 
 
-```r
+``` r
 starwars2 <- starwars %>%
   filter(name != "Jabba Desilijic Tiure")
 
@@ -153,7 +153,7 @@ pairs(~height + mass + birth_year, starwars2)
 Better, but there's a creature with an outlying birth year that we might want to get rid of.
 
 
-```r
+``` r
 starwars2 %>%
   filter(birth_year > 800) %>%
   select(name, height, mass, birth_year)
@@ -169,7 +169,7 @@ starwars2 %>%
 It's Yoda. He's as old as the universe. Let's drop him and see how the plots look.
 
 
-```r
+``` r
 starwars3 <- starwars2 %>%
   filter(name != "Yoda")
 
@@ -184,7 +184,7 @@ pairs(~height + mass + birth_year, starwars3)
 That looks much better. Let's see how that changes our correlation matrix.
 
 
-```r
+``` r
 starwars3 %>%
   select(height, mass, birth_year) %>%
   correlate() %>%
@@ -210,7 +210,7 @@ Note that these values are quite different from the ones we started with.
 Sometimes it's not a great idea to remove outliers. Another approach to dealing with outliers is to use a robust method. The default correlation coefficient that is computed by `corrr::correlate()` is the Pearson product-moment correlation coefficient. You can also compute the Spearman correlation coefficient by changing the `method()` argument to `correlate()`. This replaces the values with ranks before computing the correlation, so that outliers will still be included, but will have dramatically less influence.
 
 
-```r
+``` r
 starwars %>%
   select(height, mass, birth_year) %>%
   correlate(method = "spearman") %>%
@@ -234,7 +234,7 @@ starwars %>%
 Incidentally, if you are generating a report from R Markdown and want your tables to be nicely formatted you can use `knitr::kable()`.
 
 
-```r
+``` r
 starwars %>%
   select(height, mass, birth_year) %>%
   correlate(method = "spearman") %>%
@@ -243,36 +243,13 @@ starwars %>%
   knitr::kable()
 ```
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> height </th>
-   <th style="text-align:left;"> mass </th>
-   <th style="text-align:left;"> birth_year </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> height </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> mass </td>
-   <td style="text-align:left;"> .72 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> birth_year </td>
-   <td style="text-align:left;"> .15 </td>
-   <td style="text-align:left;"> .15 </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-</tbody>
-</table>
+
+
+|term       |height |mass |birth_year |
+|:----------|:------|:----|:----------|
+|height     |       |     |           |
+|mass       |.72    |     |           |
+|birth_year |.15    |.15  |           |
 
 ## Simulating bivariate data
 
@@ -350,7 +327,7 @@ Let's start by simulating data representing hypothetical humans and their height
 I found some data [here](https://www.geogebra.org/m/RRprACv4) which I converted into a CSV file. If you want to follow along, download the file [heights_and_weights.csv](data/heights_and_weights.csv){download="heights_and_weights.csv"}. Here's how the scatterplot looks:
 
 
-```r
+``` r
 handw <- read_csv("data/heights_and_weights.csv", col_types = "dd")
 
 ggplot(handw, aes(height_in, weight_lbs)) + 
@@ -366,7 +343,7 @@ ggplot(handw, aes(height_in, weight_lbs)) +
 Now, that's not quite a linear relationship. We can make it into one by log transforming each of the variables first.
 
 
-```r
+``` r
 handw_log <- handw %>%
   mutate(hlog = log(height_in),
          wlog = log(weight_lbs))
@@ -414,14 +391,14 @@ OK, how do we form `Sigma` in R so that we can pass it to the `mvrnorm()` functi
 First let's define our covariance and store it in the variable `my_cov`.
 
 
-```r
+``` r
 my_cov <- .96 * .26 * .65
 ```
 
 Now we'll use `matrix()` to define our `Sigma`, `my_Sigma`.
 
 
-```r
+``` r
 my_Sigma <- matrix(c(.26^2, my_cov, my_cov, .65^2), ncol = 2)
 my_Sigma
 ```
@@ -444,7 +421,7 @@ my_Sigma
 Great. Now that we've got `my_Sigma`, we're ready to use `MASS::mvrnorm()`. Let's test it out by creating 6 synthetic humans.
 
 
-```r
+``` r
 set.seed(62) # for reproducibility
 
 # passing the *named* vector c(height = 4.11, weight = 4.74)
@@ -469,7 +446,7 @@ log_ht_wt
 So `MASS::mvrnorm()` returns a matrix with a row for each simulated human, with the first column representing the log height and the second column representing the log weight.  But log heights and log weights are not very useful to us, so let's transform them back by using `exp()`, which is the inverse of the `log()` transform.
 
 
-```r
+``` r
 exp(log_ht_wt)
 ```
 
@@ -488,7 +465,7 @@ So our first simulated human is 70.4 inches tall (about 5'5" or X) and weighs 19
 OK, let's randomly generate a bunch of humans, transform them from log to inches and pounds, and plot them against our original data to see how we're doing.
 
 
-```r
+``` r
 ## simulate new humans
 new_humans <- MASS::mvrnorm(500, 
                             c(height_in = 4.11, weight_lbs = 4.74),
@@ -534,7 +511,7 @@ Given the estimates above for log height and weight, can you solve for $\beta_1$
 <!-- TODO make this use webex -->
 
 
-```r
+``` r
 b1 <- .96 * (.65 / .26)
 b1
 ```
@@ -563,7 +540,7 @@ $$Y_i =  -5.124 + 2.4X_i + e_i.$$
 To check our results, let's first run a regression on the log-transformed data using `lm()`, which estimates parameters using ordinary least squares regression.
 
 
-```r
+``` r
 summary(lm(wlog ~ hlog, handw_log))
 ```
 
@@ -593,7 +570,7 @@ Looks pretty close. The reason that it doesn't match exactly is only because we'
 As another check, let's superimpose the regression line we computed by hand on the scatterplot of the log-transformed data.
 
 
-```r
+``` r
 ggplot(handw_log, aes(hlog, wlog)) +
   geom_point(alpha = .2) +
   labs(x = "log(height)", y = "log(weight)") +
@@ -616,5 +593,4 @@ To close, here are a few implications from the relationship between correlation 
 
 ## Exercises
 
-<iframe src="https://rstudio-connect.psy.gla.ac.uk/covariance/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
-
+<iframe src="https://talklab.psy.gla.ac.uk/app/covariance-site/?showcase=0" width="530px" height="480px" data-external="1"></iframe>

@@ -41,7 +41,7 @@ where $Y_i$ is the measured value of the dependent variable for observation $i$,
 
 <div class='webex-solution'><button>See the R code to make the plot</button>
 
-```r
+``` r
 library("tidyverse") # if needed
 
 set.seed(62)
@@ -123,14 +123,14 @@ Data simulation inverts this process. You to define the parameters of a model re
 Let's look at an example. Let's assume you are interested in the question of whether being a parent of a toddler 'sharpens' your reflexes. If you've ever taken care of a toddler, you know that physical danger always seems imminent—they could fall of the chair they just climbed on, slam their finger in a door, bang their head on the corner of a table, etc.—so you need to be attentive and ready to act fast. You hypothesize that this vigilance will translate into faster response times in other situations where a toddler is not around, such as in a psychological laboratory. So you recruit a set of parents of toddlers to come into the lab. You give each parent the task of pressing a button as quickly as possible in response to a flashing light, and measure their response time (in milliseconds). For each parent, you calculate their mean response time over all trials. We can simulate the mean response time for each of say, 50 parents using the `rnorm()` function in R. But before we do that, we will load in the packages that we need (tidyverse) and set the <a class='glossary' target='_blank' title='A value used to set the initial state of a random number generator.' href='https://psyteachr.github.io/glossary/r#random-seed'>random seed</a> to make sure that you (the reader) get the same random values as me (the author).
 
 
-```r
+``` r
 library("tidyverse")
 
 set.seed(2021)  # can be any arbitrary integer
 ```
 
 
-```r
+``` r
 parents <- rnorm(n = 50, mean = 480, sd = 40)
 ```
 
@@ -150,14 +150,14 @@ We chose to generate the data using `rnorm()`—a function that generates random
 But of course, to test our hypothesis, we need a comparison group, so we define a control group of non-parents. We generate data from this control group in the same way as above, but changing the mean.
 
 
-```r
+``` r
 control <- rnorm(n = 50, mean = 500, sd = 40)
 ```
 
 Let's put them into a <a class='glossary' target='_blank' title='A container for tabular data with some different properties to a data frame' href='https://psyteachr.github.io/glossary/t#tibble'>tibble</a> to make it easier to plot and analyze the data. Each row from this table represents the mean response time from a particular subject.
 
 
-```r
+``` r
 dat <- tibble(group = rep(c("parent", "control"), each = 50),
               rt = c(parents, control))
 
