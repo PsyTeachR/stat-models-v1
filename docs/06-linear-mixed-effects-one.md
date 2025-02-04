@@ -23,11 +23,11 @@ By the end of this chapter, you should:
 To decide which of the four regression functions to use, you need to be able to answer two questions.
 
 1. What type of data does the dependent variable represent and how is it distributed?
-2. Is the data <a class='glossary' target='_blank' title='(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli).' href='https://psyteachr.github.io/glossary/m#multilevel'>multilevel</a> or single level?
+2. Is the data <a class='glossary'>multilevel<span class='def'></span></a> or single level?
 
 Arguments to these functions are highly similar across all four versions.  We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but the principles will generalize to those other types of data.
 
-Here is a comparison chart for single-level data (data where you don't have <a class='glossary' target='_blank' title='A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units.' href='https://psyteachr.github.io/glossary/r#repeated-measures'>repeated-measures</a>):
+Here is a comparison chart for single-level data (data where you don't have <a class='glossary'>repeated-measures<span class='def'></span></a>):
 
 
 |test                       |conventional approach |regression approach     |
@@ -68,7 +68,7 @@ One of the main selling points of the general linear models / regression framewo
 
 Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition).  You have 7 participants in each of the two groups. Note that you would need more than this for a real study.
 
-This [web app](https://talklab.psy.gla.ac.uk/app/icc-site/){target="_blank"} presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!
+This [web app](https://dalejbarr.github.io/statistical-models-web-apps/icc-site/){target="_blank"} presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!
 
 If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as `independent_samples.csv`).
 

@@ -36,10 +36,10 @@ Then you sample a set of four participants to perform the soothing ratings. Agai
 
 | subject_id| age|date       |
 |----------:|---:|:----------|
-|          1|  24|2020-05-03 |
-|          2|  34|2020-05-11 |
-|          3|  71|2020-05-15 |
-|          4|  51|2020-05-20 |
+|          1|  52|2020-05-23 |
+|          2|  56|2020-05-24 |
+|          3|  54|2020-05-24 |
+|          4|  30|2020-05-26 |
 
 Now, because each subject has given a "soothingness" rating for each picture, you'd have a full dataset consisting of all of the levels of `subject_id` crossed with all of the levels of `stimulus_id`. This is what we mean when we talk about "crossed random factors." You can create the table containing all these combinations with the `crossing()` function from `tidyr` (which is loaded when you load in `tidyverse`).
 
@@ -418,7 +418,7 @@ For more technical details about convergence problems and what to do, see `?lme4
 
 ## Simulating data with crossed random factors
 
-For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://talklab.psy.gla.ac.uk/app/crossed-site/){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
+For these exercises, we will generate simulated data corresponding to an experiment with a single, two-level factor (independent variable) that is within-subjects and between-items.  Let's imagine that the experiment involves lexical decisions to a set of words (e.g., is "PINT" a word or nonword?), and the dependent variable is response time (in milliseconds), and the independent variable is word type (noun vs verb).  We want to treat both subjects and words as random factors (so that we can generalize to the population of events where subjects encounter words).  You can play around with the web app (or [click here to open it in a new window](https://dalejbarr.github.io/statistical-models-web-apps/crossed-site/){target="_blank"}), which allows you to manipulate the data-generating parameters and see their effect on the data.
 
 By now, you should have all the pieces of the puzzle that you need to simulate data from a study with crossed random effects. @Debruine_Barr_2020 provides a more detailed, step-by-step walkthrough of the exercise below.
 

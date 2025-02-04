@@ -7,7 +7,7 @@
 <title>Overview | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="Textbook on statistical models for social scientists.">
-<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Overview | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1">
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -30,6 +30,28 @@
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 <link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
@@ -75,7 +97,7 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="overview" class="section level1 unnumbered" number="">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="overview" class="section level1 unnumbered">
 <h1>Overview<a class="anchor" aria-label="anchor" href="#overview"><i class="fas fa-link"></i></a>
 </h1>
 <p>This textbook approaches statistical analysis through the General Linear Model, taking a simulation-based approach in the R software environment. The overarching goal is to teach students how to translate a description of the design of a study into a linear model to analyze data from that study. The focus is on the skills needed to analyze data from psychology experiments.</p>
@@ -93,17 +115,17 @@
 </ul>
 <p>The material in this course forms the basis for a one-semester course for third-year undergradautes taught by <a href="">Dale Barr</a> at the <a href="">University of Glasgow School of Psychology</a>. It is part of the <a href="https://psyteachr.github.io">PsyTeachR series of course materials</a> developed by University of Glasgow Psychology staff.</p>
 <p>Unlike other textbooks you may have encountered, this is an <strong>interactive textbook</strong>. Each chapter contains embedded exercises as well as web applications to help students better understand the content. The interactive content will only work if you access this material through a web browser. Printing out the material is not recommended. If you want to access the textbook without an internet connection or have a local version to keep in case this site changes or moves, you can <a href="offline-textbook.zip">download a version for offline use</a>. Just extract the files from the ZIP archive, locate the file <code>index.html</code> in the <code>docs</code> directory, and open this file using a web browser.</p>
-<div id="how-to-cite-this-book" class="section level2 unnumbered" number="">
+<div id="how-to-cite-this-book" class="section level2 unnumbered">
 <h2>How to cite this book<a class="anchor" aria-label="anchor" href="#how-to-cite-this-book"><i class="fas fa-link"></i></a>
 </h2>
 <p>Barr, Dale J. (2021). <em>Learning statistical models through simulation in R: An interactive textbook</em>. Version 1.0.0. Retrieved from <a href="https://psyteachr.github.io/stat-models-v1" class="uri">https://psyteachr.github.io/stat-models-v1</a>.</p>
 </div>
-<div id="found-an-issue" class="section level2 unnumbered" number="">
+<div id="found-an-issue" class="section level2 unnumbered">
 <h2>Found an issue?<a class="anchor" aria-label="anchor" href="#found-an-issue"><i class="fas fa-link"></i></a>
 </h2>
 <p>If you find errors or typos, have questions or suggestions, please file an issue at <a href="https://github.com/psyteachr/stat-models-v1/issues" class="uri">https://github.com/psyteachr/stat-models-v1/issues</a>. Thanks!</p>
 </div>
-<div id="information-for-educators" class="section level2 unnumbered" number="">
+<div id="information-for-educators" class="section level2 unnumbered">
 <h2>Information for educators<a class="anchor" aria-label="anchor" href="#information-for-educators"><i class="fas fa-link"></i></a>
 </h2>
 <p>You are free to re-use and modify the material in this textbook for your own purposes, with the stipulation that you cite the original work. Please note additional terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons CC-BY-SA 4.0 license</a> governing re-use of this material.</p>
@@ -254,7 +276,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2025-02-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

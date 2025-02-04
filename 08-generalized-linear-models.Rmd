@@ -151,8 +151,8 @@ $$np(1 - p).$$
 
 The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.
 
-```{r logit-app, echo=FALSE, fig.cap="**Logistic regression web app** <https://talklab.psy.gla.ac.uk/app/logit-site/>"}
-knitr::include_app("https://talklab.psy.gla.ac.uk/app/logit-site/", "800px")
+```{r logit-app, echo=FALSE, fig.cap="**Logistic regression web app** <https://dalejbarr.github.io/statistical-models-web-apps/logit-site/>"}
+knitr::include_app("https://dalejbarr.github.io/logit-site/", "800px")
 ```
 
 ### Estimating logistic regression models in R
