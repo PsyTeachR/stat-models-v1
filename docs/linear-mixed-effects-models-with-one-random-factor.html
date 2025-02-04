@@ -7,7 +7,7 @@
 <title>Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="6.1 When, and why, would you want to replace conventional analyses with linear mixed-effects modeling? We have repeatedly emphasized how many common techniques in psychology can be seen as special...">
-<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Linear mixed-effects models with one random factor | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/linear-mixed-effects-models-with-one-random-factor.html">
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -30,6 +30,28 @@
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 <link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
@@ -133,11 +155,16 @@
 <p>To decide which of the four regression functions to use, you need to be able to answer two questions.</p>
 <ol style="list-style-type: decimal">
 <li>What type of data does the dependent variable represent and how is it distributed?</li>
-<li>Is the data <a class="glossary" target="_blank" title="(or multi-level) Relating to datasets where there are multiple observations taken on the same variable on the same sampling units (usually subjects or stimuli)." href="https://psyteachr.github.io/glossary/m#multilevel">multilevel</a> or single level?</li>
+<li>Is the data <a class="glossary">multilevel<span class="def"></span></a> or single level?</li>
 </ol>
 <p>Arguments to these functions are highly similar across all four versions. We will learn about analyzing count and categorical data later in this course. For now, we will focus on continuous data, but the principles will generalize to those other types of data.</p>
-<p>Here is a comparison chart for single-level data (data where you don't have <a class="glossary" target="_blank" title="A dataset has repeated measures if there are multiple measurements taken on the same variable for individual sampling units." href="https://psyteachr.github.io/glossary/r#repeated-measures">repeated-measures</a>):</p>
+<p>Here is a comparison chart for single-level data (data where you don't have <a class="glossary">repeated-measures<span class="def"></span></a>):</p>
 <div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="36%">
+<col width="30%">
+<col width="32%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">test</th>
 <th align="left">conventional approach</th>
@@ -234,7 +261,7 @@
 <span class="header-section-number">6.2</span> Example: Independent-samples <span class="math inline">\(t\)</span>-test on multi-level data<a class="anchor" aria-label="anchor" href="#example-independent-samples-t-test-on-multi-level-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let's consider a situation where you are testing the effect of alcohol consumption on simple reaction time (e.g., press a button as fast as you can after a light appears). To keep it simple, let's assume that you have collected data from 14 participants randomly assigned to perform a set of 10 simple RT trials after one of two interventions: drinking a pint of alcohol (treatment condition) or a placebo drink (placebo condition). You have 7 participants in each of the two groups. Note that you would need more than this for a real study.</p>
-<p>This <a href="https://talklab.psy.gla.ac.uk/app/icc-site/" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
+<p>This <a href="https://dalejbarr.github.io/statistical-models-web-apps/icc-site/" target="_blank">web app</a> presents simulated data from such a study. Subjects P01-P07 are from the placebo condition, while subjects T01-T07 are from the treatment condition. Please stop and have a look!</p>
 <p>If we were going to run a t-test on these data, we would first need to calculate subject means, because otherwise the observations are not independent. You could do this as follows. (If you want to run the code below, you can download sample data from the web app above and save it as <code>independent_samples.csv</code>).</p>
 <div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
@@ -292,7 +319,7 @@ Y_{st} = \beta_{0s} + \beta_{1} X_{s} + e_{st}
 \end{equation}\]</span></p>
 <p><em>Variance Components:</em></p>
 <p><span class="math display">\[\begin{equation}
-S_{0s} \sim N\left(0, {\tau_{00}}^2\right) 
+S_{0s} \sim N\left(0, {\tau_{00}}^2\right)
 \end{equation}\]</span></p>
 <p><span class="math display">\[\begin{equation}
 e_{st} \sim N\left(0, \sigma^2\right)
@@ -364,7 +391,7 @@ Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
 <h2>
 <span class="header-section-number">6.3</span> Expressing the study design and performing tests in regression<a class="anchor" aria-label="anchor" href="#expressing-the-study-design-and-performing-tests-in-regression"><i class="fas fa-link"></i></a>
 </h2>
-<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(Luke, <a href="bibliography.html#ref-Luke_2017" role="doc-biblioref">2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
+<p>In order to reproduce all of the t-test/ANOVA-style analyses in linear mixed-effects models, you'll need to better understand two things: (1) how to express your study design in a regression formula, and (2) how to get p-values for any tests you perform. The latter part is not obvious within the linear mixed-effects approach, since in many circumstances, the output of <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> does not give you p-values by default, reflecting the fact that there are multiple options for deriving them <span class="citation">(<a href="bibliography.html#ref-Luke_2017">Luke, 2017</a>)</span>. Or, you might get p-values for individual regression coefficients, but the test you want to perform is a composite one where you need to test multiple parameters simultaneously.</p>
 <p>First, let's take a closer look at the regression formula syntax in R and <strong><code>lme4</code></strong>. For the regression model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span> with by-subject random effects you'd have:</p>
 <p><code>y ~ 1 + x1 + x2 + ... + xm + (1 + x1 + ... | subject)</code></p>
 <p>The residual term is implied and so not mentioned; only the predictors. The left side (before the tilde <code>~</code>) specifies the response variable, the right side has the predictor variables. The term in brackets, <code>(... | ...)</code>, is specific to <strong><code>lme4</code></strong>. The right side of the vertical bar <code>|</code> specifies the name of a variable (in this case, <code>subject</code>) that codes the levels of the random factor. The left side specifies what regression coefficients you want to allow to vary over those levels. The <code>1</code> at the start of the formula specifies that you want an intercept, which is included by default anyway, and so can be omitted. The <code>1</code> within the bracket specifies a <strong>random intercept</strong>, which is also included by default; the predictor variables mentioned inside the brackets specify <strong>random slopes</strong>. So you could write the above formula equivalently as:</p>
@@ -707,7 +734,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2025-02-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

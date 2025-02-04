@@ -7,7 +7,7 @@
 <title>Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="2.1 Correlation matrices You may be familiar with the concept of a correlation matrix from reading papers in psychology. Correlation matrices are a common way of summarizing relationships between...">
-<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Correlation and regression | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/correlation-and-regression.html">
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -30,6 +30,28 @@
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 <link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
@@ -95,11 +117,17 @@ Figure 2.1: Different types of bivariate relationships.
 <p>If you have <span class="math inline">\(n\)</span> measures, how many pairwise correlations can you compute? You can figure this out either by the formula in the info box below, or more easily you can computed it directly through the <code>choose(n, 2)</code> function in R. For instance, to get the number of possible pairwise correlations between 6 measures, you'd type <code>choose(6, 2)</code>, which tells you that you have 15 combinations.</p>
 <div class="info">
 <p>
-For any <span class="math inline"><span class="math inline">\(n\)</span></span> measures, you can calculate <span class="math inline"><span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span></span> pairwise correlations between measures. The <span class="math inline"><span class="math inline">\(!\)</span></span> symbol is called the <strong>factorial</strong> operator, defined as the product of all numbers from 1 to <span class="math inline"><span class="math inline">\(n\)</span></span>. So, if you have six measurements, you have
+For any <span class="math inline"><span class="math inline">\(n\)</span></span> measures, you can
+calculate <span class="math inline"><span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span></span>
+pairwise correlations between measures. The <span class="math inline"><span class="math inline">\(!\)</span></span> symbol is called the
+<strong>factorial</strong> operator, defined as the product of all
+numbers from 1 to <span class="math inline"><span class="math inline">\(n\)</span></span>. So, if you
+have six measurements, you have
 </p>
 <p>
 <span class="math display"><span class="math display">\[
-\frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times 6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
+\frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times
+6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
 \]</span></span>
 </p>
 </div>
@@ -277,13 +305,33 @@ Figure 2.4: Pairwise correlations for the starwars dataset after removing outlyi
 <p>The package <strong><code>MASS</code></strong> provides a function <code>mvrnorm()</code> which is the 'multivariate' version of rnorm (hence the function name, <code>mv</code> + <code>rnorm</code>, which makes it easy to remember.</p>
 <div class="watchout">
 <p>
-The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you’ll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>, it is preferable to use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don’t play well together, due to both packages having the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you’ll end up getting the <strong><code>MASS</code></strong> version of <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code> without loading <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>.
+The <strong><code>MASS</code></strong> package comes pre-installed
+with R. But the only function you’ll probably ever want to use from
+<strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather
+than load in the package using <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>, it is
+preferable to use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>, especially as
+<strong><code>MASS</code></strong> and the
+<strong><code>dplyr</code></strong> package from
+<strong><code>tidyverse</code></strong> don’t play well together, due to
+both packages having the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>. So if you load
+in <strong><code>MASS</code></strong> after you load in
+<strong><code>tidyverse</code></strong>, you’ll end up getting the
+<strong><code>MASS</code></strong> version of <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>
+instead of the <strong><code>dplyr</code></strong> version. It will do
+your head in trying to figure out what is wrong with your code, so
+always use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code> without loading
+<code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>.
 </p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
-MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the ass. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>
+MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the
+ass.
+<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>
+<a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>
 </p>
-— Dale Barr (<span class="citation">(<span class="citeproc-not-found" data-reference-id="dalejbarr"><strong>???</strong></span>)</span>) <a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September 30, 2014</a>
+— Dale Barr (<span class="citation">(<a href="#ref-dalejbarr"><strong>dalejbarr?</strong></a>)</span>)
+<a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September
+30, 2014</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
@@ -405,16 +453,24 @@ Figure 2.6: Log transformed heights and weights.
 Confused about the <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> function?
 </p>
 <p>
-The first argument is a vector of values, which we created above using <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. The <code>ncol</code> argument specifies how many columns the matrix should have. There is also an <code>nrow</code> argument that you could use, but if you give it one of the dimensions, it can infer the size of the other using the length of the vector supplied as the first argument.
+The first argument is a vector of values, which we created above
+using <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. The <code>ncol</code> argument specifies how
+many columns the matrix should have. There is also an <code>nrow</code>
+argument that you could use, but if you give it one of the dimensions,
+it can infer the size of the other using the length of the vector
+supplied as the first argument.
 </p>
 <p>
-You can see that <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> fills in the elements of the matrix column by column, rather than row by row by running the following code:
+You can see that <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> fills in the elements of the
+matrix column by column, rather than row by row by running the following
+code:
 </p>
 <p>
 <code>matrix(c("a", "b", "c", "d"), ncol = 2)</code>
 </p>
 <p>
-If you want to change this behavior, set the <code>byrow</code> argument to <code>TRUE</code>.
+If you want to change this behavior, set the <code>byrow</code>
+argument to <code>TRUE</code>.
 </p>
 <p>
 <code>matrix(c("a", "b", "c", "d"), ncol = 2, byrow = TRUE)</code>
@@ -550,7 +606,7 @@ Figure 2.8: Log transformed values with superimposed regression line.
 <h2>
 <span class="header-section-number">2.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
 </h2>
-<iframe src="https://talklab.psy.gla.ac.uk/app/covariance-site/?showcase=0" width="530px" height="480px" data-external="1">
+<iframe src="https://dalejbarr.github.io/statistical-models-web-apps/covariance-site/?showcase=0" width="530px" height="480px" data-external="1">
 </iframe>
 
 </div>
@@ -699,7 +755,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2025-02-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

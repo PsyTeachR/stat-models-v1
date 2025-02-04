@@ -7,7 +7,7 @@
 <title>Chapter 4 Interactions | Learning Statistical Models Through Simulation in R</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="Up to now, we've been focusing on estimating and interpreting the effect of a variable or linear combination of predictor variables on a response variable. However, there are often situations...">
-<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Interactions | Learning Statistical Models Through Simulation in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://psyteachr.github.io/stat-models-v1/interactions.html">
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://psyteachr.github.io/stat-models-v1/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -30,6 +30,28 @@
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 <link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
@@ -232,11 +254,11 @@ Figure 4.2: <em>Effect of sonic distraction on simple RT for urban and rural par
 <p>How do we estimate the regression coefficients in R. Let's say we wanted to test the hypothesis that the slopes for the two lines are different. Note that this just amounts to testing the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>, because <span class="math inline">\(\beta_3\)</span> is our slope offset. If this parameter is zero, that means there is a single slope for both groups (although they can have different intercepts). In other words, that means the two slopes are <strong>parallel</strong>. If it is non-zero, that means that the two groups have different slopes; that is, the two slopes are <strong>not parallel</strong>.</p>
 <div class="warning">
 <p><strong>Parallel lines in the sample versus in the population</strong></p>
-<p>I just said that two non-parallel lines mean there is an <em>interaction</em> between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class="glossary" target="_blank" title="All members of a group that we wish to generalise our findings to. E.g. all students taking Psychology at the University of Glasgow. We draw our testing sample from the population." href="https://psyteachr.github.io/glossary/p#population">population</a>. Whether or not they are parallel in the <a class="glossary" target="_blank" title="A subset of the population that you wish to make an inference about through your test." href="https://psyteachr.github.io/glossary/s#sample">sample</a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small.</p>
+<p>I just said that two non-parallel lines mean there is an <em>interaction</em> between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class="glossary">population<span class="def"></span></a>. Whether or not they are parallel in the <a class="glossary">sample<span class="def"></span></a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small.</p>
 <p>Generally, you will be interested in whether the slopes are the same or different in the population, not in the sample. For this reason, you can't just look at a graph of sample data and reason, "the lines are not parallel and so there must be an interaction", or vice versa, "the lines look parallel, so there is no interaction." You must run an inferential statistical test.</p>
 <p>When the interaction term is statistically significant at some <span class="math inline">\(\alpha\)</span> level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., <span class="math inline">\(H_0: \beta_3 = 0\)</span>), which implies the lines are not parallel in the population.</p>
-<p>However, a non-significant interaction does <em>not</em> necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class="glossary" target="_blank" title="The probability of rejecting the null hypothesis when it is false." href="https://psyteachr.github.io/glossary/p#power">power</a> to detect the difference.</p>
-<p>The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see <span class="citation">Lakens et al. (<a href="bibliography.html#ref-Lakens_Scheel_Isager_2018" role="doc-biblioref">2018</a>)</span> for a tutorial.</p>
+<p>However, a non-significant interaction does <em>not</em> necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class="glossary">power<span class="def"></span></a> to detect the difference.</p>
+<p>The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see <span class="citation">Lakens et al. (<a href="bibliography.html#ref-Lakens_Scheel_Isager_2018">2018</a>)</span> for a tutorial.</p>
 </div>
 <p>We have already created the dataset <code>all_data</code> combining the simulated data for our two groups. The way we express our model using R formula syntax is <code>Y ~ X1 + X2 + X1:X2</code> where <code>X1:X2</code> tells R to create a predictor that is the product of predictors X1 and X2. There is a shortcut <code>Y ~ X1 * X2</code> which tells R to calculate all possible main effects and interactions. First we'll add a dummy predictor to our model, storing the result in <code>all_data2</code>.</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
@@ -496,7 +518,7 @@ Show answers
 <div class="warning">
 <p>The reminder about populations and samples for categorical-by-continuous interactions also applies here. Except when simulating data, you will almost <strong>never</strong> know the true means of any population that you are studying. Below, we're talking about the hypothetical situation where you actually know the population means and can draw conclusions without any statistical tests. Any real sample means you look at will include sampling and measurement error, and any inferences you'd make would depend on the outcome of statistical tests, rather than the observed pattern of means.</p>
 </div>
-<div id="scenario-a" class="section level4 unnumbered" number="">
+<div id="scenario-a" class="section level4 unnumbered">
 <h4>Scenario A<a class="anchor" aria-label="anchor" href="#scenario-a"><i class="fas fa-link"></i></a>
 </h4>
 <div class="figure" style="text-align: center">
@@ -569,7 +591,7 @@ Drug
 <p>Likewise, people who got anti-depressants showed enhanced mood (70; mean of row 2) relative to people who got the placebo (50; mean of row 1).</p>
 <p>Now we can also ask the following question: <strong>did the effect of cognitive therapy depend on whether or not the patient was simultaneously receiving drug therapy</strong>? The answer to this, is no. To see why, note that for the Placebo group (Row 1), cognitive therapy increased mood by 20 points (from 40 to 60). But this was the same for the Drug group: there was an increase of 20 points from 60 to 80. So, no evidence that the effect of one factor on mood depends on the other.</p>
 </div>
-<div id="scenario-b" class="section level4 unnumbered" number="">
+<div id="scenario-b" class="section level4 unnumbered">
 <h4>Scenario B<a class="anchor" aria-label="anchor" href="#scenario-b"><i class="fas fa-link"></i></a>
 </h4>
 <div class="figure" style="text-align: center">
@@ -639,7 +661,7 @@ Drug
 </table></div>
 <p>In this scenario, we also see that CBT improved mood (again, by 20 points), but there was no effect of Drug Therapy (equal marginal means of 50 for row 1 and row 2). We can also see here that the effect of CBT also didn't depend upon Drug therapy; there is an increase of 20 points in each row.</p>
 </div>
-<div id="scenario-c" class="section level4 unnumbered" number="">
+<div id="scenario-c" class="section level4 unnumbered">
 <h4>Scenario C<a class="anchor" aria-label="anchor" href="#scenario-c"><i class="fas fa-link"></i></a>
 </h4>
 <div class="figure" style="text-align: center">
@@ -805,18 +827,18 @@ Comparing the significance of the simple effects is **not the same** as testing 
 <pre><code>## # A tibble: 12 × 9
 ##        Y     i     j     k    mu   A_i   B_j AB_ij   err
 ##    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
-##  1    11     1     1     1    10     4    -2    -1     0
-##  2    14     1     1     2    10     4    -2    -1     3
-##  3     8     1     1     3    10     4    -2    -1    -3
-##  4    17     1     2     1    10     4     2     1     0
-##  5    15     1     2     2    10     4     2     1    -2
-##  6    19     1     2     3    10     4     2     1     2
-##  7     8     2     1     1    10    -4    -2     1     3
-##  8     4     2     1     2    10    -4    -2     1    -1
-##  9     3     2     1     3    10    -4    -2     1    -2
-## 10    10     2     2     1    10    -4     2    -1     3
-## 11     7     2     2     2    10    -4     2    -1     0
-## 12     4     2     2     3    10    -4     2    -1    -3</code></pre>
+##  1    14     1     1     1    10     4    -2    -1     3
+##  2     8     1     1     2    10     4    -2    -1    -3
+##  3    11     1     1     3    10     4    -2    -1     0
+##  4    14     1     2     1    10     4     2     1    -3
+##  5    16     1     2     2    10     4     2     1    -1
+##  6    21     1     2     3    10     4     2     1     4
+##  7     2     2     1     1    10    -4    -2     1    -3
+##  8     8     2     1     2    10    -4    -2     1     3
+##  9     5     2     1     3    10    -4    -2     1     0
+## 10     7     2     2     1    10    -4     2    -1     0
+## 11     8     2     2     2    10    -4     2    -1     1
+## 12     6     2     2     3    10    -4     2    -1    -1</code></pre>
 <div id="estimation-equations" class="section level3" number="4.3.1">
 <h3>
 <span class="header-section-number">4.3.1</span> Estimation equations<a class="anchor" aria-label="anchor" href="#estimation-equations"><i class="fas fa-link"></i></a>
@@ -835,7 +857,7 @@ Comparing the significance of the simple effects is **not the same** as testing 
 <span class="header-section-number">4.3.2</span> Factorial App<a class="anchor" aria-label="anchor" href="#factorial-app"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-figure"><img src="images/04-interactions_factorial_app.png"></div>
-<p><a href="https://talklab.psy.gla.ac.uk/app/factorial-site/" target="_blank">Launch this web application</a> and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.</p>
+<p><a href="https://dalejbarr.github.io/statistical-models-web-apps/factorial-site/" target="_blank">Launch this web application</a> and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.</p>
 </div>
 </div>
 <div id="code-your-own-categorical-predictors-in-factorial-designs" class="section level2" number="4.4">
@@ -1850,7 +1872,7 @@ A
 <tbody>
 <tr>
 <td style="text-align:right;">
--0.41
+-1.07
 </td>
 <td style="text-align:left;">
 A1
@@ -1858,7 +1880,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
--1.44
+-2.33
 </td>
 <td style="text-align:left;">
 A1
@@ -1866,7 +1888,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
--2.01
+-1.12
 </td>
 <td style="text-align:left;">
 A1
@@ -1874,7 +1896,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
-0.56
+-0.51
 </td>
 <td style="text-align:left;">
 A1
@@ -1882,7 +1904,7 @@ A1
 </tr>
 <tr>
 <td style="text-align:right;">
--0.67
+0.04
 </td>
 <td style="text-align:left;">
 A2
@@ -1890,7 +1912,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
-1.00
+0.79
 </td>
 <td style="text-align:left;">
 A2
@@ -1898,7 +1920,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
--1.61
+-0.09
 </td>
 <td style="text-align:left;">
 A2
@@ -1906,7 +1928,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
-0.32
+1.94
 </td>
 <td style="text-align:left;">
 A2
@@ -1914,7 +1936,7 @@ A2
 </tr>
 <tr>
 <td style="text-align:right;">
--0.44
+0.28
 </td>
 <td style="text-align:left;">
 A3
@@ -1922,7 +1944,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
-1.19
+1.09
 </td>
 <td style="text-align:left;">
 A3
@@ -1930,7 +1952,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
-0.87
+0.28
 </td>
 <td style="text-align:left;">
 A3
@@ -1938,7 +1960,7 @@ A3
 </tr>
 <tr>
 <td style="text-align:right;">
--0.50
+0.06
 </td>
 <td style="text-align:left;">
 A3
@@ -1967,20 +1989,20 @@ A3
 Click to view resulting table
 </button>
 <pre><code>## # A tibble: 12 × 4
-##         Y A      A2v1  A3v1
-##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 -0.410 A1        0     0
-##  2 -1.44  A1        0     0
-##  3 -2.01  A1        0     0
-##  4  0.562 A1        0     0
-##  5 -0.671 A2        1     0
-##  6  1.00  A2        1     0
-##  7 -1.61  A2        1     0
-##  8  0.322 A2        1     0
-##  9 -0.443 A3        0     1
-## 10  1.19  A3        0     1
-## 11  0.868 A3        0     1
-## 12 -0.500 A3        0     1</code></pre>
+##          Y A      A2v1  A3v1
+##      &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -1.07   A1        0     0
+##  2 -2.33   A1        0     0
+##  3 -1.12   A1        0     0
+##  4 -0.513  A1        0     0
+##  5  0.0447 A2        1     0
+##  6  0.791  A2        1     0
+##  7 -0.0936 A2        1     0
+##  8  1.94   A2        1     0
+##  9  0.282  A3        0     1
+## 10  1.09   A3        0     1
+## 11  0.285  A3        0     1
+## 12  0.0565 A3        0     1</code></pre>
 </div>
 </div>
 <div id="sum-2" class="section level4" number="4.5.5.3">
@@ -2001,20 +2023,20 @@ Click to view resulting table
 Click to view resulting table
 </button>
 <pre><code>## # A tibble: 12 × 4
-##         Y A      A2v1  A3v1
-##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 -0.410 A1       -1    -1
-##  2 -1.44  A1       -1    -1
-##  3 -2.01  A1       -1    -1
-##  4  0.562 A1       -1    -1
-##  5 -0.671 A2        1     0
-##  6  1.00  A2        1     0
-##  7 -1.61  A2        1     0
-##  8  0.322 A2        1     0
-##  9 -0.443 A3        0     1
-## 10  1.19  A3        0     1
-## 11  0.868 A3        0     1
-## 12 -0.500 A3        0     1</code></pre>
+##          Y A      A2v1  A3v1
+##      &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -1.07   A1       -1    -1
+##  2 -2.33   A1       -1    -1
+##  3 -1.12   A1       -1    -1
+##  4 -0.513  A1       -1    -1
+##  5  0.0447 A2        1     0
+##  6  0.791  A2        1     0
+##  7 -0.0936 A2        1     0
+##  8  1.94   A2        1     0
+##  9  0.282  A3        0     1
+## 10  1.09   A3        0     1
+## 11  0.285  A3        0     1
+## 12  0.0565 A3        0     1</code></pre>
 </div>
 </div>
 <div id="deviation-2" class="section level4" number="4.5.5.4">
@@ -2034,20 +2056,20 @@ Click to view resulting table
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_dev</span></span></code></pre></div>
 <pre><code>## # A tibble: 12 × 4
-##         Y A       A2v1   A3v1
-##     &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1 -0.410 A1    -0.333 -0.333
-##  2 -1.44  A1    -0.333 -0.333
-##  3 -2.01  A1    -0.333 -0.333
-##  4  0.562 A1    -0.333 -0.333
-##  5 -0.671 A2     0.667 -0.333
-##  6  1.00  A2     0.667 -0.333
-##  7 -1.61  A2     0.667 -0.333
-##  8  0.322 A2     0.667 -0.333
-##  9 -0.443 A3    -0.333  0.667
-## 10  1.19  A3    -0.333  0.667
-## 11  0.868 A3    -0.333  0.667
-## 12 -0.500 A3    -0.333  0.667</code></pre>
+##          Y A       A2v1   A3v1
+##      &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 -1.07   A1    -0.333 -0.333
+##  2 -2.33   A1    -0.333 -0.333
+##  3 -1.12   A1    -0.333 -0.333
+##  4 -0.513  A1    -0.333 -0.333
+##  5  0.0447 A2     0.667 -0.333
+##  6  0.791  A2     0.667 -0.333
+##  7 -0.0936 A2     0.667 -0.333
+##  8  1.94   A2     0.667 -0.333
+##  9  0.282  A3    -0.333  0.667
+## 10  1.09   A3    -0.333  0.667
+## 11  0.285  A3    -0.333  0.667
+## 12  0.0565 A3    -0.333  0.667</code></pre>
 </div>
 </div>
 </div>
@@ -2233,7 +2255,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2024-12-09.</p>
+    <p>"<strong>Learning Statistical Models Through Simulation in R</strong>" was written by Dale J. Barr. It was last built on 2025-02-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

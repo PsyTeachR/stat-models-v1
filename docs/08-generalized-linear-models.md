@@ -58,8 +58,8 @@ rainy_days %>%
 ## # A tibble: 2 × 2
 ##   city      variance
 ##   <chr>        <dbl>
-## 1 Barcelona     49.1
-## 2 Glasgow       91.5
+## 1 Barcelona     47.0
+## 2 Glasgow       96.5
 ```
 
 With binomially distributed data, the variance is given by $np(1-p)$ where $n$ is the number of observations and $p$ is the probability of 'success' (in the above example, the probability of rain on a given day). The plot below shows this for $n=1000$; note how the variance peaks at 0.5 and gets small as the probability approaches 0 and 1.
@@ -124,8 +124,8 @@ $$np(1 - p).$$
 The app below allows you to manipulate the intercept and slope of a line in log odds space and to see the projection of the line back into response space. Note the S-shaped ("sigmoidal") shape of the function in the response shape.
 
 <div class="figure" style="text-align: center">
-<iframe src="https://talklab.psy.gla.ac.uk/app/logit-site/?showcase=0" width="100%" height="800px" data-external="1"></iframe>
-<p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://talklab.psy.gla.ac.uk/app/logit-site/></p>
+<iframe src="https://dalejbarr.github.io/logit-site/?showcase=0" width="100%" height="800px" data-external="1"></iframe>
+<p class="caption">(\#fig:logit-app)**Logistic regression web app** <https://dalejbarr.github.io/statistical-models-web-apps/logit-site/></p>
 </div>
 
 ### Estimating logistic regression models in R

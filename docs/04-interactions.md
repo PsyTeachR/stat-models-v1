@@ -203,13 +203,13 @@ How do we estimate the regression coefficients in R.  Let's say we wanted to tes
 
 **Parallel lines in the sample versus in the population**
 
-I just said that two non-parallel lines mean there is an *interaction* between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class='glossary' target='_blank' title='All members of a group that we wish to generalise our findings to. E.g. all students taking Psychology at the University of Glasgow. We draw our testing sample from the population.' href='https://psyteachr.github.io/glossary/p#population'>population</a>. Whether or not they are parallel in the <a class='glossary' target='_blank' title='A subset of the population that you wish to make an inference about through your test.' href='https://psyteachr.github.io/glossary/s#sample'>sample</a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small. 
+I just said that two non-parallel lines mean there is an *interaction* between the categorical and continuous predictors, and that parallel lines mean no interaction. It is important to be clear that I am talking about whether or not the lines are parallel in the <a class='glossary'>population<span class='def'></span></a>. Whether or not they are parallel in the <a class='glossary'>sample<span class='def'></span></a> depends not only on their status in the population, but also on biases introduced by measurement and by sampling. Lines that are parallel in the population are nonetheless extremely likely to give rise to lines in the sample with slopes that appear different, especially if your sample is small. 
 
 Generally, you will be interested in whether the slopes are the same or different in the population, not in the sample. For this reason, you can't just look at a graph of sample data and reason, "the lines are not parallel and so there must be an interaction", or vice versa, "the lines look parallel, so there is no interaction." You must run an inferential statistical test.
 
 When the interaction term is statistically significant at some $\alpha$ level (e.g., 0.05), you reject the null hypothesis that the interaction coefficient is zero (e.g., $H_0: \beta_3 = 0$), which implies the lines are not parallel in the population.
 
-However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary' target='_blank' title='The probability of rejecting the null hypothesis when it is false.' href='https://psyteachr.github.io/glossary/p#power'>power</a> to detect the difference.
+However, a non-significant interaction does *not* necessarily imply that the lines are parallel in the population. They might be, but it's also possible that they are not, and your study just lacked sufficient <a class='glossary'>power<span class='def'></span></a> to detect the difference.
 
 The best you can do to get evidence for the null hypothesis is to run what is called an equivalence test, where you seek to reject a null hypothesis that the population effect is larger than some smallest effect size of interest; see @Lakens_Scheel_Isager_2018 for a tutorial.
 
@@ -662,18 +662,18 @@ The best way to understand these effects is to see them in a decomposition table
 ## # A tibble: 12 × 9
 ##        Y     i     j     k    mu   A_i   B_j AB_ij   err
 ##    <dbl> <int> <int> <int> <dbl> <dbl> <dbl> <dbl> <int>
-##  1    11     1     1     1    10     4    -2    -1     0
-##  2    14     1     1     2    10     4    -2    -1     3
-##  3     8     1     1     3    10     4    -2    -1    -3
-##  4    17     1     2     1    10     4     2     1     0
-##  5    15     1     2     2    10     4     2     1    -2
-##  6    19     1     2     3    10     4     2     1     2
-##  7     8     2     1     1    10    -4    -2     1     3
-##  8     4     2     1     2    10    -4    -2     1    -1
-##  9     3     2     1     3    10    -4    -2     1    -2
-## 10    10     2     2     1    10    -4     2    -1     3
-## 11     7     2     2     2    10    -4     2    -1     0
-## 12     4     2     2     3    10    -4     2    -1    -3
+##  1    14     1     1     1    10     4    -2    -1     3
+##  2     8     1     1     2    10     4    -2    -1    -3
+##  3    11     1     1     3    10     4    -2    -1     0
+##  4    14     1     2     1    10     4     2     1    -3
+##  5    16     1     2     2    10     4     2     1    -1
+##  6    21     1     2     3    10     4     2     1     4
+##  7     2     2     1     1    10    -4    -2     1    -3
+##  8     8     2     1     2    10    -4    -2     1     3
+##  9     5     2     1     3    10    -4    -2     1     0
+## 10     7     2     2     1    10    -4     2    -1     0
+## 11     8     2     2     2    10    -4     2    -1     1
+## 12     6     2     2     3    10    -4     2    -1    -1
 ```
 
 
@@ -692,7 +692,7 @@ Note that the $Y$ variable with the dots in the subscripts are means of $Y$, tak
 
 ![](images/04-interactions_factorial_app.png)
 
-[Launch this web application](https://talklab.psy.gla.ac.uk/app/factorial-site/){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
+[Launch this web application](https://dalejbarr.github.io/statistical-models-web-apps/factorial-site/){target="_blank"} and experiment with factorial designs until you understand the key concepts of main effects and interactions in a factorial design.
 
 ## Code your own categorical predictors in factorial designs
 
@@ -1265,51 +1265,51 @@ Let's assume that your data is contained in a table `dat` like the one below.
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> -0.41 </td>
+   <td style="text-align:right;"> -1.07 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -1.44 </td>
+   <td style="text-align:right;"> -2.33 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -2.01 </td>
+   <td style="text-align:right;"> -1.12 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.56 </td>
+   <td style="text-align:right;"> -0.51 </td>
    <td style="text-align:left;"> A1 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.67 </td>
+   <td style="text-align:right;"> 0.04 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.79 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -1.61 </td>
+   <td style="text-align:right;"> -0.09 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.32 </td>
+   <td style="text-align:right;"> 1.94 </td>
    <td style="text-align:left;"> A2 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.44 </td>
+   <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 1.19 </td>
+   <td style="text-align:right;"> 1.09 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 0.87 </td>
+   <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> -0.50 </td>
+   <td style="text-align:right;"> 0.06 </td>
    <td style="text-align:left;"> A3 </td>
   </tr>
 </tbody>
@@ -1339,20 +1339,20 @@ Let's assume that your data is contained in a table `dat` like the one below.
 
 ```
 ## # A tibble: 12 × 4
-##         Y A      A2v1  A3v1
-##     <dbl> <chr> <int> <int>
-##  1 -0.410 A1        0     0
-##  2 -1.44  A1        0     0
-##  3 -2.01  A1        0     0
-##  4  0.562 A1        0     0
-##  5 -0.671 A2        1     0
-##  6  1.00  A2        1     0
-##  7 -1.61  A2        1     0
-##  8  0.322 A2        1     0
-##  9 -0.443 A3        0     1
-## 10  1.19  A3        0     1
-## 11  0.868 A3        0     1
-## 12 -0.500 A3        0     1
+##          Y A      A2v1  A3v1
+##      <dbl> <chr> <int> <int>
+##  1 -1.07   A1        0     0
+##  2 -2.33   A1        0     0
+##  3 -1.12   A1        0     0
+##  4 -0.513  A1        0     0
+##  5  0.0447 A2        1     0
+##  6  0.791  A2        1     0
+##  7 -0.0936 A2        1     0
+##  8  1.94   A2        1     0
+##  9  0.282  A3        0     1
+## 10  1.09   A3        0     1
+## 11  0.285  A3        0     1
+## 12  0.0565 A3        0     1
 ```
 
 
@@ -1380,20 +1380,20 @@ dat_sum <- dat %>%
 
 ```
 ## # A tibble: 12 × 4
-##         Y A      A2v1  A3v1
-##     <dbl> <chr> <int> <int>
-##  1 -0.410 A1       -1    -1
-##  2 -1.44  A1       -1    -1
-##  3 -2.01  A1       -1    -1
-##  4  0.562 A1       -1    -1
-##  5 -0.671 A2        1     0
-##  6  1.00  A2        1     0
-##  7 -1.61  A2        1     0
-##  8  0.322 A2        1     0
-##  9 -0.443 A3        0     1
-## 10  1.19  A3        0     1
-## 11  0.868 A3        0     1
-## 12 -0.500 A3        0     1
+##          Y A      A2v1  A3v1
+##      <dbl> <chr> <int> <int>
+##  1 -1.07   A1       -1    -1
+##  2 -2.33   A1       -1    -1
+##  3 -1.12   A1       -1    -1
+##  4 -0.513  A1       -1    -1
+##  5  0.0447 A2        1     0
+##  6  0.791  A2        1     0
+##  7 -0.0936 A2        1     0
+##  8  1.94   A2        1     0
+##  9  0.282  A3        0     1
+## 10  1.09   A3        0     1
+## 11  0.285  A3        0     1
+## 12  0.0565 A3        0     1
 ```
 
 
@@ -1422,20 +1422,20 @@ dat_dev
 
 ```
 ## # A tibble: 12 × 4
-##         Y A       A2v1   A3v1
-##     <dbl> <chr>  <dbl>  <dbl>
-##  1 -0.410 A1    -0.333 -0.333
-##  2 -1.44  A1    -0.333 -0.333
-##  3 -2.01  A1    -0.333 -0.333
-##  4  0.562 A1    -0.333 -0.333
-##  5 -0.671 A2     0.667 -0.333
-##  6  1.00  A2     0.667 -0.333
-##  7 -1.61  A2     0.667 -0.333
-##  8  0.322 A2     0.667 -0.333
-##  9 -0.443 A3    -0.333  0.667
-## 10  1.19  A3    -0.333  0.667
-## 11  0.868 A3    -0.333  0.667
-## 12 -0.500 A3    -0.333  0.667
+##          Y A       A2v1   A3v1
+##      <dbl> <chr>  <dbl>  <dbl>
+##  1 -1.07   A1    -0.333 -0.333
+##  2 -2.33   A1    -0.333 -0.333
+##  3 -1.12   A1    -0.333 -0.333
+##  4 -0.513  A1    -0.333 -0.333
+##  5  0.0447 A2     0.667 -0.333
+##  6  0.791  A2     0.667 -0.333
+##  7 -0.0936 A2     0.667 -0.333
+##  8  1.94   A2     0.667 -0.333
+##  9  0.282  A3    -0.333  0.667
+## 10  1.09   A3    -0.333  0.667
+## 11  0.285  A3    -0.333  0.667
+## 12  0.0565 A3    -0.333  0.667
 ```
 
 

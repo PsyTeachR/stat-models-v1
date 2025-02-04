@@ -18,9 +18,16 @@ Recall that a correlation coefficient quantifies the **strength** and **directio
 If you have $n$ measures, how many pairwise correlations can you compute? You can figure this out either by the formula in the info box below, or more easily you can computed it directly through the `choose(n, 2)` function in R. For instance, to get the number of possible pairwise correlations between 6 measures, you'd type `choose(6, 2)`, which tells you that you have 15 combinations.
 
 <div class="info">
-<p>For any <span class="math inline">\(n\)</span> measures, you can calculate <span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span> pairwise correlations between measures. The <span class="math inline">\(!\)</span> symbol is called the <strong>factorial</strong> operator, defined as the product of all numbers from 1 to <span class="math inline">\(n\)</span>. So, if you have six measurements, you have</p>
+<p>For any <span class="math inline">\(n\)</span> measures, you can
+calculate <span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span>
+pairwise correlations between measures. The <span
+class="math inline">\(!\)</span> symbol is called the
+<strong>factorial</strong> operator, defined as the product of all
+numbers from 1 to <span class="math inline">\(n\)</span>. So, if you
+have six measurements, you have</p>
 <p><span class="math display">\[
-\frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times 6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
+\frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times
+6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
 \]</span></p>
 </div>
 
@@ -260,12 +267,32 @@ It should be clear that you can't just run `rnorm()` twice and combine the varia
 The package **`MASS`** provides a function `mvrnorm()` which is the 'multivariate' version of rnorm (hence the function name, `mv` + `rnorm`, which makes it easy to remember.
 
 <div class="watchout">
-<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you’ll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code>library("MASS")</code>, it is preferable to use <code>MASS::mvrnorm()</code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don’t play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you’ll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to figure out what is wrong with your code, so always use <code>MASS::mvrnorm()</code> without loading <code>library("MASS")</code>.</p>
+<p>The <strong><code>MASS</code></strong> package comes pre-installed
+with R. But the only function you’ll probably ever want to use from
+<strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather
+than load in the package using <code>library("MASS")</code>, it is
+preferable to use <code>MASS::mvrnorm()</code>, especially as
+<strong><code>MASS</code></strong> and the
+<strong><code>dplyr</code></strong> package from
+<strong><code>tidyverse</code></strong> don’t play well together, due to
+both packages having the function <code>select()</code>. So if you load
+in <strong><code>MASS</code></strong> after you load in
+<strong><code>tidyverse</code></strong>, you’ll end up getting the
+<strong><code>MASS</code></strong> version of <code>select()</code>
+instead of the <strong><code>dplyr</code></strong> version. It will do
+your head in trying to figure out what is wrong with your code, so
+always use <code>MASS::mvrnorm()</code> without loading
+<code>library("MASS")</code>.</p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
-MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the ass. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>
+MASS before dplyr, clashes not dire;<br>dplyr before MASS, pain in the
+ass.
+<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>
+<a href="http://t.co/vHIbGwSKd8">pic.twitter.com/vHIbGwSKd8</a>
 </p>
-— Dale Barr (@dalejbarr) <a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September 30, 2014</a>
+— Dale Barr (@dalejbarr)
+<a href="https://twitter.com/dalejbarr/status/516986671129452544?ref_src=twsrc%5Etfw">September
+30, 2014</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
@@ -411,10 +438,18 @@ my_Sigma
 
 <div class="info">
 <p>Confused about the <code>matrix()</code> function?</p>
-<p>The first argument is a vector of values, which we created above using <code>c()</code>. The <code>ncol</code> argument specifies how many columns the matrix should have. There is also an <code>nrow</code> argument that you could use, but if you give it one of the dimensions, it can infer the size of the other using the length of the vector supplied as the first argument.</p>
-<p>You can see that <code>matrix()</code> fills in the elements of the matrix column by column, rather than row by row by running the following code:</p>
+<p>The first argument is a vector of values, which we created above
+using <code>c()</code>. The <code>ncol</code> argument specifies how
+many columns the matrix should have. There is also an <code>nrow</code>
+argument that you could use, but if you give it one of the dimensions,
+it can infer the size of the other using the length of the vector
+supplied as the first argument.</p>
+<p>You can see that <code>matrix()</code> fills in the elements of the
+matrix column by column, rather than row by row by running the following
+code:</p>
 <p><code>matrix(c("a", "b", "c", "d"), ncol = 2)</code></p>
-<p>If you want to change this behavior, set the <code>byrow</code> argument to <code>TRUE</code>.</p>
+<p>If you want to change this behavior, set the <code>byrow</code>
+argument to <code>TRUE</code>.</p>
 <p><code>matrix(c("a", "b", "c", "d"), ncol = 2, byrow = TRUE)</code></p>
 </div>
 
@@ -593,4 +628,4 @@ To close, here are a few implications from the relationship between correlation 
 
 ## Exercises
 
-<iframe src="https://talklab.psy.gla.ac.uk/app/covariance-site/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
+<iframe src="https://dalejbarr.github.io/statistical-models-web-apps/covariance-site/?showcase=0" width="530px" height="480px" data-external="1"></iframe>

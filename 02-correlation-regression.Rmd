@@ -432,5 +432,5 @@ To close, here are a few implications from the relationship between correlation 
 ## Exercises
 
 ```{r cov-app, echo=FALSE, out.width="530px"}
-knitr::include_app("https://talklab.psy.gla.ac.uk/app/covariance-site/", height = "480px")
+knitr::include_app("https://dalejbarr.github.io/statistical-models-web-apps/covariance-site/", height = "480px")
 ```
